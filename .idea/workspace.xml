@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa0e0fa8-af30-4bd0-8c54-04de3242f970" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/God.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Color.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/TurnManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/TurnManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Worker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/PSP23/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/PSP23/App.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +115,8 @@
       <option name="presentableId" value="Default" />
       <updated>1585130118943</updated>
       <workItem from="1585130120762" duration="3130000" />
-      <workItem from="1585470415506" duration="5304000" />
+      <workItem from="1585470415506" duration="5523000" />
+      <workItem from="1585484909916" duration="4692000" />
     </task>
     <task id="LOCAL-00001" summary="Created the project">
       <created>1585132381041</created>
@@ -131,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585472285000</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Primi passi">
+      <created>1585476859177</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585476859177</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,21 +161,22 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created the project" />
     <MESSAGE value="fixup! Created the project" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixup! Created the project" />
+    <MESSAGE value="Primi passi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Primi passi" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="801" y="265" width="374" height="575" key="#com.intellij.ide.util.MemberChooser" timestamp="1585475876401">
+    <state x="801" y="265" width="374" height="575" key="#com.intellij.ide.util.MemberChooser" timestamp="1585486160702">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="801" y="265" width="374" height="575" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1585475876401" />
+    <state x="801" y="265" width="374" height="575" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1585486160702" />
     <state x="746" y="413" width="494" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1585475269303">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="746" y="413" width="494" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/67.27.1853.1053@67.27.1853.1053" timestamp="1585475269303" />
-    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2" timestamp="1585476828608">
+    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2" timestamp="1585476859121">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585476828608" />
+    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585476859121" />
     <state x="783" y="301" width="424" height="484" key="FileChooserDialogImpl" timestamp="1585132748017">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -204,9 +213,9 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="843" y="459" width="303" height="167" key="VCS.ChangelistChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1585132938355" />
-    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1585472312424">
+    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1585476880434">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585472312424" />
+    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585476880434" />
   </component>
 </project>

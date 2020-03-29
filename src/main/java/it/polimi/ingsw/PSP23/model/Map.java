@@ -12,6 +12,7 @@ public class Map {
         }
     }
 
+    //metodo di debug
     public void check()
     {
         for(int i=0;i<5;i++){
