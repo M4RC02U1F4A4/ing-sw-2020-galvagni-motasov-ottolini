@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa0e0fa8-af30-4bd0-8c54-04de3242f970" name="Default Changelist" comment="fixup! Created the project">
-      <change afterPath="$PROJECT_DIR$/deliveries/model_V-0.8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Cell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Color.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Map.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/TurnManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Worker.java" afterDir="false" />
+    <list default="true" id="fa0e0fa8-af30-4bd0-8c54-04de3242f970" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/TurnManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP23/model/TurnManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +69,7 @@
       <recent name="$PROJECT_DIR$/deliveries" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Game">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.PSP23.App" />
       <module name="ing-sw-2020-galvagni-motasov-ottolini" />
@@ -86,8 +83,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.PSP23.model.Game" />
+      <module name="ing-sw-2020-galvagni-motasov-ottolini" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.PSP23.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Game" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.App" />
       </list>
@@ -104,7 +115,7 @@
       <option name="presentableId" value="Default" />
       <updated>1585130118943</updated>
       <workItem from="1585130120762" duration="3130000" />
-      <workItem from="1585470415506" duration="1451000" />
+      <workItem from="1585470415506" duration="5304000" />
     </task>
     <task id="LOCAL-00001" summary="Created the project">
       <created>1585132381041</created>
@@ -113,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585132381041</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fixup! Created the project">
+      <created>1585472285000</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585472285000</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,13 +152,22 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created the project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created the project" />
+    <MESSAGE value="fixup! Created the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixup! Created the project" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2" timestamp="1585133308428">
+    <state x="801" y="265" width="374" height="575" key="#com.intellij.ide.util.MemberChooser" timestamp="1585475876401">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585133308428" />
+    <state x="801" y="265" width="374" height="575" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1585475876401" />
+    <state x="746" y="413" width="494" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1585475269303">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="746" y="413" width="494" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/67.27.1853.1053@67.27.1853.1053" timestamp="1585475269303" />
+    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2" timestamp="1585476828608">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="426" y="87" width="1137" height="912" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1585476828608" />
     <state x="783" y="301" width="424" height="484" key="FileChooserDialogImpl" timestamp="1585132748017">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -157,29 +184,29 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="756" y="438" width="478" height="210" key="Github.ShareDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1585133244347" />
-    <state width="1354" height="260" key="GridCell.Tab.0.bottom" timestamp="1585133905960">
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1585476828632">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1354" height="260" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585133905960" />
-    <state width="1354" height="260" key="GridCell.Tab.0.center" timestamp="1585133905960">
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1585476828632" />
+    <state width="1807" height="278" key="GridCell.Tab.0.center" timestamp="1585476828632">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1354" height="260" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585133905960" />
-    <state width="1354" height="260" key="GridCell.Tab.0.left" timestamp="1585133905959">
+    <state width="1807" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1585476828632" />
+    <state width="1807" height="278" key="GridCell.Tab.0.left" timestamp="1585476828631">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1354" height="260" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585133905959" />
-    <state width="1354" height="260" key="GridCell.Tab.0.right" timestamp="1585133905960">
+    <state width="1807" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1585476828631" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right" timestamp="1585476828632">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1354" height="260" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585133905960" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1585476828632" />
     <state x="843" y="459" width="303" height="167" key="VCS.ChangelistChooser" timestamp="1585132938355">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="843" y="459" width="303" height="167" key="VCS.ChangelistChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1585132938355" />
-    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1585133426248">
+    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1585472312424">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585133426248" />
+    <state x="595" y="279" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1585472312424" />
   </component>
 </project>
