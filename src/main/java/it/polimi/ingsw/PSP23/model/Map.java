@@ -13,7 +13,7 @@ public class Map {
     }
 
     //metodo di debug
-    public void check()
+    public void printStatus()
     {
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++) {

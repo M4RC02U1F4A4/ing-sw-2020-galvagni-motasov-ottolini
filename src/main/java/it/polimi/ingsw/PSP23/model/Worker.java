@@ -45,4 +45,9 @@ public class Worker {
     public Color getColor() {
         return color;
     }
+
+    public void moveWorker(int x, int y, int z){
+
+    }
+
 }
