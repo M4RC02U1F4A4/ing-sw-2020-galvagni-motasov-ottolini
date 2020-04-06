@@ -1,0 +1,216 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Cell</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Cell (it.polimi.ingsw.PSP23.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Cell</td>
+<td class="coverageStat">
+  <span class="percent">
+    18.2%
+  </span>
+  <span class="absValue">
+    (2/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    30.6%
+  </span>
+  <span class="absValue">
+    (15/ 49)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Cell$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (3/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    32%
+  </span>
+  <span class="absValue">
+    (16/ 50)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import static it.polimi.ingsw.PSP23.model.Status.*;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class Cell {
+<i>6</i>&nbsp;    private Status levels[];
+<i>7</i>&nbsp;    Worker worker;
+<i>8</i>&nbsp;    private int X;
+<i>9</i>&nbsp;    private int Y;
+<i>10</i>&nbsp;
+<b class="fc"><i>11</i>&nbsp;    public Cell(int x, int y){</b>
+<b class="fc"><i>12</i>&nbsp;        levels=new Status[4];</b>
+<b class="fc"><i>13</i>&nbsp;        for (int i=0;i&lt;levels.length;i++) {</b>
+<b class="fc"><i>14</i>&nbsp;            levels[i] = FREE;</b>
+<i>15</i>&nbsp;        }
+<b class="fc"><i>16</i>&nbsp;        worker=null;</b>
+<b class="fc"><i>17</i>&nbsp;        X = x;</b>
+<b class="fc"><i>18</i>&nbsp;        Y = y;</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public Worker getWorker(){
+<b class="nc"><i>22</i>&nbsp;        return this.worker;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public void setWorker(Worker w){
+<b class="nc"><i>26</i>&nbsp;        worker=w;</b>
+<b class="nc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public void fireWorker() {
+<b class="nc"><i>30</i>&nbsp;        worker = null;</b>
+<b class="nc"><i>31</i>&nbsp;    }</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public int getX () {
+<b class="nc"><i>34</i>&nbsp;        return X;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public int getY () {
+<b class="nc"><i>38</i>&nbsp;        return Y;</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public boolean isNear (Cell c, Worker w) {
+<b class="nc"><i>42</i>&nbsp;        if ((X &gt;= w.getPosX() - 1) &amp;&amp; (X &lt;= w.getPosX() + 1)) {</b>
+<b class="nc"><i>43</i>&nbsp;            if ((Y &gt;= w.getPosY() - 1) &amp;&amp; (Y &lt;= w.getPosY() + 1)) {</b>
+<b class="nc"><i>44</i>&nbsp;                return (this.height() &lt;= w.getPosZ() + 1);</b>
+<i>45</i>&nbsp;            }
+<i>46</i>&nbsp;            else {
+<b class="nc"><i>47</i>&nbsp;                return false;</b>
+<i>48</i>&nbsp;            }
+<i>49</i>&nbsp;        }
+<i>50</i>&nbsp;        else {
+<b class="nc"><i>51</i>&nbsp;            return false;</b>
+<i>52</i>&nbsp;        }
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public boolean isOccupied(){
+<b class="nc"><i>56</i>&nbsp;        if(worker==null)</b>
+<b class="nc"><i>57</i>&nbsp;            return false;</b>
+<b class="nc"><i>58</i>&nbsp;        else return true;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    public int height(){
+<b class="nc"><i>62</i>&nbsp;        int height=0;</b>
+<b class="nc"><i>63</i>&nbsp;        for(int i=0;i&lt;4;i++){</b>
+<b class="pc"><i>64</i>&nbsp;            switch (levels[i]) {</b>
+<i>65</i>&nbsp;                case FREE:
+<b class="nc"><i>66</i>&nbsp;                    break;</b>
+<i>67</i>&nbsp;                case BUILT:
+<b class="nc"><i>68</i>&nbsp;                    height++;</b>
+<b class="nc"><i>69</i>&nbsp;                    break;</b>
+<i>70</i>&nbsp;                case CUPOLA:
+<b class="nc"><i>71</i>&nbsp;                    return height;</b>
+<i>72</i>&nbsp;                case NOT_AVAILABLE:
+<b class="nc"><i>73</i>&nbsp;                    return -1;</b>
+<i>74</i>&nbsp;            }
+<i>75</i>&nbsp;        }
+<b class="nc"><i>76</i>&nbsp;        return height;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public void build (Status b) {
+<b class="nc"><i>80</i>&nbsp;        int i = 0;</b>
+<b class="nc"><i>81</i>&nbsp;        while (FREE != levels[i]) {</b>
+<b class="nc"><i>82</i>&nbsp;            i++;</b>
+<i>83</i>&nbsp;        };
+<b class="nc"><i>84</i>&nbsp;        if (CUPOLA == b || 4 == i) {</b>
+<b class="nc"><i>85</i>&nbsp;            levels[i] = CUPOLA;</b>
+<i>86</i>&nbsp;        }
+<i>87</i>&nbsp;        else {
+<b class="nc"><i>88</i>&nbsp;            levels [i] = BUILT;</b>
+<i>89</i>&nbsp;        }
+<b class="nc"><i>90</i>&nbsp;    }</b>
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    public String toString(){
+<b class="fc"><i>93</i>&nbsp;        String ret=&quot;&quot;;</b>
+<b class="fc"><i>94</i>&nbsp;        for(int i=0;i&lt;4;i++){</b>
+<b class="fc"><i>95</i>&nbsp;            ret=ret+&quot;livello &quot;+i+&quot;: &quot;;</b>
+<b class="fc"><i>96</i>&nbsp;            switch (levels[i]){</b>
+<b class="fc"><i>97</i>&nbsp;                case FREE:ret=ret+&quot;FREE&quot;;break;</b>
+<b class="nc"><i>98</i>&nbsp;                case BUILT:ret=ret+&quot;BUILT&quot;;break;</b>
+<b class="nc"><i>99</i>&nbsp;                case CUPOLA:ret=ret+&quot;CUPOLA&quot;;break;</b>
+<b class="nc"><i>100</i>&nbsp;                case NOT_AVAILABLE:ret=ret+&quot;NOT AVAILABLE&quot;;break;</b>
+<i>101</i>&nbsp;            }
+<b class="fc"><i>102</i>&nbsp;            ret=ret+&quot;\n&quot;;</b>
+<i>103</i>&nbsp;        }
+<b class="fc"><i>104</i>&nbsp;        return ret;</b>
+<i>105</i>&nbsp;    }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-06 17:35</div>
+</div>
+</body>
+</html>

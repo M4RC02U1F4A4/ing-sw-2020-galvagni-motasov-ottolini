@@ -10,7 +10,7 @@ public class App
 {
     public static void main( String[] args ) {
         Map m=new Map();
-        m.check();
+        m.printStatus();
         System.out.println( "Hello World!" );
     }
 }
