@@ -58,8 +58,8 @@ public class Worker {
     }
 
     /**
-    *   Return the cell object
-    *   @return the cell object
+    *   Return cell object
+    *   @return cell object
     */
     public Cell getCell() {
         return this.cell;
