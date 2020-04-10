@@ -80,7 +80,7 @@ public class God {
 
     /**
     *   Check if the <code>Athena</code> god is used by some player in this game
-    *   @param <code>Athena</code> god
+    *   @param ap <code>Athena</code> god
     */
     public void AthenaIsHere(Athena ap) {
         is_athena_in_game = true;
