@@ -68,8 +68,8 @@ public class Cell {
     /**
     *   Check if the worker is adjacent the cell
     *   and if the difference between worker height and cell height is <= 1
-    *   @param c
-    *   @param w
+    *   @param c cell
+    *   @param w worker
     *   @return true if the condition is verified, false other otherwise
     */
     public boolean isNear (Cell c, Worker w) {
