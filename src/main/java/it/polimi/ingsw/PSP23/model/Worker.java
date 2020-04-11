@@ -18,15 +18,13 @@ public class Worker {
     }
 
     /**
-    *   Set the worker color
-    *   @param color worker color 
+    *   @param color worker color to set
     */
     public void setColor(Color color) {
         this.color = color;
     }
 
     /**
-    *   Return the worker color
     *   @return worker color
     */
     public Color getColor() {
@@ -58,7 +56,6 @@ public class Worker {
     }
 
     /**
-    *   Return cell object
     *   @return cell object
     */
     public Cell getCell() {

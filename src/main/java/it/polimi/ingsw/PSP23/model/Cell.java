@@ -27,7 +27,6 @@ public class Cell {
     }
 
     /**
-    *   Return worker object
     *   @return cell object
     */
     public Worker getWorker(){
@@ -35,7 +34,6 @@ public class Cell {
     }
 
     /**
-    *   Set the worker into the cell
     *   @param w worker that the player want to place
     */
     public void setWorker(Worker w){
@@ -50,7 +48,6 @@ public class Cell {
     }
 
     /**
-    *   Return X position
     *   @return X position
     */
     public int getX () {
@@ -58,7 +55,6 @@ public class Cell {
     }
 
     /**
-    *   Return Y position
     *   @return Y position
     */
     public int getY () {

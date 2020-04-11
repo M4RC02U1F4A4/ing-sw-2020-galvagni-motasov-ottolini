@@ -64,11 +64,11 @@ public class God {
                 remains_builds--;
             }
             else {
-                // TODO error, too far away
+                // TODO: error, too far away
             }
         }
         else {
-            //TODO error, already build
+            //TODO: error, already build
         }
     }
 
