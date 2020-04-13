@@ -1,13 +1,21 @@
 package it.polimi.ingsw.PSP23.model;
 
 import static it.polimi.ingsw.PSP23.model.Status.*;
-
+/**
+*   Cell class
+*/
 public class Cell {
     private Status levels[];
     Worker worker;
     private int X;
     private int Y;
 
+    /**
+    *   Costructor that set Cell with 4 high levels,
+    *   every level status is set to free and worker status is ste to NULL
+    *   @param x X position on the map
+    *   @param y Y position on the map
+    */
     public Cell(int x, int y){
         levels=new Status[4];
         for (int i=0;i<levels.length;i++) {
@@ -18,26 +26,48 @@ public class Cell {
         Y = y;
     }
 
+    /**
+    *   @return cell object
+    */
     public Worker getWorker(){
         return this.worker;
     }
 
+    /**
+    *   @param w worker that the player want to place
+    */
     public void setWorker(Worker w){
         worker=w;
     }
 
+    /**
+    *   Free the cell from the worker
+    */
     public void fireWorker() {
         worker = null;
     }
 
+    /**
+    *   @return X position
+    */
     public int getX () {
         return X;
     }
 
+    /**
+    *   @return Y position
+    */
     public int getY () {
         return Y;
     }
 
+    /**
+    *   Check if the worker is adjacent the cell
+    *   and if the difference between worker height and cell height is <= 1
+    *   @param c cell
+    *   @param w worker
+    *   @return true if the condition is verified, false other otherwise
+    */
     public boolean isNear (Cell c, Worker w) {
         if ((X >= w.getPosX() - 1) && (X <= w.getPosX() + 1)) {
             if ((Y >= w.getPosY() - 1) && (Y <= w.getPosY() + 1)) {
@@ -52,12 +82,20 @@ public class Cell {
         }
     }
 
+    /**
+    *   Check if there is è worker in the cell
+    *   @return true if the condition is verified, false otherwise
+    */
     public boolean isOccupied(){
         if(worker==null)
             return false;
         else return true;
     }
 
+    /**
+    *   Translates the state of the cell by returning its height
+    *   @return the height of the cell, -1 if there are some other condition
+    */
     public int height(){
         int height=0;
         for(int i=0;i<4;i++){
@@ -76,6 +114,11 @@ public class Cell {
         return height;
     }
 
+    /**
+    *   Search for a FREE level, when it is found build a new BUILD level,
+    *   if the level already contains a CUPOLA or is the last one (level 4), build a CUPOLA
+    *   @param b level status
+    */
     public void build (Status b) {
         int i = 0;
         while (FREE != levels[i]) {
@@ -89,6 +132,11 @@ public class Cell {
         }
     }
 
+    /**
+    *   Return a string made in this way
+    *   livello <height> <STATUS>
+    *   @return string livello <height> <STATUS>
+    */
     public String toString(){
         String ret="";
         for(int i=0;i<4;i++){
