@@ -14,6 +14,7 @@ public class Worker {
     */
     public Worker(Cell c, Color color) {
         this.cell = c;
+        c.setWorker(this);
         this.color = color;
     }
 

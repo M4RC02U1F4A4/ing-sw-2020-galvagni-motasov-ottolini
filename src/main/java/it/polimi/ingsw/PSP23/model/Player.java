@@ -9,6 +9,12 @@ public class Player {
     private Worker workers[];
     private God god;
 
+    public Player(String name, String ipAddress){
+        this.name=name;
+        this.ipAddress=ipAddress;
+        workers=new Worker[2];
+    }
+
     /**
     *   @return the name of the player
     */

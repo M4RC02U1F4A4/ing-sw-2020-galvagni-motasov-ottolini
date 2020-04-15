@@ -60,7 +60,10 @@ public class God {
         remains_moves = 0;
         if (0 < remains_builds) {
             if (c.isNear(c, w)) {
-                c.build(Status.BUILT);
+                switch (b){
+                    case BUILT:c.build(Status.BUILT);break;
+                    case CUPOLA:c.build(Status.CUPOLA);break;
+                }
                 remains_builds--;
             }
             else {

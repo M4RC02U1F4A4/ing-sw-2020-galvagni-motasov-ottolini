@@ -38,6 +38,7 @@ public class Cell {
     */
     public void setWorker(Worker w){
         worker=w;
+
     }
 
     /**
@@ -149,7 +150,7 @@ public class Cell {
             }
             ret=ret+"\n";
         }
-        return ret;
+        return ret+"OCCUPATA: "+isOccupied();
     }
 
 }

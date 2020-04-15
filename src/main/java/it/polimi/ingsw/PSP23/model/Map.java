@@ -19,6 +19,17 @@ public class Map {
         }
     }
 
+    //TODO javadoc
+    public Cell getCell(int x, int y){
+        if (x>=0 && x<5 && y>=0 && y<5) {
+            return cells[x][y];
+        }
+        else return null;
+    }
+
+    //TODO javadoc
+
+
     /**
     *   Debug
     *   Print the map with the cell status
