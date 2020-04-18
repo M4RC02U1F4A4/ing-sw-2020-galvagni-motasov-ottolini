@@ -19,6 +19,14 @@ public class Map {
         }
     }
 
+    public final Map clone(){
+        final Map ret=new Map();
+        for(int i=0; i<5;i++){
+            ret.cells[i]=cells[i].clone();
+        }
+        return ret;
+    }
+
     //TODO javadoc
     public Cell getCell(int x, int y){
         if (x>=0 && x<5 && y>=0 && y<5) {
@@ -28,6 +36,8 @@ public class Map {
     }
 
     //TODO javadoc
+
+
 
 
     /**

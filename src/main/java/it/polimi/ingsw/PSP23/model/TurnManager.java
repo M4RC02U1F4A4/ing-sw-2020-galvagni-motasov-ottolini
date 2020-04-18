@@ -116,7 +116,13 @@ public class TurnManager {
     *   TODO: javadoc
     */
     public static void nextPlayer(){
-        //TODO: vedere se usare le liste oppure se si può farne a meno
+        turnNumber++;
+        if(currentPlayer+1==playerNumber){
+            reset();
+        }
+        else {
+            phase=Phase.START;
+        }
     }
 
 }

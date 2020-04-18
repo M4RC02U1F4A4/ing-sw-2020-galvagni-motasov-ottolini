@@ -25,6 +25,25 @@ public class Cell {
         X = x;
         Y = y;
     }
+    public Cell(){
+        levels=new Status[4];
+        for (int i=0;i<levels.length;i++) {
+            levels[i] = FREE;
+        }
+        worker=null;
+    }
+
+
+    protected Cell clone(){
+        Cell f=new Cell();
+        f.X=this.X;
+        f.Y=this.Y;
+        f.worker=this.worker;
+        for (int i=0;i<levels.length;i++) {
+            f.levels[i] = this.levels[i];
+        }
+        return f;
+    }
 
     /**
     *   @return cell object
