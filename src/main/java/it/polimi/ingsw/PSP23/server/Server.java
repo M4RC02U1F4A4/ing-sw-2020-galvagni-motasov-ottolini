@@ -11,7 +11,7 @@ public class Server {
     private static final int PORT=13245;
     private ServerSocket serverSocket;
 
-    private ExecutorService executor= Executors.newFixedThreadPool(128); //probabilmente basta falo con 3 al massimo, da vedere
+    private ExecutorService executor= Executors.newFixedThreadPool(5); //probabilmente basta falo con 3 al massimo, da vedere
 
     public synchronized void deregisterConnection(ClientConnection c){
         System.out.println("XD");

@@ -27,6 +27,7 @@ public class Map {
         return ret;
     }
 
+
     //TODO javadoc
     public Cell getCell(int x, int y){
         if (x>=0 && x<5 && y>=0 && y<5) {
