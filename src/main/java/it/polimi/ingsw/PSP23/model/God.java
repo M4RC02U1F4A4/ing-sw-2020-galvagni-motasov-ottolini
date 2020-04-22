@@ -90,4 +90,10 @@ public class God {
         athena_player = ap;
     }
 
+    public String choseRandomGod(){
+        String gods[]={"Apollo","Artemis",",Athena","Atlas","Demeter"};
+        int i= (int) ((Math.random()*100)%gods.length);
+        return gods[i];
+    }
+
 }

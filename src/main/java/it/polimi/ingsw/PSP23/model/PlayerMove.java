@@ -7,8 +7,8 @@ public class PlayerMove {
     private final View view;
     private final int x;
     private final int y;
-    public enum Action{BUILT, MOVE};
     private final Action a;
+
 
     public Player getPlayer() {
         return player;
@@ -25,6 +25,9 @@ public class PlayerMove {
     public int getY() {
         return y;
     }
+
+    public Action getA() { return a; }
+
 
     public PlayerMove(Player player, View view, int x, int y, Action a) {
         this.player = player;
