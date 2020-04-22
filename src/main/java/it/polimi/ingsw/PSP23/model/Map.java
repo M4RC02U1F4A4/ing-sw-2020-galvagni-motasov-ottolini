@@ -19,6 +19,7 @@ public class Map {
         }
     }
 
+    //TODO: Javadoc
     public final Map clone(){
         final Map ret=new Map();
         for(int i=0; i<5;i++){
@@ -35,11 +36,6 @@ public class Map {
         }
         else return null;
     }
-
-    //TODO javadoc
-
-
-
 
     /**
     *   Debug

@@ -18,13 +18,15 @@ public class Cell {
     */
     public Cell(int x, int y){
         levels=new Status[4];
-        for (int i=0;i<levels.length;i++) {
+        for (int i=0; i<levels.length; i++) {
             levels[i] = FREE;
         }
         worker=null;
         X = x;
         Y = y;
     }
+
+    //TODO: Javadoc
     public Cell(){
         levels=new Status[4];
         for (int i=0;i<levels.length;i++) {
@@ -33,7 +35,7 @@ public class Cell {
         worker=null;
     }
 
-
+    //TODO: Javadoc
     protected Cell clone(){
         Cell f=new Cell();
         f.X=this.X;
@@ -134,6 +136,24 @@ public class Cell {
         return height;
     }
 
+    //TODO: Javadoc
+    public String levelStatus(int height){
+        if(height < 4 && height >= 0){
+            switch (levels[height]){
+                case FREE:
+                    return "FREE";
+                case BUILT:
+                    return "BUILT";
+                case CUPOLA:
+                    return "CUPOLA";
+                case NOT_AVAILABLE:
+                    return "NOT_AVAILABLE";
+            }
+        }
+      return "Error";
+    }
+
+
     /**
     *   Search for a FREE level, when it is found build a new BUILD level,
     *   if the level already contains a CUPOLA or is the last one (level 4), build a CUPOLA
@@ -141,10 +161,10 @@ public class Cell {
     */
     public void build (Status b) {
         int i = 0;
-        while (FREE != levels[i]) {
+        while (FREE != levels[i] && i < 3) {
             i++;
         };
-        if (CUPOLA == b || 4 == i) {
+        if (CUPOLA == b || 3 == i) {
             levels[i] = CUPOLA;
         }
         else {
