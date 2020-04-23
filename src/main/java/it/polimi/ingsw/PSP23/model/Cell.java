@@ -137,18 +137,20 @@ public class Cell {
     }
 
     //TODO: Javadoc
-    public Status levelStatus(int height){
+    public String levelStatus(int height){
         if(height < 4 && height >= 0){
             switch (levels[height]){
                 case FREE:
-                    return FREE;
+                    return "FREE";
                 case BUILT:
-                    return BUILT;
+                    return "BUILT";
                 case CUPOLA:
-                    return CUPOLA;
+                    return "CUPOLA";
+                case NOT_AVAILABLE:
+                    return "NOT_AVAILABLE";
             }
         }
-      return NOT_AVAILABLE;
+      return "Error";
     }
 
 
