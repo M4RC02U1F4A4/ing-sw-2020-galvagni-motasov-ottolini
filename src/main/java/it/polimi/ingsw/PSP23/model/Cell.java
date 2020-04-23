@@ -128,7 +128,7 @@ public class Cell {
                     height++;
                     break;
                 case CUPOLA:
-                    return height;
+                    return height + 1;
                 case NOT_AVAILABLE:
                     return -1;
             }
