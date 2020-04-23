@@ -1,4 +1,8 @@
-package it.polimi.ingsw.PSP23.model;
+package it.polimi.ingsw.PSP23.model.god;
+
+import it.polimi.ingsw.PSP23.model.Cell;
+import it.polimi.ingsw.PSP23.model.God;
+import it.polimi.ingsw.PSP23.model.Worker;
 
 public class Athena extends God {
     private boolean moved_up;
