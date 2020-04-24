@@ -19,7 +19,10 @@ public class Map {
         }
     }
 
-    //TODO: Javadoc
+    /**
+     * Clone the map
+     * @return cloned map
+     */
     public final Map clone(){
         final Map ret=new Map();
         for(int i=0; i<5;i++){
@@ -29,7 +32,12 @@ public class Map {
     }
 
 
-    //TODO javadoc
+    /**
+     * Return the cell of the map
+     * @param x X position of the cell
+     * @param y Y position of the cell
+     * @return cell of given coordinates
+     */
     public Cell getCell(int x, int y){
         if (x>=0 && x<5 && y>=0 && y<5) {
             return cells[x][y];

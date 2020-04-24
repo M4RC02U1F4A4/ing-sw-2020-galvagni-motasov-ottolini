@@ -95,6 +95,9 @@ public class MapCellTest {
         assertFalse(map.getCell(1, 3).isNear(map.getCell(3, 3), worker));
     }
 
+    /**
+     * test debug print
+     */
     @Test
     public void print(){
         map.getCell(1, 1).build(Status.BUILT);

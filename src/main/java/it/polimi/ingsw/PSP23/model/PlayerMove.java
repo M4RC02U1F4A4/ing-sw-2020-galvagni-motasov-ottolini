@@ -9,26 +9,28 @@ public class PlayerMove {
     private final int y;
     private final Action a;
 
-
+    /**
+     * @return player object
+     */
     public Player getPlayer() {
         return player;
     }
-
+    //TODO: Javadoc
     public View getView() {
         return view;
     }
-
+    //TODO: Javadoc
     public int getX() {
         return x;
     }
-
+    //TODO: Javadoc
     public int getY() {
         return y;
     }
-
+    //TODO: Javadoc
     public Action getA() { return a; }
 
-
+    //TODO: Javadoc
     public PlayerMove(Player player, View view, int x, int y, Action a) {
         this.player = player;
         this.view = view;

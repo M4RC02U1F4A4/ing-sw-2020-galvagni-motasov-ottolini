@@ -26,7 +26,9 @@ public class Cell {
         Y = y;
     }
 
-    //TODO: Javadoc
+    /**
+     * Cell cos
+     */
     public Cell(){
         levels=new Status[4];
         for (int i=0;i<levels.length;i++) {
@@ -35,7 +37,10 @@ public class Cell {
         worker=null;
     }
 
-    //TODO: Javadoc
+    /**
+     * Clone a single cell
+     * @return cloned cell
+     */
     protected Cell clone(){
         Cell f=new Cell();
         f.X=this.X;
@@ -136,7 +141,11 @@ public class Cell {
         return height;
     }
 
-    //TODO: Javadoc
+    /**
+     * Return the status of the given level
+     * @param height height of the status that need to be returned
+     * @return Status of the given level
+     */
     public Status levelStatus(int height){
         if(height < 4 && height >= 0){
             switch (levels[height]){
