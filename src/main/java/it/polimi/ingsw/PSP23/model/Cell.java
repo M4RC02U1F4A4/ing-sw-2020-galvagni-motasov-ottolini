@@ -90,9 +90,9 @@ public class Cell {
     *   @param w worker
     *   @return true if the condition is verified, false other otherwise
     */
-    public boolean isNear (Cell c, Worker w) {
-        if ((X >= w.getPosX() - 1) && (X <= w.getPosX() + 1)) {
-            if ((Y >= w.getPosY() - 1) && (Y <= w.getPosY() + 1)) {
+    public boolean isNear (Worker w) {
+        if ((this.X >= w.getPosX() - 1) && (this.X <= w.getPosX() + 1)) {
+            if ((this.Y >= w.getPosY() - 1) && (this.Y <= w.getPosY() + 1)) {
                 return (this.height() <= w.getPosZ() + 1);
             }
             else {

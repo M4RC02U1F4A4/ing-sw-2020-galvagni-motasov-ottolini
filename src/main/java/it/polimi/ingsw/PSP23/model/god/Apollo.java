@@ -6,9 +6,13 @@ import it.polimi.ingsw.PSP23.model.Worker;
 
 public class Apollo extends God {
 
+    public Apollo() {
+        super.setUpGod("Apollo");
+    }
+
     @Override
-    public void startTurn(int x, int y) {
-        super.startTurn(1, 1);
+    public void startTurn() {
+        super.setUpTurn(1, 1);
     }
 
     @Override

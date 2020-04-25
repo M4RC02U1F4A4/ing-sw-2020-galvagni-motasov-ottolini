@@ -7,23 +7,30 @@ import it.polimi.ingsw.PSP23.model.Worker;
 public class Athena extends God {
     private boolean moved_up;
 
+    public Athena() {
+        super.setUpGod("Athena");
+        this.moved_up = false;
+    }
+
     @Override
-    public void startTurn(int x, int y) {
-        super.startTurn(1, 2);
+    public void startTurn() {
+        super.setUpTurn(1, 2);
     }
 
     @Override
     public int move(Cell c, Worker w) {
         if ((c.isNear(c, w)) && !c.isOccupied()) {
             if (w.getPosZ() + 1 == c.height()) {
-                moved_up = true;
+                this.moved_up = true;
             }
             else {
-                moved_up = false;
+                this.moved_up = false;
             }
-            if (0 < remains_moves) {
+            if (0 < this.remains_moves) {
+                if (-1 == this.starting_z)
+                    this.starting_z = w.getPosZ();
                 w.moveWorker(c);
-                remains_moves--;
+                this.remains_moves--;
                 return 0;
             }
             else {

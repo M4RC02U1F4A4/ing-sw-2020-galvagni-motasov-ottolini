@@ -9,17 +9,37 @@ public class God {
     private String name;
     protected int remains_moves;
     protected int remains_builds;
+    protected int starting_z;
     private boolean is_athena_in_game;
     private Athena athena_player;
+
+    //TODO javadoc, intellij mi dice che non so scrivere tuono...
+    public God() {
+        setUpGod("zioDelTuono");
+    }
+
+    //TODO Jabbadoc
+    protected void setUpGod(String godName) {
+        this.name = godName;
+        this.remains_builds = 0;
+        this.remains_moves = 0;
+        this.is_athena_in_game = false;
+        this.athena_player = null;
+    }
+
+    public void startTurn() {
+        this.setUpTurn(x,y);
+    }
 
     /**
     *   Set the parameters for how many time the player can move and build, based on the god that he owns
     *   @param x number of moves that the player can do
     *   @param y number of times that the player can build
     */
-    public void startTurn(int x, int y) {
-        remains_moves = x;
-        remains_builds = y;
+    public void setUpTurn(int x, int y) {
+        this.remains_moves = x;
+        this.remains_builds = y;
+        this.starting_z = -1;
     }
 
     /**
@@ -37,8 +57,10 @@ public class God {
             //error, invalid move
         }
         else {
-            if ((c.isNear(c, w)) && !c.isOccupied()) {
+            if ((c.isNear(w)) && !c.isOccupied()) {
                 if (0 < remains_moves) {
+                    if (-1 == this.starting_z)
+                        this.starting_z = w.getPosZ();
                     w.moveWorker(c);
                     remains_moves--;
                     return 0;
@@ -61,7 +83,7 @@ public class God {
     public void build(Cell c, Status b, Worker w){
         remains_moves = 0;
         if (0 < remains_builds) {
-            if (c.isNear(c, w)) {
+            if (c.isNear(w)) {
                 switch (b){
                     case BUILT:c.build(Status.BUILT);break;
                     case CUPOLA:c.build(Status.CUPOLA);break;
@@ -78,9 +100,10 @@ public class God {
     }
 
     /**
-    *   Check if tha player has won the game
+    *   Check if the player has won the game
     */
-    public void checkWin() {
+    public boolean checkWin(Worker w) {
+        return (0 < this.starting_z) && (3 > this.starting_z) && (3 == w.getPosZ());
     }
 
     /**
@@ -92,8 +115,9 @@ public class God {
         athena_player = ap;
     }
 
+    //TODO javadoc too
     public String choseRandomGod(){
-        String gods[]={"Apollo","Artemis",",Athena","Atlas","Demeter"};
+        String gods[]={"Apollo","Artemis",",Athena","Atlas","Demeter","Hephaestus","Minotaur","Pan","Protheus"};
         int i= (int) ((Math.random()*100)%gods.length);
         return gods[i];
     }
