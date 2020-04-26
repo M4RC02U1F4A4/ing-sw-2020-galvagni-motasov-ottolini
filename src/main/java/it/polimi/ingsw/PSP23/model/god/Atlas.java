@@ -20,7 +20,7 @@ public class Atlas extends God {
     public void build(Cell c, Status b, Worker w) {
         this.remains_moves = 0;
         if (0 < remains_builds) {
-            if (c.isNear(c, w)) {
+            if (c.isNear(w)) {
                 c.build(b);
                 this.remains_builds--;
             }

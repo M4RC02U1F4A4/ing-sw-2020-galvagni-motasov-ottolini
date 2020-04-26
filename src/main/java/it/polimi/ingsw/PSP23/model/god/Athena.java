@@ -19,7 +19,7 @@ public class Athena extends God {
 
     @Override
     public int move(Cell c, Worker w) {
-        if ((c.isNear(c, w)) && !c.isOccupied()) {
+        if ((c.isNear(w)) && !c.isOccupied()) {
             if (w.getPosZ() + 1 == c.height()) {
                 this.moved_up = true;
             }

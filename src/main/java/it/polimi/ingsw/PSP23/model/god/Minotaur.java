@@ -10,7 +10,7 @@ public class Minotaur extends God{
     public Minotaur() {
         super.setUpGod("Minotaur");
     }
-
+/*
     @java.lang.Override
     public int move(Cell c, Worker w) {
         if (null == c.getWorker())
@@ -19,6 +19,7 @@ public class Minotaur extends God{
             Cell b = w.getCell();
             int moreX = c.getX() - b.getX();
             int moreY = c.getY() - b.getY();
+            //TODO trovare un modo di avere una cella sapendone le coordinate.
             Cell a = Map.getCell(c.getX()+moreX, c.getY()+moreY);
             if (null == a.getWorker()) {
                 Worker teseo = c.getWorker();
@@ -30,4 +31,5 @@ public class Minotaur extends God{
             }
         }
     }
+    */
 }
