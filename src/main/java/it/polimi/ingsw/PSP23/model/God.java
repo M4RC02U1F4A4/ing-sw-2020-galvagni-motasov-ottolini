@@ -28,7 +28,8 @@ public class God {
     }
 
     public void startTurn() {
-        this.setUpTurn(x,y);
+        //TODO da sistemare
+        //this.setUpTurn(x,y);
     }
 
     /**
