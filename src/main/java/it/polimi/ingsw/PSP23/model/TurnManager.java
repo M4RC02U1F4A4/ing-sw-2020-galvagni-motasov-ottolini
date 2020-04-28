@@ -113,7 +113,7 @@ public class TurnManager {
     }
 
     /**
-    *   TODO: javadoc
+    *   Pass the turn to the next player
     */
     public static void nextPlayer(){
         turnNumber++;

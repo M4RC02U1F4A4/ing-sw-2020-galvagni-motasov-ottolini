@@ -19,7 +19,10 @@ public class God {
         setUpGod("zioDelTuono");
     }
 
-    //TODO Jabbadoc
+    /**
+     * God setup
+     * @param godName name of the god
+     */
     protected void setUpGod(String godName) {
         this.name = godName;
         this.remains_builds = 0;
@@ -29,6 +32,10 @@ public class God {
         this.athena_player = null;
     }
 
+    /**
+     * call the function <code>setUpTurn</code> with the parameters that indicate
+     * the number of moves and builds that the player can do
+     */
     public void startTurn() {
         this.setUpTurn(1,1);
     }
@@ -78,11 +85,14 @@ public class God {
     }
 
     /**
-    *   TODO: javadoc
-     *   @return 0 if successful, -1 if cell is not near or is under the worker, -2 if the player already build in this turn
+     * call the cell build function based on the god power
+     * @param c cell
+     * @param b status of the cell
+     * @param w worker that the player want to use to build
+     * @return -1 if cell is not near or is under the worker, -2 if the player already build in this turn
      *   -3 (Demeter) if already build in this cell this turn, -4 (Hephaestus) if is a different building slot,
-     *   -5 (Hesta) if perimetral slot build
-    */
+            *   -5 (Hesta) if perimetral slot build
+     */
     public int build(Cell c, Status b, Worker w){
         remains_moves = 0;
         if (0 < remains_builds) {
@@ -131,7 +141,10 @@ public class God {
         this.is_hera_in_game = true;
     }
 
-    //TODO javadoc too
+    /**
+     * extracts a random god
+     * @return name of the god
+     */
     public String choseRandomGod(){
         String gods[]={"Apollo","Artemis",",Athena","Atlas","Chronus","Demeter","Hephaestus","Hera","Hestia","Minotaur","Pan","Prometheus","Triton","Zeus"};
         int i= (int) ((Math.random()*100)%gods.length);
