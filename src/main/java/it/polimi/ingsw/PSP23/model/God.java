@@ -89,9 +89,11 @@ public class God {
      * @param c cell
      * @param b status of the cell
      * @param w worker that the player want to use to build
-     * @return -1 if cell is not near or is under the worker, -2 if the player already build in this turn
-     *   -3 (Demeter) if already build in this cell this turn, -4 (Hephaestus) if is a different building slot,
-            *   -5 (Hesta) if perimetral slot build
+     * @return -1 if cell is not near or is under the worker,
+     *         -2 if the player already build in this turn,
+     *         -3 (Demeter) if already build in this cell this turn,
+     *         -4 (Hephaestus) if is a different building slot,
+     *         -5 (Hesta) if perimetral slot build
      */
     public int build(Cell c, Status b, Worker w){
         remains_moves = 0;
