@@ -9,23 +9,18 @@ public class Athena extends God {
 
     public Athena() {
         super.setUpGod("Athena");
-        this.moved_up = false;
     }
 
     @Override
     public void startTurn() {
-        super.setUpTurn(1, 2);
+        super.setUpTurn(1, 1);
+        this.moved_up = false;
     }
 
     @Override
     public int move(Cell c, Worker w) {
         if ((c.isNear(w)) && !c.isOccupied()) {
-            if (w.getPosZ() + 1 == c.height()) {
-                this.moved_up = true;
-            }
-            else {
-                this.moved_up = false;
-            }
+            this.moved_up = w.getPosZ() + 1 == c.height();
             if (0 < this.remains_moves) {
                 if (-1 == this.starting_z)
                     this.starting_z = w.getPosZ();
@@ -34,13 +29,11 @@ public class Athena extends God {
                 return 0;
             }
             else {
-                return -1;
-                // error, no moves left
+                return -2;
             }
         }
         else {
             return -1;
-            // error, invalid move
         }
     }
 

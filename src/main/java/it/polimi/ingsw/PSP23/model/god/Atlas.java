@@ -12,24 +12,20 @@ public class Atlas extends God {
     }
 
     @Override
-    public void startTurn() {
-        super.setUpTurn(1, 1);
-    }
-
-    @Override
-    public void build(Cell c, Status b, Worker w) {
+    public int build(Cell c, Status b, Worker w) {
         this.remains_moves = 0;
-        if (0 < remains_builds) {
+        if (0 < this.remains_builds) {
             if (c.isNear(w)) {
                 c.build(b);
                 this.remains_builds--;
+                return 0;
             }
             else {
-                // TODO error, too far away
+                return -1;
             }
         }
         else {
-            //TODO error, already build
+            return -2;
         }
     }
 

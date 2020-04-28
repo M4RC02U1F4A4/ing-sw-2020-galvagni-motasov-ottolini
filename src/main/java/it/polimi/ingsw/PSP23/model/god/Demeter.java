@@ -23,19 +23,20 @@ public class Demeter extends God {
     }
 
     @Override
-    public void build(Cell c, Status b, Worker w) {
+    public int build(Cell c, Status b, Worker w) {
         if (0 < this.remains_builds) {
             if ((c.getX() != this.prev_build_x)&&(c.getY() != this.prev_build_y)) {
                 super.build(c, Status.BUILT, w);
                 this.prev_build_x = c.getX();
                 this.prev_build_y = c.getY();
+                return 0;
             }
             else {
-                // TODO error, already build here
+                return -3;
             }
         }
         else {
-            //TODO error, no more building allowed
+            return -2;
         }
     }
 

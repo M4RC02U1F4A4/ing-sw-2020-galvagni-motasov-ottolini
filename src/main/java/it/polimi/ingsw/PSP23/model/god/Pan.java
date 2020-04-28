@@ -9,7 +9,7 @@ public class Pan extends God {
         super.setUpGod("Pan");
     }
 
-    // true if before>after 2>0, 3>0, 3>1, 2>3
+    // true if going from>to 2>0, 3>0, 3>1, 2>3
     @Override
     public boolean checkWin(Worker w) {
         return (((2 <= this.starting_z) && (0 == w.getPosZ())) || ((3 == this.starting_z) && (1 == w.getPosZ())) || super.checkWin(w));

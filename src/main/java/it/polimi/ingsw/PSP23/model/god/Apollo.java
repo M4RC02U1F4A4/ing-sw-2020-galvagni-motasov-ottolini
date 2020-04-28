@@ -11,21 +11,17 @@ public class Apollo extends God {
     }
 
     @Override
-    public void startTurn() {
-        super.setUpTurn(1, 1);
-    }
-
-    @Override
     public int move(Cell c, Worker w) {
         if (c.isOccupied()) {
             Worker w1 = c.getWorker();
             Cell c1 = w.getCell();
-            if (0 == super.move(c, w)) {
+            int r = super.move(c, w);
+            if (0 == r) {
                 w1.moveWorker(c1);
                 return 0;
             }
             else {
-                return -1;
+                return r;
             }
         }
         else {

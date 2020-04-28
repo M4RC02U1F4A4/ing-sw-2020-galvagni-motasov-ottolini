@@ -11,7 +11,7 @@ public class Minotaur extends God{
         super.setUpGod("Minotaur");
     }
 /*
-    @java.lang.Override
+    @Override
     public int move(Cell c, Worker w) {
         if (null == c.getWorker())
             return super.move(c, w);

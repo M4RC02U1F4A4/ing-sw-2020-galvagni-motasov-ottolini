@@ -11,13 +11,13 @@ public class Prometheus extends God {
         super.setUpGod("Prometheus");
     }
 
-    @java.lang.Override
+    @Override
     public void startTurn() {
         super.setUpTurn(1, 2);
     }
 
     //permette il movimento se ha costruito e non sale o se non si ha costruito nulla, in tal caso rimuove la possibilità di costruire una seconda volta
-    @java.lang.Override
+    @Override
     public int move(Cell c, Worker w) {
         if ((w.getPosZ() >= c.height()) && (1 == this.remains_builds))
             return super.move(c, w);
@@ -27,6 +27,6 @@ public class Prometheus extends God {
                 return super.move(c, w);
             }
             else
-                return -1; //todo error invalid move, can't move up after build
+                return -5;
     }
 }

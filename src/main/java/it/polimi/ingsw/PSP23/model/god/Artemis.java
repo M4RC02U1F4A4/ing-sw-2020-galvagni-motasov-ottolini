@@ -30,8 +30,7 @@ public class Artemis extends God {
         }
         else {
             if ((c.getY() == this.starting_y)&&(c.getX() == this.starting_x)) {
-                return -1;
-                // error, invalid move
+                return -4;
             }
             else {
                 return super.move(c, w);

@@ -12,18 +12,20 @@ public class Hephaestus extends God{
         super.setUpGod("Hephaestus");
     }
 
-    @java.lang.Override
+    @Override
     public void startTurn() {
         super.setUpTurn(1, 2);
+        this.previousBuild = null;
     }
 
     // permette di costruire due volte sulla stessa cella un blocco (non una cupola)
-    @java.lang.Override
-    public void build(Cell c, Status b, Worker w) {
-        if ((2 == this.remains_builds) || ((1 == this.remains_builds) && (c == this.previousBuild) && (3 > c.height())))
-            super.build(c, b, w);
+    @Override
+    public int build(Cell c, Status b, Worker w) {
+        if ((2 == this.remains_builds) || ((1 == this.remains_builds) && (c == this.previousBuild) && (3 > c.height()))) {
+            this.previousBuild = c;
+            return super.build(c, b, w);
+        }
         else
-            //todo error, invalid building slot;
-        ;
+            return -4;
     }
 }

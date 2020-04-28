@@ -28,7 +28,7 @@ public class God {
     }
 
     public void startTurn() {
-        this.setUpTurn(x,y);
+        this.setUpTurn(1,1);
     }
 
     /**
@@ -53,8 +53,7 @@ public class God {
     public int move(Cell c, Worker w){
         // verifico che non si salga se si verifica il potere di athena
         if(is_athena_in_game && athena_player.CheckMovedUp() && (w.getPosZ() < c.height())) {
-            return -1;
-            //error, invalid move
+            return -3;
         }
         else {
             if ((c.isNear(w)) && !c.isOccupied()) {
@@ -66,13 +65,11 @@ public class God {
                     return 0;
                 }
                 else {
-                    return -1;
-                    // error, no moves left
+                    return -2;
                 }
             }
             else {
                 return -1;
-                //error, invalid move
             }
         }
     }
@@ -80,7 +77,7 @@ public class God {
     /**
     *   TODO: javadoc
     */
-    public void build(Cell c, Status b, Worker w){
+    public int build(Cell c, Status b, Worker w){
         remains_moves = 0;
         if (0 < remains_builds) {
             if (c.isNear(w)) {
@@ -89,13 +86,14 @@ public class God {
                     case CUPOLA:c.build(Status.CUPOLA);break;
                 }
                 remains_builds--;
+                return 0;
             }
             else {
-                // TODO: error, too far away
+                return -1;
             }
         }
         else {
-            //TODO: error, already build
+            return -2;
         }
     }
 
@@ -111,13 +109,13 @@ public class God {
     *   @param ap <code>Athena</code> god
     */
     public void AthenaIsHere(Athena ap) {
-        is_athena_in_game = true;
-        athena_player = ap;
+        this.is_athena_in_game = true;
+        this.athena_player = ap;
     }
 
     //TODO javadoc too
     public String choseRandomGod(){
-        String gods[]={"Apollo","Artemis",",Athena","Atlas","Demeter","Hephaestus","Minotaur","Pan","Protheus"};
+        String gods[]={"Apollo","Artemis",",Athena","Atlas","Demeter","Hephaestus","Minotaur","Pan","Prometheus"};
         int i= (int) ((Math.random()*100)%gods.length);
         return gods[i];
     }
