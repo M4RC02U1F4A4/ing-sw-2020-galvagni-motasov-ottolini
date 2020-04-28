@@ -110,12 +110,12 @@ public class MapCellTest {
 
     @Test
     public void testCloneCell(){
-        Cell cell = new Cell();
         assertEquals(cell.height(), 0, 0);
         cell.build(Status.BUILT);
         assertEquals(cell.height(), 1, 0);
         Cell cell1 = cell.clone();
         assertEquals(cell1.height(), 1, 0);
+        cell1 = null;
     }
 
 }
