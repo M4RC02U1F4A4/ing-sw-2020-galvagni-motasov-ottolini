@@ -10,6 +10,7 @@ public class God {
     protected int remains_moves;
     protected int remains_builds;
     protected int starting_z;
+    protected boolean is_hera_in_game;
     private boolean is_athena_in_game;
     private Athena athena_player;
 
@@ -23,6 +24,7 @@ public class God {
         this.name = godName;
         this.remains_builds = 0;
         this.remains_moves = 0;
+        this.is_hera_in_game = false;
         this.is_athena_in_game = false;
         this.athena_player = null;
     }
@@ -42,13 +44,14 @@ public class God {
         this.starting_z = -1;
     }
 
-    /**
+    /** TODO fix me sempai
     *   Move the worker in the desired cell
     *   If it is possible to move the worker the <code>moveWorker</code> function is called,
     *   otherwise the action is not successful
     *   @param c cell in which the player want to move the worker
     *   @param w worker that the player want to move
-    *   @return 0 if the operation is successful, -1 if any type of error has occurred
+    *   @return 0 if the operation is successful, -1 if not near or occupied, -2 if already moved this turn,
+     *   *   -3 athena block moved up moves, -4 (Artemis) not back to origin, -5 (Prometheus) tried to moved up after build
     */
     public int move(Cell c, Worker w){
         // verifico che non si salga se si verifica il potere di athena
@@ -76,11 +79,14 @@ public class God {
 
     /**
     *   TODO: javadoc
+     *   @return 0 if successful, -1 if cell is not near or is under the worker, -2 if the player already build in this turn
+     *   -3 (Demeter) if already build in this cell this turn, -4 (Hephaestus) if is a different building slot,
+     *   -5 (Hesta) if perimetral slot build
     */
     public int build(Cell c, Status b, Worker w){
         remains_moves = 0;
         if (0 < remains_builds) {
-            if (c.isNear(w)) {
+            if ((c.isNear(w)) && ((c != w.getCell()) || ("Zeus".equals(this.name)))) {
                 switch (b){
                     case BUILT:c.build(Status.BUILT);break;
                     case CUPOLA:c.build(Status.CUPOLA);break;
@@ -101,7 +107,15 @@ public class God {
     *   Check if the player has won the game
     */
     public boolean checkWin(Worker w) {
-        return (0 < this.starting_z) && (3 > this.starting_z) && (3 == w.getPosZ());
+        if ((0 < this.starting_z) && (3 > this.starting_z) && (3 == w.getPosZ())) {
+            if (this.is_hera_in_game){
+                return (0 != w.getPosX()) && (0 != w.getPosY()) && (4 != w.getPosX()) && (4 != w.getPosY());
+            }
+            else
+                return true;
+        }
+        else
+            return false;
     }
 
     /**
@@ -113,9 +127,13 @@ public class God {
         this.athena_player = ap;
     }
 
+    public void HeraIsHere() {
+        this.is_hera_in_game = true;
+    }
+
     //TODO javadoc too
     public String choseRandomGod(){
-        String gods[]={"Apollo","Artemis",",Athena","Atlas","Demeter","Hephaestus","Minotaur","Pan","Prometheus"};
+        String gods[]={"Apollo","Artemis",",Athena","Atlas","Chronus","Demeter","Hephaestus","Hera","Hestia","Minotaur","Pan","Prometheus","Triton","Zeus"};
         int i= (int) ((Math.random()*100)%gods.length);
         return gods[i];
     }
