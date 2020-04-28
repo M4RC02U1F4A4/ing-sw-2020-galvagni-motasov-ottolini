@@ -18,7 +18,10 @@ public class God {
         setUpGod("zioDelTuono");
     }
 
-    //TODO Jabbadoc
+    /**
+     * God setup
+     * @param godName name of the god
+     */
     protected void setUpGod(String godName) {
         this.name = godName;
         this.remains_builds = 0;
@@ -27,6 +30,10 @@ public class God {
         this.athena_player = null;
     }
 
+    /**
+     * call the function <code>setUpTurn</code> with the parameters that indicate
+     * the number of moves and builds that the player can do
+     */
     public void startTurn() {
         this.setUpTurn(1,1);
     }
@@ -75,8 +82,12 @@ public class God {
     }
 
     /**
-    *   TODO: javadoc
-    */
+     * call the cell build function based on the god power
+     * @param c cell
+     * @param b status of the cell
+     * @param w worker that the player want to use to build
+     * @return
+     */
     public int build(Cell c, Status b, Worker w){
         remains_moves = 0;
         if (0 < remains_builds) {
@@ -113,7 +124,10 @@ public class God {
         this.athena_player = ap;
     }
 
-    //TODO javadoc too
+    /**
+     * extracts a random god
+     * @return name of the god
+     */
     public String choseRandomGod(){
         String gods[]={"Apollo","Artemis",",Athena","Atlas","Demeter","Hephaestus","Minotaur","Pan","Prometheus"};
         int i= (int) ((Math.random()*100)%gods.length);
