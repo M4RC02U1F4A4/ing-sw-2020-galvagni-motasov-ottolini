@@ -4,7 +4,7 @@ import it.polimi.ingsw.PSP23.observer.Observable;
 
 import java.util.ArrayList;
 
-public class Game extends Observable<MoveOrBuildMessage> {
+public class Game extends Observable<Message> {
     private Map map=new Map();
     private ArrayList<Player> players;
     private ArrayList<String> takenGods=null;
@@ -15,6 +15,7 @@ public class Game extends Observable<MoveOrBuildMessage> {
     public void performeMove(int x, int y, Player player, Action action){
         if(action == Action.BUILD){
             //TODO build
+            //TOTO build
         }
         else if(action == Action.MOVE){
             //TODO move

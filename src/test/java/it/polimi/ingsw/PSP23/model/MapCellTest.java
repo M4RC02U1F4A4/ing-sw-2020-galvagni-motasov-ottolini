@@ -85,14 +85,14 @@ public class MapCellTest {
         Worker worker = new Worker(map.getCell(1, 1), Color.BLUE);
         assertTrue(map.getCell(1, 1).isOccupied());
         assertFalse(map.getCell(2, 2).isOccupied());
-        assertTrue(map.getCell(2, 2).isNear(map.getCell(2, 2), worker));
+        assertTrue(map.getCell(2, 2).isNear(worker));
         map.getCell(2, 2).build(Status.BUILT);
         map.getCell(2, 2).build(Status.BUILT);
-        assertFalse(map.getCell(2, 2).isNear(map.getCell(2, 2), worker));
+        assertFalse(map.getCell(2, 2).isNear(worker));
         assertNull(map.getCell(6, 6));
         assertEquals(map.getCell(1, 1).getWorker(), worker);
-        assertFalse(map.getCell(3, 1).isNear(map.getCell(3, 3), worker));
-        assertFalse(map.getCell(1, 3).isNear(map.getCell(3, 3), worker));
+        assertFalse(map.getCell(3, 1).isNear(worker));
+        assertFalse(map.getCell(1, 3).isNear(worker));
     }
 
     /**
