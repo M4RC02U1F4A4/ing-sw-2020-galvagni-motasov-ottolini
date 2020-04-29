@@ -66,30 +66,22 @@ public class God {
     *           -2 if already moved this turn,
     *           -3 athena block moved up moves,
     *           -4 (Artemis) not back to origin,
-    *           -5 (Prometheus) tried to moved up after build
+    *           -5 (Prometheus) tried to moved up after build,
+    *           -6 (Apollo) tried to move in friendly occupied cell.
     */
     public int move(Cell c, Worker w){
         // verifico che non si salga se si verifica il potere di athena
-        if(this.is_athena_in_game && this.athena_moved_up && (w.getPosZ() < c.height())) {
+        if(this.is_athena_in_game && this.athena_moved_up && (w.getPosZ() < c.height()))
             return -3;
-        }
-        else {
-            if ((c.isNear(w, true)) && !c.isOccupied()) {
-                if (0 < this.remains_moves) {
-                    if (-1 == this.starting_z)
-                        this.starting_z = w.getPosZ();
-                    w.moveWorker(c);
-                    this.remains_moves--;
-                    return 0;
-                }
-                else {
-                    return -2;
-                }
-            }
-            else {
-                return -1;
-            }
-        }
+        if (0 == this.remains_moves)
+            return -2;
+        if (!(c.isNear(w, true)) || (c.isOccupied() && !("Apollo".matches(this.name))))
+            return -1;
+        if (-1 == this.starting_z)
+            this.starting_z = w.getPosZ();
+        w.moveWorker(c);
+        this.remains_moves--;
+        return 0;
     }
 
     /**
@@ -105,22 +97,16 @@ public class God {
      */
     public int build(Cell c, Status b, Worker w){
         this.remains_moves = 0;
-        if (0 < this.remains_builds) {
-            if ((c.isNear(w, false)) && ((c != w.getCell()) || ("Zeus".equals(this.name)))) {
-                switch (b){
-                    case BUILT:c.build(Status.BUILT);break;
-                    case CUPOLA:c.build(Status.CUPOLA);break;
-                }
-                this.remains_builds--;
-                return 0;
-            }
-            else {
-                return -1;
-            }
-        }
-        else {
+        if (0 == this.remains_builds)
             return -2;
-        }
+        if (!(c.isNear(w, false)) || ((c == w.getCell()) && !("Zeus".equals(this.name))))
+            return -1;
+        if ("Atlas".equals(this.name))
+            c.build(b);
+        else
+            c.build(Status.BUILT);
+        this.remains_builds--;
+        return 0;
     }
 
     /**
