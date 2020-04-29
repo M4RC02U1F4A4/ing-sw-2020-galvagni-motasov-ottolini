@@ -54,9 +54,12 @@ public class Client {
             @Override
             public void run() {
                 try{
-                    String inputLine=stdin.nextLine();
-                    socketOut.println(inputLine);
-                    socketOut.flush();
+                    while(isActive()) {
+                        String inputLine = stdin.nextLine();
+                        socketOut.println(inputLine);
+                        socketOut.flush();
+                    }
+
                 }catch (Exception e ){
                     setActive(false);
                 }

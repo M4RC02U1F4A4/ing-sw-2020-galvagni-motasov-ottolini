@@ -6,4 +6,5 @@ public interface ClientConnection {
     void closeConnection();
     void addObserver(Observer<String> observer);
     void asyncSend(Object message);
+    String getIpAddress();
 }

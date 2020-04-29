@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public class Controller implements Observer<PlayerMove> {
 
     private final Game game;
-    private ArrayList<Player> players;
+    private ArrayList<Player> players=new ArrayList<>();
 
     public void addPlayer(Player p){
-        players.add(p);
+        players.add(new Player(p.getName(), p.getIpAddress()));
     }
 
     public Controller(Game game) {

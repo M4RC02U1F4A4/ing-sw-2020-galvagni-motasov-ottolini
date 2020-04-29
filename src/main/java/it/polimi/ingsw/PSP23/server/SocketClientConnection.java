@@ -23,6 +23,10 @@ public class SocketClientConnection extends Observable implements ClientConnecti
         return active;
     }
 
+    public String getIpAddress(){
+        return socket.getRemoteSocketAddress().toString();
+    }
+
     private synchronized void send(Object message){
         try{
             out.reset();
@@ -65,24 +69,25 @@ public class SocketClientConnection extends Observable implements ClientConnecti
         try{
             in=new Scanner(socket.getInputStream());
             out=new ObjectOutputStream(socket.getOutputStream());
-            send("Inserisci il tuo nome: ");
+            send("Inserisci il tuo nome");
             String read=in.nextLine();
             name=read;
+            in.reset();
             send("Inserisci il numero di giocatori");
-            //int nPlayers=Integer.parseInt(in.nextLine());
-
-            server.lobby(this, name, 2);
+            int nPlayers=in.nextInt();
+            //int n=Integer.parseInt(nPlayers);
+            server.lobby(this, name,nPlayers);
             while (isActive()){
-                read=in.nextLine();
+                read=in.next();
                 notify(read);
             }
 
 
         }catch (IOException| NoSuchElementException e){
             System.err.println("Errore "+e.getMessage());
-        }finally {
+        }/*finally {
             close();
-        }
+        }*/
 
     }
 }
