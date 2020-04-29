@@ -9,6 +9,8 @@ public class Game extends Observable<Message> {
     private ArrayList<Player> players;
     private ArrayList<String> takenGods=null;
 
+    //TODO creare un metodo che controlli che il dio non sia gia' stato usato, c tale scopo usare takenGods
+
 
 
 

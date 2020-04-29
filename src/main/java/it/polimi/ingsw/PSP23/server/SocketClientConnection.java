@@ -68,11 +68,16 @@ public class SocketClientConnection extends Observable implements ClientConnecti
             send("Inserisci il tuo nome: ");
             String read=in.nextLine();
             name=read;
-            server.lobby(this, name);
+            send("Inserisci il numero di giocatori");
+            //int nPlayers=Integer.parseInt(in.nextLine());
+
+            server.lobby(this, name, 2);
             while (isActive()){
                 read=in.nextLine();
                 notify(read);
             }
+
+
         }catch (IOException| NoSuchElementException e){
             System.err.println("Errore "+e.getMessage());
         }finally {

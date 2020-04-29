@@ -1,14 +1,18 @@
 package it.polimi.ingsw.PSP23.controller;
 
-import it.polimi.ingsw.PSP23.model.Action;
-import it.polimi.ingsw.PSP23.model.Game;
-import it.polimi.ingsw.PSP23.model.Map;
-import it.polimi.ingsw.PSP23.model.PlayerMove;
+import it.polimi.ingsw.PSP23.model.*;
 import it.polimi.ingsw.PSP23.observer.Observer;
+
+import java.util.ArrayList;
 
 public class Controller implements Observer<PlayerMove> {
 
     private final Game game;
+    private ArrayList<Player> players;
+
+    public void addPlayer(Player p){
+        players.add(p);
+    }
 
     public Controller(Game game) {
         super();
