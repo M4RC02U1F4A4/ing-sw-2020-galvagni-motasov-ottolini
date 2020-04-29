@@ -41,7 +41,7 @@ public class Cell {
      * Clone a single cell
      * @return cloned cell
      */
-    protected Cell clone(){
+    public Cell clone(){
         Cell f=new Cell();
         f.X=this.X;
         f.Y=this.Y;

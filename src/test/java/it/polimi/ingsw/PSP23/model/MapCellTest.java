@@ -108,4 +108,14 @@ public class MapCellTest {
         map.printStatus();
     }
 
+    @Test
+    public void testCloneCell(){
+        assertEquals(cell.height(), 0, 0);
+        cell.build(Status.BUILT);
+        assertEquals(cell.height(), 1, 0);
+        Cell cell1 = cell.clone();
+        assertEquals(cell1.height(), 1, 0);
+        cell1 = null;
+    }
+
 }

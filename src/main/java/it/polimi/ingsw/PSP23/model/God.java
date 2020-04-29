@@ -61,8 +61,12 @@ public class God {
     *   otherwise the action is not successful
     *   @param c cell in which the player want to move the worker
     *   @param w worker that the player want to move
-    *   @return 0 if the operation is successful, -1 if not near or occupied, -2 if already moved this turn,
-    *  -3 athena block moved up moves, -4 (Artemis) not back to origin, -5 (Prometheus) tried to moved up after build
+    *   @return 0 if the operation is successful,
+    *           -1 if not near or occupied,
+    *           -2 if already moved this turn,
+    *           -3 athena block moved up moves,
+    *           -4 (Artemis) not back to origin,
+    *           -5 (Prometheus) tried to moved up after build
     */
     public int move(Cell c, Worker w){
         // verifico che non si salga se si verifica il potere di athena
@@ -93,9 +97,11 @@ public class God {
      * @param c cell
      * @param b status of the cell
      * @param w worker that the player want to use to build
-     * @return -1 if cell is not near or is under the worker, -2 if the player already build in this turn
-     *   -3 (Demeter) if already build in this cell this turn, -4 (Hephaestus) if is a different building slot,
-     *   -5 (Hesta) if perimetral slot build
+     * @return -1 if cell is not near or is under the worker,
+     *         -2 if the player already build in this turn,
+     *         -3 (Demeter) if already build in this cell this turn,
+     *         -4 (Hephaestus) if is a different building slot,
+     *         -5 (Hesta) if perimetral slot build
      */
     public int build(Cell c, Status b, Worker w){
         this.remains_moves = 0;
