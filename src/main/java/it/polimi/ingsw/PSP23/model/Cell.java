@@ -64,7 +64,6 @@ public class Cell {
     */
     public void setWorker(Worker w){
         worker=w;
-
     }
 
     /**
@@ -94,10 +93,13 @@ public class Cell {
     *   @param w worker
     *   @return true if the condition is verified, false other otherwise
     */
-    public boolean isNear (Worker w) {
+    public boolean isNear (Worker w, boolean height) {
         if ((this.X >= w.getPosX() - 1) && (this.X <= w.getPosX() + 1)) {
             if ((this.Y >= w.getPosY() - 1) && (this.Y <= w.getPosY() + 1)) {
-                return (this.height() <= w.getPosZ() + 1);
+                if (height)
+                    return (this.height() <= w.getPosZ() + 1);
+                else
+                    return true;
             }
             else {
                 return false;
@@ -200,4 +202,9 @@ public class Cell {
         return ret+"OCCUPATA: "+isOccupied();
     }
 
+    // Metodi utilizzati per i test
+    public void setCoord (int x, int y) {
+        this.X = x;
+        this.Y = y;
+    }
 }

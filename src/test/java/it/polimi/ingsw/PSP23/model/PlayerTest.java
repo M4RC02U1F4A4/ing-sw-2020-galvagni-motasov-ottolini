@@ -27,12 +27,12 @@ public class PlayerTest {
 
     @Test
     public void playerSetGet(){
-        assertEquals(player.getName(), "marco");
-        assertEquals(player.getIpAddress(), "192.168.1.5");
+        assertEquals("marco", player.getName());
+        assertEquals("192.168.1.5",player.getIpAddress());
         player.setName("filippo");
         player.setIpAddress("192.168.1.6");
-        assertEquals(player.getName(), "filippo");
-        assertEquals(player.getIpAddress(), "192.168.1.6");
+        assertEquals("filippo", player.getName());
+        assertEquals("192.168.1.6",player.getIpAddress());
     }
 
     @Test

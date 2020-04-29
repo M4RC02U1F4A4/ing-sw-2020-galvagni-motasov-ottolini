@@ -17,8 +17,14 @@ public class Chronus extends God {
     }
 
     @Override
+    public void startTurn(boolean moved_up) {
+        super.startTurn(moved_up);
+        this.checkWin(null);
+    }
+
+    @Override
     public boolean checkWin(Worker w) {
-        if (super.checkWin(w))
+        if ((null != w) && (super.checkWin(w)))
             return true;
         else
             return (5 <= this.completed_tower);

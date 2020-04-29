@@ -14,8 +14,8 @@ public class Hestia extends God {
     }
 
     @Override
-    public void startTurn() {
-        super.setUpTurn(1,2);
+    public void startTurn(boolean moved_up) {
+        super.setUpTurn(1,2, moved_up);
     }
 
     @Override

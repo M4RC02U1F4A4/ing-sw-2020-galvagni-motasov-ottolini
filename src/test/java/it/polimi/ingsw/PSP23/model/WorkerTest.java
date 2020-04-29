@@ -23,16 +23,16 @@ public class WorkerTest {
     public void inizializationSetteregetter(){
         worker = new Worker(map.getCell(1, 1), Color.BLUE);
         assertEquals(worker.getCell(), map.getCell(1, 1));
-        assertEquals(worker.getColor(), Color.BLUE);
+        assertEquals(Color.BLUE, worker.getColor());
         worker.setColor(Color.WHITE);
-        assertEquals(worker.getColor(), Color.WHITE);
-        assertEquals(worker.getPosX(), 1, 0);
-        assertEquals(worker.getPosY(), 1, 0);
-        assertEquals(worker.getPosZ(), 0, 0);
+        assertEquals(Color.WHITE, worker.getColor());
+        assertEquals(1, worker.getPosX());
+        assertEquals(1, worker.getPosY());
+        assertEquals(0, worker.getPosZ());
         worker.moveWorker(map.getCell(2, 2));
-        assertEquals(worker.getPosX(), 2, 0);
-        assertEquals(worker.getPosY(), 2, 0);
-        assertEquals(worker.getPosZ(), 0, 0);
+        assertEquals(2, worker.getPosX());
+        assertEquals(2, worker.getPosY());
+        assertEquals(0, worker.getPosZ());
     }
 
 }

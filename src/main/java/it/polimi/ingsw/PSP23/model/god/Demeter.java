@@ -16,8 +16,8 @@ public class Demeter extends God {
     }
 
     @Override
-    public void startTurn() {
-        super.setUpTurn(1, 2);
+    public void startTurn(boolean moved_up) {
+        super.setUpTurn(1, 2, moved_up);
         this.prev_build_x = -1;
         this.prev_build_y = -1;
     }
