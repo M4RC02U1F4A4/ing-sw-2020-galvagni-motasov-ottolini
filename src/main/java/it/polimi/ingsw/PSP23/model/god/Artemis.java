@@ -15,8 +15,8 @@ public class Artemis extends God {
     }
 
     @Override
-    public void startTurn() {
-        super.setUpTurn(2, 1);
+    public void startTurn(boolean moved_up) {
+        super.setUpTurn(2, 1, moved_up);
         this.starting_x = -1;
         this.starting_y = -1;
     }

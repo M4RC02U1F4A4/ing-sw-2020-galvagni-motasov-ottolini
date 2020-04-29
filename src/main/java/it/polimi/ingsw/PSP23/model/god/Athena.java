@@ -12,14 +12,14 @@ public class Athena extends God {
     }
 
     @Override
-    public void startTurn() {
-        super.setUpTurn(1, 1);
+    public void startTurn(boolean moved_up) {
+        super.setUpTurn(1, 1, false);
         this.moved_up = false;
     }
 
     @Override
     public int move(Cell c, Worker w) {
-        if ((c.isNear(w)) && !c.isOccupied()) {
+        if ((c.isNear(w, true)) && !c.isOccupied()) {
             this.moved_up = w.getPosZ() + 1 == c.height();
             if (0 < this.remains_moves) {
                 if (-1 == this.starting_z)

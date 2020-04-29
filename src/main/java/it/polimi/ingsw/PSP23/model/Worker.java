@@ -68,9 +68,9 @@ public class Worker {
     *   @param c the cell in which the worker need to be placed
     */
     public void moveWorker(Cell c){
-        cell.fireWorker();
-        cell = c;
-        cell.setWorker(this);
+        this.cell.fireWorker();
+        this.cell = c;
+        this.cell.setWorker(this);
     }
 
 }

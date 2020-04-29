@@ -15,7 +15,7 @@ public class Atlas extends God {
     public int build(Cell c, Status b, Worker w) {
         this.remains_moves = 0;
         if (0 < this.remains_builds) {
-            if (c.isNear(w)) {
+            if (c.isNear(w, false)) {
                 c.build(b);
                 this.remains_builds--;
                 return 0;

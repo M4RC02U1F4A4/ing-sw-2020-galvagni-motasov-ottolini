@@ -12,8 +12,8 @@ public class Prometheus extends God {
     }
 
     @Override
-    public void startTurn() {
-        super.setUpTurn(1, 2);
+    public void startTurn(boolean moved_up) {
+        super.setUpTurn(1, 2, moved_up);
     }
 
     //permette il movimento se ha costruito e non sale o se non si ha costruito nulla, in tal caso rimuove la possibilità di costruire una seconda volta
