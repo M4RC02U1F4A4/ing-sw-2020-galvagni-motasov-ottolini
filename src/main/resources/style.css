@@ -1,0 +1,47 @@
+.button#play {
+    -fx-background-image: url('/img/btn_blue.png');
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-background-size: 217,55;
+    -fx-background-position: center;
+}
+
+.button#play:hover {
+    -fx-background-image: url('/img/btn_blue_pressed.png');
+}
+
+.button#exit {
+    -fx-background-image: url('/img/btn_coral.png');
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-background-size: 217,55;
+    -fx-background-position: center;
+}
+
+.button#exit:hover {
+    -fx-background-image: url('/img/btn_coral_pressed.png');
+}
+
+#username {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-prompt-text-fill: #c4c4c4;
+}
+
+#ip {
+    -fx-border-color: transparent;
+    -fx-background-size: 233,126;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-prompt-text-fill: #c4c4c4;
+    -fx-background-repeat: no-repeat;
+}

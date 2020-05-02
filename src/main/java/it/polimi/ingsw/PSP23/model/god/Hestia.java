@@ -5,7 +5,6 @@ import it.polimi.ingsw.PSP23.model.God;
 import it.polimi.ingsw.PSP23.model.Status;
 import it.polimi.ingsw.PSP23.model.Worker;
 
-import javax.swing.*;
 
 public class Hestia extends God {
 
