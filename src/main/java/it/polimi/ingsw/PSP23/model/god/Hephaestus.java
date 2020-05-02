@@ -21,11 +21,16 @@ public class Hephaestus extends God{
     // permette di costruire due volte sulla stessa cella un blocco (non una cupola)
     @Override
     public int build(Cell c, Status b, Worker w) {
-        if ((2 == this.remains_builds) || ((1 == this.remains_builds) && (c == this.previousBuild) && (3 > c.height()))) {
-            this.previousBuild = c;
-            return super.build(c, b, w);
+        if (2 == this.remains_builds) {
+            int i = 0;
+            i = super.build(c, b, w);
+            if (0 == i)
+                this.previousBuild = c;
+            return i;
         }
-        else
+        if ((1 == this.remains_builds) && (c != this.previousBuild) || (3 == c.height())) {
             return -4;
+        }
+        return super.build(c, b, w);
     }
 }

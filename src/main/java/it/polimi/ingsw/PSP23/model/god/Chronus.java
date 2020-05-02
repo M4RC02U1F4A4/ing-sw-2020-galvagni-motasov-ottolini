@@ -1,6 +1,8 @@
 package it.polimi.ingsw.PSP23.model.god;
 
+import it.polimi.ingsw.PSP23.model.Cell;
 import it.polimi.ingsw.PSP23.model.God;
+import it.polimi.ingsw.PSP23.model.Status;
 import it.polimi.ingsw.PSP23.model.Worker;
 
 public class Chronus extends God {
@@ -14,12 +16,6 @@ public class Chronus extends God {
     protected void setUpGod(String godName) {
         super.setUpGod(godName);
         this.completed_tower = 0;
-    }
-
-    @Override
-    public void startTurn(boolean moved_up) {
-        super.startTurn(moved_up);
-        this.checkWin(null);
     }
 
     @Override

@@ -24,20 +24,15 @@ public class Demeter extends God {
 
     @Override
     public int build(Cell c, Status b, Worker w) {
-        if (0 < this.remains_builds) {
-            if ((c.getX() != this.prev_build_x)&&(c.getY() != this.prev_build_y)) {
-                super.build(c, Status.BUILT, w);
-                this.prev_build_x = c.getX();
-                this.prev_build_y = c.getY();
-                return 0;
-            }
-            else {
-                return -3;
-            }
+        if ((c.getX() == this.prev_build_x)&&(c.getY() == this.prev_build_y))
+            return -3;
+        int i = 0;
+        i = super.build(c, b, w);
+        if (0 == i) {
+            this.prev_build_x = c.getX();
+            this.prev_build_y = c.getY();
         }
-        else {
-            return -2;
-        }
+        return i;
     }
 
 }

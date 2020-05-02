@@ -19,14 +19,13 @@ public class Prometheus extends God {
     //permette il movimento se ha costruito e non sale o se non si ha costruito nulla, in tal caso rimuove la possibilità di costruire una seconda volta
     @Override
     public int move(Cell c, Worker w) {
-        if ((w.getPosZ() >= c.height()) && (1 == this.remains_builds))
+        if ((w.getPosZ() >= c.height()) && (1 == this.remains_builds)){
+            this.remains_moves = 1;
             return super.move(c, w);
-        else
-            if (2 == remains_builds) {
-                this.remains_builds = 1;
-                return super.move(c, w);
-            }
-            else
-                return -5;
+        }
+        else {
+            this.remains_builds--;
+            return super.move(c, w);
+        }
     }
 }
