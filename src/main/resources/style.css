@@ -8,7 +8,7 @@
     -fx-background-position: center;
 }
 
-.button#play:hover {
+.button#play:armed {
     -fx-background-image: url('/img/btn_blue_pressed.png');
 }
 
@@ -22,7 +22,7 @@
     -fx-background-position: center;
 }
 
-.button#exit:hover {
+.button#exit:armed {
     -fx-background-image: url('/img/btn_coral_pressed.png');
 }
 
