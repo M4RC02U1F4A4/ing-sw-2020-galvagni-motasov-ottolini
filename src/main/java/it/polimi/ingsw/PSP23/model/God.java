@@ -44,13 +44,13 @@ public class God {
 
     /**
     *   Set the parameters for how many time the player can move and build, based on the god that he owns
-    *   @param x number of moves that the player can do
-    *   @param y number of times that the player can build
+    *   @param move number of moves that the player can do
+    *   @param build number of times that the player can build
     *   @param moved_up true if athena moved up in this turn
     */
-    public void setUpTurn(int x, int y, boolean moved_up) {
-        this.remains_moves = x;
-        this.remains_builds = y;
+    public void setUpTurn(int move, int build, boolean moved_up) {
+        this.remains_moves = move;
+        this.remains_builds = build;
         this.starting_z = -1;
         this.athena_moved_up = moved_up;
     }
@@ -66,7 +66,6 @@ public class God {
     *           -2 if already moved this turn,
     *           -3 athena block moved up moves,
     *           -4 (Artemis) not back to origin,
-    *           -5 (Prometheus) tried to moved up after build,
     *           -6 (Apollo) tried to move in friendly occupied cell.
     */
     public int move(Cell c, Worker w){
