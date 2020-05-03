@@ -18,15 +18,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
         primaryStage.setTitle("Santorini");
         primaryStage.setScene(new Scene(root));
-        primaryStage.setMinWidth(732);
-        primaryStage.setMaxWidth(732);
-        primaryStage.setMinHeight(760);
-        primaryStage.setMaxHeight(760);
-        //Disable full screen
-        primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue)
-                primaryStage.setMaximized(false);
-        });
+        primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
         primaryStage.show();
     }
