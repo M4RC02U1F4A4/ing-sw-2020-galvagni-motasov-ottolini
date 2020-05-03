@@ -38,8 +38,6 @@ public class Server {
                     String ip=me.getValue().getIpAddress();
                     System.out.println("Creo il giocatore "+nome+" con ip "+ip);
                     controller.addPlayer(new Player(nome, ip));
-                    /*System.out.print(me.getKey()+":");
-                    System.out.println(me.getValue().getIpAddress());*/
                 }
                 System.out.println("HO AGGIUNTO ENTRAMBI I GIOCATORI AAAAAAAAAAAAAAAAAAAA");
 
@@ -50,7 +48,6 @@ public class Server {
             c.asyncSend("Benvenuto nella lobby a 3 giocatori");
             System.out.println("Si e' connesso " + name);
             if (waitingConnection3vs3.size() == 3) {
-                //TODO: fai partire una partita da 3 giocatori
                 System.out.println("istanzio il controller");
                 Controller controller = new Controller(new Game());
                 Set<Map.Entry<String, ClientConnection>> st = waitingConnection3vs3.entrySet();

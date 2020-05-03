@@ -11,6 +11,7 @@ public class Game extends Observable<Message> {
 
     //TODO creare un metodo che controlli che il dio non sia gia' stato usato, c tale scopo usare takenGods
 
+    public Map getMap(){ return map; }
 
 
 
