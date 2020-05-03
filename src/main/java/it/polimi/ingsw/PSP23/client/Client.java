@@ -1,5 +1,8 @@
 package it.polimi.ingsw.PSP23.client;
 
+import it.polimi.ingsw.PSP23.model.Game;
+import it.polimi.ingsw.PSP23.model.Map;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -34,9 +37,9 @@ public class Client {
                         Object inputObject = socketIn.readObject();
                         if (inputObject instanceof String) {
                             System.out.println((String) inputObject);
-                        } /*else if (inputObject instanceof Board) {
-                            //cose
-                        } */else {
+                        } else if (inputObject instanceof Map) {
+                            ((Map) inputObject).drawMap();
+                        } else {
                             throw new IllegalArgumentException();
                         }
                     }
