@@ -1,0 +1,120 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Athena</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.model.god</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Athena (it.polimi.ingsw.PSP23.model.god)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Athena</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/ 13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.model.god;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.model.Cell;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP23.model.God;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP23.model.Worker;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public class Athena extends God {
+<i>8</i>&nbsp;    private boolean moved_up;
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;    public Athena() {</b>
+<b class="fc"><i>11</i>&nbsp;        super.setUpGod(&quot;Athena&quot;);</b>
+<b class="fc"><i>12</i>&nbsp;    }</b>
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @Override
+<i>15</i>&nbsp;    public void startTurn(boolean moved_up) {
+<b class="fc"><i>16</i>&nbsp;        super.setUpTurn(1, 1, false);</b>
+<b class="fc"><i>17</i>&nbsp;        this.moved_up = false;</b>
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @Override
+<i>21</i>&nbsp;    public int move(Cell c, Worker w) {
+<b class="fc"><i>22</i>&nbsp;        if (w.getPosZ() + 1 == c.height()) {</b>
+<b class="fc"><i>23</i>&nbsp;            int i = super.move(c, w);</b>
+<b class="fc"><i>24</i>&nbsp;            if (0 == i)</b>
+<b class="fc"><i>25</i>&nbsp;                this.moved_up = true;</b>
+<b class="fc"><i>26</i>&nbsp;            return i;</b>
+<i>27</i>&nbsp;        }
+<i>28</i>&nbsp;        else
+<b class="fc"><i>29</i>&nbsp;            return super.move(c, w);</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public boolean CheckMovedUp () {
+<b class="fc"><i>34</i>&nbsp;        return moved_up;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-04 23:06</div>
+</div>
+</body>
+</html>
