@@ -8,11 +8,14 @@ public class Player {
     private String ipAddress;
     private Worker workers[];
     private God god;
+    private Color color;
+
 
     public Player(String name, String ipAddress){
         this.name=name;
         this.ipAddress=ipAddress;
         workers=new Worker[2];
+        color=Color.RED;
     }
 
     /**
@@ -90,4 +93,17 @@ public class Player {
         if(num==0 || num==1)workers[num]=w;
         else System.out.println("error");
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+        workers[0].setColor(color);
+        workers[1].setColor(color);
+    }
+
+    public boolean checkWin(){return god.checkWin(workers[0])||god.checkWin(workers[1]);}
+
 }

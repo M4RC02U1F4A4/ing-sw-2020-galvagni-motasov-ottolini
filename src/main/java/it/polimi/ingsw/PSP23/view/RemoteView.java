@@ -11,6 +11,7 @@ public class RemoteView extends View{
     protected RemoteView(Player player,ClientConnection clientConnection) {
         super(player);
         this.clientConnection=clientConnection;
+        clientConnection.addObserver(new MessageReciever());
     }
 
     private class MessageReciever implements Observer<String>{
@@ -18,19 +19,35 @@ public class RemoteView extends View{
         @Override
         public void update(String message) {
             System.out.println("Ricevuto: "+message);
+            try{
+                String[] inputs=message.split(" ");
+                if(inputs[0]=="MOVE"){
+                    handleMove(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]));
+                }
+                else if(inputs[0]=="BUILD"){
+                    handleBuild(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]));
+                }
+            }catch(IllegalArgumentException e){
+                e.printStackTrace();
+            }
 
         }
     }
 
     @Override
     protected void showMessage(Object message) {
-
+        clientConnection.asyncSend(message);
     }
 
     @Override
     public void update(Message message) {
         clientConnection.asyncSend(message.getMap());
-
-
+        //VERIFICARE CHE NON SIA GAMEOVER
+        /*if(NON È IL TUO TURNO)
+            showMessage("non è il tuo turno");
+          else{
+             showMessage("è il tuo turno");
+          }
+        */
     }
 }
