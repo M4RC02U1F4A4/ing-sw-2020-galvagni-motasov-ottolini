@@ -16,6 +16,11 @@ public class Game extends Observable<Message> {
 
     public Map getMap(){ return map; }
 
+    /**
+     * add a Player to the current game, then a god is randomly assigned to that player and then a color.
+     * The god is chosen between the unused ones, the used ones are saved in the <code>takenGods</code> ArrayList
+     * @param p the player we want to add to the game
+     */
     public void addPlayer(Player p){
 
         God g=new God();
@@ -104,6 +109,11 @@ public class Game extends Observable<Message> {
         }
         else return;//magari anche qui con un'eccezione
     }
+
+    /**
+     * Method used to give each player a different color
+     * @return
+     */
 
     public Color getUnusedColor(){
         switch (colourVariable) {

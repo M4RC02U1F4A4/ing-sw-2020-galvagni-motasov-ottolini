@@ -58,6 +58,10 @@ public class Map {
         }
     }
 
+    /**
+     * method used to draw the map
+     */
+
     public void drawMap()
     {
         System.out.println("+----------------+----------------+----------------+----------------+----------------+");

@@ -94,15 +94,30 @@ public class Player {
         else System.out.println("error");
     }
 
+    /**
+     * Getter for the color
+     * @return a color
+     */
+
     public Color getColor() {
         return color;
     }
+
+    /**
+     * Set the Color for the player and its workers
+     * @param color the color we want to set
+     */
 
     public void setColor(Color color) {
         this.color = color;
         workers[0].setColor(color);
         workers[1].setColor(color);
     }
+
+    /**
+     * Checks if any of the player's wokers has won
+     * @return true if the player has won, false otherwise
+     */
 
     public boolean checkWin(){return god.checkWin(workers[0])||god.checkWin(workers[1]);}
 
