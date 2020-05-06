@@ -5,11 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,6 +34,16 @@ public class GUIController {
     private RadioButton playersNumber2;
     @FXML
     private RadioButton playersNumber3;
+
+    @FXML
+    private Label player1Username;
+    @FXML
+    private Label player2Username;
+    @FXML
+    private Label player3Username;
+    @FXML
+    private Label playerCurrentPlay;
+
     @FXML
     public void playButtonAction() {
         Stage stage = (Stage) playButton.getScene().getWindow();
@@ -62,6 +70,7 @@ public class GUIController {
         } catch (IOException e){e.printStackTrace();}
     }
 
+
     @FXML
     private Button b00, b01, b02, b03, b04,
                    b10, b11, b12, b13, b14,
@@ -71,6 +80,10 @@ public class GUIController {
 
     public void press(Button b){
         b.setStyle("-fx-background-image: url('/img/lvl1.png')");
+        player1Username.setText("Marco");
+        player2Username.setText("Marco");
+        player3Username.setText("Marco");
+        playerCurrentPlay.setText("Marco");
     }
 
     @FXML

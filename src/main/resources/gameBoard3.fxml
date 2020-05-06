@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-image: url('/img/SantoriniBoard.png'); -fx-background-size: 1280,720; -fx-background-position: center;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP23.test.GUIController">
    <center>
@@ -55,13 +61,79 @@
       </GridPane>
    </center>
    <left>
-      <VBox maxHeight="720.0" maxWidth="375.0" minHeight="720.0" minWidth="375.0" prefHeight="720.0" prefWidth="375.0" BorderPane.alignment="CENTER" />
+      <VBox maxHeight="720.0" maxWidth="375.0" minHeight="720.0" minWidth="375.0" prefHeight="720.0" prefWidth="375.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane maxHeight="360.0" maxWidth="375.0" minHeight="360.0" minWidth="375.0" prefHeight="360.0" prefWidth="375.0">
+               <children>
+                  <ImageView fitHeight="360.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/player3.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player3Username" alignment="CENTER" layoutX="73.0" layoutY="141.0" prefHeight="17.0" prefWidth="110.0" style="-fx-text-alignment: center;" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane maxHeight="360.0" maxWidth="375.0" minHeight="360.0" minWidth="375.0" prefHeight="360.0" prefWidth="375.0">
+               <children>
+                  <ImageView fitHeight="360.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/player1.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player1Username" alignment="CENTER" layoutX="73.0" layoutY="10.0" prefHeight="17.0" prefWidth="110.0" style="-fx-text-alignment: center;" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children></VBox>
    </left>
    <right>
-      <VBox maxHeight="720.0" maxWidth="375.0" minHeight="720.0" minWidth="375.0" prefHeight="720.0" prefWidth="375.0" BorderPane.alignment="CENTER" />
+      <VBox alignment="BOTTOM_RIGHT" maxHeight="720.0" maxWidth="375.0" minHeight="720.0" minWidth="375.0" prefHeight="720.0" prefWidth="375.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane maxHeight="360.0" maxWidth="256.0" minHeight="360.0" minWidth="256.0" prefHeight="360.0" prefWidth="256.0">
+               <children>
+                  <ImageView fitHeight="360.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/player2.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="player2Username" alignment="CENTER" layoutX="73.0" layoutY="10.0" prefHeight="17.0" prefWidth="110.0" style="-fx-text-alignment: center;" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children></VBox>
    </right>
    <top>
-      <HBox maxHeight="97.0" maxWidth="1280.0" minHeight="97.0" minWidth="1280.0" prefHeight="97.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+      <HBox alignment="CENTER" maxHeight="97.0" maxWidth="1280.0" minHeight="97.0" minWidth="1280.0" prefHeight="97.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane maxHeight="97.0" minWidth="97.0" prefHeight="97.0">
+               <children>
+                  <ImageView fitHeight="97.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <image>
+                        <Image url="@img/versus_nameflags_blu.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="playerCurrentPlay" alignment="CENTER" layoutX="57.0" layoutY="32.0" prefHeight="28.0" prefWidth="220.0" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
    </top>
    <bottom>
       <HBox maxHeight="97.0" maxWidth="1280.0" minHeight="97.0" minWidth="1280.0" prefHeight="97.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
