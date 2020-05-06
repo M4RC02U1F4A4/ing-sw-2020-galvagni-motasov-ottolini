@@ -1,8 +1,8 @@
 package it.polimi.ingsw.PSP23.model;
 
 import it.polimi.ingsw.PSP23.model.*;
+import it.polimi.ingsw.PSP23.model.god.Apollo;
 import org.junit.*;
-
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -33,6 +33,9 @@ public class PlayerTest {
         player.setIpAddress("192.168.1.6");
         assertEquals("filippo", player.getName());
         assertEquals("192.168.1.6",player.getIpAddress());
+        Apollo cedra = new Apollo();
+        player.setGod(cedra);
+        assertEquals(cedra,player.getGod());
     }
 
     @Test
@@ -50,6 +53,8 @@ public class PlayerTest {
         workerlistTemp = player.getWorkers();
         assertEquals(workerlistTemp[0], workerlist[0]);
         assertEquals(workerlistTemp[1], workerlist[1]);
+        player.setColor(Color.WHITE);
+        assertEquals(Color.WHITE,player.getColor());
     }
 
 

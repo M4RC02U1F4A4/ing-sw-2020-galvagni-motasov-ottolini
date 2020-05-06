@@ -68,7 +68,7 @@ public class God {
     *           -4 (Artemis) not back to origin,
     *           -6 (Apollo) tried to move in friendly occupied cell.
     */
-    public int move(Cell c, Worker w){
+    public int move(Cell c, Worker w, Map map){
         // verifico che non si salga se si verifica il potere di athena
         if(this.is_athena_in_game && this.athena_moved_up && (w.getPosZ() < c.height()))
             return -3;

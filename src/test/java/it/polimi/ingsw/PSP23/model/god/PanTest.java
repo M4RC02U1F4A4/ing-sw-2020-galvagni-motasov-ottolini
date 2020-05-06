@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP23.model.god;
 
-import it.polimi.ingsw.PSP23.model.Cell;
-import it.polimi.ingsw.PSP23.model.Color;
-import it.polimi.ingsw.PSP23.model.Status;
-import it.polimi.ingsw.PSP23.model.Worker;
+import it.polimi.ingsw.PSP23.model.*;
 import org.junit.*;
 
 import java.nio.Buffer;
@@ -14,6 +11,7 @@ public class PanTest {
     Pan god;
     Worker gianni;
     Cell base, zero, one;
+    Map map;
 
     @Before
     public void setUp() {
@@ -43,41 +41,41 @@ public class PanTest {
         base.build(Status.BUILT);
         one.build(Status.BUILT);
         god.startTurn(false);
-        god.move(zero, gianni);
+        god.move(zero, gianni,map);
         assertTrue(god.checkWin(gianni));
         //from 3 to 0
         god.startTurn(false);
-        god.move(one,gianni);
+        god.move(one,gianni,map);
         god.startTurn(false);
-        god.move(base,gianni);
+        god.move(base,gianni,map);
         base.build(Status.BUILT);
         god.startTurn(false);
-        god.move(zero,gianni);
+        god.move(zero,gianni,map);
         assertTrue(god.checkWin(gianni));
         //from 3 to 1
         god.startTurn(false);
-        god.move(one,gianni);
+        god.move(one,gianni,map);
         zero.build(Status.BUILT);
         zero.build(Status.BUILT);
         god.startTurn(false);
-        god.move(zero,gianni);
+        god.move(zero,gianni,map);
         god.startTurn(false);
-        god.move(base,gianni);
+        god.move(base,gianni,map);
         god.startTurn(false);
-        god.move(one,gianni);
+        god.move(one,gianni,map);
         assertTrue(god.checkWin(gianni));
         //from 1 to 2
         god.startTurn(false);
-        god.move(zero,gianni);
+        god.move(zero,gianni,map);
         assertFalse(god.checkWin(gianni));
         //from 2 to 3 border
         god.HeraIsHere();
         god.startTurn(false);
-        god.move(base,gianni);
+        god.move(base,gianni,map);
         assertFalse(god.checkWin(gianni));
         //from 3 to 1 border
         god.startTurn(false);
-        god.move(one,gianni);
+        god.move(one,gianni,map);
         assertFalse(god.checkWin(gianni));
     }
 }

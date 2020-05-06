@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP23.model.god;
 
-import it.polimi.ingsw.PSP23.model.Cell;
-import it.polimi.ingsw.PSP23.model.Color;
-import it.polimi.ingsw.PSP23.model.Status;
-import it.polimi.ingsw.PSP23.model.Worker;
+import it.polimi.ingsw.PSP23.model.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -11,6 +8,7 @@ public class TritonTest {
     Triton god;
     Worker pesciolino;
     Cell uno, due, tre, quattro, cinque;
+    Map map;
 
     @Before
     public void setUp() {
@@ -43,15 +41,15 @@ public class TritonTest {
         cinque.setCoord(1,3);
         // move inside the board
         god.startTurn(false);
-        assertEquals(0, god.move(due,pesciolino));
-        assertEquals(0, god.move(tre,pesciolino));
-        assertEquals(0, god.move(cinque,pesciolino));
-        assertEquals(-2, god.move(quattro,pesciolino));
+        assertEquals(0, god.move(due,pesciolino,map));
+        assertEquals(0, god.move(tre,pesciolino,map));
+        assertEquals(0, god.move(cinque,pesciolino,map));
+        assertEquals(-2, god.move(quattro,pesciolino,map));
         // build and try to move
         god.startTurn(false);
-        assertEquals(0,god.move(due,pesciolino));
-        assertEquals(0,god.move(tre,pesciolino));
+        assertEquals(0,god.move(due,pesciolino,map));
+        assertEquals(0,god.move(tre,pesciolino,map));
         assertEquals(0, god.build(cinque, Status.BUILT,pesciolino));
-        assertEquals(-2,god.move(quattro,pesciolino));
+        assertEquals(-2,god.move(quattro,pesciolino,map));
     }
 }

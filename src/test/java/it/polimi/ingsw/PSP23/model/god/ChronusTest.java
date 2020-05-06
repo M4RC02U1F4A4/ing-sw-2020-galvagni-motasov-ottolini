@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP23.model.god;
 
-import it.polimi.ingsw.PSP23.model.Cell;
-import it.polimi.ingsw.PSP23.model.Color;
-import it.polimi.ingsw.PSP23.model.Status;
-import it.polimi.ingsw.PSP23.model.Worker;
+import it.polimi.ingsw.PSP23.model.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -11,6 +8,7 @@ public class ChronusTest {
     Chronus criceto;
     Worker hamtaro;
     Cell albero, foglie;
+    Map map;
 
     @Before
     public void setUp() {
@@ -34,7 +32,7 @@ public class ChronusTest {
         albero.setCoord(1,2);
         albero.build(Status.BUILT);
         criceto.startTurn(false);
-        assertEquals(0, criceto.move(foglie,hamtaro));
+        assertEquals(0, criceto.move(foglie,hamtaro,map));
         for (int i = 0; i < 3; i++) {
             foglie.build(Status.BUILT);
         }

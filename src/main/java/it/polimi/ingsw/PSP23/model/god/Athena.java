@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP23.model.god;
 
 import it.polimi.ingsw.PSP23.model.Cell;
 import it.polimi.ingsw.PSP23.model.God;
+import it.polimi.ingsw.PSP23.model.Map;
 import it.polimi.ingsw.PSP23.model.Worker;
 
 public class Athena extends God {
@@ -18,15 +19,15 @@ public class Athena extends God {
     }
 
     @Override
-    public int move(Cell c, Worker w) {
+    public int move(Cell c, Worker w, Map map) {
         if (w.getPosZ() + 1 == c.height()) {
-            int i = super.move(c, w);
+            int i = super.move(c, w, map);
             if (0 == i)
                 this.moved_up = true;
             return i;
         }
         else
-            return super.move(c, w);
+            return super.move(c, w, map);
     }
 
 

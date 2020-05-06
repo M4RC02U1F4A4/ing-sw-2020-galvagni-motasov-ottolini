@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP23.model.god;
 
-import it.polimi.ingsw.PSP23.model.Cell;
-import it.polimi.ingsw.PSP23.model.Color;
-import it.polimi.ingsw.PSP23.model.Status;
-import it.polimi.ingsw.PSP23.model.Worker;
+import it.polimi.ingsw.PSP23.model.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -11,6 +8,7 @@ public class PrometheusTest {
     Prometheus god;
     Worker fuoco;
     Cell uno, due, tre;
+    Map map;
 
     @Before
     public void setUp() {
@@ -38,12 +36,12 @@ public class PrometheusTest {
         // build, move and build
         god.startTurn(false);
         assertEquals(0, god.build(due,Status.BUILT,fuoco));
-        assertEquals(0, god.move(tre,fuoco));
+        assertEquals(0, god.move(tre,fuoco, map));
         assertEquals(0, god.build(uno,Status.BUILT,fuoco));
         // build, move up and try to build
         god.startTurn(false);
         assertEquals(0, god.build(uno,Status.BUILT,fuoco));
-        assertEquals(0, god.move(due,fuoco));
+        assertEquals(0, god.move(due,fuoco, map));
         assertEquals(-2, god.build(tre,Status.BUILT,fuoco));
     }
 }

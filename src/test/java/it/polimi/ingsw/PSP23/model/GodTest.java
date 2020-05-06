@@ -7,6 +7,7 @@ public class GodTest {
     God rjdio;
     Cell ulare, perfect, banana;
     Worker murathor, opelatole_ecologico;
+    Map map;
 
     @Before
     public void setUp() {
@@ -53,38 +54,38 @@ public class GodTest {
         rjdio.remains_moves = 1;
         ulare.setCoord(1,2);
         perfect.setCoord(3,2);
-        assertEquals(-1, rjdio.move(perfect, murathor));
+        assertEquals(-1, rjdio.move(perfect, murathor, map));
         //occupied
         rjdio.remains_moves = 1;
         banana.setCoord(2,2);
-        assertEquals(-1, rjdio.move(banana, murathor));
+        assertEquals(-1, rjdio.move(banana, murathor, map));
         // no moves
         rjdio.remains_moves = 0;
         perfect.setCoord(2,2);
-        assertEquals(-2, rjdio.move(perfect, murathor));
+        assertEquals(-2, rjdio.move(perfect, murathor, map));
         // athena power up, "It's over, Anakin! I have the high ground!"
         rjdio.AthenaIsHere();
         rjdio.setUpTurn(1,0,true);
         perfect.build(Status.BUILT);
-        assertEquals(-3, rjdio.move(perfect, murathor));
+        assertEquals(-3, rjdio.move(perfect, murathor, map));
         // athena is no moar, testing going up
         rjdio.setUpTurn(2,0,false);
-        assertEquals(0, rjdio.move(perfect, murathor));
-        assertEquals(0, rjdio.move(ulare, murathor));
+        assertEquals(0, rjdio.move(perfect, murathor, map));
+        assertEquals(0, rjdio.move(ulare, murathor, map));
         // going up 2
         rjdio.remains_moves = 1;
         rjdio.setUpTurn(1,0,false);
         murathor.moveWorker(ulare);
         perfect.build(Status.BUILT);
-        assertEquals(-1, rjdio.move(perfect, murathor));
+        assertEquals(-1, rjdio.move(perfect, murathor, map));
         ulare.build(Status.BUILT);
-        assertEquals(0, rjdio.move(perfect, murathor));
+        assertEquals(0, rjdio.move(perfect, murathor, map));
         //going down 2
         rjdio.remains_moves = 1;
         rjdio.setUpTurn(1,0,false);
         murathor.moveWorker(ulare);
         perfect.build(Status.BUILT);
-        assertEquals(-1, rjdio.move(ulare, murathor));
+        assertEquals(-1, rjdio.move(ulare, murathor, map));
     }
 
     @Test

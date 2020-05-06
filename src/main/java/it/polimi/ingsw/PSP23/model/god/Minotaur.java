@@ -10,26 +10,22 @@ public class Minotaur extends God{
     public Minotaur() {
         super.setUpGod("Minotaur");
     }
-/*
+
     @Override
-    public int move(Cell c, Worker w) {
+    public int move(Cell c, Worker w, Map map) {
         if (null == c.getWorker())
-            return super.move(c, w);
+            return super.move(c, w, map);
+        Cell b = w.getCell();
+        int moreX = c.getX() - b.getX();
+        int moreY = c.getY() - b.getY();
+        Cell a = map.getCell(c.getX()+moreX, c.getY()+moreY);
+        if (null == a.getWorker()) {
+            Worker teseo = c.getWorker();
+            teseo.moveWorker(a);
+            return super.move(c, w, map);
+        }
         else {
-            Cell b = w.getCell();
-            int moreX = c.getX() - b.getX();
-            int moreY = c.getY() - b.getY();
-            //TODO trovare un modo di avere una cella sapendone le coordinate.
-            Cell a = Map.getCell(c.getX()+moreX, c.getY()+moreY);
-            if (null == a.getWorker()) {
-                Worker teseo = c.getWorker();
-                teseo.moveWorker(a);
-                return super.move(c, w);
-            }
-            else {
-                return -1; //TODO error, invalid move, cell not empty
-            }
+            return -1;
         }
     }
-    */
 }

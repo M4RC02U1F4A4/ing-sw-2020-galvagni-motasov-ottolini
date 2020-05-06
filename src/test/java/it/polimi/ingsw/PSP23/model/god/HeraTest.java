@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP23.model.god;
 
-import it.polimi.ingsw.PSP23.model.Cell;
-import it.polimi.ingsw.PSP23.model.Color;
-import it.polimi.ingsw.PSP23.model.Status;
-import it.polimi.ingsw.PSP23.model.Worker;
+import it.polimi.ingsw.PSP23.model.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -11,6 +8,7 @@ public class HeraTest {
     Hera ero;
     Worker gianni;
     Cell base, top;
+    Map map;
 
     @Before
     public void setUp() {
@@ -37,7 +35,7 @@ public class HeraTest {
         top.build(Status.BUILT);
         ero.startTurn(false);
         assertFalse(ero.checkWin(gianni));
-        assertEquals(0, ero.move(top, gianni));
+        assertEquals(0, ero.move(top, gianni,map));
         assertTrue(ero.checkWin(gianni));
     }
 }
