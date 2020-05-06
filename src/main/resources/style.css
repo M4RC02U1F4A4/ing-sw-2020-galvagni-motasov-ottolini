@@ -45,3 +45,7 @@
     -fx-prompt-text-fill: #c4c4c4;
     -fx-background-repeat: no-repeat;
 }
+
+#boardButton {
+    -fx-background-color: transparent;
+}
