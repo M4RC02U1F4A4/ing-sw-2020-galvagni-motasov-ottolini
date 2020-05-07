@@ -7,33 +7,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
-public class GUIController {
-
-    @FXML
-    private javafx.scene.control.Button closeButton;
-    @FXML
-    public void closeButtonAction() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private javafx.scene.control.Button playButton;
-    @FXML
-    private TextField username;
-    @FXML
-    private TextField ip;
-    @FXML
-    private RadioButton playersNumber2;
-    @FXML
-    private RadioButton playersNumber3;
+public class GUIController3 {
 
     @FXML
     private Label player1Username;
@@ -42,48 +27,55 @@ public class GUIController {
     @FXML
     private Label player3Username;
     @FXML
-    private Label playerCurrentPlay;
-
+    private Label player1Power;
     @FXML
-    public void playButtonAction() {
-        Stage stage = (Stage) playButton.getScene().getWindow();
-        stage.close();
-
-        //player data
-
-        //TODO: l'username se non inserito va generato random
-        System.out.println(username.getText());
-        //default ip is localhost
-        System.out.println(ip.getText());
-        if (playersNumber2.isSelected()) System.out.println("2");
-        if (playersNumber3.isSelected()) System.out.println("3");
-
-        //gameboard
-        try{
-            Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard3.fxml"));
-            Stage gameBoard = new Stage();
-            gameBoard.setTitle("Santorini");
-            gameBoard.setScene(new Scene(rootGameBoard));
-            gameBoard.setResizable(false);
-            gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
-            gameBoard.show();
-        } catch (IOException e){e.printStackTrace();}
-    }
-
-
+    private Label player2Power;
+    @FXML
+    private Label player3Power;
+    @FXML
+    private Label playerCurrentPlay;
+    @FXML
+    private ImageView player1God;
+    @FXML
+    private ImageView player2God;
+    @FXML
+    private ImageView player3God;
+    @FXML
+    private ImageView player3;
+    @FXML
+    private Button loadingButton;
+    @FXML
+    private Button errorButton;
     @FXML
     private Button b00, b01, b02, b03, b04,
-                   b10, b11, b12, b13, b14,
-                   b20, b21, b22, b23, b24,
-                   b30, b31, b32, b33, b34,
-                   b40, b41, b42, b43, b44;
+            b10, b11, b12, b13, b14,
+            b20, b21, b22, b23, b24,
+            b30, b31, b32, b33, b34,
+            b40, b41, b42, b43, b44;
 
-    public void press(Button b){
-        b.setStyle("-fx-background-image: url('/img/lvl1.png')");
+    @FXML
+    public void loadingButtonAction(){
         player1Username.setText("Marco");
         player2Username.setText("Marco");
         player3Username.setText("Marco");
+        player1God.setImage(new Image ("/img/gods/Artemis.png"));
+        player2God.setImage(new Image ("/img/gods/Prometheus.png"));
+        player3God.setImage(new Image ("/img/gods/Minotaur.png"));
+        player1Power.setText("Your Worker may move one additional time, but not back to its initial space.");
+        player2Power.setText("If your Worker does not move up, it may build both before and after moving.");
+        player3Power.setText("Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.");
         playerCurrentPlay.setText("Marco");
+        loadingButton.setVisible(false);
+        errorButton.setVisible(false);
+    }
+
+    public void errorButtonAction(){
+        errorButton.setVisible(false);
+    }
+
+    public void press(Button b){
+        b.setStyle("-fx-background-image: url('/img/lvl1.png')");
+        errorButton.setVisible(true);
     }
 
     @FXML

@@ -49,3 +49,8 @@
 #boardButton {
     -fx-background-color: transparent;
 }
+#loading {
+    -fx-background-color: transparent;
+    -fx-background-image: url('/img/loading.png');
+    -fx-background-position: center;
+}
