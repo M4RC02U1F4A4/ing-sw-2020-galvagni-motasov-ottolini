@@ -154,10 +154,34 @@ public class GUIController3 {
     }
     public void b43Action(){
         press(b43);
+        //test
+        Stage stage = (Stage) b43.getScene().getWindow();
+        //stage.close();
+        try {
+            Parent rootWin = FXMLLoader.load(getClass().getResource("/lose.fxml"));
+            Stage lose = new Stage();
+            lose.setTitle("Santorini");
+            lose.setScene(new Scene(rootWin));
+            lose.setResizable(false);
+            lose.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+            lose.show();
+        } catch (IOException e) { e.printStackTrace(); }
     }
     public void b44Action(){
         press(b44);
+        //test
+        Stage stage = (Stage) b44.getScene().getWindow();
+        //stage.close();
+        try {
+            Parent rootWin = FXMLLoader.load(getClass().getResource("/win.fxml"));
+            Stage win = new Stage();
+            win.setTitle("Santorini");
+            win.setScene(new Scene(rootWin));
+            win.setResizable(false);
+            win.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+            win.show();
+        } catch (IOException e) { e.printStackTrace(); }
     }
-
 }
+
 
