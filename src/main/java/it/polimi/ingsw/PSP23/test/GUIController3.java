@@ -75,7 +75,6 @@ public class GUIController3 {
 
     public void press(Button b){
         b.setStyle("-fx-background-image: url('/img/lvl1.png')");
-        errorButton.setVisible(true);
     }
 
     @FXML
@@ -151,6 +150,8 @@ public class GUIController3 {
     }
     public void b42Action(){
         press(b42);
+        //test
+        errorButton.setVisible(true);
     }
     public void b43Action(){
         press(b43);
