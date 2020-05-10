@@ -49,8 +49,7 @@ public class Map {
     *   Debug
     *   Print the map with the cell status
     */
-    public void printStatus()
-    {
+    public void printStatus() {
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++) {
                 System.out.println("Cella["+i+"]["+j+"]\n"+cells[i][j].toString());
@@ -61,9 +60,7 @@ public class Map {
     /**
      * method used to draw the map
      */
-
-    public void drawMap()
-    {
+    public void drawMap() {
         System.out.println("+----------------+----------------+----------------+----------------+----------------+");
         String tmp="";
         for(int i=0;i<5;i++){
@@ -145,7 +142,5 @@ public class Map {
             System.out.println("+----------------+----------------+----------------+----------------+----------------+");
         }
     }
-
-
 
 }

@@ -1,12 +1,18 @@
 package it.polimi.ingsw.PSP23.model;
 
+import it.polimi.ingsw.PSP23.model.god.Apollo;
+import it.polimi.ingsw.PSP23.model.god.Minotaur;
 import org.junit.*;
+import it.polimi.ingsw.PSP23.model.Map;
 import static org.junit.Assert.*;
 
 public class GodTest {
     God rjdio;
+    Apollo apelle;
+    Minotaur toro;
     Cell ulare, perfect, banana;
-    Worker murathor, opelatole_ecologico;
+    Cell uno, due, tre, qua, cin, sei, set, ott, nov;
+    Worker murathor, opelatole_ecologico, pedone1, pedone2, pedone3;
     Map map;
 
     @Before
@@ -15,8 +21,20 @@ public class GodTest {
         banana = new Cell();
         perfect = new Cell();
         rjdio = new God();
+        apelle = new Apollo();
+        toro = new Minotaur();
+        map = new Map();
         murathor = new Worker(ulare, Color.RED);
         opelatole_ecologico = new Worker(banana, Color.BLUE);
+        uno = map.getCell(0,0);
+        due = map.getCell(0,1);
+        tre = map.getCell(0,2);
+        qua = map.getCell(1,0);
+        cin = map.getCell(1,1);
+        sei = map.getCell(1,2);
+        set = map.getCell(2,0);
+        ott = map.getCell(2,1);
+        nov = map.getCell(2,2);
     }
 
     @After
@@ -27,6 +45,9 @@ public class GodTest {
         rjdio = null;
         murathor = null;
         opelatole_ecologico = null;
+        pedone1 = null;
+        pedone2 = null;
+        pedone3 = null;
     }
 
     @Test
@@ -36,10 +57,15 @@ public class GodTest {
         assertEquals(rjdio.remains_moves, 0);
         assertEquals(rjdio.starting_z, -2);
         assertEquals(rjdio.name(), "zioDelTuono");
+        rjdio.HeraIsHere();
+        assertTrue(rjdio.is_hera_in_game);
+        rjdio.choseRandomGod();
     }
 
     @Test
     public void startTurn() {
+        rjdio.startTurn(false);
+        assertFalse(rjdio.AthenaMovedUp());
         rjdio.startTurn(true);
         assertTrue(rjdio.AthenaMovedUp());
         assertEquals(rjdio.remains_moves,1);
@@ -162,5 +188,70 @@ public class GodTest {
                 assertTrue(rjdio.checkWin(murathor));
             }
         }
+    }
+
+    /* number = height, o = occupied, b= base(height zero). bottom left = 0,0
+    test 1, result = athena_moved_up
+    2       o       1
+    2       b       2
+    2       o       2
+    test 2 result = true
+    2       o       2
+    2       b       2
+    2       o       2
+    test 3 result = athena_moved_up (apollo)
+    2       o(1)    2
+    2       b       2
+    2       o       2
+    test 4 result = athena_moved_up (mino)
+            0
+    2       o(1)    2
+    2       b       2
+    2       o       2
+    test 5 result = true (mino)
+            o
+    2       o(1)    2
+    2       b       2
+    2       o       2
+     */
+    @Test
+    public void testCheckLoss() {
+        for (int i = 0; i < 2; i++) {
+            uno.build(Status.BUILT);
+            tre.build(Status.BUILT);
+            qua.build(Status.BUILT);
+            sei.build(Status.BUILT);
+            set.build(Status.BUILT);
+        }
+        nov.build(Status.BUILT);
+        apelle.AthenaIsHere();
+        toro.AthenaIsHere();
+        //test 1
+        rjdio.startTurn(false);
+        pedone1 = new Worker(cin, Color.BLUE);
+        pedone2 = new Worker(due, Color.WHITE);
+        pedone3 = new Worker(ott, Color.WHITE);
+        assertFalse(rjdio.checkLossMove(pedone1, map));
+        rjdio.startTurn(true);
+        assertTrue(rjdio.checkLossMove(pedone1, map));
+        //test 2
+        nov.build(Status.BUILT);
+        assertTrue(rjdio.checkLossMove(pedone1, map));
+        //test 3
+        ott.build(Status.BUILT);
+        due.build(Status.BUILT);
+        apelle.startTurn(false);
+        assertFalse(apelle.checkLossMove(pedone1, map));
+        apelle.startTurn(true);
+        assertTrue(apelle.checkLossMove(pedone1, map));
+        //test 4
+        toro.startTurn(false);
+        assertFalse(toro.checkLossMove(pedone1, map));
+        toro.startTurn(true);
+        assertTrue(toro.checkLossMove(pedone1, map));
+        //test 5
+        banana = map.getCell(3,1);
+        opelatole_ecologico = new Worker(banana, Color.WHITE);
+        assertTrue(toro.checkLossMove(pedone1, map));
     }
 }
