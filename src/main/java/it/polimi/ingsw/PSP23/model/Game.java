@@ -61,11 +61,12 @@ public class Game extends Observable<Message> {
     public void performeMove(int x, int y, Player player, Action action, int nworker){
         if(action == Action.BUILD){
             //TODO build
-            //TOTO build
+            player.getGod().build(map.getCell(1,0),Status.BUILT,player.getWorkerByNumber(nworker));
         }
         else if(action == Action.MOVE){
             //TODO move
-            //takenGods.add(players.get(0).getGod().choseRandomGod());
+            player.getGod().startTurn(false);
+            player.getGod().move(map.getCell(1,0),player.getWorkerByNumber(nworker),map);
         }
         else if(action==Action.PLACE_WORKERS){
             //TODO PLACE WORKERS
