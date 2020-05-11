@@ -38,7 +38,9 @@ public class Server {
                     String ip=me.getValue().getIpAddress();
                     System.out.println("Creo il giocatore "+nome+" con ip "+ip);
                     controller.addPlayer(new Player(nome, ip));
+                    
                 }
+
                 System.out.println("HO AGGIUNTO ENTRAMBI I GIOCATORI AAAAAAAAAAAAAAAAAAAA");
 
             }

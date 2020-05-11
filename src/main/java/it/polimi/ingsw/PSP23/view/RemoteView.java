@@ -41,9 +41,9 @@ public class RemoteView extends View{
 
     @Override
     public void update(Message message) {
-        clientConnection.asyncSend(message.getMap());
+        showMessage(message.getMap());
         //VERIFICARE CHE NON SIA GAMEOVER
-        /*if(NON È IL TUO TURNO)
+       /* if(message.getPlayer().getPlayerNumber()==)//non e' il tuo turno
             showMessage("non è il tuo turno");
           else{
              showMessage("è il tuo turno");

@@ -9,12 +9,25 @@ public class Game extends Observable<Message> {
     private Map map=new Map();
     private ArrayList<Player> players=new ArrayList<>();
     private ArrayList<String> takenGods=new ArrayList<>();
-    private TurnManager turnManager=new TurnManager(0);
+    private TurnManager turnManager=new TurnManager();
     private int colourVariable=0;
 
     //TODO creare un metodo che controlli che il dio non sia gia' stato usato, c tale scopo usare takenGods
 
     public Map getMap(){ return map; }
+
+    public void chooseRandomGods(){
+        int i=0;
+        God g=new God();
+        String tmp=g.choseRandomGod();
+        while(i<players.size()){
+            while(takenGods.contains(tmp)){
+                tmp=g.choseRandomGod();
+            }
+            takenGods.add(tmp);
+            i++;
+        }
+    }
 
     /**
      * add a Player to the current game, then a god is randomly assigned to that player and then a color.
@@ -23,14 +36,8 @@ public class Game extends Observable<Message> {
      */
     public void addPlayer(Player p){
 
-        God g=new God();
-        String tmp=g.choseRandomGod();
-        while(takenGods.contains(tmp)){
-            tmp=g.choseRandomGod();
-        }
-        takenGods.add(tmp);
-        //String gods[]={"Apollo","Artemis",",Athena","Atlas","Chronus","Demeter","Hephaestus","Hera","Hestia","Minotaur","Pan","Prometheus","Triton","Zeus"};
-        switch (tmp){
+
+        /*switch (tmp){
             case "Apollo":
                         p.setGod(new Apollo());
                         break;
@@ -73,10 +80,11 @@ public class Game extends Observable<Message> {
             case "Zeus"
                         :p.setGod(new Zeus());
                         break;
-        }
-        p.setColor(getUnusedColor());
+        }*/
+        //p.setColor(getUnusedColor());
+        p.setPlayerNumber(players.size());
         players.add(p);
-        turnManager.setPlayerNumber(players.size());
+        turnManager.addPlayer();
 
     }
 
@@ -88,9 +96,6 @@ public class Game extends Observable<Message> {
         turnManager.nextPhase();
     }
 
-    public void nextTurn(){
-        turnManager.nextPlayer();
-    }
 
     public int getNumberOfPlayers(){
         return players.size();
@@ -106,6 +111,12 @@ public class Game extends Observable<Message> {
         else if(action == Action.MOVE){
             //TODO move
             //takenGods.add(players.get(0).getGod().choseRandomGod());
+        }
+        else if(action==Action.PLACE_WORKERS){
+            //TODO PLACE WORKERS
+        }
+        else if(action==Action.CHOOSE_GODS){
+            //TODO CHOOSE GODS
         }
         else return;//magari anche qui con un'eccezione
     }
@@ -130,9 +141,31 @@ public class Game extends Observable<Message> {
         }
     }
 
+    public Player getPlayer(int pos){
+        return players.get(pos);
+    }
+
     //TODO: COSE MANCANTI:
     //TODO:VERIFICARE SE SI HA PERSO SEMPRE TRAMITE UN METODO
 
+    public ArrayList<String> getChosenGods(){
+        return takenGods;
+    }
+
+    public int getCurrentPlayer(){
+        return turnManager.getCurrentPlayer();
+    }
+
+    public TurnManager.Phase getCurrentPhase(){
+        return turnManager.getCurrentPhase();
+    }
+
+    public boolean isPlayerTurn(Player p){
+        if(p.getPlayerNumber()==getCurrentPlayer())
+            return true;
+        else
+            return false;
+    }
 
 
 }

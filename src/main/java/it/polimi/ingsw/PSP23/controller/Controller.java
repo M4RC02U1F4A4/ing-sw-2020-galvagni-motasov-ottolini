@@ -20,11 +20,16 @@ public class Controller implements Observer<PlayerMove> {
         this.game = game;
 
     }
+    public void generateRandomGods(){
+        game.chooseRandomGods();
+    }
+
+
     //TODO
     private synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
 
-        //if(game.)
+
 
         if(move.getA()== Action.MOVE){
             game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE);
