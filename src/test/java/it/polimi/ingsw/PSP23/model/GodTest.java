@@ -79,7 +79,6 @@ public class GodTest {
     @Test
     public void move() {
         // not near
-        murathor.moveWorker(ulare);
         rjdio.remains_moves = 1;
         ulare.setCoord(1,2);
         perfect.setCoord(3,2);

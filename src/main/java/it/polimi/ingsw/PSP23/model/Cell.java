@@ -163,7 +163,6 @@ public class Cell {
       return NOT_AVAILABLE;
     }
 
-
     /**
     *   Search for a FREE level, when it is found build a new BUILD level,
     *   if the level already contains a CUPOLA or is the last one (level 4), build a CUPOLA
@@ -202,7 +201,7 @@ public class Cell {
         return ret+"OCCUPATA: "+isOccupied();
     }
 
-    // Metodi utilizzati per i test
+    // Metodo utilizzato solo per i test
     public void setCoord (int x, int y) {
         this.X = x;
         this.Y = y;

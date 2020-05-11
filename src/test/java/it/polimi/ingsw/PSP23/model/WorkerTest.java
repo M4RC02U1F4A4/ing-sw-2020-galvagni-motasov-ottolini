@@ -34,4 +34,16 @@ public class WorkerTest {
         assertEquals(0, worker.getPosZ());
     }
 
+    @Test
+    public void moveTest() {
+        Cell uno = map.getCell(1,1);
+        Cell due = map.getCell(2,2);
+        worker = new Worker(uno,Color.WHITE);
+        assertEquals(uno, worker.getCell());
+        assertEquals(worker, uno.getWorker());
+        worker.moveWorker(due);
+        assertNull(uno.getWorker());
+        assertEquals(due, worker.getCell());
+        assertEquals(worker, due.getWorker());
+    }
 }
