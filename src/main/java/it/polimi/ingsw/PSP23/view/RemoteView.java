@@ -8,10 +8,10 @@ import it.polimi.ingsw.PSP23.server.ClientConnection;
 public class RemoteView extends View{
     private ClientConnection clientConnection;
 
-    protected RemoteView(Player player,ClientConnection clientConnection) {
+    public RemoteView(Player player, ClientConnection c) {
         super(player);
-        this.clientConnection=clientConnection;
-        clientConnection.addObserver(new MessageReciever());
+        this.clientConnection=c;
+        c.addObserver(new MessageReciever());
     }
 
     private class MessageReciever implements Observer<String>{
@@ -20,12 +20,14 @@ public class RemoteView extends View{
         public void update(String message) {
             System.out.println("Ricevuto: "+message);
             try{
-                String[] inputs=message.split(" ");
+                String[] inputs=message.split(",");
                 if(inputs[0]=="MOVE"){
-                    handleMove(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]));
+                    System.out.println("mi muovo");
+                    handleMove(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]));
                 }
                 else if(inputs[0]=="BUILD"){
-                    handleBuild(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]));
+                    System.out.println("costruisco");
+                    handleBuild(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]));
                 }
             }catch(IllegalArgumentException e){
                 e.printStackTrace();
@@ -49,5 +51,6 @@ public class RemoteView extends View{
              showMessage("è il tuo turno");
           }
         */
+
     }
 }

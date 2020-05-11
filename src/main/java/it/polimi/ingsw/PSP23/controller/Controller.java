@@ -15,6 +15,10 @@ public class Controller implements Observer<PlayerMove> {
 
     }
 
+    public void addGodToSpecificPlayer(Player p, String god){
+        game.addGod(p,god);
+    }
+
     public Controller(Game game) {
         super();
         this.game = game;
@@ -23,21 +27,26 @@ public class Controller implements Observer<PlayerMove> {
     public void generateRandomGods(){
         game.chooseRandomGods();
     }
+    public ArrayList<String> getChosenGods(){
+        return game.getChosenGods();
+    }
 
 
     //TODO
-    private synchronized void  performMove(PlayerMove move){
+    public synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
-
-
-
-        if(move.getA()== Action.MOVE){
-            game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE);
+        if(game.isPlayerTurn(move.getPlayer())){
+            if(move.getA()== Action.MOVE){
+                game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE,move.getnWorker());
+            }
+            else if(move.getA()== Action.BUILD){
+                game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.BUILD,move.getnWorker());
+            }
         }
-        else if(move.getA()== Action.BUILD){
-            game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.BUILD);
-        }
-        else return;//magari sollevando anche un'eccezione
+        game.setCurrentPhase(TurnManager.Phase.END);
+
+
+
 
     }
 

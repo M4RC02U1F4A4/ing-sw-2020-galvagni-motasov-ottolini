@@ -1,10 +1,12 @@
 package it.polimi.ingsw.PSP23.model;
 
+import java.io.Serializable;
+
 import static it.polimi.ingsw.PSP23.model.Status.*;
 /**
 *   Cell class
 */
-public class Cell {
+public class Cell implements Serializable {
     private Status levels[];
     Worker worker;
     private int X;

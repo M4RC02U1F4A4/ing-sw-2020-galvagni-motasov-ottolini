@@ -8,6 +8,7 @@ public class PlayerMove {
     private final int x;
     private final int y;
     private final Action a;
+    private final int nWorker;
 
     /**
      * @return player object
@@ -29,15 +30,19 @@ public class PlayerMove {
     }
     //TODO: Javadoc
     public Action getA() { return a; }
+    //TODO: Javadoc
+    public int getnWorker(){ return nWorker;}
 
     //TODO: Javadoc
-    public PlayerMove(Player player, View view, int x, int y, Action a) {
+    public PlayerMove(Player player, View view, int x, int y, Action a, int nWorker) {
         this.player = player;
         this.view = view;
         this.x = x;
         this.y = y;
         this.a=a;
+        this.nWorker = nWorker;
     }
+
 
 
 }

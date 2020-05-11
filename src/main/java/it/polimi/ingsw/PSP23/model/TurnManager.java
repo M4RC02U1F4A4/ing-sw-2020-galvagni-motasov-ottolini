@@ -4,7 +4,7 @@ package it.polimi.ingsw.PSP23.model;
 *   TurnMagaer class
 */
 public class TurnManager {
-    enum Phase{CHOOSE_WORKER, MOVE, BUILD, END}
+    public enum Phase{CHOOSE_WORKER, MOVE, BUILD, END}
     private int numberOfPlayers=0;
     private int currentPlayer;
     private Phase currentPhase;
