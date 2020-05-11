@@ -17,7 +17,5 @@ public class provaMain {
         System.out.println(g.getPlayer(1).getPlayerNumber());
         g.chooseRandomGods();
         System.out.println(Arrays.toString(g.getChosenGods().toArray()));
-
-
     }
 }
