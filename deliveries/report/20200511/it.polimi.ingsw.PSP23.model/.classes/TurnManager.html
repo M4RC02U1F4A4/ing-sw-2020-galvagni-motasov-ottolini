@@ -1,0 +1,207 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TurnManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TurnManager (it.polimi.ingsw.PSP23.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TurnManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,5%
+  </span>
+  <span class="absValue">
+    (42/ 48)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TurnManager$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,8%
+  </span>
+  <span class="absValue">
+    (43/ 49)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp;*   TurnManager class
+<i>5</i>&nbsp;*/
+<i>6</i>&nbsp;public class TurnManager {
+<b class="fc"><i>7</i>&nbsp;    private int numberOfPlayers = 0;</b>
+<i>8</i>&nbsp;    private int currentPlayerNumber;
+<i>9</i>&nbsp;    private Player currentPlayer;
+<i>10</i>&nbsp;    private Phase currentPhase;
+<i>11</i>&nbsp;
+<b class="fc"><i>12</i>&nbsp;    public TurnManager(){</b>
+<b class="fc"><i>13</i>&nbsp;        currentPlayerNumber = 0;</b>
+<b class="fc"><i>14</i>&nbsp;        currentPhase = Phase.CHOOSE_WORKER;</b>
+<b class="fc"><i>15</i>&nbsp;    }</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    /**
+<i>18</i>&nbsp;     *
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    public void nextPhase(){
+<b class="fc"><i>21</i>&nbsp;        switch (currentPhase) {</b>
+<i>22</i>&nbsp;            case CHOOSE_WORKER:
+<b class="fc"><i>23</i>&nbsp;                currentPhase = Phase.START_TURN;</b>
+<b class="fc"><i>24</i>&nbsp;                break;</b>
+<i>25</i>&nbsp;            case START_TURN:
+<b class="fc"><i>26</i>&nbsp;                if (&quot;Prometheus&quot;.equals(currentPlayer.getGod().name()) &amp;&amp; 2 == currentPlayer.getGod().remains_builds)</b>
+<b class="nc"><i>27</i>&nbsp;                    currentPhase = Phase.CHECK_LOSE_BUILD;</b>
+<b class="fc"><i>28</i>&nbsp;                else if (&quot;Chronus&quot;.equals(currentPlayer.getGod().name()))</b>
+<b class="nc"><i>29</i>&nbsp;                    currentPhase = Phase.CHECK_WIN;</b>
+<i>30</i>&nbsp;                else
+<b class="fc"><i>31</i>&nbsp;                    currentPhase = Phase.CHECK_LOSE_MOVE;</b>
+<b class="fc"><i>32</i>&nbsp;                break;</b>
+<i>33</i>&nbsp;            case CHECK_WIN:
+<b class="nc"><i>34</i>&nbsp;                currentPhase = Phase.CHECK_LOSE_MOVE;</b>
+<b class="nc"><i>35</i>&nbsp;                break;</b>
+<i>36</i>&nbsp;            case CHECK_LOSE_MOVE:
+<b class="fc"><i>37</i>&nbsp;                currentPhase = Phase.MOVE;</b>
+<b class="fc"><i>38</i>&nbsp;                break;</b>
+<i>39</i>&nbsp;            case MOVE:
+<b class="fc"><i>40</i>&nbsp;                currentPhase = Phase.CHECK_WIN_MOVE;</b>
+<b class="fc"><i>41</i>&nbsp;                break;</b>
+<i>42</i>&nbsp;            case CHECK_WIN_MOVE:
+<b class="fc"><i>43</i>&nbsp;                if (1 &lt;= currentPlayer.getGod().remains_moves)</b>
+<b class="nc"><i>44</i>&nbsp;                    currentPhase = Phase.CHECK_LOSE_MOVE;</b>
+<i>45</i>&nbsp;                else
+<b class="fc"><i>46</i>&nbsp;                    currentPhase = Phase.CHECK_LOSE_BUILD;</b>
+<b class="fc"><i>47</i>&nbsp;                break;</b>
+<i>48</i>&nbsp;            case CHECK_LOSE_BUILD:
+<b class="fc"><i>49</i>&nbsp;                currentPhase = Phase.BUILD;</b>
+<b class="fc"><i>50</i>&nbsp;                break;</b>
+<i>51</i>&nbsp;            case BUILD:
+<b class="fc"><i>52</i>&nbsp;                currentPhase = Phase.CHECK_WIN_BUILD;</b>
+<b class="fc"><i>53</i>&nbsp;                break;</b>
+<i>54</i>&nbsp;            case CHECK_WIN_BUILD:
+<b class="fc"><i>55</i>&nbsp;                if (2 &lt;= currentPlayer.getGod().remains_builds)</b>
+<b class="nc"><i>56</i>&nbsp;                    currentPhase = Phase.CHECK_LOSE_BUILD;</b>
+<i>57</i>&nbsp;                else
+<b class="fc"><i>58</i>&nbsp;                    currentPhase = Phase.END;</b>
+<b class="fc"><i>59</i>&nbsp;                break;</b>
+<i>60</i>&nbsp;            case END:
+<b class="fc"><i>61</i>&nbsp;                currentPhase = Phase.CHOOSE_WORKER;</b>
+<b class="fc"><i>62</i>&nbsp;                currentPlayerNumber++;</b>
+<b class="fc"><i>63</i>&nbsp;                if(numberOfPlayers == currentPlayerNumber)</b>
+<b class="fc"><i>64</i>&nbsp;                    currentPlayerNumber = 0;</b>
+<i>65</i>&nbsp;                break;
+<i>66</i>&nbsp;        }
+<b class="fc"><i>67</i>&nbsp;    }</b>
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    public void addPlayer(){
+<b class="fc"><i>70</i>&nbsp;        numberOfPlayers++;</b>
+<b class="fc"><i>71</i>&nbsp;    }</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    public void subsPlayer(){
+<b class="fc"><i>74</i>&nbsp;        numberOfPlayers--;</b>
+<b class="fc"><i>75</i>&nbsp;    }</b>
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    public int getNumberOfPlayers() {
+<b class="fc"><i>78</i>&nbsp;        return numberOfPlayers;</b>
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public int getCurrentPlayerNumber() {
+<b class="fc"><i>82</i>&nbsp;        return currentPlayerNumber;</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    /**
+<i>86</i>&nbsp;     * this function initialize the turn of the player
+<i>87</i>&nbsp;     * @param VamosAllaPlayer i Choose you VAMOSALLAPLAYER!
+<i>88</i>&nbsp;     */
+<i>89</i>&nbsp;    public void setCurrentPlayerNumber(Player VamosAllaPlayer) {
+<b class="fc"><i>90</i>&nbsp;        this.currentPlayerNumber = VamosAllaPlayer.getPlayerNumber();</b>
+<b class="fc"><i>91</i>&nbsp;        this.currentPlayer = VamosAllaPlayer;</b>
+<b class="fc"><i>92</i>&nbsp;        this.currentPhase = Phase.CHOOSE_WORKER;</b>
+<b class="fc"><i>93</i>&nbsp;    }</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    public Phase getCurrentPhase() {
+<b class="fc"><i>96</i>&nbsp;        return currentPhase;</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-11 21:00</div>
+</div>
+</body>
+</html>
