@@ -1,70 +1,98 @@
 package it.polimi.ingsw.PSP23.model;
 
 /**
-*   TurnMagaer class
+*   TurnManager class
 */
 public class TurnManager {
-    enum Phase{CHOOSE_WORKER, MOVE, BUILD, END}
-    private int numberOfPlayers=0;
-    private int currentPlayer;
+    private int numberOfPlayers = 0;
+    private int currentPlayerNumber;
+    private Player currentPlayer;
     private Phase currentPhase;
 
     public TurnManager(){
-        currentPlayer=0;
-        currentPhase=Phase.CHOOSE_WORKER;
+        currentPlayerNumber = 0;
+        currentPhase = Phase.CHOOSE_WORKER;
+    }
+
+    /**
+     *
+     */
+    public void nextPhase(){
+        switch (currentPhase) {
+            case CHOOSE_WORKER:
+                currentPhase = Phase.START_TURN;
+                break;
+            case START_TURN:
+                if ("Prometheus".equals(currentPlayer.getGod().name()) && 2 == currentPlayer.getGod().remains_builds)
+                    currentPhase = Phase.CHECK_LOSE_BUILD;
+                else if ("Chronus".equals(currentPlayer.getGod().name()))
+                    currentPhase = Phase.CHECK_WIN;
+                else
+                    currentPhase = Phase.CHECK_LOSE_MOVE;
+                break;
+            case CHECK_WIN:
+                currentPhase = Phase.CHECK_LOSE_MOVE;
+                break;
+            case CHECK_LOSE_MOVE:
+                currentPhase = Phase.MOVE;
+                break;
+            case MOVE:
+                currentPhase = Phase.CHECK_WIN_MOVE;
+                break;
+            case CHECK_WIN_MOVE:
+                if (1 <= currentPlayer.getGod().remains_moves)
+                    currentPhase = Phase.CHECK_LOSE_MOVE;
+                else
+                    currentPhase = Phase.CHECK_LOSE_BUILD;
+                break;
+            case CHECK_LOSE_BUILD:
+                currentPhase = Phase.BUILD;
+                break;
+            case BUILD:
+                currentPhase = Phase.CHECK_WIN_BUILD;
+                break;
+            case CHECK_WIN_BUILD:
+                if (2 <= currentPlayer.getGod().remains_builds)
+                    currentPhase = Phase.CHECK_LOSE_BUILD;
+                else
+                    currentPhase = Phase.END;
+                break;
+            case END:
+                currentPhase = Phase.CHOOSE_WORKER;
+                currentPlayerNumber++;
+                if(numberOfPlayers == currentPlayerNumber)
+                    currentPlayerNumber = 0;
+                break;
+        }
     }
 
     public void addPlayer(){
         numberOfPlayers++;
     }
 
-    public void nextPhase(){
-        switch (currentPhase){
-            case CHOOSE_WORKER:{
-                    currentPhase=Phase.MOVE;
-                    break;
-            }
-            case MOVE:{
-                currentPhase=Phase.BUILD;
-                break;
-            }
-            case BUILD:{
-                currentPhase=Phase.END;
-                break;
-            }
-            case END:{
-                currentPhase=Phase.CHOOSE_WORKER;
-                currentPlayer++;
-                if(numberOfPlayers==currentPlayer){
-                    currentPlayer=0;
-                }
-            }
-        }
+    public void subsPlayer(){
+        numberOfPlayers--;
     }
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
+    public int getCurrentPlayerNumber() {
+        return currentPlayerNumber;
     }
 
-    public int getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(int currentPlayer) {
-        this.currentPlayer = currentPlayer;
+    /**
+     * this function initialize the turn of the player
+     * @param VamosAllaPlayer i Choose you VAMOSALLAPLAYER!
+     */
+    public void setCurrentPlayerNumber(Player VamosAllaPlayer) {
+        this.currentPlayerNumber = VamosAllaPlayer.getPlayerNumber();
+        this.currentPlayer = VamosAllaPlayer;
+        this.currentPhase = Phase.CHOOSE_WORKER;
     }
 
     public Phase getCurrentPhase() {
         return currentPhase;
     }
-
-    public void setCurrentPhase(Phase currentPhase) {
-        this.currentPhase = currentPhase;
-    }
-
-
 }

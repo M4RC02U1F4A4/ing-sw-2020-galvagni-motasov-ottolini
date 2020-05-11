@@ -2,12 +2,14 @@ package it.polimi.ingsw.PSP23.model;
 
 import it.polimi.ingsw.PSP23.model.god.Apollo;
 import it.polimi.ingsw.PSP23.model.god.Minotaur;
+import it.polimi.ingsw.PSP23.model.god.Zeus;
 import org.junit.*;
 import it.polimi.ingsw.PSP23.model.Map;
 import static org.junit.Assert.*;
 
 public class GodTest {
     God rjdio;
+    Zeus saetta;
     Apollo apelle;
     Minotaur toro;
     Cell ulare, perfect, banana;
@@ -21,6 +23,7 @@ public class GodTest {
         banana = new Cell();
         perfect = new Cell();
         rjdio = new God();
+        saetta = new Zeus();
         apelle = new Apollo();
         toro = new Minotaur();
         map = new Map();
@@ -191,28 +194,40 @@ public class GodTest {
     }
 
     /* number = height, o = occupied, b= base(height zero). bottom left = 0,0
-    test 1, result = athena_moved_up
+        test 1, result = athena_moved_up
     2       o       1
     2       b       2
     2       o       2
-    test 2 result = true
+        test 2 result = true
     2       o       2
     2       b       2
     2       o       2
-    test 3 result = athena_moved_up (apollo)
+        test 3 result = athena_moved_up (apollo)
     2       o(1)    2
     2       b       2
     2       o       2
-    test 4 result = athena_moved_up (mino)
+        test 4 result = athena_moved_up (mino)
             0
     2       o(1)    2
     2       b       2
     2       o       2
-    test 5 result = true (mino)
+        test 5 result = true (mino)
             o
     2       o(1)    2
     2       b       2
     2       o       2
+        test 6 result = false
+    2       o(1)    2
+    2       b       2
+    2       o       2
+        test 7 result = true
+    c       o(1)    c
+    c       b       c
+    c       o       c
+        test 8 result = false (zeus)
+    c       o(1)    c
+    c       b       c
+    c       o       c
      */
     @Test
     public void testCheckLoss() {
@@ -253,5 +268,19 @@ public class GodTest {
         banana = map.getCell(3,1);
         opelatole_ecologico = new Worker(banana, Color.WHITE);
         assertTrue(toro.checkLossMove(pedone1, map));
+        //test 6
+        assertFalse(rjdio.checkLossBuild(pedone1, map));
+        //test 7
+        for (int i = 0; i < 2; i++) {
+            uno.build(Status.BUILT);
+            tre.build(Status.BUILT);
+            qua.build(Status.BUILT);
+            sei.build(Status.BUILT);
+            set.build(Status.BUILT);
+            nov.build(Status.BUILT);
+        }
+        assertTrue(rjdio.checkLossBuild(pedone1, map));
+        //test 8
+        assertFalse(saetta.checkLossBuild(pedone1, map));
     }
 }

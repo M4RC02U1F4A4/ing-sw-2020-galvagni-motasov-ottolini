@@ -154,9 +154,21 @@ public class God {
     }
 
     //TODO jabbadoc, da chiamare subito dopo il move
-    //casi particolari: ???
+    //TODO aggiungere caso costruzione cupola sotto i piedi di zeus
+    //casi particolari: zeus
     public boolean checkLossBuild(Worker w, Map map) {
-        return false;
+        int posX = w.getPosX();
+        int posY = w.getPosY();
+        for (int cont1 = -1; cont1 < 2; cont1++) {
+            for (int cont2 = -1; cont2 < 2; cont2++) {
+                Cell JustChecking = map.getCell(posX + cont1, posY + cont2);
+                if (JustChecking.isNear(w,false) && !JustChecking.isOccupied() && JustChecking.height() < 4)
+                    return false;
+                else if ("Zeus".equals(this.name) && 0 == cont1 && 0 == cont2 && JustChecking.height() < 3)
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**

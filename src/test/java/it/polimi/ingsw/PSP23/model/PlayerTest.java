@@ -55,6 +55,9 @@ public class PlayerTest {
         assertEquals(workerlistTemp[1], workerlist[1]);
         player.setColor(Color.WHITE);
         assertEquals(Color.WHITE,player.getColor());
+        Worker Lurido = new Worker(map.getCell(3,3), Color.WHITE);
+        assertNull(player.getWorkerByNumber(2));
+        player.setWorkerByNumber(Lurido, 2);
     }
 
 

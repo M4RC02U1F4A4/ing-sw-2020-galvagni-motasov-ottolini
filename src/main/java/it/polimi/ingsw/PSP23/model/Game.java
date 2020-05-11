@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP23.model;
 
-import it.polimi.ingsw.PSP23.model.god.*;
 import it.polimi.ingsw.PSP23.observer.Observable;
 
 import java.util.ArrayList;
@@ -89,19 +88,16 @@ public class Game extends Observable<Message> {
     }
 
     public int getTurnNumber(){
-        return turnManager.getCurrentPlayer();
+        return turnManager.getCurrentPlayerNumber();
     }
 
     public void nextPhase(){
         turnManager.nextPhase();
     }
 
-
     public int getNumberOfPlayers(){
         return players.size();
     }
-
-
 
     public void performeMove(int x, int y, Player player, Action action){
         if(action == Action.BUILD){
@@ -125,7 +121,6 @@ public class Game extends Observable<Message> {
      * Method used to give each player a different color
      * @return
      */
-
     public Color getUnusedColor(){
         switch (colourVariable) {
             case (0):
@@ -145,18 +140,15 @@ public class Game extends Observable<Message> {
         return players.get(pos);
     }
 
-    //TODO: COSE MANCANTI:
-    //TODO:VERIFICARE SE SI HA PERSO SEMPRE TRAMITE UN METODO
-
     public ArrayList<String> getChosenGods(){
         return takenGods;
     }
 
     public int getCurrentPlayer(){
-        return turnManager.getCurrentPlayer();
+        return turnManager.getCurrentPlayerNumber();
     }
 
-    public TurnManager.Phase getCurrentPhase(){
+    public Phase getCurrentPhase(){
         return turnManager.getCurrentPhase();
     }
 
