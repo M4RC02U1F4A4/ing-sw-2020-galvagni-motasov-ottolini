@@ -8,6 +8,7 @@ public abstract class Message implements Serializable {
     private final Action action;
     private final int x;
     private final int y;
+    private final int nWorker;
 
 
     public Player getPlayer() {
@@ -30,12 +31,13 @@ public abstract class Message implements Serializable {
         return y;
     }
 
-    public Message(Player player, Map map, Action action, int x, int y) {
+    public Message(Player player, Map map, Action action, int x, int y, int nWorker) {
         this.player = player;
         this.map = map;
         this.action = action;
         this.x = x;
         this.y = y;
+        this.nWorker = nWorker;
     }
 
 }

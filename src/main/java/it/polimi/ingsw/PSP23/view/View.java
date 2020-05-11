@@ -20,14 +20,14 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
 
     protected abstract void showMessage(Object message);
 
-    void handleMove(int x, int y){
+    void handleMove(int x, int y, int nWorker){
         System.out.println(x+" "+y);
-        notify(new PlayerMove(player, this , x, y, Action.MOVE));
+        notify(new PlayerMove(player, this , x, y, Action.MOVE, nWorker));
     }
 
-    void handleBuild(int x, int y){
+    void handleBuild(int x, int y, int nWorker){
         System.out.println(x+" "+y);
-        notify(new PlayerMove(player, this , x, y, Action.BUILD));
+        notify(new PlayerMove(player, this , x, y, Action.BUILD, nWorker));
     }
 
 

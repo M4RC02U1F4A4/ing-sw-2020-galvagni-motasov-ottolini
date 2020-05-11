@@ -1,9 +1,11 @@
 package it.polimi.ingsw.PSP23.model;
 
+import java.io.Serializable;
+
 /**
 *   Map class
 */
-public class Map {
+public class Map implements Serializable {
     private Cell cells[][];
 
     /**

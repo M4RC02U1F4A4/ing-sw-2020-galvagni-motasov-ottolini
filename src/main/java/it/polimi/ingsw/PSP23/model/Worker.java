@@ -1,8 +1,11 @@
 package it.polimi.ingsw.PSP23.model;
+
+import java.io.Serializable;
+
 /**
 * Worker class
 */
-public class Worker {
+public class Worker implements Serializable {
     private Cell cell;
     Color color;
 
