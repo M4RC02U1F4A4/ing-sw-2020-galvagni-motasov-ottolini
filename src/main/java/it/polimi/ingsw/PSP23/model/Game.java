@@ -158,6 +158,4 @@ public class Game extends Observable<Message> {
         else
             return false;
     }
-
-
 }

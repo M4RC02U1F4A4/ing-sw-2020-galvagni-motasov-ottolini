@@ -1,0 +1,224 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Server</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.server</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Server (it.polimi.ingsw.PSP23.server)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Server</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 78)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.server;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.client.Client;
+<i>4</i>&nbsp;//import it.polimi.ingsw.PSP23.controller.Controller;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP23.model.*;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP23.model.god.Apollo;
+<i>7</i>&nbsp;import it.polimi.ingsw.PSP23.model.god.Demeter;
+<i>8</i>&nbsp;import it.polimi.ingsw.PSP23.view.RemoteView;
+<i>9</i>&nbsp;import it.polimi.ingsw.PSP23.view.View;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.io.IOException;
+<i>12</i>&nbsp;import java.net.ServerSocket;
+<i>13</i>&nbsp;import java.net.Socket;
+<i>14</i>&nbsp;import java.util.*;
+<i>15</i>&nbsp;import java.util.Map;
+<i>16</i>&nbsp;import java.util.concurrent.Executor;
+<i>17</i>&nbsp;import java.util.concurrent.ExecutorService;
+<i>18</i>&nbsp;import java.util.concurrent.Executors;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;public class Server {
+<i>21</i>&nbsp;    private static final int PORT=13245;
+<i>22</i>&nbsp;    private ServerSocket serverSocket;
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;    private ExecutorService executor= Executors.newFixedThreadPool(5); //probabilmente basta falo con 3 al massimo, da vedere</b>
+<b class="nc"><i>25</i>&nbsp;    private Map&lt;String, ClientConnection&gt; waitingConnection2vs2=new HashMap&lt;&gt;();</b>
+<b class="nc"><i>26</i>&nbsp;    private Map&lt;String, ClientConnection&gt; waitingConnection3vs3=new HashMap&lt;&gt;();</b>
+<b class="nc"><i>27</i>&nbsp;    private ArrayList&lt;Player&gt; players=new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>28</i>&nbsp;    private ArrayList&lt;ClientConnection&gt;conn=new ArrayList&lt;&gt;();</b>
+<i>29</i>&nbsp;    public synchronized void deregisterConnection(ClientConnection c){
+<b class="nc"><i>30</i>&nbsp;        System.out.println(&quot;XD&quot;);</b>
+<i>31</i>&nbsp;    }
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public synchronized void lobby(ClientConnection c, String name, int numberOfPlayers){
+<b class="nc"><i>34</i>&nbsp;        if(numberOfPlayers==2){</b>
+<b class="nc"><i>35</i>&nbsp;            waitingConnection2vs2.put(name, c);</b>
+<b class="nc"><i>36</i>&nbsp;            c.asyncSend(&quot;Benvenuto nella lobby a 2 giocatori&quot;);</b>
+<b class="nc"><i>37</i>&nbsp;            System.out.println(&quot;Si e&#39; connesso &quot;+name);</b>
+<b class="nc"><i>38</i>&nbsp;            if(waitingConnection2vs2.size()==2){</b>
+<b class="nc"><i>39</i>&nbsp;                System.out.println(&quot;istanzio il controller&quot;);</b>
+<b class="nc"><i>40</i>&nbsp;                Game game=new Game();</b>
+<i>41</i>&nbsp;                //Controller controller=new Controller(game);
+<b class="nc"><i>42</i>&nbsp;                Set&lt;Map.Entry&lt;String, ClientConnection&gt;&gt; st= waitingConnection2vs2.entrySet();</b>
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;                for(Map.Entry&lt;String, ClientConnection&gt;me:st){</b>
+<b class="nc"><i>45</i>&nbsp;                    String nome=me.getKey();</b>
+<b class="nc"><i>46</i>&nbsp;                    String ip=me.getValue().getIpAddress();</b>
+<b class="nc"><i>47</i>&nbsp;                    conn.add(me.getValue());</b>
+<b class="nc"><i>48</i>&nbsp;                    System.out.println(&quot;Creo il giocatore &quot;+nome+&quot; con ip &quot;+ip);</b>
+<b class="nc"><i>49</i>&nbsp;                    Player p=new Player(nome, ip);</b>
+<b class="nc"><i>50</i>&nbsp;                    players.add(p);</b>
+<b class="nc"><i>51</i>&nbsp;                }</b>
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;                Worker[] workers = new Worker[2];</b>
+<b class="nc"><i>54</i>&nbsp;                workers[0]=new Worker(game.getMap().getCell(0,0),Color.BLUE);</b>
+<b class="nc"><i>55</i>&nbsp;                workers[1]=new Worker(game.getMap().getCell(0,1),Color.BLUE);</b>
+<b class="nc"><i>56</i>&nbsp;                players.get(0).setWorkers(workers);</b>
+<b class="nc"><i>57</i>&nbsp;                players.get(0).setColor(Color.BLUE);</b>
+<b class="nc"><i>58</i>&nbsp;                players.get(0).setGod(new Apollo());</b>
+<i>59</i>&nbsp;                //controller.addPlayer(players.get(0));
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;                workers[0]=new Worker(game.getMap().getCell(3,3),Color.RED);</b>
+<b class="nc"><i>62</i>&nbsp;                workers[1]=new Worker(game.getMap().getCell(3,4),Color.RED);</b>
+<b class="nc"><i>63</i>&nbsp;                players.get(1).setWorkers(workers);</b>
+<b class="nc"><i>64</i>&nbsp;                players.get(1).setColor(Color.RED);</b>
+<b class="nc"><i>65</i>&nbsp;                players.get(1).setGod(new Demeter());</b>
+<i>66</i>&nbsp;                //controller.addPlayer(players.get(1));
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;
+<b class="nc"><i>69</i>&nbsp;                View player1view=new RemoteView(players.get(0),conn.get(0));</b>
+<b class="nc"><i>70</i>&nbsp;                View player2view=new RemoteView(players.get(1),conn.get(1));</b>
+<b class="nc"><i>71</i>&nbsp;                game.addObserver(player1view);</b>
+<b class="nc"><i>72</i>&nbsp;                game.addObserver(player2view);</b>
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;
+<b class="nc"><i>76</i>&nbsp;                conn.get(0).asyncSend(game.getMap());</b>
+<b class="nc"><i>77</i>&nbsp;                conn.get(1).asyncSend(game.getMap());</b>
+<i>78</i>&nbsp;
+<b class="nc"><i>79</i>&nbsp;                if(game.isPlayerTurn(players.get(0))){</b>
+<b class="nc"><i>80</i>&nbsp;                    conn.get(0).asyncSend(&quot;e&#39; il tuo turno&quot;);</b>
+<b class="nc"><i>81</i>&nbsp;                    conn.get(1).asyncSend(&quot;non e&#39; il tuo turno&quot;);</b>
+<i>82</i>&nbsp;                }
+<i>83</i>&nbsp;                else{
+<b class="nc"><i>84</i>&nbsp;                    conn.get(0).asyncSend(&quot;non e&#39; il tuo turno&quot;);</b>
+<b class="nc"><i>85</i>&nbsp;                    conn.get(1).asyncSend(&quot;e&#39; il tuo turno&quot;);</b>
+<i>86</i>&nbsp;                }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;
+<b class="nc"><i>89</i>&nbsp;            }</b>
+<i>90</i>&nbsp;        }
+<b class="nc"><i>91</i>&nbsp;        else if(numberOfPlayers==3) {</b>
+<b class="nc"><i>92</i>&nbsp;            waitingConnection3vs3.put(name, c);</b>
+<b class="nc"><i>93</i>&nbsp;            c.asyncSend(&quot;Benvenuto nella lobby a 3 giocatori&quot;);</b>
+<b class="nc"><i>94</i>&nbsp;            System.out.println(&quot;Si e&#39; connesso &quot; + name);</b>
+<b class="nc"><i>95</i>&nbsp;            if (waitingConnection3vs3.size() == 3) {</b>
+<b class="nc"><i>96</i>&nbsp;                System.out.println(&quot;istanzio il controller&quot;);</b>
+<i>97</i>&nbsp;                //Controller controller = new Controller(new Game());
+<b class="nc"><i>98</i>&nbsp;                Set&lt;Map.Entry&lt;String, ClientConnection&gt;&gt; st = waitingConnection3vs3.entrySet();</b>
+<b class="nc"><i>99</i>&nbsp;                for (Map.Entry&lt;String, ClientConnection&gt; me : st) {</b>
+<b class="nc"><i>100</i>&nbsp;                    String nome = me.getKey();</b>
+<b class="nc"><i>101</i>&nbsp;                    String ip = me.getValue().getIpAddress();</b>
+<b class="nc"><i>102</i>&nbsp;                    System.out.println(&quot;Creo il giocatore &quot; + nome + &quot; con ip &quot; + ip);</b>
+<i>103</i>&nbsp;                    //controller.addPlayer(new Player(nome, ip));
+<b class="nc"><i>104</i>&nbsp;                }</b>
+<b class="nc"><i>105</i>&nbsp;                System.out.println(&quot;HO AGGIUNTO TUTTI E TRE I GIOCATORI AAAAAAAAAAAAAAAAAAAA&quot;);</b>
+<i>106</i>&nbsp;            }
+<i>107</i>&nbsp;
+<b class="nc"><i>108</i>&nbsp;            System.out.println(&quot;Giocatori in attesa di una partita per 2&quot;);</b>
+<b class="nc"><i>109</i>&nbsp;            Set&lt;Map.Entry&lt;String, ClientConnection&gt;&gt; st = waitingConnection2vs2.entrySet();</b>
+<b class="nc"><i>110</i>&nbsp;            for (Map.Entry&lt;String, ClientConnection&gt; me : st) {</b>
+<b class="nc"><i>111</i>&nbsp;                System.out.print(me.getKey() + &quot;:&quot;);</b>
+<b class="nc"><i>112</i>&nbsp;                System.out.println(me.getValue().getIpAddress());</b>
+<b class="nc"><i>113</i>&nbsp;            }</b>
+<i>114</i>&nbsp;
+<b class="nc"><i>115</i>&nbsp;            System.out.println(&quot;Giocatori in attesa di una partita per 3&quot;);</b>
+<b class="nc"><i>116</i>&nbsp;            Set&lt;Map.Entry&lt;String, ClientConnection&gt;&gt; sti = waitingConnection3vs3.entrySet();</b>
+<b class="nc"><i>117</i>&nbsp;            for (Map.Entry&lt;String, ClientConnection&gt; me : sti) {</b>
+<b class="nc"><i>118</i>&nbsp;                System.out.print(me.getKey() + &quot;:&quot;);</b>
+<b class="nc"><i>119</i>&nbsp;                System.out.println(me.getValue().getIpAddress());</b>
+<b class="nc"><i>120</i>&nbsp;            }</b>
+<i>121</i>&nbsp;        }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    }
+<i>125</i>&nbsp;
+<b class="nc"><i>126</i>&nbsp;    public Server() throws IOException {</b>
+<b class="nc"><i>127</i>&nbsp;        this.serverSocket=new ServerSocket(PORT);</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    public void run(){
+<i>131</i>&nbsp;        while(true){
+<i>132</i>&nbsp;            try{
+<b class="nc"><i>133</i>&nbsp;                Socket s=serverSocket.accept();</b>
+<b class="nc"><i>134</i>&nbsp;                SocketClientConnection socketConnection= new SocketClientConnection(s, this);</b>
+<b class="nc"><i>135</i>&nbsp;                executor.submit(socketConnection);</b>
+<b class="nc"><i>136</i>&nbsp;            }catch(IOException e){</b>
+<b class="nc"><i>137</i>&nbsp;                System.out.println(&quot;Connection error&quot;);</b>
+<b class="nc"><i>138</i>&nbsp;            }</b>
+<i>139</i>&nbsp;        }
+<i>140</i>&nbsp;    }
+<i>141</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-11 21:00</div>
+</div>
+</body>
+</html>

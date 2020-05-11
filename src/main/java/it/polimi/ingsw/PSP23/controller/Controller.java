@@ -4,7 +4,7 @@ import it.polimi.ingsw.PSP23.model.*;
 import it.polimi.ingsw.PSP23.observer.Observer;
 
 import java.util.ArrayList;
-
+/*
 public class Controller implements Observer<PlayerMove> {
 
     private final Game game;
@@ -33,6 +33,7 @@ public class Controller implements Observer<PlayerMove> {
 
 
     //TODO
+
     public synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
         if(game.isPlayerTurn(move.getPlayer())){
@@ -56,3 +57,4 @@ public class Controller implements Observer<PlayerMove> {
 
     }
 }
+        */

@@ -1,0 +1,127 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: provaMain</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23</a> ]
+</div>
+
+<h1>Coverage Summary for Class: provaMain (it.polimi.ingsw.PSP23)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">provaMain</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;//import it.polimi.ingsw.PSP23.controller.Controller;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP23.model.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP23.model.god.Apollo;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP23.server.SocketClientConnection;
+<i>7</i>&nbsp;import it.polimi.ingsw.PSP23.view.RemoteView;
+<i>8</i>&nbsp;import it.polimi.ingsw.PSP23.view.View;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.util.Arrays;
+<i>11</i>&nbsp;
+<b class="nc"><i>12</i>&nbsp;public class provaMain {</b>
+<i>13</i>&nbsp;    public static void main(String[] args) {
+<b class="nc"><i>14</i>&nbsp;        Map m=new Map();</b>
+<b class="nc"><i>15</i>&nbsp;        Game g=new Game();</b>
+<b class="nc"><i>16</i>&nbsp;        Player ivan=new Player(&quot;ivan&quot;,&quot;localhost&quot;);</b>
+<b class="nc"><i>17</i>&nbsp;        Player lapo=new Player(&quot;lapo&quot;,&quot;localhost&quot;);</b>
+<b class="nc"><i>18</i>&nbsp;        g.addPlayer(ivan);</b>
+<b class="nc"><i>19</i>&nbsp;        g.addPlayer(lapo);</b>
+<b class="nc"><i>20</i>&nbsp;        System.out.println(g.getPlayer(0).getPlayerNumber());</b>
+<b class="nc"><i>21</i>&nbsp;        System.out.println(g.getPlayer(1).getPlayerNumber());</b>
+<b class="nc"><i>22</i>&nbsp;        g.chooseRandomGods();</b>
+<b class="nc"><i>23</i>&nbsp;        System.out.println(Arrays.toString(g.getChosenGods().toArray()));</b>
+<i>24</i>&nbsp;        //g.addGod(ivan, &quot;Apollo&quot;);
+<i>25</i>&nbsp;        //g.addGod(lapo, &quot;Apollo&quot;);
+<b class="nc"><i>26</i>&nbsp;        System.out.println(ivan.getGod().name());</b>
+<b class="nc"><i>27</i>&nbsp;        System.out.println(lapo.getGod().name());</b>
+<b class="nc"><i>28</i>&nbsp;        Worker[] workers = new Worker[2];</b>
+<b class="nc"><i>29</i>&nbsp;        workers[0]=new Worker(g.getMap().getCell(0,0),Color.BLUE);</b>
+<b class="nc"><i>30</i>&nbsp;        workers[1]=new Worker(g.getMap().getCell(0,1),Color.BLUE);</b>
+<b class="nc"><i>31</i>&nbsp;        ivan.setWorkers(workers);</b>
+<b class="nc"><i>32</i>&nbsp;        g.getMap().drawMap();</b>
+<i>33</i>&nbsp;
+<b class="nc"><i>34</i>&nbsp;        God dio=new Apollo();</b>
+<b class="nc"><i>35</i>&nbsp;        dio.move(g.getMap().getCell(1,1),ivan.getWorkerByNumber(0),g.getMap());</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;        //ivan.getGod().move(g.getMap().getCell(1,1),ivan.getWorkerByNumber(0),g.getMap());
+<i>38</i>&nbsp;        //g.performeMove(1, 1, ivan, Action.MOVE,0);
+<b class="nc"><i>39</i>&nbsp;        PlayerMove move=new PlayerMove(ivan, null, 1,1,Action.BUILD,1);</b>
+<i>40</i>&nbsp;        //g.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE, move.getnWorker());
+<b class="nc"><i>41</i>&nbsp;        g.getMap().drawMap();</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-11 21:00</div>
+</div>
+</body>
+</html>
