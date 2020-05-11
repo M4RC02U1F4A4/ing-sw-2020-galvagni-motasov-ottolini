@@ -106,6 +106,7 @@ public class MapCellTest {
         map.getCell(1, 1).build(Status.BUILT);
         System.out.println(map.getCell(1, 1).toString());
         map.printStatus();
+        map.drawMap();
     }
 
     @Test
