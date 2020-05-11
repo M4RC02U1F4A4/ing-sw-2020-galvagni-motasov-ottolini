@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP23.model;
 
-import it.polimi.ingsw.PSP23.model.god.*;
 import it.polimi.ingsw.PSP23.observer.Observable;
 
 import java.util.ArrayList;
@@ -36,97 +35,8 @@ public class Game extends Observable<Message> {
      */
     public void addPlayer(Player p){
 
-        //p.setColor(getUnusedColor());
-        p.setPlayerNumber(players.size());
-        players.add(p);
-        turnManager.addPlayer();
 
-    }
-
-    public int getTurnNumber(){
-        return turnManager.getCurrentPlayer();
-    }
-
-    public void nextPhase(){
-        turnManager.nextPhase();
-    }
-
-
-    public int getNumberOfPlayers(){
-        return players.size();
-    }
-
-
-
-    public void performeMove(int x, int y, Player player, Action action, int nWorker){
-        if(action == Action.BUILD){
-            //TODO build
-            player.getGod().build(map.getCell(x,y),Status.BUILT,player.getWorkerByNumber(nWorker));
-            notify(new BuildMessage(player, getMap(), x, y, nWorker));
-        }
-        else if(action == Action.MOVE){
-            //TODO move
-            player.getGod().move(map.getCell(x,y),player.getWorkerByNumber(nWorker),map);
-            notify(new MoveMessage(player, getMap(), x, y, nWorker));
-        }
-        else if(action==Action.PLACE_WORKERS){
-            //TODO PLACE WORKERS
-        }
-        else if(action==Action.CHOOSE_GODS){
-            //TODO CHOOSE GODS
-        }
-        else return;//magari anche qui con un'eccezione
-    }
-
-    /**
-     * Method used to give each player a different color
-     * @return
-     */
-
-    public Color getUnusedColor(){
-        switch (colourVariable) {
-            case (0):
-                colourVariable++;
-                return Color.RED;
-            case (1):
-                colourVariable++;
-                return Color.BLUE;
-            case (2):
-                colourVariable++;
-                return Color.WHITE;
-            default:return null;
-        }
-    }
-
-    public Player getPlayer(int pos){
-        return players.get(pos);
-    }
-
-    //TODO: COSE MANCANTI:
-    //TODO:VERIFICARE SE SI HA PERSO SEMPRE TRAMITE UN METODO
-
-    public ArrayList<String> getChosenGods(){
-        return takenGods;
-    }
-
-    public int getCurrentPlayer(){
-        return turnManager.getCurrentPlayer();
-    }
-
-    public TurnManager.Phase getCurrentPhase(){
-        return turnManager.getCurrentPhase();
-    }
-    public void setCurrentPhase(TurnManager.Phase p){turnManager.setCurrentPhase(p);}
-
-    public boolean isPlayerTurn(Player p){
-        if(p.getPlayerNumber()==getCurrentPlayer())
-            return true;
-        else
-            return false;
-    }
-
-    public void addGod(Player p, String chosenGod){
-        switch (chosenGod){
+        /*switch (tmp){
             case "Apollo":
                         p.setGod(new Apollo());
                         break;
@@ -169,8 +79,84 @@ public class Game extends Observable<Message> {
             case "Zeus"
                         :p.setGod(new Zeus());
                         break;
-        }
+        }*/
+        //p.setColor(getUnusedColor());
+        p.setPlayerNumber(players.size());
+        players.add(p);
+        turnManager.addPlayer();
 
+    }
+
+    public int getTurnNumber(){
+        return turnManager.getCurrentPlayerNumber();
+    }
+
+    public void nextPhase(){
+        turnManager.nextPhase();
+    }
+
+    public int getNumberOfPlayers(){
+        return players.size();
+    }
+
+    public void performeMove(int x, int y, Player player, Action action){
+        if(action == Action.BUILD){
+            //TODO build
+            //TOTO build
+        }
+        else if(action == Action.MOVE){
+            //TODO move
+            //takenGods.add(players.get(0).getGod().choseRandomGod());
+        }
+        else if(action==Action.PLACE_WORKERS){
+            //TODO PLACE WORKERS
+        }
+        else if(action==Action.CHOOSE_GODS){
+            //TODO CHOOSE GODS
+        }
+        else return;//magari anche qui con un'eccezione
+    }
+
+    /**
+     * Method used to give each player a different color
+     * @return
+     */
+    public Color getUnusedColor(){
+        switch (colourVariable) {
+            case (0):
+                colourVariable++;
+                return Color.RED;
+            case (1):
+                colourVariable++;
+                return Color.BLUE;
+            case (2):
+                colourVariable++;
+                return Color.WHITE;
+            default:return null;
+        }
+    }
+
+    public Player getPlayer(int pos){
+        return players.get(pos);
+    }
+
+    public ArrayList<String> getChosenGods(){
+        return takenGods;
+    }
+
+    public int getCurrentPlayer(){
+        return turnManager.getCurrentPlayerNumber();
+    }
+
+    public Phase getCurrentPhase(){
+        return turnManager.getCurrentPhase();
+    }
+
+    public boolean isPlayerTurn(Player p){
+        if(p.getPlayerNumber()==getCurrentPlayer())
+            return true;
+        else
+            return false;
     }
 
 

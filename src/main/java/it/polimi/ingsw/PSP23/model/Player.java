@@ -6,7 +6,7 @@ package it.polimi.ingsw.PSP23.model;
 public class Player {
     private String name;
     private String ipAddress;
-    private Worker workers[];
+    private Worker[] workers;
     private God god;
     private Color color;
     private int playerNumber;
@@ -118,13 +118,6 @@ public class Player {
         c1.setWorker(workers[0]);
         c2.setWorker(workers[2]);
     }
-
-    /**
-     * Checks if any of the player's wokers has won
-     * @return true if the player has won, false otherwise
-     */
-
-    public boolean checkWin(){return god.checkWin(workers[0])||god.checkWin(workers[1]);}
 
     /**
      * Gets the playernumber, used for managing the turns
