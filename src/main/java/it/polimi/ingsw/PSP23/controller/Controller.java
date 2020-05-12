@@ -44,6 +44,7 @@ public class Controller implements Observer<PlayerMove> {
                 game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.BUILD,move.getnWorker());
             }
         }
+        //TODO:UPDATE TURN
         //game.setCurrentPhase(TurnManager.Phase.END);
 
 

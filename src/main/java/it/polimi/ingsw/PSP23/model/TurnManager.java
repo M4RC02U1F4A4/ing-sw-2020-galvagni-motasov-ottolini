@@ -95,4 +95,9 @@ public class TurnManager {
     public Phase getCurrentPhase() {
         return currentPhase;
     }
+
+    //SOLO DI DEBUG!
+    public void vaiAllaFineDelTurno(){
+        currentPhase=Phase.END;
+    }
 }
