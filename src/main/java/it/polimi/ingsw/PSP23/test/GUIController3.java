@@ -52,12 +52,19 @@ public class GUIController3 {
             b20, b21, b22, b23, b24,
             b30, b31, b32, b33, b34,
             b40, b41, b42, b43, b44;
+    @FXML
+    private Button skipButton;
+
+    @FXML
+    private void skipButtonAction(){
+        System.out.println("SKIP");
+    }
 
     @FXML
     public void loadingButtonAction(){
-        player1Username.setText("Marco");
-        player2Username.setText("Marco");
-        player3Username.setText("Marco");
+        player1Username.setText("Player1");
+        player2Username.setText("Player2");
+        player3Username.setText("Player3");
         player1God.setImage(new Image ("/img/gods/Artemis.png"));
         player2God.setImage(new Image ("/img/gods/Prometheus.png"));
         player3God.setImage(new Image ("/img/gods/Minotaur.png"));
