@@ -117,9 +117,7 @@ public class Cell implements Serializable {
     *   @return true if the condition is verified, false otherwise
     */
     public boolean isOccupied(){
-        if(worker==null)
-            return false;
-        else return true;
+        return worker != null;
     }
 
     /**
@@ -203,7 +201,11 @@ public class Cell implements Serializable {
         return ret+"OCCUPATA: "+isOccupied();
     }
 
-    // Metodo utilizzato solo per i test
+    /**
+     * Only used for testing purpose. DO NOT USE!
+     * @param x x
+     * @param y y
+     */
     public void setCoord (int x, int y) {
         this.X = x;
         this.Y = y;

@@ -4,7 +4,7 @@ import it.polimi.ingsw.PSP23.model.god.Apollo;
 import it.polimi.ingsw.PSP23.model.god.Minotaur;
 import it.polimi.ingsw.PSP23.model.god.Zeus;
 import org.junit.*;
-import it.polimi.ingsw.PSP23.model.Map;
+
 import static org.junit.Assert.*;
 
 public class GodTest {
@@ -59,7 +59,7 @@ public class GodTest {
         assertEquals(rjdio.remains_builds, 0);
         assertEquals(rjdio.remains_moves, 0);
         assertEquals(rjdio.starting_z, -2);
-        assertEquals(rjdio.name(), "zioDelTuono");
+        assertEquals(rjdio.getName(), "zioDelTuono");
         rjdio.HeraIsHere();
         assertTrue(rjdio.is_hera_in_game);
         rjdio.choseRandomGod();

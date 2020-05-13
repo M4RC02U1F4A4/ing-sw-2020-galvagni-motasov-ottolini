@@ -33,7 +33,6 @@ public class Map implements Serializable {
         return ret;
     }
 
-
     /**
      * Return the cell of the map
      * @param x X position of the cell

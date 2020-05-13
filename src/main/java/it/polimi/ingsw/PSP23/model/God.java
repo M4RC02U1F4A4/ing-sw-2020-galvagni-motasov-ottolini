@@ -14,13 +14,15 @@ public class God {
     private boolean is_athena_in_game;
     private boolean athena_moved_up;
 
-    //TODO javadoc, intellij mi dice che non so scrivere tuono...
+    /**
+     *  Constructor of god
+     */
     public God() {
         setUpGod("zioDelTuono");
     }
 
     /**
-     * God setup
+     * Setup the god for the turn, used only internally. DO NOT USE OUTSIDE!
      * @param godName name of the god
      */
     protected void setUpGod(String godName) {
@@ -43,12 +45,12 @@ public class God {
     }
 
     /**
-    *   Set the parameters for how many time the player can move and build, based on the god that he owns
+    *   Set the parameters for how many time the player can move and build. DO NOT USE OUTSIDE!
     *   @param move number of moves that the player can do
     *   @param build number of times that the player can build
     *   @param moved_up true if athena moved up in this turn
     */
-    public void setUpTurn(int move, int build, boolean moved_up) {
+    protected void setUpTurn(int move, int build, boolean moved_up) {
         this.remains_moves = move;
         this.remains_builds = build;
         this.starting_z = -1;
@@ -61,6 +63,7 @@ public class God {
     *   otherwise the action is not successful
     *   @param c cell in which the player want to move the worker
     *   @param w worker that the player want to move
+    *   @param map used only for minotaur power
     *   @return 0 if the operation is successful,
     *           -1 if not near or occupied,
     *           -2 if already moved this turn,
@@ -69,7 +72,6 @@ public class God {
     *           -6 (Apollo) tried to move in friendly occupied cell.
     */
     public int move(Cell c, Worker w, Map map){
-        // verifico che non si salga se si verifica il potere di athena
         if(this.is_athena_in_game && this.athena_moved_up && (w.getPosZ() < c.height()))
             return -3;
         if (0 == this.remains_moves)
@@ -124,8 +126,13 @@ public class God {
             return false;
     }
 
-    //TODO jabbadoc, da chiamare 2 volte (una per ogni worker) dopo aver inizializzato il turno (colpa di athena)
-    //casi particolari: apollo, athena, minotauro
+    /**
+     *  Used for check if a worker cannot move thus triggering a loss
+     *  specific cases: Apollo, Athena, Minotaur
+     * @param w the worker checked
+     * @param map to check the cell near the worker
+     * @return true if loss, false if a move is possible
+     */
     public boolean checkLossMove(Worker w, Map map) {
         int posX = w.getPosX();
         int posY = w.getPosY();
@@ -153,9 +160,13 @@ public class God {
         return true;
     }
 
-    //TODO jabbadoc, da chiamare subito dopo il move
-    //TODO aggiungere caso costruzione cupola sotto i piedi di zeus
-    //casi particolari: zeus
+    /**
+     *  Used for check if a worker cannot build thus triggering a loss
+     *  specific cases: Zeus
+     * @param w the worker checked
+     * @param map to check the cell near the worker
+     * @return true if loss, false if a build is possible
+     */
     public boolean checkLossBuild(Worker w, Map map) {
         int posX = w.getPosX();
         int posY = w.getPosY();
@@ -178,7 +189,9 @@ public class God {
         this.is_athena_in_game = true;
     }
 
-    //TODO javadoc
+    /**
+     *  This function set the flag for the god hera
+     */
     public void HeraIsHere() {
         this.is_hera_in_game = true;
     }
@@ -188,18 +201,24 @@ public class God {
      * @return name of the god
      */
     public String choseRandomGod(){
-        String gods[]={"Apollo","Artemis",",Athena","Atlas","Chronus","Demeter","Hephaestus","Hera","Hestia","Minotaur","Pan","Prometheus","Triton","Zeus"};
+        String[] gods ={"Apollo","Artemis",",Athena","Atlas","Chronus","Demeter","Hephaestus","Hera","Hestia","Minotaur","Pan","Prometheus","Triton","Zeus"};
         int i= (int) ((Math.random()*100)%gods.length);
         return gods[i];
     }
 
-    // Metodo utilizzato solo per i test TODO javadoc
+    /**
+     *  function used only for debugging
+     * @return if athena moved up
+     */
     public boolean AthenaMovedUp() {
         return this.athena_moved_up;
     }
 
-    // Metodo utilizzato solo per i test TODO javadoc
-    public String name() {
+    /**
+     *  Getter function for the name
+     * @return the name of the god used
+     */
+    public String getName() {
         return this.name;
     }
 }

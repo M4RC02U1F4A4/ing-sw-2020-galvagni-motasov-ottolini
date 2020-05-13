@@ -36,14 +36,10 @@ public class Game extends Observable<Message> {
      * @param p the player we want to add to the game
      */
     public void addPlayer(Player p){
-
-
-        /**/
         //p.setColor(getUnusedColor());
         p.setPlayerNumber(players.size());
         players.add(p);
         turnManager.addPlayer();
-
     }
 
     public int getTurnNumber(){

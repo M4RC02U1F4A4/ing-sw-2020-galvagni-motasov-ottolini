@@ -98,7 +98,6 @@ public class Player {
      * Getter for the color
      * @return a color
      */
-
     public Color getColor() {
         return color;
     }
@@ -107,7 +106,6 @@ public class Player {
      * Set the Color for the player and its workers
      * @param color the color we want to set
      */
-
     public void setColor(Color color) {
         this.color = color;
         workers[0].setColor(color);

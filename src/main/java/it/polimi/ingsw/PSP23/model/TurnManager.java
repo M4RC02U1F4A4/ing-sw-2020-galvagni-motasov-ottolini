@@ -8,24 +8,29 @@ public class TurnManager {
     private int currentPlayerNumber;
     private Player currentPlayer;
     private Phase currentPhase;
+    private int Atheplayer;
+    private boolean Athena_moved_up;
 
     public TurnManager(){
-        currentPlayerNumber = 0;
-        currentPhase = Phase.CHOOSE_WORKER;
+        this.currentPlayerNumber = 0;
+        this.currentPhase = Phase.CHOOSE_WORKER;
+        this.Athena_moved_up = false;
+        this.Atheplayer = -1;
     }
 
     /**
-     *
+     * Phase switcher, also a turn initializer for gods
      */
     public void nextPhase(){
         switch (currentPhase) {
             case CHOOSE_WORKER:
                 currentPhase = Phase.START_TURN;
+                currentPlayer.getGod().startTurn(Athena_moved_up);
                 break;
             case START_TURN:
-                if ("Prometheus".equals(currentPlayer.getGod().name()) && 2 == currentPlayer.getGod().remains_builds)
+                if ("Prometheus".equals(currentPlayer.getGod().getName()) && 2 == currentPlayer.getGod().remains_builds)
                     currentPhase = Phase.CHECK_LOSE_BUILD;
-                else if ("Chronus".equals(currentPlayer.getGod().name()))
+                else if ("Chronus".equals(currentPlayer.getGod().getName()))
                     currentPhase = Phase.CHECK_WIN;
                 else
                     currentPhase = Phase.CHECK_LOSE_MOVE;
@@ -58,6 +63,8 @@ public class TurnManager {
                     currentPhase = Phase.END;
                 break;
             case END:
+                if (this.Atheplayer == currentPlayerNumber)
+                    this.Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
                 currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
                 if(numberOfPlayers == currentPlayerNumber)
@@ -84,12 +91,16 @@ public class TurnManager {
 
     /**
      * this function initialize the turn of the player
+     * also reset the athena moveup if athena is in game
      * @param VamosAllaPlayer i Choose you VAMOSALLAPLAYER!
      */
     public void setCurrentPlayerNumber(Player VamosAllaPlayer) {
         this.currentPlayerNumber = VamosAllaPlayer.getPlayerNumber();
         this.currentPlayer = VamosAllaPlayer;
-        this.currentPhase = Phase.CHOOSE_WORKER;
+        if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
+            this.Atheplayer = this.currentPlayerNumber;
+            this.Athena_moved_up = false;
+        }
     }
 
     public Phase getCurrentPhase() {

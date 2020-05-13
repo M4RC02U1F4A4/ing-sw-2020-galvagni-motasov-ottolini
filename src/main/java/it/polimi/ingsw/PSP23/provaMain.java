@@ -23,20 +23,18 @@ public class provaMain {
         System.out.println(Arrays.toString(g.getChosenGods().toArray()));
         //g.addGod(ivan, "Apollo");
         //g.addGod(lapo, "Apollo");
-        System.out.println(ivan.getGod().name());
-        System.out.println(lapo.getGod().name());
+        //System.out.println(ivan.getGod().name());
+        //System.out.println(lapo.getGod().name());
         Worker[] workers = new Worker[2];
         workers[0]=new Worker(g.getMap().getCell(0,0),Color.BLUE);
         workers[1]=new Worker(g.getMap().getCell(0,1),Color.BLUE);
         ivan.setWorkers(workers);
         g.getMap().drawMap();
-
         God dio=new Apollo();
         dio.move(g.getMap().getCell(1,1),ivan.getWorkerByNumber(0),g.getMap());
-
         //ivan.getGod().move(g.getMap().getCell(1,1),ivan.getWorkerByNumber(0),g.getMap());
         //g.performeMove(1, 1, ivan, Action.MOVE,0);
-        PlayerMove move=new PlayerMove(ivan, null, 1,1,Action.BUILD,1);
+        //PlayerMove move=new PlayerMove(ivan, null, 1,1,Action.BUILD,1);
         //g.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE, move.getnWorker());
         g.getMap().drawMap();
 
