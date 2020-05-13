@@ -134,11 +134,20 @@
          <bottom>
             <HBox alignment="CENTER" maxHeight="97.0" maxWidth="1280.0" minHeight="97.0" minWidth="1280.0" prefHeight="97.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="errorButton" maxHeight="97.0" maxWidth="768.0" minHeight="97.0" minWidth="768.0" mnemonicParsing="false" onAction="#errorButtonAction" prefHeight="97.0" prefWidth="768.0" style="-fx-background-color: transparent; -fx-background-image: url('&quot;/img/error.png&quot;');">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
+                  <Pane maxHeight="97.0" maxWidth="768.0" minHeight="97.0" minWidth="768.0" prefHeight="97.0" prefWidth="768.0">
+                     <children>
+                        <Button id="skip" fx:id="skipButton" alignment="CENTER" contentDisplay="CENTER" layoutX="268.0" layoutY="30.0" maxHeight="55.0" maxWidth="217.0" minHeight="55.0" minWidth="217.0" mnemonicParsing="false" onAction="#skipButtonAction" prefHeight="55.0" prefWidth="217.0" stylesheets="@style.css">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="errorButton" maxHeight="97.0" maxWidth="768.0" minHeight="97.0" minWidth="768.0" mnemonicParsing="false" onAction="#errorButtonAction" prefHeight="97.0" prefWidth="768.0" style="-fx-background-color: transparent; -fx-background-image: url('&quot;/img/error.png&quot;');">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </Pane>
                </children>
             </HBox>
          </bottom>

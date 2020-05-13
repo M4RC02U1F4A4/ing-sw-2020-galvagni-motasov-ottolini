@@ -19,14 +19,17 @@ public class RemoteView extends View{
         @Override
         public void update(String message) {
             System.out.println("Ricevuto: "+message);
+
             try{
                 String[] inputs=message.split(",");
-                if(inputs[0]=="MOVE"){
-                    System.out.println("mi muovo");
+
+                if(inputs[0].equals("MOVE")){
+                    clientConnection.asyncSend("MI MUOVO");
                     handleMove(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]));
+
                 }
-                else if(inputs[0]=="BUILD"){
-                    System.out.println("costruisco");
+                else if(inputs[0].equals("BUILD")){
+                    clientConnection.asyncSend("COSTRUISCO");
                     handleBuild(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]));
                 }
             }catch(IllegalArgumentException e){

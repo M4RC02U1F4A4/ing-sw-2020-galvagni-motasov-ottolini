@@ -4,7 +4,7 @@ import it.polimi.ingsw.PSP23.model.*;
 import it.polimi.ingsw.PSP23.observer.Observer;
 
 import java.util.ArrayList;
-/*
+
 public class Controller implements Observer<PlayerMove> {
 
     private final Game game;
@@ -44,6 +44,7 @@ public class Controller implements Observer<PlayerMove> {
                 game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.BUILD,move.getnWorker());
             }
         }
+        //TODO:UPDATE TURN
         //game.setCurrentPhase(TurnManager.Phase.END);
 
 
@@ -57,4 +58,3 @@ public class Controller implements Observer<PlayerMove> {
 
     }
 }
-        */
