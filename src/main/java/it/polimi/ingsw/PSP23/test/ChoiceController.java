@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
@@ -79,6 +80,26 @@ public class ChoiceController {
     private CheckBox checkHephaestus;
     @FXML
     private CheckBox checkAtlas;
+    @FXML
+    private Button choiceButton1;
+    @FXML
+    private Button choiceButton2;
+    @FXML
+    private Button choiceButton3;
+    @FXML
+    private ImageView choiceImage1desc;
+    @FXML
+    private ImageView choiceImage2desc;
+    @FXML
+    private ImageView choiceImage3desc;
+    @FXML
+    private ImageView choiceImage1;
+    @FXML
+    private ImageView choiceImage2;
+    @FXML
+    private ImageView choiceImage3;
+    @FXML
+    private Button loadingButton;
 
     @FXML
     public void choiceNextAction(){
@@ -103,14 +124,44 @@ public class ChoiceController {
             System.out.println(gods);
             Stage stage = (Stage) choiceError.getScene().getWindow();
             stage.close();
-            //try {
-                //TODO: aggiungere la finestra per la scelta della divinità
-            //} catch (IOException e) { e.printStackTrace(); }
+            try {
+                Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
+                Stage choice3 = new Stage();
+                choice3.setTitle("Santorini");
+                choice3.setScene(new Scene(rootChoice3));
+                choice3.setResizable(false);
+                choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                choice3.show();
+            } catch (IOException e) { e.printStackTrace(); }
         }
     }
+
+    @FXML
+    public void loadingButtonAction(){
+        choiceImage1desc.setImage(new Image ("/img/gods/Artemis_desc.png"));
+        choiceImage2desc.setImage(new Image ("/img/gods/Athena_desc.png"));
+        choiceImage3desc.setImage(new Image ("/img/gods/Atlas_desc.png"));
+        choiceImage1.setImage(new Image ("/img/gods/Artemis.png"));
+        choiceImage2.setImage(new Image ("/img/gods/Athena.png"));
+        choiceImage3.setImage(new Image ("/img/gods/Atlas.png"));
+        loadingButton.setVisible(false);
+    }
+
+    @FXML
+    public void choiceButton1Action(){
+        System.out.println("1");
+    }
+    @FXML
+    public void choiceButton2Action(){
+        System.out.println("2");
+    }
+    @FXML
+    public void choiceButton3Action(){
+        System.out.println("3");
+    }
+
     @FXML
     public void choiceErrorAction(){choiceError.setVisible(false);}
-
 
     @FXML
     public void apolloAction(){description("apollo");}
