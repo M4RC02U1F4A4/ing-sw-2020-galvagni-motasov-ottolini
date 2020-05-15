@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BackgroundImage;
@@ -45,6 +46,71 @@ public class ChoiceController {
     private Button hephaestus;
     @FXML
     private Button atlas;
+    @FXML
+    private Button choiceNext;
+    @FXML
+    private Button choiceError;
+
+    @FXML
+    private CheckBox checkApollo;
+    @FXML
+    private CheckBox checkHera;
+    @FXML
+    private CheckBox checkPrometheus;
+    @FXML
+    private CheckBox checkArtemis;
+    @FXML
+    private CheckBox checkTriton;
+    @FXML
+    private CheckBox checkZeus;
+    @FXML
+    private CheckBox checkMinotaur;
+    @FXML
+    private CheckBox checkDemeter;
+    @FXML
+    private CheckBox checkAthena;
+    @FXML
+    private CheckBox checkPan;
+    @FXML
+    private CheckBox checkChronus;
+    @FXML
+    private CheckBox checkHestia;
+    @FXML
+    private CheckBox checkHephaestus;
+    @FXML
+    private CheckBox checkAtlas;
+
+    @FXML
+    public void choiceNextAction(){
+        int check = 0;
+        String gods = "";
+        if(checkApollo.isSelected()){ check += 1; gods += "Apollo";}
+        if(checkHera.isSelected()){ check += 1; gods += "Hera";}
+        if(checkPrometheus.isSelected()){ check += 1; gods += "Prometheus";}
+        if(checkArtemis.isSelected()){ check += 1; gods += "Artemis";}
+        if(checkTriton.isSelected()){ check += 1; gods += "Triton";}
+        if(checkZeus.isSelected()){ check += 1; gods += "Zeus";}
+        if(checkMinotaur.isSelected()){ check += 1; gods += "Minotaur";}
+        if(checkDemeter.isSelected()){ check += 1; gods += "Demeter";}
+        if(checkAthena.isSelected()){ check += 1; gods += "Athena";}
+        if(checkPan.isSelected()){ check += 1; gods += "Pan";}
+        if(checkChronus.isSelected()){ check += 1; gods += "Chronus";}
+        if(checkHestia.isSelected()){ check += 1; gods += "Hestia";}
+        if(checkHephaestus.isSelected()){ check += 1; gods += "Hephaestus";}
+        if(checkAtlas.isSelected()){ check += 1; gods += "Atlas";}
+        if(check != 3) choiceError.setVisible(true);
+        else {
+            System.out.println(gods);
+            Stage stage = (Stage) choiceError.getScene().getWindow();
+            stage.close();
+            //try {
+                //TODO: aggiungere la finestra per la scelta della divinità
+            //} catch (IOException e) { e.printStackTrace(); }
+        }
+    }
+    @FXML
+    public void choiceErrorAction(){choiceError.setVisible(false);}
+
 
     @FXML
     public void apolloAction(){description("apollo");}
@@ -78,6 +144,7 @@ public class ChoiceController {
     public void description(String god){
         Stage window = new Stage();
         window.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+        //must be closed before reuse the choice window
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(god);
         window.setMinWidth(640);
