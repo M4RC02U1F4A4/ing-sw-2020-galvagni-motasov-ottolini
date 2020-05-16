@@ -37,18 +37,19 @@ public class Controller implements Observer<PlayerMove>{
 
     public synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
-        move.getView().showMessage("ciao");
+
         if(game.isPlayerTurn(move.getPlayer())){
+            move.getView().showMessage("VAMOS");
             /*if(move.getA()== Action.MOVE){
                 game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE,move.getnWorker());
             }
             else if(move.getA()== Action.BUILD){
                 game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.BUILD,move.getnWorker());
-            }*/
+            }
             while(game.getCurrentPhase()!=Phase.END){
                 playPhase(move);
             }
-
+            */
         }
         //TODO:UPDATE TURN
         game.nextTurn();
@@ -57,17 +58,16 @@ public class Controller implements Observer<PlayerMove>{
 
     @Override
     public void update(PlayerMove message) {
-        message.getView().showMessage("mi chiamo ivan");
         performMove(message);
 
     }
 
-    public void playPhase(PlayerMove move){
+    /*public void playPhase(PlayerMove move){
         /*switch (game.getCurrentPhase()){
             case CHOOSE_WORKER:{
 
                 break;
             }
-        }*/
-    }
+        }
+    }*/
 }
