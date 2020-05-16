@@ -53,7 +53,7 @@ public class RemoteView extends View{
     @Override
     public void update(Message message) {
         showMessage(message.getMap());
-        showMessage("vacca la madonna");
+        showMessage("aiuto");
 
         //VERIFICARE CHE NON SIA GAMEOVER
        /* if(message.getPlayer().getPlayerNumber()==)//non e' il tuo turno

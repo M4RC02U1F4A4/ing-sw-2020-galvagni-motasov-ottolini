@@ -37,7 +37,7 @@ public class Controller implements Observer<PlayerMove>{
 
     public synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
-        move.getView().showMessage("PORCODIO");
+        move.getView().showMessage("ciao");
         if(game.isPlayerTurn(move.getPlayer())){
             /*if(move.getA()== Action.MOVE){
                 game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE,move.getnWorker());
@@ -57,7 +57,7 @@ public class Controller implements Observer<PlayerMove>{
 
     @Override
     public void update(PlayerMove message) {
-        message.getView().showMessage("DIO BASTARDO");
+        message.getView().showMessage("mi chiamo ivan");
         performMove(message);
 
     }
