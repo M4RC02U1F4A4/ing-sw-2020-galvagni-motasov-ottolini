@@ -72,6 +72,8 @@ public class Server {
                 game.addObserver(player2view);
                 controller.addPlayerView(player1view);
                 controller.addPlayerView(player2view);
+                player1view.addObserver(controller);
+                player2view.addObserver(controller);
 
 
 

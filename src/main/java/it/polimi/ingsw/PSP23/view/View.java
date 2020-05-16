@@ -19,12 +19,16 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
     }
 
     public abstract void showMessage(Object message);
-    public abstract String getMessage();
 
     void handleMove(int x, int y, int nWorker){
-        System.out.println(x+" "+y);
+        System.out.println(player.getName());
+        System.out.println(this);
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println(Action.MOVE);
+        System.out.println(nWorker);
         notify(new PlayerMove(player, this , x, y, Action.MOVE, nWorker));
-        showMessage("Questo lo mando ai client");
+        showMessage("Questo lo mando al client");
     }
 
     void handleBuild(int x, int y, int nWorker){

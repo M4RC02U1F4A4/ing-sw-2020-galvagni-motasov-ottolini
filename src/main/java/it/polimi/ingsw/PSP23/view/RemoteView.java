@@ -7,7 +7,6 @@ import it.polimi.ingsw.PSP23.server.ClientConnection;
 
 public class RemoteView extends View{
     private ClientConnection clientConnection;
-    String recievedMesssage;
 
     public RemoteView(Player player, ClientConnection c) {
         super(player);
@@ -20,13 +19,13 @@ public class RemoteView extends View{
         @Override
         public void update(String message) {
             System.out.println("Ricevuto: "+message);
-            recievedMesssage=message;
             try{
                 String[] inputs=message.split(",");
 
                 if(inputs[0].equals("MOVE")){
-                    clientConnection.asyncSend("MI MUOVO");
+                    showMessage("MI MUOVO");
                     handleMove(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]));
+                    showMessage("E NON CRASHO");
 
                 }
                 else if(inputs[0].equals("BUILD")){
@@ -45,10 +44,6 @@ public class RemoteView extends View{
         clientConnection.asyncSend(message);
     }
 
-    @Override
-    public String getMessage() {
-        return recievedMesssage;
-    }
 
     @Override
     public void update(Message message) {
