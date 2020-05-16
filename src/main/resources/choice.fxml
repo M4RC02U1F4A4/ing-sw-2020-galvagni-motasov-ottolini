@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
@@ -32,6 +35,7 @@
                 <RowConstraints minHeight="172.0" prefHeight="172.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="78.0" prefHeight="78.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="172.0" prefHeight="172.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="78.0" prefHeight="78.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Button fx:id="apollo" minHeight="172.0" minWidth="116.0" mnemonicParsing="false" onAction="#apolloAction" style="-fx-background-color: transparent;">
@@ -104,8 +108,95 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <CheckBox fx:id="checkApollo" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkHera" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkPrometheus" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkArtemis" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkTriton" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkZeus" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="10" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkMinotaur" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="12" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkDemeter" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkAthena" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkPan" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkChronus" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkHestia" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="8" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkHephaestus" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="10" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkAtlas" alignment="CENTER" contentDisplay="CENTER" maxHeight="78.0" maxWidth="116.0" minHeight="78.0" minWidth="116.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="116.0" GridPane.columnIndex="12" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </CheckBox>
                </children>
             </GridPane>
+            <HBox alignment="CENTER" maxHeight="220.0" maxWidth="1280.0" minHeight="220.0" minWidth="1280.0" prefHeight="220.0" prefWidth="1280.0">
+               <children>
+                  <VBox alignment="CENTER" maxWidth="1280.0" minWidth="1280.0" prefHeight="200.0" prefWidth="1280.0">
+                     <children>
+                        <Button id="next" fx:id="choiceNext" alignment="CENTER" contentDisplay="CENTER" maxHeight="55.0" maxWidth="217.0" minHeight="55.0" minWidth="217.0" mnemonicParsing="false" onAction="#choiceNextAction" prefHeight="55.0" prefWidth="217.0" stylesheets="@style.css">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button fx:id="choiceError" maxHeight="50.0" maxWidth="1280.0" minHeight="50.0" minWidth="1280.0" mnemonicParsing="false" onAction="#choiceErrorAction" prefHeight="50.0" prefWidth="1280.0" style="-fx-background-color: red; visibility: false;">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

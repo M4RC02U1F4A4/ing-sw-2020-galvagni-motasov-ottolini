@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
@@ -45,6 +47,121 @@ public class ChoiceController {
     private Button hephaestus;
     @FXML
     private Button atlas;
+    @FXML
+    private Button choiceNext;
+    @FXML
+    private Button choiceError;
+
+    @FXML
+    private CheckBox checkApollo;
+    @FXML
+    private CheckBox checkHera;
+    @FXML
+    private CheckBox checkPrometheus;
+    @FXML
+    private CheckBox checkArtemis;
+    @FXML
+    private CheckBox checkTriton;
+    @FXML
+    private CheckBox checkZeus;
+    @FXML
+    private CheckBox checkMinotaur;
+    @FXML
+    private CheckBox checkDemeter;
+    @FXML
+    private CheckBox checkAthena;
+    @FXML
+    private CheckBox checkPan;
+    @FXML
+    private CheckBox checkChronus;
+    @FXML
+    private CheckBox checkHestia;
+    @FXML
+    private CheckBox checkHephaestus;
+    @FXML
+    private CheckBox checkAtlas;
+    @FXML
+    private Button choiceButton1;
+    @FXML
+    private Button choiceButton2;
+    @FXML
+    private Button choiceButton3;
+    @FXML
+    private ImageView choiceImage1desc;
+    @FXML
+    private ImageView choiceImage2desc;
+    @FXML
+    private ImageView choiceImage3desc;
+    @FXML
+    private ImageView choiceImage1;
+    @FXML
+    private ImageView choiceImage2;
+    @FXML
+    private ImageView choiceImage3;
+    @FXML
+    private Button loadingButton;
+
+    @FXML
+    public void choiceNextAction(){
+        int check = 0;
+        String gods = "";
+        if(checkApollo.isSelected()){ check += 1; gods += "Apollo";}
+        if(checkHera.isSelected()){ check += 1; gods += "Hera";}
+        if(checkPrometheus.isSelected()){ check += 1; gods += "Prometheus";}
+        if(checkArtemis.isSelected()){ check += 1; gods += "Artemis";}
+        if(checkTriton.isSelected()){ check += 1; gods += "Triton";}
+        if(checkZeus.isSelected()){ check += 1; gods += "Zeus";}
+        if(checkMinotaur.isSelected()){ check += 1; gods += "Minotaur";}
+        if(checkDemeter.isSelected()){ check += 1; gods += "Demeter";}
+        if(checkAthena.isSelected()){ check += 1; gods += "Athena";}
+        if(checkPan.isSelected()){ check += 1; gods += "Pan";}
+        if(checkChronus.isSelected()){ check += 1; gods += "Chronus";}
+        if(checkHestia.isSelected()){ check += 1; gods += "Hestia";}
+        if(checkHephaestus.isSelected()){ check += 1; gods += "Hephaestus";}
+        if(checkAtlas.isSelected()){ check += 1; gods += "Atlas";}
+        if(check != 3) choiceError.setVisible(true);
+        else {
+            System.out.println(gods);
+            Stage stage = (Stage) choiceError.getScene().getWindow();
+            stage.close();
+            try {
+                Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
+                Stage choice3 = new Stage();
+                choice3.setTitle("Santorini");
+                choice3.setScene(new Scene(rootChoice3));
+                choice3.setResizable(false);
+                choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                choice3.show();
+            } catch (IOException e) { e.printStackTrace(); }
+        }
+    }
+
+    @FXML
+    public void loadingButtonAction(){
+        choiceImage1desc.setImage(new Image ("/img/gods/Artemis_desc.png"));
+        choiceImage2desc.setImage(new Image ("/img/gods/Athena_desc.png"));
+        choiceImage3desc.setImage(new Image ("/img/gods/Atlas_desc.png"));
+        choiceImage1.setImage(new Image ("/img/gods/Artemis.png"));
+        choiceImage2.setImage(new Image ("/img/gods/Athena.png"));
+        choiceImage3.setImage(new Image ("/img/gods/Atlas.png"));
+        loadingButton.setVisible(false);
+    }
+
+    @FXML
+    public void choiceButton1Action(){
+        System.out.println("1");
+    }
+    @FXML
+    public void choiceButton2Action(){
+        System.out.println("2");
+    }
+    @FXML
+    public void choiceButton3Action(){
+        System.out.println("3");
+    }
+
+    @FXML
+    public void choiceErrorAction(){choiceError.setVisible(false);}
 
     @FXML
     public void apolloAction(){description("apollo");}
@@ -78,6 +195,7 @@ public class ChoiceController {
     public void description(String god){
         Stage window = new Stage();
         window.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+        //must be closed before reuse the choice window
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(god);
         window.setMinWidth(640);
