@@ -112,9 +112,8 @@ public class Player {
         workers[1].setColor(color);
     }
 
-    public void placeWorkers(Cell c1, Cell c2){
-        c1.setWorker(workers[0]);
-        c2.setWorker(workers[2]);
+    public void placeWorker(Cell c, int nWorker){
+        c.setWorker(workers[0]);
     }
 
     /**

@@ -62,7 +62,6 @@ public class GodTest {
         assertEquals(rjdio.getName(), "zioDelTuono");
         rjdio.HeraIsHere();
         assertTrue(rjdio.is_hera_in_game);
-        rjdio.choseRandomGod();
     }
 
     @Test

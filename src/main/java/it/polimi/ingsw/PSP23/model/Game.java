@@ -9,26 +9,14 @@ import java.util.ArrayList;
 public class Game extends Observable<Message> {
     private Map map=new Map();
     private ArrayList<Player> players=new ArrayList<>();
-    private ArrayList<String> takenGods=new ArrayList<>();
+    private ArrayList<String> availableGods=God.getAllGods();
     private TurnManager turnManager=new TurnManager();
     private int colourVariable=0;
 
-    //TODO creare un metodo che controlli che il dio non sia gia' stato usato, c tale scopo usare takenGods
 
     public Map getMap(){ return map; }
 
-    public void chooseRandomGods(){
-        int i=0;
-        God g=new God();
-        String tmp=g.choseRandomGod();
-        while(i<players.size()){
-            while(takenGods.contains(tmp)){
-                tmp=g.choseRandomGod();
-            }
-            takenGods.add(tmp);
-            i++;
-        }
-    }
+
 
     /**
      * add a Player to the current game, then a god is randomly assigned to that player and then a color.
@@ -49,6 +37,8 @@ public class Game extends Observable<Message> {
     public void nextPhase(){
         turnManager.nextPhase();
     }
+
+    public void nextTurn() {turnManager.nextTurn();}
 
     public int getNumberOfPlayers(){
         return players.size();
@@ -96,8 +86,8 @@ public class Game extends Observable<Message> {
         return players.get(pos);
     }
 
-    public ArrayList<String> getChosenGods(){
-        return takenGods;
+    public ArrayList<String> getAvailableGods(){
+        return availableGods;
     }
 
     public int getCurrentPlayer(){

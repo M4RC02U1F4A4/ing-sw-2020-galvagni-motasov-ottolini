@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class SocketClientConnection extends Observable implements ClientConnection, Runnable {
+public class SocketClientConnection extends Observable<String> implements ClientConnection, Runnable {
     private Socket socket;
     private ObjectOutputStream out;
     private Server server;
