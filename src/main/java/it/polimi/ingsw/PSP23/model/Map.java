@@ -131,7 +131,7 @@ public class Map implements Serializable {
             tmp="";
             for(int j=0;j<5;j++){
                 if(getCell(i,j).isOccupied()){
-                    tmp=tmp+"| OCCUPATA DA W0  ";
+                    tmp=tmp+"|OCCUPATA DA "+getCell(i,j).getWorker().getColor();
                 }
                 else{
                     tmp=tmp+"| LIBERA         ";

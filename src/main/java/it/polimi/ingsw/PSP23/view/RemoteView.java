@@ -7,6 +7,7 @@ import it.polimi.ingsw.PSP23.server.ClientConnection;
 
 public class RemoteView extends View{
     private ClientConnection clientConnection;
+    String recievedMesssage;
 
     public RemoteView(Player player, ClientConnection c) {
         super(player);
@@ -19,7 +20,7 @@ public class RemoteView extends View{
         @Override
         public void update(String message) {
             System.out.println("Ricevuto: "+message);
-
+            recievedMesssage=message;
             try{
                 String[] inputs=message.split(",");
 
@@ -40,13 +41,20 @@ public class RemoteView extends View{
     }
 
     @Override
-    protected void showMessage(Object message) {
+    public void showMessage(Object message) {
         clientConnection.asyncSend(message);
+    }
+
+    @Override
+    public String getMessage() {
+        return recievedMesssage;
     }
 
     @Override
     public void update(Message message) {
         showMessage(message.getMap());
+        showMessage("vacca la madonna");
+
         //VERIFICARE CHE NON SIA GAMEOVER
        /* if(message.getPlayer().getPlayerNumber()==)//non e' il tuo turno
             showMessage("non è il tuo turno");

@@ -2,6 +2,8 @@ package it.polimi.ingsw.PSP23.model;
 
 import it.polimi.ingsw.PSP23.model.god.Athena;
 
+import java.util.ArrayList;
+
 /**
 *   God class
 */
@@ -200,10 +202,23 @@ public class God {
      * extracts a random god
      * @return name of the god
      */
-    public String choseRandomGod(){
-        String[] gods ={"Apollo","Artemis",",Athena","Atlas","Chronus","Demeter","Hephaestus","Hera","Hestia","Minotaur","Pan","Prometheus","Triton","Zeus"};
-        int i= (int) ((Math.random()*100)%gods.length);
-        return gods[i];
+    public static ArrayList<String> getAllGods(){
+        ArrayList<String> gods=new ArrayList<>(); //={"Apollo","Artemis",",Athena","Atlas","Chronus","Demeter","Hephaestus","Hera","Hestia","Minotaur","Pan","Prometheus","Triton","Zeus"};
+        gods.add("Apollo");
+        gods.add("Artemis");
+        gods.add("Athena");
+        gods.add("Atlas");
+        gods.add("Chronus");
+        gods.add("Demeter");
+        gods.add("Hephaestus");
+        gods.add("Hera");
+        gods.add("Hestia");
+        gods.add("Minotaur");
+        gods.add("Pan");
+        gods.add("Prometheus");
+        gods.add("Triton");
+        gods.add("Zeus");
+        return gods;
     }
 
     /**

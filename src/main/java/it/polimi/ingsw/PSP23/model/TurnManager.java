@@ -65,10 +65,11 @@ public class TurnManager {
             case END:
                 if (this.Atheplayer == currentPlayerNumber)
                     this.Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
-                currentPhase = Phase.CHOOSE_WORKER;
+                /*currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
                 if(numberOfPlayers == currentPlayerNumber)
-                    currentPlayerNumber = 0;
+                    currentPlayerNumber = 0;*/
+                nextTurn();
                 break;
         }
     }
@@ -110,5 +111,13 @@ public class TurnManager {
     //SOLO DI DEBUG!
     public void vaiAllaFineDelTurno(){
         currentPhase=Phase.END;
+    }
+
+    public void nextTurn(){
+        currentPhase = Phase.CHOOSE_WORKER;
+        currentPlayerNumber++;
+        if(numberOfPlayers == currentPlayerNumber) {
+            currentPlayerNumber = 0;
+        }
     }
 }

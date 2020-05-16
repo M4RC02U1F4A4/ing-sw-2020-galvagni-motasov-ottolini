@@ -18,11 +18,13 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
         return player;
     }
 
-    protected abstract void showMessage(Object message);
+    public abstract void showMessage(Object message);
+    public abstract String getMessage();
 
     void handleMove(int x, int y, int nWorker){
         System.out.println(x+" "+y);
         notify(new PlayerMove(player, this , x, y, Action.MOVE, nWorker));
+        showMessage("Questo lo mando ai client");
     }
 
     void handleBuild(int x, int y, int nWorker){
