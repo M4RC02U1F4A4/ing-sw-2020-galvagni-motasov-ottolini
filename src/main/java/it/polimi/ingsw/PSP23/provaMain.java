@@ -2,8 +2,6 @@ package it.polimi.ingsw.PSP23;
 
 //import it.polimi.ingsw.PSP23.controller.Controller;
 import it.polimi.ingsw.PSP23.model.*;
-import it.polimi.ingsw.PSP23.model.god.Apollo;
-import it.polimi.ingsw.PSP23.model.god.Atlas;
 import it.polimi.ingsw.PSP23.server.SocketClientConnection;
 import it.polimi.ingsw.PSP23.view.RemoteView;
 import it.polimi.ingsw.PSP23.view.View;
@@ -24,8 +22,8 @@ public class provaMain {
         System.out.println(Arrays.toString(g.getChosenGods().toArray()));
         g.addGod(ivan, "Zeus");
         g.addGod(lapo, "Apollo");
-        System.out.println(ivan.getGod().name());
-        System.out.println(lapo.getGod().name());
+        System.out.println(ivan.getGod().getName());
+        System.out.println(lapo.getGod().getName());
         Worker[] workers = new Worker[2];
         workers[0]=new Worker(g.getMap().getCell(0,0),Color.BLUE);
         workers[1]=new Worker(g.getMap().getCell(0,1),Color.BLUE);
