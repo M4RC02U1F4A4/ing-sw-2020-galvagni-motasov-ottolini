@@ -1,8 +1,5 @@
 package it.polimi.ingsw.PSP23.model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -35,6 +32,7 @@ public class TurnManagerTest {
         IChooseYou.subsPlayer();
         assertEquals(1, IChooseYou.getNumberOfPlayers());
         Pikachu.setPlayerNumber(1);
+        Pikachu.setGod(new God());
         IChooseYou.setCurrentPlayerNumber(Pikachu);
         assertEquals(1, IChooseYou.getCurrentPlayerNumber());
     }
