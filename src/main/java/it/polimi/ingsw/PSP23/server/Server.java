@@ -23,8 +23,8 @@ public class Server {
     private ServerSocket serverSocket;
 
     private ExecutorService executor= Executors.newFixedThreadPool(5); //probabilmente basta falo con 3 al massimo, da vedere
-    private Map<String, ClientConnection> waitingConnection2vs2=new HashMap<>();
-    private Map<String, ClientConnection> waitingConnection3vs3=new HashMap<>();
+    private Map<String, ClientConnection> waitingConnection2vs2=new LinkedHashMap<>();
+    private Map<String, ClientConnection> waitingConnection3vs3=new LinkedHashMap<>();
     private ArrayList<Player> players=new ArrayList<>();
     private ArrayList<ClientConnection>conn=new ArrayList<>();
     public synchronized void deregisterConnection(ClientConnection c){
@@ -32,8 +32,20 @@ public class Server {
     }
 
     public synchronized void lobby(ClientConnection c, String name, int numberOfPlayers){
+        waitingConnection2vs2.put(name, c);
+
+        /*
+        Set<Map.Entry<String, ClientConnection>> xd= waitingConnection2vs2.entrySet();
+        for(Map.Entry<String, ClientConnection>me:xd) {
+            String nome = me.getKey();
+            String ip = me.getValue().getIpAddress();
+            System.out.println("nome: "+nome+" - ip: +"+ip);
+        }*/
+
+
+
         if(numberOfPlayers==2){
-            waitingConnection2vs2.put(name, c);
+
             c.asyncSend("Benvenuto nella lobby a 2 giocatori");
             System.out.println("Si e' connesso "+name);
             if(waitingConnection2vs2.size()==2){
@@ -55,15 +67,18 @@ public class Server {
                 workers[0]=new Worker(game.getMap().getCell(0,0),Color.BLUE);
                 workers[1]=new Worker(game.getMap().getCell(0,1),Color.BLUE);
                 players.get(0).setWorkers(workers);
+                players.get(0).setColor(Color.BLUE);
+                players.get(0).setPlayerNumber(0);
 
-                //controller.addPlayer(players.get(0));
 
                 workers[0]=new Worker(game.getMap().getCell(3,3),Color.RED);
                 workers[1]=new Worker(game.getMap().getCell(3,4),Color.RED);
                 players.get(1).setWorkers(workers);
                 players.get(1).setColor(Color.RED);
-                players.get(1).setGod(new Demeter());
-                //controller.addPlayer(players.get(1));
+                players.get(1).setPlayerNumber(1);
+                controller.addPlayer(players.get(0));
+                controller.addPlayer(players.get(1));
+
 
 
                 View player1view=new RemoteView(players.get(0),conn.get(0));
@@ -78,8 +93,7 @@ public class Server {
 
 
 
-                conn.get(0).asyncSend(game.getMap());
-                conn.get(1).asyncSend(game.getMap());
+
 
                 if(game.isPlayerTurn(players.get(0))){
                     conn.get(0).asyncSend("e' il tuo turno");

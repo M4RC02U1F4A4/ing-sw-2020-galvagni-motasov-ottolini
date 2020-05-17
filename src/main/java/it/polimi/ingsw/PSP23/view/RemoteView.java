@@ -7,6 +7,7 @@ import it.polimi.ingsw.PSP23.server.ClientConnection;
 
 public class RemoteView extends View{
     private ClientConnection clientConnection;
+    private String clientSaid="";
 
     public RemoteView(Player player, ClientConnection c) {
         super(player);
@@ -19,6 +20,7 @@ public class RemoteView extends View{
         @Override
         public void update(String message) {
             System.out.println("Ricevuto: "+message);
+            clientSaid=message;
             try{
                 String[] inputs=message.split(",");
 
@@ -58,5 +60,9 @@ public class RemoteView extends View{
           }
         */
 
+    }
+
+    public String getWhatClientSaid(){
+        return clientSaid;
     }
 }

@@ -19,6 +19,7 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
     }
 
     public abstract void showMessage(Object message);
+    public abstract String getWhatClientSaid();
 
     void handleMove(int x, int y, int nWorker){
         System.out.println(player.getName());
@@ -28,7 +29,7 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
         System.out.println(Action.MOVE);
         System.out.println(nWorker);
         notify(new PlayerMove(player, this , x, y, Action.MOVE, nWorker));
-        showMessage("Questo lo mando al client");
+        showMessage(getWhatClientSaid());
     }
 
     void handleBuild(int x, int y, int nWorker){

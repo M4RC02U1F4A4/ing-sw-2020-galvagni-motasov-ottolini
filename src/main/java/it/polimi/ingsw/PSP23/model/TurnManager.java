@@ -115,9 +115,11 @@ public class TurnManager {
 
     public void nextTurn(){
         currentPhase = Phase.CHOOSE_WORKER;
-        currentPlayerNumber++;
-        if(numberOfPlayers == currentPlayerNumber) {
+        if(numberOfPlayers -1 == currentPlayerNumber) {
             currentPlayerNumber = 0;
+            return;
         }
+
+        currentPlayerNumber++;
     }
 }
