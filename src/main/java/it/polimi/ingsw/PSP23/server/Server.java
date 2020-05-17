@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP23.server;
 
 import it.polimi.ingsw.PSP23.client.Client;
 //import it.polimi.ingsw.PSP23.controller.Controller;
+import it.polimi.ingsw.PSP23.controller.Controller;
 import it.polimi.ingsw.PSP23.model.*;
 import it.polimi.ingsw.PSP23.model.god.Apollo;
 import it.polimi.ingsw.PSP23.model.god.Demeter;
@@ -38,7 +39,7 @@ public class Server {
             if(waitingConnection2vs2.size()==2){
                 System.out.println("istanzio il controller");
                 Game game=new Game();
-                //Controller controller=new Controller(game);
+                Controller controller=new Controller(game);
                 Set<Map.Entry<String, ClientConnection>> st= waitingConnection2vs2.entrySet();
 
                 for(Map.Entry<String, ClientConnection>me:st){
@@ -54,8 +55,7 @@ public class Server {
                 workers[0]=new Worker(game.getMap().getCell(0,0),Color.BLUE);
                 workers[1]=new Worker(game.getMap().getCell(0,1),Color.BLUE);
                 players.get(0).setWorkers(workers);
-                players.get(0).setColor(Color.BLUE);
-                players.get(0).setGod(new Apollo());
+
                 //controller.addPlayer(players.get(0));
 
                 workers[0]=new Worker(game.getMap().getCell(3,3),Color.RED);
@@ -70,6 +70,11 @@ public class Server {
                 View player2view=new RemoteView(players.get(1),conn.get(1));
                 game.addObserver(player1view);
                 game.addObserver(player2view);
+                controller.addPlayerView(player1view);
+                controller.addPlayerView(player2view);
+                player1view.addObserver(controller);
+                player2view.addObserver(controller);
+
 
 
 
@@ -94,7 +99,7 @@ public class Server {
             System.out.println("Si e' connesso " + name);
             if (waitingConnection3vs3.size() == 3) {
                 System.out.println("istanzio il controller");
-                //Controller controller = new Controller(new Game());
+                Controller controller = new Controller(new Game());
                 Set<Map.Entry<String, ClientConnection>> st = waitingConnection3vs3.entrySet();
                 for (Map.Entry<String, ClientConnection> me : st) {
                     String nome = me.getKey();

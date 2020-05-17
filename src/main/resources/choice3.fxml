@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-image: url('/img/scelta3.png');" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP23.test.ChoiceController">
+   <children>
+      <GridPane alignment="CENTER" maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.0" minWidth="44.0" prefWidth="44.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="339.0" prefWidth="339.0" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="339.0" prefWidth="339.0" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="339.0" prefWidth="339.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="44.0" minWidth="44.0" prefWidth="44.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="46.0" minHeight="46.0" prefHeight="46.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="291.0" minHeight="291.0" prefHeight="291.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="255.0" minHeight="255.0" prefHeight="255.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="128.0" minHeight="128.0" prefHeight="128.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="choiceImage1desc" fitHeight="255.0" fitWidth="339.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ImageView fx:id="choiceImage2desc" fitHeight="255.0" fitWidth="339.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ImageView fx:id="choiceImage3desc" fitHeight="255.0" fitWidth="339.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="choiceImage1" fitHeight="291.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true" x="71.0" />
+                  <Button fx:id="choiceButton1" mnemonicParsing="false" onAction="#choiceButton1Action" prefHeight="291.0" prefWidth="339.0" style="-fx-background-color: transparent;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="choiceImage2" fitHeight="291.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true" x="71.0" />
+                  <Button fx:id="choiceButton2" mnemonicParsing="false" onAction="#choiceButton2Action" prefHeight="291.0" prefWidth="339.0" style="-fx-background-color: transparent;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fx:id="choiceImage3" fitHeight="291.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true" x="71.0" />
+                  <Button fx:id="choiceButton3" mnemonicParsing="false" onAction="#choiceButton3Action" prefHeight="291.0" prefWidth="339.0" style="-fx-background-color: transparent;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+      <Button fx:id="loadingButton" maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" mnemonicParsing="false" onAction="#loadingButtonAction" prefHeight="720.0" prefWidth="1280.0" text="CLICK HERE" textFill="#0d09ee">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>

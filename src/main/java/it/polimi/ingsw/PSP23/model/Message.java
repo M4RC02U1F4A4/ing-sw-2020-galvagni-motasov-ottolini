@@ -2,7 +2,7 @@ package it.polimi.ingsw.PSP23.model;
 
 import java.io.Serializable;
 
-public abstract class Message implements Serializable {
+public class Message implements Serializable {
     private final Player player;
     private final Map map;
     private final Action action;
