@@ -35,7 +35,7 @@ public class Game extends Observable<Message> {
     }
 
     public void nextPhase(){
-        turnManager.nextPhase();
+        turnManager.nextPhaseGame();
     }
 
     public void nextTurn() {turnManager.nextTurn();}

@@ -14,8 +14,11 @@ public class Player {
     public Player(String name, String ipAddress){
         this.name=name;
         this.ipAddress=ipAddress;
-        workers=new Worker[2];
-        color=Color.RED;
+        this.workers=new Worker[2];
+        this.color=Color.RED;
+        this.god = null;
+        this.workers[0] = null;
+        this.workers[1] = null;
     }
 
     /**

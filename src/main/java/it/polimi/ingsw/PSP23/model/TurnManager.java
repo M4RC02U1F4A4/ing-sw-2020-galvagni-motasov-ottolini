@@ -8,20 +8,59 @@ public class TurnManager {
     private int currentPlayerNumber;
     private Player currentPlayer;
     private Phase currentPhase;
-    private int Atheplayer;
+    private int AthenaPlayer;
+    private int HeraPlayer;
     private boolean Athena_moved_up;
 
     public TurnManager(){
         this.currentPlayerNumber = 0;
-        this.currentPhase = Phase.CHOOSE_WORKER;
+        this.currentPhase = Phase.GOD_CHOOSE;
         this.Athena_moved_up = false;
-        this.Atheplayer = -1;
+        this.AthenaPlayer = -1;
+        this.HeraPlayer = -1;
     }
 
     /**
-     * Phase switcher, also a turn initializer for gods
+     * Game setup.
+     * This function relies on Gods and Workers being initialized to null.
+     * END will be seen as the first state for every player.
+     * Will set the phase to CHOOSE_WORKER when finished.
+     * Also initialize athena and hera flag in gods.
      */
-    public void nextPhase(){
+    public void nextPhaseSetUp(){
+        switch (currentPhase) {
+            case GOD_CHOOSE:
+                currentPhase = Phase.END;
+                break;
+            case GOD_PICK:
+                if (0 == currentPlayerNumber)
+                    currentPhase = Phase.WORKER_HOUSING;
+                else
+                    currentPhase = Phase.END;
+                break;
+            case WORKER_HOUSING:
+                currentPhase = Phase.END;
+                if (-1 != this.AthenaPlayer)
+                    this.currentPlayer.getGod().AthenaIsHere();
+                if (-1 != this.HeraPlayer)
+                    this.currentPlayer.getGod().HeraIsHere();
+                break;
+            case END:
+                if (null == currentPlayer.getGod())
+                    currentPhase = Phase.GOD_PICK;
+                else if (null == currentPlayer.getWorkerByNumber(0) || null == currentPlayer.getWorkerByNumber(1))
+                    currentPhase = Phase.WORKER_HOUSING;
+                else
+                    currentPhase = Phase.CHOOSE_WORKER;
+                break;
+        }
+    }
+
+    /**
+     * Game phase switcher, also initialize the turn for gods.
+     * When END is seen it has to be used one more time.
+     */
+    public void nextPhaseGame(){
         switch (currentPhase) {
             case CHOOSE_WORKER:
                 currentPhase = Phase.START_TURN;
@@ -63,12 +102,12 @@ public class TurnManager {
                     currentPhase = Phase.END;
                 break;
             case END:
-                if (this.Atheplayer == currentPlayerNumber)
+                if (this.AthenaPlayer == currentPlayerNumber)
                     this.Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
-                /*currentPhase = Phase.CHOOSE_WORKER;
+                currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
                 if(numberOfPlayers == currentPlayerNumber)
-                    currentPlayerNumber = 0;*/
+                    currentPlayerNumber = 0;
                 nextTurn();
                 break;
         }
@@ -95,17 +134,29 @@ public class TurnManager {
      * also reset the athena moveup if athena is in game
      * @param VamosAllaPlayer i Choose you VAMOSALLAPLAYER!
      */
-    public void setCurrentPlayerNumber(Player VamosAllaPlayer) {
+    public void setCurrentPlayer(Player VamosAllaPlayer) {
         this.currentPlayerNumber = VamosAllaPlayer.getPlayerNumber();
         this.currentPlayer = VamosAllaPlayer;
-        if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
-            this.Atheplayer = this.currentPlayerNumber;
+        if (null == currentPlayer.getGod());
+        else if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
+            this.AthenaPlayer = this.currentPlayerNumber;
             this.Athena_moved_up = false;
         }
+        else if ("Hera".equals(VamosAllaPlayer.getGod().getName()))
+            this.HeraPlayer = this.currentPlayerNumber;
     }
 
     public Phase getCurrentPhase() {
         return currentPhase;
+    }
+
+    //TODO controllare questa funzione e ritornare errore se chiamata e player num != player.num
+    public void nextTurn(){
+        currentPhase = Phase.CHOOSE_WORKER;
+        currentPlayerNumber++;
+        if(numberOfPlayers == currentPlayerNumber) {
+            currentPlayerNumber = 0;
+        }
     }
 
     //SOLO DI DEBUG!
@@ -113,11 +164,8 @@ public class TurnManager {
         currentPhase=Phase.END;
     }
 
-    public void nextTurn(){
-        currentPhase = Phase.CHOOSE_WORKER;
-        currentPlayerNumber++;
-        if(numberOfPlayers == currentPlayerNumber) {
-            currentPlayerNumber = 0;
-        }
+    //TEST ONLY!
+    public void goBanana(){
+        currentPhase=Phase.CHOOSE_WORKER;
     }
 }
