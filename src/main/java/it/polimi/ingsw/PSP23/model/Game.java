@@ -38,7 +38,21 @@ public class Game extends Observable<Message> {
         turnManager.nextPhaseGame();
     }
 
-    public void nextTurn() {turnManager.nextTurn();}
+    // TODO not like this!
+    public void nextTurn() {
+        //turnManager.nextTurn();
+        // instead something like
+        if (Phase.END == turnManager.getCurrentPhase()) {
+            turnManager.setCurrentPlayer(players.get(turnManager.getCurrentPlayerNumber()));
+            // game set up
+        }
+        else if (Phase.CHOOSE_WORKER == turnManager.getCurrentPhase()) {
+            turnManager.setCurrentPlayer(players.get(turnManager.getCurrentPlayerNumber()));
+        }
+        else
+            return;
+            // error
+    }
 
     public int getNumberOfPlayers(){
         return players.size();

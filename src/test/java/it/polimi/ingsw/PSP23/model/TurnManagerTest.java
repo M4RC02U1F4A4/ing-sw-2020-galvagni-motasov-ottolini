@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PSP23.model;
 
+import it.polimi.ingsw.PSP23.model.god.Athena;
+import it.polimi.ingsw.PSP23.model.god.Hera;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -37,7 +39,7 @@ public class TurnManagerTest {
         Bulbasaur.setPlayerNumber(1);
         Bulbasaur.setGod(new God());
         IChooseYou.setCurrentPlayer(Bulbasaur);
-        assertEquals(1, IChooseYou.getCurrentPlayerNumber());
+        assertEquals(0, IChooseYou.getCurrentPlayerNumber());
     }
 
     @Test
@@ -52,14 +54,14 @@ public class TurnManagerTest {
         IChooseYou.setCurrentPlayer(Squirtle);
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.GOD_PICK, IChooseYou.getCurrentPhase());
-        Squirtle.setGod(new God());
+        Squirtle.setGod(new Hera());
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // god pick player 1 and setting worker 0
         IChooseYou.setCurrentPlayer(Bulbasaur);
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.GOD_PICK, IChooseYou.getCurrentPhase());
-        Bulbasaur.setGod(new God());
+        Bulbasaur.setGod(new Athena());
         IChooseYou.nextPhaseSetUp();
         Bulbasaur.setWorkerByNumber(new Worker(new Cell(), Color.WHITE), 0);
         IChooseYou.nextPhaseSetUp();

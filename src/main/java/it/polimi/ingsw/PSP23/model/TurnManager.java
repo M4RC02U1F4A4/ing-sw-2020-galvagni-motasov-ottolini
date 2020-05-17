@@ -30,15 +30,23 @@ public class TurnManager {
     public void nextPhaseSetUp(){
         switch (currentPhase) {
             case GOD_CHOOSE:
+                this.currentPlayerNumber = 1;
                 currentPhase = Phase.END;
                 break;
             case GOD_PICK:
                 if (0 == currentPlayerNumber)
                     currentPhase = Phase.WORKER_HOUSING;
-                else
+                else {
+                    this.currentPlayerNumber++;
+                    if (numberOfPlayers == this.currentPlayerNumber)
+                        this.currentPlayerNumber = 0;
                     currentPhase = Phase.END;
+                }
                 break;
             case WORKER_HOUSING:
+                this.currentPlayerNumber++;
+                if (numberOfPlayers == this.currentPlayerNumber)
+                    this.currentPlayerNumber = 0;
                 currentPhase = Phase.END;
                 if (-1 != this.AthenaPlayer)
                     this.currentPlayer.getGod().AthenaIsHere();
@@ -106,27 +114,24 @@ public class TurnManager {
                     this.Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
                 currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
-                if(numberOfPlayers == currentPlayerNumber)
+                if (numberOfPlayers == currentPlayerNumber)
                     currentPlayerNumber = 0;
-                nextTurn();
                 break;
         }
     }
 
+    /**
+     * Used to add players in the beginning
+     */
     public void addPlayer(){
         numberOfPlayers++;
     }
 
+    /**
+     * Used to remove player after loss in 3 player mode
+     */
     public void subsPlayer(){
         numberOfPlayers--;
-    }
-
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
-    }
-
-    public int getCurrentPlayerNumber() {
-        return currentPlayerNumber;
     }
 
     /**
@@ -135,7 +140,6 @@ public class TurnManager {
      * @param VamosAllaPlayer i Choose you VAMOSALLAPLAYER!
      */
     public void setCurrentPlayer(Player VamosAllaPlayer) {
-        this.currentPlayerNumber = VamosAllaPlayer.getPlayerNumber();
         this.currentPlayer = VamosAllaPlayer;
         if (null == currentPlayer.getGod());
         else if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
@@ -146,19 +150,25 @@ public class TurnManager {
             this.HeraPlayer = this.currentPlayerNumber;
     }
 
-    public Phase getCurrentPhase() {
-        return currentPhase;
+    /**
+     * @return the turn player number
+     */
+    public int getCurrentPlayerNumber() {
+        return currentPlayerNumber;
     }
 
-    //TODO controllare questa funzione e ritornare errore se chiamata e player num != player.num
-    public void nextTurn(){
-        currentPhase = Phase.CHOOSE_WORKER;
-        if(numberOfPlayers -1 == currentPlayerNumber) {
-            currentPlayerNumber = 0;
-            return;
-        }
+    /**
+     * @return the number of players in the game right now
+     */
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
 
-        currentPlayerNumber++;
+    /**
+     * @return the current phase of the turn
+     */
+    public Phase getCurrentPhase() {
+        return currentPhase;
     }
 
     //SOLO DI DEBUG!
