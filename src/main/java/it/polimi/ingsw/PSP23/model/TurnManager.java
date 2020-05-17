@@ -153,10 +153,12 @@ public class TurnManager {
     //TODO controllare questa funzione e ritornare errore se chiamata e player num != player.num
     public void nextTurn(){
         currentPhase = Phase.CHOOSE_WORKER;
-        currentPlayerNumber++;
-        if(numberOfPlayers == currentPlayerNumber) {
+        if(numberOfPlayers -1 == currentPlayerNumber) {
             currentPlayerNumber = 0;
+            return;
         }
+
+        currentPlayerNumber++;
     }
 
     //SOLO DI DEBUG!
