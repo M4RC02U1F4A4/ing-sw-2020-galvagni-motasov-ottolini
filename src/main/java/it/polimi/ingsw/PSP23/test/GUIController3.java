@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -53,11 +54,11 @@ public class GUIController3 {
             b30, b31, b32, b33, b34,
             b40, b41, b42, b43, b44;
     @FXML
-    private Button skipButton;
+    private Button utilityButton;
 
     @FXML
-    private void skipButtonAction(){
-        System.out.println("SKIP");
+    private void utilityButtonAction(){
+        System.out.println("ACTION");
     }
 
     @FXML

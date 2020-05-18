@@ -136,7 +136,7 @@
                <children>
                   <Pane maxHeight="97.0" maxWidth="768.0" minHeight="97.0" minWidth="768.0" prefHeight="97.0" prefWidth="768.0">
                      <children>
-                        <Button id="skip" fx:id="skipButton" alignment="CENTER" contentDisplay="CENTER" layoutX="268.0" layoutY="30.0" maxHeight="55.0" maxWidth="217.0" minHeight="55.0" minWidth="217.0" mnemonicParsing="false" onAction="#skipButtonAction" prefHeight="55.0" prefWidth="217.0" stylesheets="@style.css">
+                        <Button id="utility" fx:id="utilityButton" alignment="CENTER" contentDisplay="CENTER" layoutX="268.0" layoutY="30.0" maxHeight="55.0" maxWidth="217.0" minHeight="55.0" minWidth="217.0" mnemonicParsing="false" onAction="#utilityButtonAction" prefHeight="55.0" prefWidth="217.0" stylesheets="@style.css">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

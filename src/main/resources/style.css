@@ -55,8 +55,7 @@
     -fx-background-position: center;
 }
 
-.button#skip {
-    -fx-background-image: url('/img/btn_skip.png');
+.button#utility {
     -fx-border-color: transparent;
     -fx-border-width: 0;
     -fx-background-radius: 0;
@@ -65,8 +64,7 @@
     -fx-background-position: center;
 }
 
-.button#skip:armed {
-    -fx-background-image: url('/img/btn_skip_pressed.png');
+.button#utility:armed {
 }
 
 .button#next {
