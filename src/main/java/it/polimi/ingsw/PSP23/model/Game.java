@@ -1,16 +1,17 @@
 package it.polimi.ingsw.PSP23.model;
 
 import it.polimi.ingsw.PSP23.model.god.*;
+import it.polimi.ingsw.PSP23.observer.Observable;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Game extends Observable<Message> {
     private Map map;
     private Player[] players;
     private String[] availableGods;
     private TurnManager turnManager;
     private boolean activeWorker, ChronoIsHere;
-    private int numPlayers, colorVariable;
+    private int numPlayers, colorVariable=0;
 
     public Game(int numPlayer) {
         map=new Map();
@@ -29,7 +30,9 @@ public class Game {
             return -1;
         players[colorVariable] = new Player(name, ip);
         players[colorVariable].setColor(getColor());
+        players[colorVariable].setPlayerNumber(colorVariable);
         colorVariable++;
+        turnManager.addPlayer();
         return 0;
     }
 
@@ -178,7 +181,7 @@ public class Game {
 
     //TODO check this function
     public int getCurrentPlayerNum() {
-        return turnManager.getCurrentPlayerNumber() - 1;
+        return turnManager.getCurrentPlayerNumber() ;
     }
 
     public Map getMap() {
@@ -206,6 +209,33 @@ public class Game {
     }
 
     public void sendMapUpdate() {}
+
+    public void performeMove(int x, int y, Player player, Action action, int nworker){
+        if(action == Action.BUILD){
+            //TODO build
+            player.getGod().build(map.getCell(1,0),Status.BUILT,player.getWorkerByNumber(nworker));
+        }
+        else if(action == Action.MOVE){
+            //TODO move
+            player.getGod().startTurn(false);
+            player.getGod().move(map.getCell(1,0),player.getWorkerByNumber(nworker),map);
+        }
+        else if(action==Action.PLACE_WORKERS){
+            //TODO PLACE WORKERS
+        }
+        else if(action==Action.CHOOSE_GODS){
+            //TODO CHOOSE GODS
+        }
+        else return;//magari anche qui con un'eccezione
+    }
+
+
+    public boolean isPlayerTurn(Player p){
+        if(p.getPlayerNumber()==getCurrentPlayerNum())
+            return true;
+        else
+            return false;
+    }
 
 
 /*

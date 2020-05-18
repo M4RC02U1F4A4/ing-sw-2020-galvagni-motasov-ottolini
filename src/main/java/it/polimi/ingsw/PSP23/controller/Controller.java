@@ -14,16 +14,13 @@ public class Controller implements Observer<PlayerMove>{
 
     public void addPlayer(Player p){
         Player lol=new Player(p.getName(), p.getIpAddress());
-        game.addPlayer(lol);
+        game.addPlayer(p.getName(),p.getIpAddress());
 
     }
     public void addPlayerView(View v){
         players.add(v);
     }
 
-    public void addGodToSpecificPlayer(Player p, String god){
-        game.addGod(p,god);
-    }
 
     public Controller(Game game) {
         super();
@@ -37,27 +34,12 @@ public class Controller implements Observer<PlayerMove>{
 
     public synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
-        move.getView().showMessage("E' il tuo turno: "+game.isPlayerTurn(move.getPlayer()));
-        if(game.isPlayerTurn(move.getPlayer())){
-            if(move.getA()== Action.MOVE){
-                move.getView().showMessage("VAMOS");
-                // game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.MOVE,move.getnWorker());
-            }
-            /*else if(move.getA()== Action.BUILD){
-                game.performeMove(move.getX(), move.getY(), move.getPlayer(), Action.BUILD,move.getnWorker());
-            }
-            while(game.getCurrentPhase()!=Phase.END){
-                playPhase(move);
-            }
-            */
-        }
+
+
+
         //TODO:UPDATE TURN
-        move.getView().showMessage("Stiamo giocando in "+game.getNumberOfPlayers());
-        move.getView().showMessage("Sta giocando il giocatore "+game.getCurrentPlayer());
-        move.getView().showMessage("Turno corrente: "+game.getTurnNumber());
-        game.nextTurn();
-        move.getView().showMessage("Ora tocchera' al "+game.getCurrentPlayer());
-        move.getView().showMessage("Turno successivo: "+game.getTurnNumber());
+
+
 
     }
 
@@ -68,7 +50,7 @@ public class Controller implements Observer<PlayerMove>{
     }
 
     /*public void playPhase(PlayerMove move){
-        /*switch (game.getCurrentPhase()){
+        switch (game.getCurrentPhase()){
             case CHOOSE_WORKER:{
 
                 break;

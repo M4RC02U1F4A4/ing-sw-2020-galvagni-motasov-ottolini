@@ -8,7 +8,7 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        hunger = new Game();
+        hunger = new Game(2);
     }
 
     @After
