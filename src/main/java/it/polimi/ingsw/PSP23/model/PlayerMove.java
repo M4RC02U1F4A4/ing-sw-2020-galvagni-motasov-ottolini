@@ -19,9 +19,13 @@ public class PlayerMove {
         return view;
     }
 
+    public String getCommand() {
+        return command;
+    }
 
-
-
+    public String getArgs() {
+        return args;
+    }
 
     //TODO: Javadoc
     public PlayerMove(Player player, View view, String command, String args) {

@@ -49,12 +49,9 @@ public class Controller implements Observer<PlayerMove>{
 
     }
 
-    /*public void playPhase(PlayerMove move){
-        switch (game.getCurrentPhase()){
-            case CHOOSE_WORKER:{
-
-                break;
-            }
+    public void playPhase(PlayerMove move){
+        switch (game.getPhase()){
+            
         }
-    }*/
+    }
 }
