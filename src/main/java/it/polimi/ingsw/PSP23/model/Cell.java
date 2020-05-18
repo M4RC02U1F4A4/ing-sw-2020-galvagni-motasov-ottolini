@@ -7,7 +7,7 @@ import static it.polimi.ingsw.PSP23.model.Status.*;
 *   Cell class
 */
 public class Cell implements Serializable {
-    private Status levels[];
+    private Status[] levels;
     Worker worker;
     private int X;
     private int Y;
@@ -168,7 +168,7 @@ public class Cell implements Serializable {
     *   if the level already contains a CUPOLA or is the last one (level 4), build a CUPOLA
     *   @param b level status
     */
-    public void build (Status b) {
+    public int build (Status b) {
         int i = 0;
         while (FREE != levels[i] && i < 3) {
             i++;
@@ -179,6 +179,7 @@ public class Cell implements Serializable {
         else {
             levels [i] = BUILT;
         }
+        return i;
     }
 
     /**

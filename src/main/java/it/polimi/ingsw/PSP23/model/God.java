@@ -60,6 +60,7 @@ public class God {
     }
 
     /**
+     *  TODO check worker color for Apollo and Minotaur
     *   Move the worker in the desired cell
     *   If it is possible to move the worker the <code>moveWorker</code> function is called,
     *   otherwise the action is not successful
@@ -92,24 +93,26 @@ public class God {
      * @param c cell
      * @param b status of the cell
      * @param w worker that the player want to use to build
-     * @return -1 if cell is not near or is under the worker,
+     * @return  the level built
+     *         -1 if cell is not near or is under the worker,
      *         -2 if the player already build in this turn,
      *         -3 (Demeter) if already build in this cell this turn,
      *         -4 (Hephaestus) if is a different building slot,
      *         -5 (Hesta) if perimetral slot build
      */
     public int build(Cell c, Status b, Worker w){
+        int level = 0;
         this.remains_moves = 0;
         if (0 == this.remains_builds)
             return -2;
         if (!(c.isNear(w, false)) || ((c == w.getCell()) && !("Zeus".equals(this.name))))
             return -1;
         if ("Atlas".equals(this.name))
-            c.build(b);
+            level = c.build(b);
         else
-            c.build(Status.BUILT);
+            level = c.build(Status.BUILT);
         this.remains_builds--;
-        return 0;
+        return level;
     }
 
     /**
@@ -129,6 +132,7 @@ public class God {
     }
 
     /**
+     *  TODO add color check for apollo e minotaur
      *  Used for check if a worker cannot move thus triggering a loss
      *  specific cases: Apollo, Athena, Minotaur
      * @param w the worker checked
@@ -185,21 +189,37 @@ public class God {
     }
 
     /**
-    *   Check if the <code>Athena</code> god is used by some player in this game
+    *   Set the flag for Athena's power
     */
     public void AthenaIsHere() {
         this.is_athena_in_game = true;
     }
 
     /**
-     *  This function set the flag for the god hera
+     *  Used by turn manager
+     * @return if athena moved up
+     */
+    public boolean AthenaMovedUp() {
+        return this.athena_moved_up;
+    }
+
+    /**
+     *  Set the flag for Hera's power
      */
     public void HeraIsHere() {
         this.is_hera_in_game = true;
     }
 
     /**
-     * extracts a random god
+     *  Getter function for the name
+     * @return the name of the god used
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * TODO update documentation
      * @return name of the god
      */
     public static ArrayList<String> getAllGods(){
@@ -219,21 +239,5 @@ public class God {
         gods.add("Triton");
         gods.add("Zeus");
         return gods;
-    }
-
-    /**
-     *  function used only for debugging
-     * @return if athena moved up
-     */
-    public boolean AthenaMovedUp() {
-        return this.athena_moved_up;
-    }
-
-    /**
-     *  Getter function for the name
-     * @return the name of the god used
-     */
-    public String getName() {
-        return this.name;
     }
 }

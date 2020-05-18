@@ -4,7 +4,6 @@ import it.polimi.ingsw.PSP23.model.*;
 import it.polimi.ingsw.PSP23.model.god.Apollo;
 import org.junit.*;
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class PlayerTest {
