@@ -56,6 +56,7 @@ public class GUIController3 {
     @FXML
     private Button utilityButton;
 
+
     @FXML
     private void utilityButtonAction(){
         System.out.println("ACTION");
@@ -138,13 +139,13 @@ public class GUIController3 {
         press(b30);
     }
     public void b31Action(){
-        press(b31);
+        b31.setStyle("-fx-background-image: url('/img/blue.png')");
     }
     public void b32Action(){
-        press(b32);
+        b32.setStyle("-fx-background-image: url('/img/red.png')");
     }
     public void b33Action(){
-        press(b33);
+        b33.setStyle("-fx-background-image: url('/img/white.png')");
     }
     public void b34Action(){
         press(b34);
