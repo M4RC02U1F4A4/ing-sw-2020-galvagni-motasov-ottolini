@@ -1,0 +1,115 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Chronus</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.model.god</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Chronus (it.polimi.ingsw.PSP23.model.god)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Chronus</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.model.god;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.model.Cell;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP23.model.God;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP23.model.Status;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP23.model.Worker;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public class Chronus extends God {
+<i>9</i>&nbsp;    private int completed_tower;
+<i>10</i>&nbsp;
+<b class="fc"><i>11</i>&nbsp;    public Chronus() {</b>
+<b class="fc"><i>12</i>&nbsp;        this.setUpGod(&quot;Chronus&quot;);</b>
+<b class="fc"><i>13</i>&nbsp;    }</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    @Override
+<i>16</i>&nbsp;    protected void setUpGod(String godName) {
+<b class="fc"><i>17</i>&nbsp;        super.setUpGod(godName);</b>
+<b class="fc"><i>18</i>&nbsp;        this.completed_tower = 0;</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public boolean checkWin(Worker w) {
+<b class="fc"><i>23</i>&nbsp;        if ((null != w) &amp;&amp; (super.checkWin(w)))</b>
+<b class="fc"><i>24</i>&nbsp;            return true;</b>
+<i>25</i>&nbsp;        else
+<b class="fc"><i>26</i>&nbsp;            return (5 &lt;= this.completed_tower);</b>
+<i>27</i>&nbsp;    }
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public void addCompletedTower() {
+<b class="fc"><i>30</i>&nbsp;        this.completed_tower++;</b>
+<b class="fc"><i>31</i>&nbsp;    }</b>
+<i>32</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-19 15:35</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Cell</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Cell (it.polimi.ingsw.PSP23.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Cell</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95,8%
+  </span>
+  <span class="absValue">
+    (69/ 72)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Cell$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/ 16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95,9%
+  </span>
+  <span class="absValue">
+    (70/ 73)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.Serializable;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import static it.polimi.ingsw.PSP23.model.Status.*;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp;*   Cell class
+<i>8</i>&nbsp;*/
+<i>9</i>&nbsp;public class Cell implements Serializable {
+<i>10</i>&nbsp;    private Status levels[];
+<i>11</i>&nbsp;    Worker worker;
+<i>12</i>&nbsp;    private int X;
+<i>13</i>&nbsp;    private int Y;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;    *   Costructor that set Cell with 4 high levels,
+<i>17</i>&nbsp;    *   every level status is set to free and worker status is ste to NULL
+<i>18</i>&nbsp;    *   @param x X position on the map
+<i>19</i>&nbsp;    *   @param y Y position on the map
+<i>20</i>&nbsp;    */
+<b class="fc"><i>21</i>&nbsp;    public Cell(int x, int y){</b>
+<b class="fc"><i>22</i>&nbsp;        levels=new Status[4];</b>
+<b class="fc"><i>23</i>&nbsp;        for (int i=0; i&lt;levels.length; i++) {</b>
+<b class="fc"><i>24</i>&nbsp;            levels[i] = FREE;</b>
+<i>25</i>&nbsp;        }
+<b class="fc"><i>26</i>&nbsp;        worker=null;</b>
+<b class="fc"><i>27</i>&nbsp;        X = x;</b>
+<b class="fc"><i>28</i>&nbsp;        Y = y;</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Cell cos
+<i>33</i>&nbsp;     */
+<b class="fc"><i>34</i>&nbsp;    public Cell(){</b>
+<b class="fc"><i>35</i>&nbsp;        levels=new Status[4];</b>
+<b class="fc"><i>36</i>&nbsp;        for (int i=0;i&lt;levels.length;i++) {</b>
+<b class="fc"><i>37</i>&nbsp;            levels[i] = FREE;</b>
+<i>38</i>&nbsp;        }
+<b class="fc"><i>39</i>&nbsp;        worker=null;</b>
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    /**
+<i>43</i>&nbsp;     * Clone a single cell
+<i>44</i>&nbsp;     * @return cloned cell
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    public Cell clone(){
+<b class="fc"><i>47</i>&nbsp;        Cell f=new Cell();</b>
+<b class="fc"><i>48</i>&nbsp;        f.X=this.X;</b>
+<b class="fc"><i>49</i>&nbsp;        f.Y=this.Y;</b>
+<b class="fc"><i>50</i>&nbsp;        f.worker=this.worker;</b>
+<b class="fc"><i>51</i>&nbsp;        for (int i=0;i&lt;levels.length;i++) {</b>
+<b class="fc"><i>52</i>&nbsp;            f.levels[i] = this.levels[i];</b>
+<i>53</i>&nbsp;        }
+<b class="fc"><i>54</i>&nbsp;        return f;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;    *   @return cell object
+<i>59</i>&nbsp;    */
+<i>60</i>&nbsp;    public Worker getWorker(){
+<b class="fc"><i>61</i>&nbsp;        return this.worker;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;    *   @param w worker that the player want to place
+<i>66</i>&nbsp;    */
+<i>67</i>&nbsp;    public void setWorker(Worker w){
+<b class="fc"><i>68</i>&nbsp;        worker=w;</b>
+<b class="fc"><i>69</i>&nbsp;    }</b>
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    /**
+<i>72</i>&nbsp;    *   Free the cell from the worker
+<i>73</i>&nbsp;    */
+<i>74</i>&nbsp;    public void fireWorker() {
+<b class="fc"><i>75</i>&nbsp;        worker = null;</b>
+<b class="fc"><i>76</i>&nbsp;    }</b>
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    /**
+<i>79</i>&nbsp;    *   @return X position
+<i>80</i>&nbsp;    */
+<i>81</i>&nbsp;    public int getX () {
+<b class="fc"><i>82</i>&nbsp;        return X;</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    /**
+<i>86</i>&nbsp;    *   @return Y position
+<i>87</i>&nbsp;    */
+<i>88</i>&nbsp;    public int getY () {
+<b class="fc"><i>89</i>&nbsp;        return Y;</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    /**
+<i>93</i>&nbsp;    *   Check if the worker is adjacent the cell
+<i>94</i>&nbsp;    *   and if the difference between worker height and cell height is &lt;= 1
+<i>95</i>&nbsp;    *   @param w worker
+<i>96</i>&nbsp;    *   @return true if the condition is verified, false other otherwise
+<i>97</i>&nbsp;    */
+<i>98</i>&nbsp;    public boolean isNear (Worker w, boolean height) {
+<b class="fc"><i>99</i>&nbsp;        if ((this.X &gt;= w.getPosX() - 1) &amp;&amp; (this.X &lt;= w.getPosX() + 1)) {</b>
+<b class="fc"><i>100</i>&nbsp;            if ((this.Y &gt;= w.getPosY() - 1) &amp;&amp; (this.Y &lt;= w.getPosY() + 1)) {</b>
+<b class="fc"><i>101</i>&nbsp;                if (height)</b>
+<b class="fc"><i>102</i>&nbsp;                    return (this.height() &lt;= w.getPosZ() + 1);</b>
+<i>103</i>&nbsp;                else
+<b class="fc"><i>104</i>&nbsp;                    return true;</b>
+<i>105</i>&nbsp;            }
+<i>106</i>&nbsp;            else {
+<b class="fc"><i>107</i>&nbsp;                return false;</b>
+<i>108</i>&nbsp;            }
+<i>109</i>&nbsp;        }
+<i>110</i>&nbsp;        else {
+<b class="fc"><i>111</i>&nbsp;            return false;</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    /**
+<i>116</i>&nbsp;    *   Check if there is è worker in the cell
+<i>117</i>&nbsp;    *   @return true if the condition is verified, false otherwise
+<i>118</i>&nbsp;    */
+<i>119</i>&nbsp;    public boolean isOccupied(){
+<b class="fc"><i>120</i>&nbsp;        return worker != null;</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    /**
+<i>124</i>&nbsp;    *   Translates the state of the cell by returning its height
+<i>125</i>&nbsp;    *   @return the height of the cell, -1 if there are some other condition
+<i>126</i>&nbsp;    */
+<i>127</i>&nbsp;    public int height(){
+<b class="fc"><i>128</i>&nbsp;        int height=0;</b>
+<b class="fc"><i>129</i>&nbsp;        for(int i=0;i&lt;4;i++){</b>
+<b class="fc"><i>130</i>&nbsp;            switch (levels[i]) {</b>
+<i>131</i>&nbsp;                case FREE:
+<b class="fc"><i>132</i>&nbsp;                    break;</b>
+<i>133</i>&nbsp;                case BUILT:
+<b class="fc"><i>134</i>&nbsp;                    height++;</b>
+<b class="fc"><i>135</i>&nbsp;                    break;</b>
+<i>136</i>&nbsp;                case CUPOLA:
+<b class="fc"><i>137</i>&nbsp;                    return height + 1;</b>
+<i>138</i>&nbsp;                case NOT_AVAILABLE:
+<b class="nc"><i>139</i>&nbsp;                    return -1;</b>
+<i>140</i>&nbsp;            }
+<i>141</i>&nbsp;        }
+<b class="fc"><i>142</i>&nbsp;        return height;</b>
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;    /**
+<i>146</i>&nbsp;     * Return the status of the given level
+<i>147</i>&nbsp;     * @param height height of the status that need to be returned
+<i>148</i>&nbsp;     * @return Status of the given level
+<i>149</i>&nbsp;     */
+<i>150</i>&nbsp;    public Status levelStatus(int height){
+<b class="fc"><i>151</i>&nbsp;        if(height &lt; 4 &amp;&amp; height &gt;= 0){</b>
+<b class="fc"><i>152</i>&nbsp;            switch (levels[height]){</b>
+<i>153</i>&nbsp;                case FREE:
+<b class="fc"><i>154</i>&nbsp;                    return FREE;</b>
+<i>155</i>&nbsp;                case BUILT:
+<b class="fc"><i>156</i>&nbsp;                    return BUILT;</b>
+<i>157</i>&nbsp;                case CUPOLA:
+<b class="fc"><i>158</i>&nbsp;                    return CUPOLA;</b>
+<i>159</i>&nbsp;                case NOT_AVAILABLE:
+<b class="nc"><i>160</i>&nbsp;                    return NOT_AVAILABLE;</b>
+<i>161</i>&nbsp;            }
+<i>162</i>&nbsp;        }
+<b class="fc"><i>163</i>&nbsp;      return NOT_AVAILABLE;</b>
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    /**
+<i>167</i>&nbsp;    *   Search for a FREE level, when it is found build a new BUILD level,
+<i>168</i>&nbsp;    *   if the level already contains a CUPOLA or is the last one (level 4), build a CUPOLA
+<i>169</i>&nbsp;    *   @param b level status
+<i>170</i>&nbsp;    */
+<i>171</i>&nbsp;    public void build (Status b) {
+<b class="fc"><i>172</i>&nbsp;        int i = 0;</b>
+<b class="fc"><i>173</i>&nbsp;        while (FREE != levels[i] &amp;&amp; i &lt; 3) {</b>
+<b class="fc"><i>174</i>&nbsp;            i++;</b>
+<i>175</i>&nbsp;        };
+<b class="fc"><i>176</i>&nbsp;        if (CUPOLA == b || 3 == i) {</b>
+<b class="fc"><i>177</i>&nbsp;            levels[i] = CUPOLA;</b>
+<i>178</i>&nbsp;        }
+<i>179</i>&nbsp;        else {
+<b class="fc"><i>180</i>&nbsp;            levels [i] = BUILT;</b>
+<i>181</i>&nbsp;        }
+<b class="fc"><i>182</i>&nbsp;    }</b>
+<i>183</i>&nbsp;
+<i>184</i>&nbsp;    /**
+<i>185</i>&nbsp;    *   Return a string made in this way
+<i>186</i>&nbsp;    *   livello &lt;height&gt; &lt;STATUS&gt;
+<i>187</i>&nbsp;    *   @return string livello &lt;height&gt; &lt;STATUS&gt;
+<i>188</i>&nbsp;    */
+<i>189</i>&nbsp;    public String toString(){
+<b class="fc"><i>190</i>&nbsp;        String ret=&quot;&quot;;</b>
+<b class="fc"><i>191</i>&nbsp;        for(int i=0;i&lt;4;i++){</b>
+<b class="fc"><i>192</i>&nbsp;            ret=ret+&quot;livello &quot;+i+&quot;: &quot;;</b>
+<b class="fc"><i>193</i>&nbsp;            switch (levels[i]){</b>
+<b class="fc"><i>194</i>&nbsp;                case FREE:ret=ret+&quot;FREE&quot;;break;</b>
+<b class="fc"><i>195</i>&nbsp;                case BUILT:ret=ret+&quot;BUILT&quot;;break;</b>
+<b class="fc"><i>196</i>&nbsp;                case CUPOLA:ret=ret+&quot;CUPOLA&quot;;break;</b>
+<b class="nc"><i>197</i>&nbsp;                case NOT_AVAILABLE:ret=ret+&quot;NOT AVAILABLE&quot;;break;</b>
+<i>198</i>&nbsp;            }
+<b class="fc"><i>199</i>&nbsp;            ret=ret+&quot;\n&quot;;</b>
+<i>200</i>&nbsp;        }
+<b class="fc"><i>201</i>&nbsp;        return ret+&quot;OCCUPATA: &quot;+isOccupied();</b>
+<i>202</i>&nbsp;    }
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;    /**
+<i>205</i>&nbsp;     * Only used for testing purpose. DO NOT USE!
+<i>206</i>&nbsp;     * @param x x
+<i>207</i>&nbsp;     * @param y y
+<i>208</i>&nbsp;     */
+<i>209</i>&nbsp;    public void setCoord (int x, int y) {
+<b class="fc"><i>210</i>&nbsp;        this.X = x;</b>
+<b class="fc"><i>211</i>&nbsp;        this.Y = y;</b>
+<b class="fc"><i>212</i>&nbsp;    }</b>
+<i>213</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-19 15:35</div>
+</div>
+</body>
+</html>
