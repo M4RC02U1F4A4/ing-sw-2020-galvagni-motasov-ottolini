@@ -45,7 +45,6 @@ public class Server {
 
 
         if(numberOfPlayers==2){
-
             c.asyncSend("Benvenuto nella lobby a 2 giocatori");
             System.out.println("Si e' connesso "+name);
             if(waitingConnection2vs2.size()==2){
