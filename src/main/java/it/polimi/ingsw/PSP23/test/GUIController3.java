@@ -44,8 +44,6 @@ public class GUIController3 {
     @FXML
     private ImageView player3;
     @FXML
-    private Button loadingButton;
-    @FXML
     private Button errorButton;
     @FXML
     private Button b00, b01, b02, b03, b04,
@@ -56,14 +54,8 @@ public class GUIController3 {
     @FXML
     private Button utilityButton;
 
-
     @FXML
-    private void utilityButtonAction(){
-        System.out.println("ACTION");
-    }
-
-    @FXML
-    public void loadingButtonAction(){
+    public void initialize(){
         player1Username.setText("Player1");
         player2Username.setText("Player2");
         player3Username.setText("Player3");
@@ -74,8 +66,12 @@ public class GUIController3 {
         player2Power.setText("If your Worker does not move up, it may build both before and after moving.");
         player3Power.setText("Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.");
         playerCurrentPlay.setText("Marco");
-        loadingButton.setVisible(false);
         errorButton.setVisible(false);
+    }
+
+    @FXML
+    private void utilityButtonAction(){
+        System.out.println("ACTION");
     }
 
     public void errorButtonAction(){

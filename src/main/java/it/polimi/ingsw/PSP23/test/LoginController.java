@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -32,6 +33,7 @@ public class LoginController {
     private RadioButton playersNumber2;
     @FXML
     private RadioButton playersNumber3;
+
     @FXML
     public void playButtonAction() {
         Stage stage = (Stage) playButton.getScene().getWindow();
@@ -64,6 +66,7 @@ public class LoginController {
                 gameBoard.setResizable(false);
                 gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
                 gameBoard.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

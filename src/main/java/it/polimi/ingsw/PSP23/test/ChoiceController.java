@@ -51,7 +51,6 @@ public class ChoiceController {
     private Button choiceNext;
     @FXML
     private Button choiceError;
-
     @FXML
     private CheckBox checkApollo;
     @FXML
@@ -80,48 +79,33 @@ public class ChoiceController {
     private CheckBox checkHephaestus;
     @FXML
     private CheckBox checkAtlas;
-    @FXML
-    private Button choiceButton1;
-    @FXML
-    private Button choiceButton2;
-    @FXML
-    private Button choiceButton3;
-    @FXML
-    private ImageView choiceImage1desc;
-    @FXML
-    private ImageView choiceImage2desc;
-    @FXML
-    private ImageView choiceImage3desc;
-    @FXML
-    private ImageView choiceImage1;
-    @FXML
-    private ImageView choiceImage2;
-    @FXML
-    private ImageView choiceImage3;
-    @FXML
-    private Button loadingButton;
 
     @FXML
     public void choiceNextAction(){
+        Vars vars = new Vars();
         int check = 0;
         String gods = "";
-        if(checkApollo.isSelected()){ check += 1; gods += "Apollo";}
-        if(checkHera.isSelected()){ check += 1; gods += "Hera";}
-        if(checkPrometheus.isSelected()){ check += 1; gods += "Prometheus";}
-        if(checkArtemis.isSelected()){ check += 1; gods += "Artemis";}
-        if(checkTriton.isSelected()){ check += 1; gods += "Triton";}
-        if(checkZeus.isSelected()){ check += 1; gods += "Zeus";}
-        if(checkMinotaur.isSelected()){ check += 1; gods += "Minotaur";}
-        if(checkDemeter.isSelected()){ check += 1; gods += "Demeter";}
-        if(checkAthena.isSelected()){ check += 1; gods += "Athena";}
-        if(checkPan.isSelected()){ check += 1; gods += "Pan";}
-        if(checkChronus.isSelected()){ check += 1; gods += "Chronus";}
-        if(checkHestia.isSelected()){ check += 1; gods += "Hestia";}
-        if(checkHephaestus.isSelected()){ check += 1; gods += "Hephaestus";}
-        if(checkAtlas.isSelected()){ check += 1; gods += "Atlas";}
+        if(checkApollo.isSelected()){ check += 1; gods += "Apollo-";}
+        if(checkHera.isSelected()){ check += 1; gods += "Hera-";}
+        if(checkPrometheus.isSelected()){ check += 1; gods += "Prometheus-";}
+        if(checkArtemis.isSelected()){ check += 1; gods += "Artemis-";}
+        if(checkTriton.isSelected()){ check += 1; gods += "Triton-";}
+        if(checkZeus.isSelected()){ check += 1; gods += "Zeus-";}
+        if(checkMinotaur.isSelected()){ check += 1; gods += "Minotaur-";}
+        if(checkDemeter.isSelected()){ check += 1; gods += "Demeter-";}
+        if(checkAthena.isSelected()){ check += 1; gods += "Athena-";}
+        if(checkPan.isSelected()){ check += 1; gods += "Pan-";}
+        if(checkChronus.isSelected()){ check += 1; gods += "Chronus-";}
+        if(checkHestia.isSelected()){ check += 1; gods += "Hestia-";}
+        if(checkHephaestus.isSelected()){ check += 1; gods += "Hephaestus-";}
+        if(checkAtlas.isSelected()){ check += 1; gods += "Atlas-";}
         if(check != 3) choiceError.setVisible(true);
         else {
-            System.out.println(gods);
+            gods = gods.substring(0, gods.length() - 1);
+            String[] parts = gods.split("-");
+            vars.god1 = parts[0];
+            vars.god2 = parts[1];
+            vars.god3 = parts[2];
             Stage stage = (Stage) choiceError.getScene().getWindow();
             stage.close();
             try {
@@ -134,30 +118,6 @@ public class ChoiceController {
                 choice3.show();
             } catch (IOException e) { e.printStackTrace(); }
         }
-    }
-
-    @FXML
-    public void loadingButtonAction(){
-        choiceImage1desc.setImage(new Image ("/img/gods/Artemis_desc.png"));
-        choiceImage2desc.setImage(new Image ("/img/gods/Athena_desc.png"));
-        choiceImage3desc.setImage(new Image ("/img/gods/Atlas_desc.png"));
-        choiceImage1.setImage(new Image ("/img/gods/Artemis.png"));
-        choiceImage2.setImage(new Image ("/img/gods/Athena.png"));
-        choiceImage3.setImage(new Image ("/img/gods/Atlas.png"));
-        loadingButton.setVisible(false);
-    }
-
-    @FXML
-    public void choiceButton1Action(){
-        System.out.println("1");
-    }
-    @FXML
-    public void choiceButton2Action(){
-        System.out.println("2");
-    }
-    @FXML
-    public void choiceButton3Action(){
-        System.out.println("3");
     }
 
     @FXML
