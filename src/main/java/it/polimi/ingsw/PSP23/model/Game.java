@@ -39,7 +39,9 @@ public class Game extends Observable<Message> {
     public void godChoose(String god1, String god2, String god3) {
         availableGods[0] = god1;
         availableGods[1] = god2;
-        availableGods[2] = god3;
+        if(god3!=null) {
+            availableGods[2] = god3;
+        }
         this.nextGameSetUpPhase();
     }
 
@@ -169,7 +171,7 @@ public class Game extends Observable<Message> {
             return getCurrentPlayer().getWorkerByNumber(1);
     }
 
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return players[this.getCurrentPlayerNum()];
     }
 
@@ -210,23 +212,8 @@ public class Game extends Observable<Message> {
 
     public void sendMapUpdate() {}
 
-    public void performeMove(int x, int y, Player player, Action action, int nworker){
-        if(action == Action.BUILD){
-            //TODO build
-            player.getGod().build(map.getCell(1,0),Status.BUILT,player.getWorkerByNumber(nworker));
-        }
-        else if(action == Action.MOVE){
-            //TODO move
-            player.getGod().startTurn(false);
-            player.getGod().move(map.getCell(1,0),player.getWorkerByNumber(nworker),map);
-        }
-        else if(action==Action.PLACE_WORKERS){
-            //TODO PLACE WORKERS
-        }
-        else if(action==Action.CHOOSE_GODS){
-            //TODO CHOOSE GODS
-        }
-        else return;//magari anche qui con un'eccezione
+    public void performeMove(int x, int y, Player player, Action action){
+        //TODO
     }
 
 
@@ -235,6 +222,54 @@ public class Game extends Observable<Message> {
             return true;
         else
             return false;
+    }
+    public void addGod(Player p, String god){
+        switch (god){
+            case "Apollo":
+                p.setGod(new Apollo());
+                break;
+            case "Artemis":
+                p.setGod(new Artemis());
+                break;
+            case "Athena":
+                p.setGod(new Athena());
+                break;
+            case "Atlas":
+                p.setGod(new Atlas());
+                break;
+            case "Chronus":
+                p.setGod(new Chronus());
+                break;
+            case "Demeter"
+                    :p.setGod(new Demeter());
+                break;
+            case "Hephaestus":
+                p.setGod(new Hephaestus());
+                break;
+            case "Hera":
+                p.setGod(new Hera());
+                break;
+            case "Hestia":
+                p.setGod(new Hestia());
+                break;
+            case "Minotaur":
+                p.setGod( new Minotaur());
+                break;
+            case "Pan":
+                p.setGod(new Pan());
+                break;
+            case "Prometheus":
+                p.setGod(new Prometheus());
+                break;
+            case "Triton":
+                p.setGod(new Triton());
+                break;
+            case "Zeus"
+                    :p.setGod(new Zeus());
+                break;
+        }
+        nextGameSetUpPhase();
+
     }
 
 

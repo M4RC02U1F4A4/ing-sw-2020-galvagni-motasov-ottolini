@@ -63,6 +63,7 @@ public class Player {
         this.god = god;
     }
 
+
     /**
      *   @return player worker list
      */

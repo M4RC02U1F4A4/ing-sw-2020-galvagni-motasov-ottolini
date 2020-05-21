@@ -11,6 +11,7 @@ public class Controller implements Observer<PlayerMove>{
     private final Game game;
     private ArrayList<View> players=new ArrayList<>();
     private Action actionBeingPerformed;
+    private Status whatToBuild;
     private ArrayList<String> arguments=new ArrayList<>();
 
 
@@ -51,6 +52,7 @@ public class Controller implements Observer<PlayerMove>{
 
     @Override
     public void update(PlayerMove message) {
+        setActionFromTheClient(message.getCommand(), message.getArgs());
         performMove(message);
 
     }
@@ -58,7 +60,58 @@ public class Controller implements Observer<PlayerMove>{
     public void playPhase(PlayerMove move){
         switch (game.getPhase()){
             case GOD_CHOOSE:{
-
+                game.godChoose(arguments.get(0),arguments.get(1),arguments.get(2));
+                return;
+            }
+            case GOD_PICK:{
+                game.addGod(game.getCurrentPlayer(), arguments.get(0));
+                return;
+            }
+            case WORKER_HOUSING:{
+                //TODO: chiedere conferma che sia effettivamente così
+                game.setWorker(game.getMap().getCell(Integer.parseInt(arguments.get(0)),Integer.parseInt(arguments.get(1))));
+                return;
+            }
+            case START_TURN:{
+                //TODO:
+                break;
+            }
+            case CHOOSE_WORKER:{
+                //TODO, da chiarire come funziona
+                //game.chooseActiveWorker();
+                break;
+            }
+            case CHECK_LOSE_MOVE:{
+                //TODO, da chiarire come funziona
+                break;
+            }
+            case CHECK_LOSE_BUILD:{
+                //TODO same
+                break;
+            }
+            case CHECK_WIN_MOVE:{
+                //TODO lol
+                break;
+            }
+            case CHECK_WIN_BUILD:{
+                //TODO lol
+                break;
+            }
+            case CHECK_WIN:{
+                //TODO idem
+                break;
+            }
+            case MOVE:{
+                game.move(game.getMap().getCell(Integer.parseInt(arguments.get(0)),Integer.parseInt(arguments.get(1))));
+                break;
+            }
+            case BUILD:{
+                game.build(game.getMap().getCell(Integer.parseInt(arguments.get(0)),Integer.parseInt(arguments.get(1))),whatToBuild);
+                break;
+            }
+            case END:{
+                //TODO c'è da fare qualcosa in questo caso?
+                break;
             }
         }
     }
@@ -103,7 +156,11 @@ public class Controller implements Observer<PlayerMove>{
                 actionBeingPerformed=Action.BUILD;
                 arguments.add(tmp[0]);//coordinata x della costruzione
                 arguments.add(tmp[1]);//coordinata y della costruzione
-                arguments.add(tmp[2]);//Struttora normale o cupola
+                if(tmp[1].equals("CUPOLA")){
+                    whatToBuild=Status.CUPOLA;
+                }
+                else
+                    whatToBuild=Status.BUILT;
                 break;
             }
 
