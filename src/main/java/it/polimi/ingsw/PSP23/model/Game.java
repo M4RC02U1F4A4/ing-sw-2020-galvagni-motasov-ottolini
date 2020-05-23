@@ -24,16 +24,7 @@ public class Game {
 
     //Set functions, game preparation
 
-    public int addPlayer(String name, String ip) {
-        if (colorVariable >= numPlayers)
-            return -1;
-        players[colorVariable] = new Player(name, ip);
-        players[colorVariable].setColor(getColor());
-        colorVariable++;
-        return 0;
-    }
-
-    public void godChoose(String god1, String god2, String god3) {
+    private void godChoose(String god1, String god2, String god3) {
         availableGods[0] = god1;
         availableGods[1] = god2;
         availableGods[2] = god3;
@@ -41,7 +32,7 @@ public class Game {
     }
 
     //TODO finire di inserire tutti i god
-    public void setGod(String god) {
+    private void setGod(String god) {
         if (god.equals(availableGods[0]))
             availableGods[0] = "Scelto";
         else if (god.equals(availableGods[1]))
@@ -60,6 +51,10 @@ public class Game {
                 for (int cont = 0; cont < numPlayers; cont++)
                     players[cont].getGod().AthenaIsHere();
                 break;
+            case "Chronus":
+                getCurrentPlayer().setGod(new Chronus());
+                this.ChronoIsHere = true;
+                break;
             case "Hera":
                 getCurrentPlayer().setGod(new Hera());
                 for (int cont = 0; cont < numPlayers; cont++)
@@ -69,8 +64,8 @@ public class Game {
         this.nextGameSetUpPhase();
     }
 
-    public void setWorker(Cell c) {
-        getCurrentPlayer().placeWorker(c);
+    private void setWorker(int x, int y) {
+        getCurrentPlayer().placeWorker(map.getCell(x, y));
         nextGameSetUpPhase();
     }
 
@@ -87,17 +82,18 @@ public class Game {
         nextGamePhase();
     }
 
-    public void build(Cell c, Status b) {
-        getCurrentPlayer().getGod().build(c, b, getActiveWorker());
+    // TODO chronus completed tower
+    private void build(int x, int y, Status b) {
+        getCurrentPlayer().getGod().build(map.getCell(x, y), b, getActiveWorker());
         nextGamePhase();
     }
 
-    public void move(Cell c) {
-        getCurrentPlayer().getGod().move(c, getActiveWorker(), map);
+    private void move(int x, int y) {
+        getCurrentPlayer().getGod().move(map.getCell(x, y), getActiveWorker(), map);
         nextGamePhase();
     }
 
-    public void skipAction() {
+    private void skipAction() {
         switch (getCurrentPlayer().getGod().getName()) {
             case "Artemis":
                 break;
@@ -170,7 +166,16 @@ public class Game {
         return players[this.getCurrentPlayerNum()];
     }
 
-    // Get functions
+    // In and Out functions
+
+    public int addPlayer(String name, String ip) {
+        if (colorVariable >= numPlayers)
+            return -1;
+        players[colorVariable] = new Player(name, ip);
+        players[colorVariable].setColor(getColor());
+        colorVariable++;
+        return 0;
+    }
 
     public Phase getPhase() {
         return turnManager.getCurrentPhase();
@@ -185,11 +190,19 @@ public class Game {
         return map;
     }
 
-    public ArrayList<String> getGodList() {
+    public ArrayList<String> getAllGodList() {
         return God.getAllGods();
     }
 
-    //Message
+    // TODO return the list of gods avaiable
+    public String getGodList() {
+        return "chiapasu";
+    }
+
+    public void performeMove(String Move) {
+    }
+
+
     /*
     TODO IVAN tutte queste funzioni sono tue, l'ideale sarebbe lasciare la classe game come istanza del gioco e chiamare
     le funzioni di comunicazione con i player attraverso un'altra classe.
@@ -205,6 +218,7 @@ public class Game {
 
     }
 
+    //Invia il messaggio di update map
     public void sendMapUpdate() {}
 
 
