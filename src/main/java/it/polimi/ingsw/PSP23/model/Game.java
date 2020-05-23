@@ -1,16 +1,17 @@
 package it.polimi.ingsw.PSP23.model;
 
 import it.polimi.ingsw.PSP23.model.god.*;
+import it.polimi.ingsw.PSP23.observer.Observable;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Game extends Observable<Message> {
     private Map map;
     private Player[] players;
     private String[] availableGods;
     private TurnManager turnManager;
     private boolean activeWorker, ChronoIsHere;
-    private int numPlayers, colorVariable;
+    private int numPlayers, colorVariable=0;
 
     public Game(int numPlayer) {
         map=new Map();
@@ -24,10 +25,13 @@ public class Game {
 
     //Set functions, game preparation
 
-    private void godChoose(String god1, String god2, String god3) {
+
+    public void godChoose(String god1, String god2, String god3) {
         availableGods[0] = god1;
         availableGods[1] = god2;
-        availableGods[2] = god3;
+        if(god3!=null) {
+            availableGods[2] = god3;
+        }
         this.nextGameSetUpPhase();
     }
 
@@ -162,7 +166,7 @@ public class Game {
             return getCurrentPlayer().getWorkerByNumber(1);
     }
 
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return players[this.getCurrentPlayerNum()];
     }
 
@@ -173,7 +177,9 @@ public class Game {
             return -1;
         players[colorVariable] = new Player(name, ip);
         players[colorVariable].setColor(getColor());
+        players[colorVariable].setPlayerNumber(colorVariable);
         colorVariable++;
+        turnManager.addPlayer();
         return 0;
     }
 
@@ -183,7 +189,7 @@ public class Game {
 
     //TODO check this function
     public int getCurrentPlayerNum() {
-        return turnManager.getCurrentPlayerNumber() - 1;
+        return turnManager.getCurrentPlayerNumber() ;
     }
 
     public Map getMap() {
@@ -220,6 +226,66 @@ public class Game {
 
     //Invia il messaggio di update map
     public void sendMapUpdate() {}
+
+    public void performeMove(int x, int y, Player player, Action action){
+        //TODO
+    }
+
+
+    public boolean isPlayerTurn(Player p){
+        if(p.getPlayerNumber()==getCurrentPlayerNum())
+            return true;
+        else
+            return false;
+    }
+    public void addGod(Player p, String god){
+        switch (god){
+            case "Apollo":
+                p.setGod(new Apollo());
+                break;
+            case "Artemis":
+                p.setGod(new Artemis());
+                break;
+            case "Athena":
+                p.setGod(new Athena());
+                break;
+            case "Atlas":
+                p.setGod(new Atlas());
+                break;
+            case "Chronus":
+                p.setGod(new Chronus());
+                break;
+            case "Demeter"
+                    :p.setGod(new Demeter());
+                break;
+            case "Hephaestus":
+                p.setGod(new Hephaestus());
+                break;
+            case "Hera":
+                p.setGod(new Hera());
+                break;
+            case "Hestia":
+                p.setGod(new Hestia());
+                break;
+            case "Minotaur":
+                p.setGod( new Minotaur());
+                break;
+            case "Pan":
+                p.setGod(new Pan());
+                break;
+            case "Prometheus":
+                p.setGod(new Prometheus());
+                break;
+            case "Triton":
+                p.setGod(new Triton());
+                break;
+            case "Zeus"
+                    :p.setGod(new Zeus());
+                break;
+        }
+        nextGameSetUpPhase();
+
+    }
 
 
 /*

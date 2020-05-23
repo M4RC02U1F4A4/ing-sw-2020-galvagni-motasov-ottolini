@@ -21,21 +21,10 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
     public abstract void showMessage(Object message);
     public abstract String getWhatClientSaid();
 
-    void handleMove(int x, int y, int nWorker){
-        System.out.println(player.getName());
-        System.out.println(this);
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println(Action.MOVE);
-        System.out.println(nWorker);
-        notify(new PlayerMove(player, this , x, y, Action.MOVE, nWorker));
-        showMessage(getWhatClientSaid());
+    void handleChoice(String command, String args){
+        notify(new PlayerMove(player, this, command, args));
     }
 
-    void handleBuild(int x, int y, int nWorker){
-        System.out.println(x+" "+y);
-        notify(new PlayerMove(player, this , x, y, Action.BUILD, nWorker));
-    }
 
 
 }

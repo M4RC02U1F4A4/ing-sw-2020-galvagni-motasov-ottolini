@@ -45,12 +45,11 @@ public class Server {
 
 
         if(numberOfPlayers==2){
-
             c.asyncSend("Benvenuto nella lobby a 2 giocatori");
             System.out.println("Si e' connesso "+name);
             if(waitingConnection2vs2.size()==2){
                 System.out.println("istanzio il controller");
-                Game game=new Game();
+                Game game=new Game(2);
                 Controller controller=new Controller(game);
                 Set<Map.Entry<String, ClientConnection>> st= waitingConnection2vs2.entrySet();
 
@@ -62,23 +61,22 @@ public class Server {
                     Player p=new Player(nome, ip);
                     players.add(p);
                 }
-
-                Worker[] workers = new Worker[2];
-                workers[0]=new Worker(game.getMap().getCell(0,0),Color.BLUE);
-                workers[1]=new Worker(game.getMap().getCell(0,1),Color.BLUE);
+                /*Worker[] workers = new Worker[2];
+                workers[0]=null;
+                workers[1]=null;
                 players.get(0).setWorkers(workers);
+                players.get(0).setGod(null);*/
                 players.get(0).setColor(Color.BLUE);
                 players.get(0).setPlayerNumber(0);
-
-
-                workers[0]=new Worker(game.getMap().getCell(3,3),Color.RED);
-                workers[1]=new Worker(game.getMap().getCell(3,4),Color.RED);
-                players.get(1).setWorkers(workers);
+                /*Worker[] workers2 = new Worker[2];
+                workers2[0]=null;
+                workers2[1]=null;
+                players.get(1).setWorkers(workers2);
+                players.get(1).setGod(null);*/
                 players.get(1).setColor(Color.RED);
                 players.get(1).setPlayerNumber(1);
                 controller.addPlayer(players.get(0));
                 controller.addPlayer(players.get(1));
-
 
 
                 View player1view=new RemoteView(players.get(0),conn.get(0));
@@ -90,13 +88,15 @@ public class Server {
                 player1view.addObserver(controller);
                 player2view.addObserver(controller);
 
+                System.out.println("fino a qua funziona");
 
 
-
-
-
+                System.out.println(players.get(0).getPlayerNumber());
+                System.out.println(players.get(1).getPlayerNumber());
                 if(game.isPlayerTurn(players.get(0))){
                     conn.get(0).asyncSend("e' il tuo turno");
+                    conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
+                    conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
                     conn.get(1).asyncSend("non e' il tuo turno");
                 }
                 else{
@@ -113,7 +113,7 @@ public class Server {
             System.out.println("Si e' connesso " + name);
             if (waitingConnection3vs3.size() == 3) {
                 System.out.println("istanzio il controller");
-                Controller controller = new Controller(new Game());
+                Controller controller = new Controller(new Game(2));
                 Set<Map.Entry<String, ClientConnection>> st = waitingConnection3vs3.entrySet();
                 for (Map.Entry<String, ClientConnection> me : st) {
                     String nome = me.getKey();

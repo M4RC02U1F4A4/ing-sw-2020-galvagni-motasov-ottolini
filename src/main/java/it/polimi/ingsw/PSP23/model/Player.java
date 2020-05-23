@@ -15,7 +15,7 @@ public class Player {
         this.name=name;
         this.ipAddress=ipAddress;
         this.workers=new Worker[2];
-        this.color=Color.RED;
+        this.color=null;
         this.god = null;
         this.workers[0] = null;
         this.workers[1] = null;
@@ -62,6 +62,7 @@ public class Player {
     public void setGod(God god) {
         this.god = god;
     }
+
 
     /**
      *   @return player worker list
