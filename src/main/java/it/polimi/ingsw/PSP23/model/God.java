@@ -119,7 +119,7 @@ public class God {
     *   Check if the player has won the game
     *   @param w the worker moved is needed
     */
-    public boolean checkWin(Worker w) {
+    public boolean checkWin(Worker w, int completed_tower) {
         if ((0 < this.starting_z) && (3 > this.starting_z) && (3 == w.getPosZ())) {
             if ((this.is_hera_in_game) && !("Hera".matches(this.name))){
                 return (0 != w.getPosX()) && (0 != w.getPosY()) && (4 != w.getPosX()) && (4 != w.getPosY());

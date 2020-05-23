@@ -155,38 +155,38 @@ public class GodTest {
             rjdio.starting_z = 1;
             ulare.build(Status.BUILT);
             murathor.moveWorker(ulare);
-            assertFalse(rjdio.checkWin(murathor));
+            assertFalse(rjdio.checkWin(murathor, 0));
         }
         ulare.build(Status.BUILT);
-        assertTrue(rjdio.checkWin(murathor));
+        assertTrue(rjdio.checkWin(murathor, 12));
         //hera power enabled
         rjdio.HeraIsHere();
         //testing borders
         int i = 0;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(i,j);
-            assertFalse(rjdio.checkWin(murathor));
+            assertFalse(rjdio.checkWin(murathor, 34));
         }
         i = 4;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(i,j);
-            assertFalse(rjdio.checkWin(murathor));
+            assertFalse(rjdio.checkWin(murathor, 5));
         }
         i = 4;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(j,i);
-            assertFalse(rjdio.checkWin(murathor));
+            assertFalse(rjdio.checkWin(murathor, 3));
         }
         i = 4;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(j,i);
-            assertFalse(rjdio.checkWin(murathor));
+            assertFalse(rjdio.checkWin(murathor, 0));
         }
         //testing center
         for (i = 1; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
                 ulare.setCoord(i, j);
-                assertTrue(rjdio.checkWin(murathor));
+                assertTrue(rjdio.checkWin(murathor, 0));
             }
         }
     }

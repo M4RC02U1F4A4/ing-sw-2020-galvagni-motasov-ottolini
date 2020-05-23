@@ -10,8 +10,8 @@ public class Game extends Observable<Message> {
     private Player[] players;
     private String[] availableGods;
     private TurnManager turnManager;
-    private boolean activeWorker, ChronoIsHere;
-    private int numPlayers, colorVariable=0;
+    private boolean activeWorker, ChronusIsHere;
+    private int numPlayers, colorVariable=0, completedTowers;
 
     public Game(int numPlayer) {
         map=new Map();
@@ -20,29 +20,64 @@ public class Game extends Observable<Message> {
         availableGods = new String[numPlayer];
         turnManager = new TurnManager();
         turnManager.setPlayerNumber(numPlayer);
-        ChronoIsHere = false;
+        ChronusIsHere = false;
     }
 
-    //Set functions, game preparation
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Set functions, game preparation
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * function to add player to game e to turn manager
+     * @param name name of the player
+     * @param ip ip of the player
+     * @return 0 if all ok
+     *        -1 if try to make a 4 player game
+     */
+    public int addPlayer(String name, String ip) {
+        if (colorVariable >= numPlayers)
+            return -1;
+        players[colorVariable] = new Player(name, ip);
+        players[colorVariable].setColor(getColor());
+        players[colorVariable].setPlayerNumber(colorVariable);
+        colorVariable++;
+        turnManager.addPlayer();
+        return 0;
+    }
 
+    /**
+     * the 2 or 3 gods choosed for this game
+     * @param god1 first god
+     * @param god2 second god
+     * @param god3 third god, will skip if numplayer == 2
+     */
     public void godChoose(String god1, String god2, String god3) {
         availableGods[0] = god1;
         availableGods[1] = god2;
-        if(god3!=null) {
+        if (3 == numPlayers)
             availableGods[2] = god3;
-        }
-        this.nextGameSetUpPhase();
+        nextGameSetUpPhase();
     }
 
-    //TODO finire di inserire tutti i god
-    private void setGod(String god) {
+    /**
+     * Set the god choosed to 'scelto' then create the god for player
+     * @param god is the god choosed by the player
+     * @return 0 if everithing is ok
+     *        -1 if tried to choose a god not avaiable
+     */
+    public int setGod(String god) {
         if (god.equals(availableGods[0]))
             availableGods[0] = "Scelto";
         else if (god.equals(availableGods[1]))
             availableGods[1] = "Scelto";
-        else if (god.equals(availableGods[2]))
-            availableGods[2] = "Scelto";
+        else if (3 == numPlayers) {
+            if (god.equals(availableGods[2]))
+                availableGods[2] = "Scelto";
+            else
+                return -1;
+        }
+        else
+            return -1;
         switch (god) {
             case "Apollo":
                 getCurrentPlayer().setGod(new Apollo());
@@ -55,17 +90,45 @@ public class Game extends Observable<Message> {
                 for (int cont = 0; cont < numPlayers; cont++)
                     players[cont].getGod().AthenaIsHere();
                 break;
+            case "Atlas":
+                getCurrentPlayer().setGod(new Atlas());
+                break;
             case "Chronus":
                 getCurrentPlayer().setGod(new Chronus());
-                this.ChronoIsHere = true;
+                this.ChronusIsHere = true;
+                break;
+            case "Demeter":
+                getCurrentPlayer().setGod(new Demeter());
+                break;
+            case "Hephaestus":
+                getCurrentPlayer().setGod(new Hephaestus());
                 break;
             case "Hera":
                 getCurrentPlayer().setGod(new Hera());
                 for (int cont = 0; cont < numPlayers; cont++)
                     players[cont].getGod().HeraIsHere();
                 break;
+            case "Hestia":
+                getCurrentPlayer().setGod(new Hestia());
+                break;
+            case "Minotaur":
+                getCurrentPlayer().setGod(new Minotaur());
+                break;
+            case "Pan":
+                getCurrentPlayer().setGod(new Pan());
+                break;
+            case "Prometheus":
+                getCurrentPlayer().setGod(new Prometheus());
+                break;
+            case "Triton":
+                getCurrentPlayer().setGod(new Triton());
+                break;
+            case "Zeus":
+                getCurrentPlayer().setGod(new Zeus());
+                break;
         }
         this.nextGameSetUpPhase();
+        return 0;
     }
 
     private void setWorker(int x, int y) {
@@ -79,42 +142,63 @@ public class Game extends Observable<Message> {
             turnManager.setCurrentPlayer(getCurrentPlayer());
     }
 
-    //Set functions, game
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Set functions, game
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void chooseActiveWorker(Worker w) {
+    private void chooseActiveWorker(Worker w) {
         activeWorker = getCurrentPlayer().getWorkerByNumber(0) == w;
         nextGamePhase();
     }
 
-    // TODO chronus completed tower
+    /**
+     * do the build
+     * @param x of the cell target
+     * @param y of the cell target
+     * @param b type of block build
+     */
     private void build(int x, int y, Status b) {
-        getCurrentPlayer().getGod().build(map.getCell(x, y), b, getActiveWorker());
+        int i = getCurrentGod().build(map.getCell(x, y), b, getActiveWorker());
+        if (ChronusIsHere && 4 == i)
+            completedTowers++;
         nextGamePhase();
     }
 
+    /**
+     * do the move
+     * @param x of the cell target
+     * @param y of the cell target
+     */
     private void move(int x, int y) {
-        getCurrentPlayer().getGod().move(map.getCell(x, y), getActiveWorker(), map);
+        getCurrentGod().move(map.getCell(x, y), getActiveWorker(), map);
         nextGamePhase();
     }
 
+    // TODO check if is an avaiable move, then skip it and modify the remainmoves/builds id needed
     private void skipAction() {
-        switch (getCurrentPlayer().getGod().getName()) {
+        switch (getCurrentGod().getName()) {
             case "Artemis":
+                nextGamePhase();
                 break;
             case "Demeter":
+                nextGamePhase();
                 break;
             case "Hephaestus":
+                nextGamePhase();
                 break;
             case "Hestia":
+                nextGamePhase();
                 break;
             case "Prometheus":
+                nextGamePhase();
                 break;
             case "Triton":
+                nextGamePhase();
                 break;
         }
-        nextGamePhase();
     }
 
+    // TODO check end case
     private void nextGamePhase() {
         turnManager.nextPhaseGame();
         switch (turnManager.getCurrentPhase()) {
@@ -125,7 +209,7 @@ public class Game extends Observable<Message> {
             case CHECK_WIN:
             case CHECK_WIN_MOVE:
             case CHECK_WIN_BUILD:
-                if (getCurrentPlayer().getGod().checkWin(this.getActiveWorker()))
+                if (getCurrentPlayer().getGod().checkWin(this.getActiveWorker(), completedTowers))
                     sendWin(getCurrentPlayer());
                 nextGamePhase();
                 break;
@@ -144,7 +228,9 @@ public class Game extends Observable<Message> {
         }
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // internal functions
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private Color getColor() {
         switch (colorVariable) {
@@ -166,32 +252,35 @@ public class Game extends Observable<Message> {
             return getCurrentPlayer().getWorkerByNumber(1);
     }
 
-    public Player getCurrentPlayer() {
+    private Player getCurrentPlayer() {
         return players[this.getCurrentPlayerNum()];
     }
 
-    // In and Out functions
-
-    public int addPlayer(String name, String ip) {
-        if (colorVariable >= numPlayers)
-            return -1;
-        players[colorVariable] = new Player(name, ip);
-        players[colorVariable].setColor(getColor());
-        players[colorVariable].setPlayerNumber(colorVariable);
-        colorVariable++;
-        turnManager.addPlayer();
-        return 0;
+    private God getCurrentGod() {
+        return players[this.getCurrentPlayerNum()].getGod();
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // In and Out functions
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Phase getPhase() {
         return turnManager.getCurrentPhase();
     }
 
-    //TODO check this function
+    //TODO check this function output
     public int getCurrentPlayerNum() {
         return turnManager.getCurrentPlayerNumber() ;
     }
 
+    public boolean isPlayerTurn(Player p){
+        if(p.getPlayerNumber()==getCurrentPlayerNum())
+            return true;
+        else
+            return false;
+    }
+
+    //Please do not use
     public Map getMap() {
         return map;
     }
@@ -205,9 +294,36 @@ public class Game extends Observable<Message> {
         return "chiapasu";
     }
 
-    public void performeMove(String Move) {
+    /**
+     * I MAKE THE GAME DO BLIP BLOP
+     * @param action the move requested
+     * @param active the active worker (for SELECT_WORKER phase only)
+     * @param block the block build (for BUILD phase only)
+     * @param x the x of the cell build/moved
+     * @param y the y of the cell build/moved
+     * @return 0 if everything is ok
+     *        -1 if there is some errors
+     */
+    public int performeMove(Action action, Worker active, Status block, int x, int y) {
+        switch (action) {
+            case PLACE_WORKER:
+                setWorker(x, y);
+                break;
+            case SELECT_WORKER:
+                chooseActiveWorker(active);
+                break;
+            case MOVE:
+                move(x, y);
+                break;
+            case BUILD:
+                build(x, y, block);
+                break;
+            case SKIP:
+                skipAction();
+                break;
+        }
+        return 0;
     }
-
 
     /*
     TODO IVAN tutte queste funzioni sono tue, l'ideale sarebbe lasciare la classe game come istanza del gioco e chiamare
@@ -226,220 +342,4 @@ public class Game extends Observable<Message> {
 
     //Invia il messaggio di update map
     public void sendMapUpdate() {}
-
-    public void performeMove(int x, int y, Player player, Action action){
-        //TODO
-    }
-
-
-    public boolean isPlayerTurn(Player p){
-        if(p.getPlayerNumber()==getCurrentPlayerNum())
-            return true;
-        else
-            return false;
-    }
-    public void addGod(Player p, String god){
-        switch (god){
-            case "Apollo":
-                p.setGod(new Apollo());
-                break;
-            case "Artemis":
-                p.setGod(new Artemis());
-                break;
-            case "Athena":
-                p.setGod(new Athena());
-                break;
-            case "Atlas":
-                p.setGod(new Atlas());
-                break;
-            case "Chronus":
-                p.setGod(new Chronus());
-                break;
-            case "Demeter"
-                    :p.setGod(new Demeter());
-                break;
-            case "Hephaestus":
-                p.setGod(new Hephaestus());
-                break;
-            case "Hera":
-                p.setGod(new Hera());
-                break;
-            case "Hestia":
-                p.setGod(new Hestia());
-                break;
-            case "Minotaur":
-                p.setGod( new Minotaur());
-                break;
-            case "Pan":
-                p.setGod(new Pan());
-                break;
-            case "Prometheus":
-                p.setGod(new Prometheus());
-                break;
-            case "Triton":
-                p.setGod(new Triton());
-                break;
-            case "Zeus"
-                    :p.setGod(new Zeus());
-                break;
-        }
-        nextGameSetUpPhase();
-
-    }
-
-
-/*
-    public Map getMap() {
-        return map;
-    }
-
-    /**
-     * add a Player to the current game, then a god is randomly assigned to that player and then a color.
-     * The god is chosen between the unused ones, the used ones are saved in the <code>takenGods</code> ArrayList
-     * @param p the player we want to add to the game
-     *
-    public void addPlayer(Player p){
-        //p.setColor(getUnusedColor());
-        p.setPlayerNumber(players.size());
-        players.add(p);
-        turnManager.addPlayer();
-    }
-
-    public int getTurnNumber(){
-        return turnManager.getCurrentPlayerNumber();
-    }
-
-    public void nextPhase(){
-        turnManager.nextPhaseGame();
-    }
-
-    // TODO not like this!
-    public void nextTurn() {
-        //turnManager.nextTurn();
-        // instead something like
-        if (Phase.END == turnManager.getCurrentPhase()) {
-            turnManager.setCurrentPlayer(players.get(turnManager.getCurrentPlayerNumber()));
-            // game set up
-        }
-        else if (Phase.CHOOSE_WORKER == turnManager.getCurrentPhase()) {
-            turnManager.setCurrentPlayer(players.get(turnManager.getCurrentPlayerNumber()));
-        }
-        else
-            return;
-            // error
-    }
-
-    public int getNumberOfPlayers(){
-        return players.size();
-    }
-
-    public void performeMove(int x, int y, Player player, Action action, int nworker){
-        if(action == Action.BUILD){
-            //TODO build
-            player.getGod().build(map.getCell(1,0),Status.BUILT,player.getWorkerByNumber(nworker));
-        }
-        else if(action == Action.MOVE){
-            //TODO move
-            player.getGod().startTurn(false);
-            player.getGod().move(map.getCell(1,0),player.getWorkerByNumber(nworker),map);
-        }
-        else if(action==Action.PLACE_WORKERS){
-            //TODO PLACE WORKERS
-        }
-        else if(action==Action.CHOOSE_GODS){
-            //TODO CHOOSE GODS
-        }
-        else return;//magari anche qui con un'eccezione
-    }
-
-    /**
-     * Method used to give each player a different color
-     * @return
-     *
-    public Color getUnusedColor(){
-        switch (colourVariable) {
-            case (0):
-                colourVariable++;
-                return Color.RED;
-            case (1):
-                colourVariable++;
-                return Color.BLUE;
-            case (2):
-                colourVariable++;
-                return Color.WHITE;
-            default:return null;
-        }
-    }
-
-    public Player getPlayer(int pos){
-        return players.get(pos);
-    }
-
-    public ArrayList<String> getAvailableGods(){
-        return availableGods;
-    }
-
-    public int getCurrentPlayer(){
-        return turnManager.getCurrentPlayerNumber();
-    }
-
-    public Phase getCurrentPhase(){
-        return turnManager.getCurrentPhase();
-    }
-
-    public boolean isPlayerTurn(Player p){
-        if(p.getPlayerNumber()==getCurrentPlayer())
-            return true;
-        else
-            return false;
-    }
-
-    public void addGod(Player p, String god){
-        switch (god){
-            case "Apollo":
-                p.setGod(new Apollo());
-                break;
-            case "Artemis":
-                p.setGod(new Artemis());
-                break;
-            case "Athena":
-                p.setGod(new Athena());
-                break;
-            case "Atlas":
-                p.setGod(new Atlas());
-                break;
-            case "Chronus":
-                p.setGod(new Chronus());
-                break;
-            case "Demeter"
-                    :p.setGod(new Demeter());
-                break;
-            case "Hephaestus":
-                p.setGod(new Hephaestus());
-                break;
-            case "Hera":
-                p.setGod(new Hera());
-                break;
-            case "Hestia":
-                p.setGod(new Hestia());
-                break;
-            case "Minotaur":
-                p.setGod( new Minotaur());
-                break;
-            case "Pan":
-                p.setGod(new Pan());
-                break;
-            case "Prometheus":
-                p.setGod(new Prometheus());
-                break;
-            case "Triton":
-                p.setGod(new Triton());
-                break;
-            case "Zeus"
-                    :p.setGod(new Zeus());
-                break;
-        }
-
-    }
-    */
 }
