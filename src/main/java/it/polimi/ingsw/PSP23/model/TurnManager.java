@@ -1,8 +1,8 @@
 package it.polimi.ingsw.PSP23.model;
 
 /**
-*   TurnManager class
-*/
+ *   TurnManager class
+ */
 public class TurnManager {
     private int numberOfPlayers = 0; // turn manager work with number 0, 1 and 2
     private int currentPlayerNumber;

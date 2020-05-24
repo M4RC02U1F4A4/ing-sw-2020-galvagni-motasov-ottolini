@@ -41,9 +41,18 @@ public class Controller implements Observer<PlayerMove>{
 
     public synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
-        move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+game.getCurrentPlayerNum());
+        //game.isPlayerTurn(move.getPlayer()) QUESTA CONDIZIONE E' ROTTA
+        move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
         if (game.isPlayerTurn(move.getPlayer())){
-                game.performeMove(actionBeingPerformed, chosenWorker, whatToBuild, x,y);
+            if(move.getCommand().equals("SELECT_GODS")){
+                game.godChoose(arguments.get(0),arguments.get(1),arguments.get(2));
+            }
+            else if(move.getCommand().equals("CHOOSE_GOD")) {
+                game.setGod(arguments.get(0));
+            }
+            else {
+                game.performeMove(actionBeingPerformed, game.getActiveWorker(), whatToBuild, x, y);
+            }
 
         }
         else {
@@ -85,13 +94,11 @@ public class Controller implements Observer<PlayerMove>{
                     arguments.add("ONLY2");
                 }
                 actionBeingPerformed=Action.SELECT_GODS;
-                game.godChoose(arguments.get(0),arguments.get(1),arguments.get(2));
                 break;
             }
-            case "COOSE_GOD":{
+            case "CHOOSE_GOD":{
                 actionBeingPerformed=Action.CHOOSE_GOD;
                 arguments.add(tmp[0]);  //dio scelto per il giocatore
-                game.setGod(arguments.get(0));
                 break;
             }
             case "PLACE_WORKER":{
