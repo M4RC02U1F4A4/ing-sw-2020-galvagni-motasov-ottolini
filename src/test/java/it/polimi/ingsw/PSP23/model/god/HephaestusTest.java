@@ -38,6 +38,6 @@ public class HephaestusTest {
         zoppo.startTurn(false);
         assertEquals(0, zoppo.build(martello, Status.BUILT, capobastone));
         assertEquals(-4, zoppo.build(segaanastro, Status.BUILT, capobastone));
-        assertEquals(0, zoppo.build(martello, Status.BUILT, capobastone));
+        assertEquals(1, zoppo.build(martello, Status.BUILT, capobastone));
     }
 }
