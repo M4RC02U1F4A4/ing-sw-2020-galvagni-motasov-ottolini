@@ -12,8 +12,10 @@ public class Controller implements Observer<PlayerMove>{
     private final Game game;
     private ArrayList<View> players=new ArrayList<>();
     private Action actionBeingPerformed;
-    private Status whatToBuild;
+    private Status whatToBuild=Status.FREE;
     private ArrayList<String> arguments=new ArrayList<>();
+    private int x=0,y=0;
+    private Worker chosenWorker;
 
 
     public void addPlayer(Player p){
@@ -39,13 +41,18 @@ public class Controller implements Observer<PlayerMove>{
 
     public synchronized void  performMove(PlayerMove move){
         //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
+        move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+game.getCurrentPlayerNum());
         if (game.isPlayerTurn(move.getPlayer())){
-            while (game.getPhase()!=Phase.END){
-            }
+                game.performeMove(actionBeingPerformed, chosenWorker, whatToBuild, x,y);
+
+        }
+        else {
+            move.getView().showMessage("NON E' IL TUO TURNO!");
         }
 
 
         //TODO:UPDATE TURN: NO!
+        //okay :(
 
 
 
@@ -53,34 +60,47 @@ public class Controller implements Observer<PlayerMove>{
 
     @Override
     public void update(PlayerMove message) {
-        setActionFromTheClient(message.getCommand(), message.getArgs());
+        setActionFromTheClient(message.getCommand(), message.getArgs(),message.getPlayer());
         performMove(message);
+
+        //inizializzazione a fine turno
+        arguments.clear();
+        x=0;
+        y=0;
+        whatToBuild=Status.FREE;
 
     }
 
     // TODO forse questa funzione può decodificare direttamente il playermove e chiamare game.performemove?
-    public void setActionFromTheClient(String msg, String args){
+    public void setActionFromTheClient(String msg, String args, Player him){
         String[] tmp=args.split(",");
         switch (msg){
             case "SELECT_GODS":{
                 arguments.add(tmp[0]);  //Dio n.1
                 arguments.add(tmp[1]);  //Dio n.2
                 if(tmp.length==3){
-                    arguments.add(tmp[3]);//Eventuale dio n.3
+                    arguments.add(tmp[2]);//Eventuale dio n.3
+                }
+                else{
+                    arguments.add("ONLY2");
                 }
                 actionBeingPerformed=Action.SELECT_GODS;
+                game.godChoose(arguments.get(0),arguments.get(1),arguments.get(2));
                 break;
             }
             case "COOSE_GOD":{
                 actionBeingPerformed=Action.CHOOSE_GOD;
                 arguments.add(tmp[0]);  //dio scelto per il giocatore
+                game.setGod(arguments.get(0));
                 break;
             }
             case "PLACE_WORKER":{
                 actionBeingPerformed=Action.PLACE_WORKER;
                 arguments.add(tmp[0]);//Numero worker
                 arguments.add(tmp[1]);//Coordinata x
+                this.x=Integer.parseInt(arguments.get(1));
                 arguments.add(tmp[2]);//Coordinata y
+                this.y=Integer.parseInt(arguments.get(2));
                 break;
             }
             case "SELECT_WORKER":{
@@ -90,15 +110,19 @@ public class Controller implements Observer<PlayerMove>{
             }
             case "MOVE":{
                 actionBeingPerformed=Action.MOVE;
-                arguments.add(tmp[0]);//coordinata x del movimento
-                arguments.add(tmp[1]);//coordinata y del movimento
+                arguments.add(tmp[0]);//Coordinata x
+                this.x=Integer.parseInt(arguments.get(0));
+                arguments.add(tmp[1]);//Coordinata y
+                this.y=Integer.parseInt(arguments.get(1));
                 break;
             }
             case "BUILD":{
                 actionBeingPerformed=Action.BUILD;
-                arguments.add(tmp[0]);//coordinata x della costruzione
-                arguments.add(tmp[1]);//coordinata y della costruzione
-                if(tmp[1].equals("CUPOLA")){
+                arguments.add(tmp[0]);//Coordinata x
+                this.x=Integer.parseInt(arguments.get(0));
+                arguments.add(tmp[1]);//Coordinata y
+                this.y=Integer.parseInt(arguments.get(1));
+                if(tmp[2].equals("CUPOLA")){
                     whatToBuild=Status.CUPOLA;
                 }
                 else

@@ -131,7 +131,7 @@ public class Game extends Observable<Message> {
         return 0;
     }
 
-    private void setWorker(int x, int y) {
+    public void setWorker(int x, int y) {
         getCurrentPlayer().placeWorker(map.getCell(x, y));
         nextGameSetUpPhase();
     }
@@ -146,7 +146,7 @@ public class Game extends Observable<Message> {
     // Set functions, game
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void chooseActiveWorker(Worker w) {
+    public void chooseActiveWorker(Worker w) {
         activeWorker = getCurrentPlayer().getWorkerByNumber(0) == w;
         nextGamePhase();
     }
@@ -245,7 +245,7 @@ public class Game extends Observable<Message> {
         }
     }
 
-    private Worker getActiveWorker() {
+    public Worker getActiveWorker() {
         if (activeWorker)
             return getCurrentPlayer().getWorkerByNumber(0);
         else
@@ -332,14 +332,16 @@ public class Game extends Observable<Message> {
 
     //Invia il messaggio di partita persa
     public void sendLoss(Player toPlayer) {
-
+        System.out.println("lmao");
     }
 
     //Invia il messaggio di partita vinta
     public void sendWin(Player toPlayer) {
-
+        System.out.println("xd");
     }
 
     //Invia il messaggio di update map
-    public void sendMapUpdate() {}
+    public void sendMapUpdate() {
+        System.out.println("lol");
+    }
 }
