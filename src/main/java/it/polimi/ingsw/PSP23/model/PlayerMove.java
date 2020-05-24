@@ -14,6 +14,7 @@ public class PlayerMove {
     public Player getPlayer() {
         return player;
     }
+
     //TODO: Javadoc
     public View getView() {
         return view;
@@ -33,9 +34,5 @@ public class PlayerMove {
         this.view = view;
         this.command=command;
         this.args=args;
-
     }
-
-
-
 }

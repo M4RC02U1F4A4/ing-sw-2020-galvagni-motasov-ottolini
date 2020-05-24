@@ -28,7 +28,7 @@ public class TurnManager {
     public void nextPhaseSetUp() {
         switch (currentPhase) {
             case GOD_CHOOSE:
-                currentPlayerNumber = 1; // second player
+                currentPlayerNumber = 1;
                 currentPhase = Phase.END;
                 break;
             case GOD_PICK:
@@ -36,7 +36,7 @@ public class TurnManager {
                     currentPhase = Phase.WORKER_HOUSING;
                 else {
                     currentPlayerNumber++;
-                    if (numberOfPlayers == currentPlayerNumber)
+                    if (numberOfPlayers <= currentPlayerNumber)
                         currentPlayerNumber = 0;
                     currentPhase = Phase.END;
                 }

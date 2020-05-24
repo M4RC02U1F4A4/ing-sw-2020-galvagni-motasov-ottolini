@@ -10,8 +10,8 @@ public class Game extends Observable<Message> {
     private Player[] players;
     private String[] availableGods;
     private TurnManager turnManager;
-    private boolean activeWorker, ChronusIsHere;
-    private int numPlayers, colorVariable, completedTowers;
+    private boolean ChronusIsHere;
+    private int numPlayers, colorVariable, completedTowers, activeWorker;
 
     public Game(int numPlayer) {
         map=new Map();
@@ -133,23 +133,25 @@ public class Game extends Observable<Message> {
         return 0;
     }
 
-    public void setWorker(int x, int y) {
+    private void setWorker(int x, int y) {
         getCurrentPlayer().placeWorker(map.getCell(x, y));
         nextGameSetUpPhase();
     }
 
     private void nextGameSetUpPhase() {
         turnManager.nextPhaseSetUp();
-        if (Phase.END == turnManager.getCurrentPhase())
+        if (Phase.END == turnManager.getCurrentPhase()) {
             turnManager.setCurrentPlayer(getCurrentPlayer());
+            turnManager.nextPhaseSetUp();
+        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Set functions, game
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void chooseActiveWorker(Worker w) {
-        activeWorker = getCurrentPlayer().getWorkerByNumber(0) == w;
+    private void setActiveWorker(int w) {
+        activeWorker = w;
         nextGamePhase();
     }
 
@@ -274,8 +276,8 @@ public class Game extends Observable<Message> {
         }
     }
 
-    public Worker getActiveWorker() {
-        if (activeWorker)
+    private Worker getActiveWorker() {
+        if (0 == activeWorker)
             return getCurrentPlayer().getWorkerByNumber(0);
         else
             return getCurrentPlayer().getWorkerByNumber(1);
@@ -303,7 +305,7 @@ public class Game extends Observable<Message> {
     }
 
     public boolean isPlayerTurn(Player p){
-        if(p.getPlayerNumber()==getCurrentPlayerNum())
+        if(p.getPlayerNumber() == getCurrentPlayerNum())
             return true;
         else
             return false;
@@ -326,20 +328,20 @@ public class Game extends Observable<Message> {
     /**
      * I MAKE THE GAME DO BLIP BLOP
      * @param action the move requested
-     * @param active the active worker (for SELECT_WORKER phase only)
+     * @param active the active worker (for SELECT_WORKER phase only) 0 for the first, 1 for the second.
      * @param block the block build (for BUILD phase only)
      * @param x the x of the cell build/moved
      * @param y the y of the cell build/moved
      * @return 0 if everything is ok
      *        -1 if there is some errors
      */
-    public int performeMove(Action action, Worker active, Status block, int x, int y) {
+    public int performeMove(Action action, Status block, int active, int x, int y) {
         switch (action) {
             case PLACE_WORKER:
                 setWorker(x, y);
                 break;
             case SELECT_WORKER:
-                chooseActiveWorker(active);
+                setActiveWorker(active);
                 break;
             case MOVE:
                 move(x, y);

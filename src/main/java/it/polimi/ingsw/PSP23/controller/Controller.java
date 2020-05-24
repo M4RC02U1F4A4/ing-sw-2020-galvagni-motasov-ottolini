@@ -10,24 +10,21 @@ public class Controller implements Observer<PlayerMove>{
 
     // potrebbero esserci dei problemi nell'avere 2 array di player?
     private final Game game;
-    private ArrayList<View> players=new ArrayList<>();
+    private ArrayList<View> players = new ArrayList<>();
     private Action actionBeingPerformed;
-    private Status whatToBuild=Status.FREE;
-    private ArrayList<String> arguments=new ArrayList<>();
-    private int x=0,y=0;
-    private Worker chosenWorker;
+    private Status whatToBuild = Status.FREE;
+    private ArrayList<String> arguments = new ArrayList<>();
+    private int x = 0, y = 0;
+    private int chosenWorker = 0;
 
 
     public void addPlayer(Player p){
-        Player lol=new Player(p.getName(), p.getIpAddress());
         game.addPlayer(p.getName(),p.getIpAddress());
-
     }
 
     public void addPlayerView(View v){
         players.add(v);
     }
-
 
     public Controller(Game game) {
         super();
@@ -35,36 +32,33 @@ public class Controller implements Observer<PlayerMove>{
 
     }
 
-
-
     //TODO
 
     public synchronized void  performMove(PlayerMove move){
-        //TODO: VERIFICARE CHE E' IL TURNO DEL GIOCATORE
-        //game.isPlayerTurn(move.getPlayer()) QUESTA CONDIZIONE E' ROTTA
         move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
-        if (game.isPlayerTurn(move.getPlayer())){
-            if(move.getCommand().equals("SELECT_GODS")){
-                game.godChoose(arguments.get(0),arguments.get(1),arguments.get(2));
+        if (game.isPlayerTurn(move.getPlayer())) {
+            move.getView().showMessage("lode lode al san crispino");
+            switch (move.getCommand()) {
+                case "SELECT_GODS":
+                    game.godChoose(arguments.get(0),arguments.get(1),arguments.get(2));
+                    break;
+                case "CHOOSE_GOD":
+                    move.getView().showMessage(game.setGod(arguments.get(0)));
+                    break;
+                // come scritto nella documentazine whatToBuild e chosenWorker possono anche essere indefiniti con alcune operazioni.
+                // TODO sostituire il placeholder chosenWorker with something working
+                case "PLACE_WORKER":
+                case "SELECT_WORKER":
+                case "BUILD":
+                case "MOVE":
+                case "SKIP":
+                    game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y);
+                    break;
             }
-            else if(move.getCommand().equals("CHOOSE_GOD")) {
-                game.setGod(arguments.get(0));
-            }
-            else {
-                game.performeMove(actionBeingPerformed, game.getActiveWorker(), whatToBuild, x, y);
-            }
-
         }
         else {
             move.getView().showMessage("NON E' IL TUO TURNO!");
         }
-
-
-        //TODO:UPDATE TURN: NO!
-        //okay :(
-
-
-
     }
 
     @Override
