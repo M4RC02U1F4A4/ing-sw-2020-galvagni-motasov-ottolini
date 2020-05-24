@@ -14,11 +14,11 @@ public class Player {
     public Player(String name, String ipAddress) {
         this.name=name;
         this.ipAddress=ipAddress;
-        this.workers=new Worker[2];
-        this.color=null;
-        this.god = null;
-        this.workers[0] = null;
-        this.workers[1] = null;
+        workers=new Worker[2];
+        color=null;
+        god = null;
+        workers[0] = null;
+        workers[1] = null;
     }
 
     /**
@@ -89,12 +89,12 @@ public class Player {
      *         -1 if all worker are already initialized
      */
     public int placeWorker(Cell c) {
-        if (null == this.workers[0]) {
-            this.workers[0] = new Worker(c, this.color);
+        if (null == workers[0]) {
+            workers[0] = new Worker(c, color);
             return 0;
         }
-        else if (null == this.workers[1]) {
-            this.workers[1] = new Worker(c, this.color);
+        else if (null == workers[1]) {
+            workers[1] = new Worker(c, color);
             return 1;
         }
         else

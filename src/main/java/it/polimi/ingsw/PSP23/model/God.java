@@ -28,13 +28,13 @@ public class God {
      * @param godName name of the god
      */
     protected void setUpGod(String godName) {
-        this.name = godName;
-        this.remains_builds = 0;
-        this.remains_moves = 0;
-        this.starting_z = -2;
-        this.is_hera_in_game = false;
-        this.is_athena_in_game = false;
-        this.athena_moved_up = false;
+        name = godName;
+        remains_builds = 0;
+        remains_moves = 0;
+        starting_z = -2;
+        is_hera_in_game = false;
+        is_athena_in_game = false;
+        athena_moved_up = false;
     }
 
     /**
@@ -43,7 +43,7 @@ public class God {
      * @param moved_up indicate if athena moved up this turn
      */
     public void startTurn(boolean moved_up) {
-        this.setUpTurn(1,1, moved_up);
+        setUpTurn(1,1, moved_up);
     }
 
     /**
@@ -53,10 +53,10 @@ public class God {
     *   @param moved_up true if athena moved up in this turn
     */
     protected void setUpTurn(int move, int build, boolean moved_up) {
-        this.remains_moves = move;
-        this.remains_builds = build;
-        this.starting_z = -1;
-        this.athena_moved_up = moved_up;
+        remains_moves = move;
+        remains_builds = build;
+        starting_z = -1;
+        athena_moved_up = moved_up;
     }
 
     /**
@@ -75,16 +75,16 @@ public class God {
     *           -6 (Apollo) tried to move in friendly occupied cell.
     */
     public int move(Cell c, Worker w, Map map){
-        if(this.is_athena_in_game && this.athena_moved_up && (w.getPosZ() < c.height()))
+        if(is_athena_in_game && athena_moved_up && (w.getPosZ() < c.height()))
             return -3;
-        if (0 == this.remains_moves)
+        if (0 == remains_moves)
             return -2;
-        if (!(c.isNear(w, true)) || (c.isOccupied() && !("Apollo".matches(this.name))))
+        if (!(c.isNear(w, true)) || (c.isOccupied() && !("Apollo".matches(name))))
             return -1;
-        if (-1 == this.starting_z)
-            this.starting_z = w.getPosZ();
+        if (-1 == starting_z)
+            starting_z = w.getPosZ();
         w.moveWorker(c);
-        this.remains_moves--;
+        remains_moves--;
         return 0;
     }
 
@@ -93,7 +93,7 @@ public class God {
      * @param c cell
      * @param b status of the cell
      * @param w worker that the player want to use to build
-     * @return  the level built
+     * @return  0, 1, 2, 3: the level built if there is no error
      *         -1 if cell is not near or is under the worker,
      *         -2 if the player already build in this turn,
      *         -3 (Demeter) if already build in this cell this turn,
@@ -101,17 +101,17 @@ public class God {
      *         -5 (Hesta) if perimetral slot build
      */
     public int build(Cell c, Status b, Worker w){
-        int level = 0;
-        this.remains_moves = 0;
-        if (0 == this.remains_builds)
+        int level;
+        remains_moves = 0;
+        if (0 == remains_builds)
             return -2;
-        if (!(c.isNear(w, false)) || ((c == w.getCell()) && !("Zeus".equals(this.name))))
+        if (!(c.isNear(w, false)) || ((c == w.getCell()) && !("Zeus".equals(name))))
             return -1;
-        if ("Atlas".equals(this.name))
+        if ("Atlas".equals(name))
             level = c.build(b);
         else
             level = c.build(Status.BUILT);
-        this.remains_builds--;
+        remains_builds--;
         return level;
     }
 
@@ -120,8 +120,8 @@ public class God {
     *   @param w the worker moved is needed
     */
     public boolean checkWin(Worker w, int completed_tower) {
-        if ((0 < this.starting_z) && (3 > this.starting_z) && (3 == w.getPosZ())) {
-            if ((this.is_hera_in_game) && !("Hera".matches(this.name))){
+        if ((0 < starting_z) && (3 > starting_z) && (3 == w.getPosZ())) {
+            if ((is_hera_in_game) && !("Hera".matches(name))){
                 return (0 != w.getPosX()) && (0 != w.getPosY()) && (4 != w.getPosX()) && (4 != w.getPosY());
             }
             else
@@ -146,9 +146,9 @@ public class God {
             for (int cont2 = -1; cont2 < 2; cont2++) {
                 Cell ILikeToMoveIt = map.getCell(posX + cont1, posY + cont2);
                 if (ILikeToMoveIt.isNear(w,true) && !((posX == ILikeToMoveIt.getX()) && (posY == ILikeToMoveIt.getY()))) {
-                    if (!(ILikeToMoveIt.isOccupied()) || ((("Apollo".equals(this.name))) || ("Minotaur".equals(this.name)))) {
-                        if (!(this.athena_moved_up && w.getPosZ() < ILikeToMoveIt.height())) {
-                            if ("Minotaur".equals(this.name)) {
+                    if (!(ILikeToMoveIt.isOccupied()) || ((("Apollo".equals(name))) || ("Minotaur".equals(name)))) {
+                        if (!(athena_moved_up && w.getPosZ() < ILikeToMoveIt.height())) {
+                            if ("Minotaur".equals(name)) {
                                 int X = (posX + 2 * cont1);
                                 int Y = (posY + 2 * cont2);
                                 if (X>=0 && X<5 && Y>=0 && Y<5) {
@@ -181,7 +181,7 @@ public class God {
                 Cell JustChecking = map.getCell(posX + cont1, posY + cont2);
                 if (JustChecking.isNear(w,false) && !JustChecking.isOccupied() && JustChecking.height() < 4)
                     return false;
-                else if ("Zeus".equals(this.name) && 0 == cont1 && 0 == cont2 && JustChecking.height() < 3)
+                else if ("Zeus".equals(name) && 0 == cont1 && 0 == cont2 && JustChecking.height() < 3)
                     return false;
             }
         }
@@ -192,7 +192,7 @@ public class God {
     *   Set the flag for Athena's power
     */
     public void AthenaIsHere() {
-        this.is_athena_in_game = true;
+        is_athena_in_game = true;
     }
 
     /**
@@ -200,14 +200,14 @@ public class God {
      * @return if athena moved up
      */
     public boolean AthenaMovedUp() {
-        return this.athena_moved_up;
+        return athena_moved_up;
     }
 
     /**
      *  Set the flag for Hera's power
      */
     public void HeraIsHere() {
-        this.is_hera_in_game = true;
+        is_hera_in_game = true;
     }
 
     /**
@@ -215,7 +215,7 @@ public class God {
      * @return the name of the god used
      */
     public String getName() {
-        return this.name;
+        return name;
     }
 
     /**

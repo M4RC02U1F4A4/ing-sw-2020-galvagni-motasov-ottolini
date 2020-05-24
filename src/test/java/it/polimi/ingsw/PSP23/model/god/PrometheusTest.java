@@ -40,7 +40,7 @@ public class PrometheusTest {
         assertEquals(0, god.build(uno,Status.BUILT,fuoco));
         // build, move up and try to build
         god.startTurn(false);
-        assertEquals(0, god.build(uno,Status.BUILT,fuoco));
+        assertEquals(1, god.build(uno,Status.BUILT,fuoco));
         assertEquals(0, god.move(due,fuoco, map));
         assertEquals(-2, god.build(tre,Status.BUILT,fuoco));
     }

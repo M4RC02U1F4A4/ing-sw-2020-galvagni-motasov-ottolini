@@ -4,20 +4,18 @@ package it.polimi.ingsw.PSP23.model;
 *   TurnManager class
 */
 public class TurnManager {
-    private int numberOfPlayers = 0;
+    private int numberOfPlayers = 0; // turn manager work with number 0, 1 and 2
     private int currentPlayerNumber;
     private Player currentPlayer;
     private Phase currentPhase;
     private int AthenaPlayer;
-    private int HeraPlayer;
     private boolean Athena_moved_up;
 
     public TurnManager() {
-        this.currentPlayerNumber = 0;
-        this.currentPhase = Phase.GOD_CHOOSE;
-        this.Athena_moved_up = false;
-        this.AthenaPlayer = -1;
-        this.HeraPlayer = -1;
+        currentPlayerNumber = 0;
+        currentPhase = Phase.GOD_CHOOSE;
+        Athena_moved_up = false;
+        AthenaPlayer = -1;
     }
 
     /**
@@ -30,23 +28,23 @@ public class TurnManager {
     public void nextPhaseSetUp() {
         switch (currentPhase) {
             case GOD_CHOOSE:
-                this.currentPlayerNumber = 1;
+                currentPlayerNumber = 1; // second player
                 currentPhase = Phase.END;
                 break;
             case GOD_PICK:
                 if (0 == currentPlayerNumber)
                     currentPhase = Phase.WORKER_HOUSING;
                 else {
-                    this.currentPlayerNumber++;
-                    if (numberOfPlayers == this.currentPlayerNumber)
-                        this.currentPlayerNumber = 0;
+                    currentPlayerNumber++;
+                    if (numberOfPlayers == currentPlayerNumber)
+                        currentPlayerNumber = 0;
                     currentPhase = Phase.END;
                 }
                 break;
             case WORKER_HOUSING:
-                this.currentPlayerNumber++;
-                if (numberOfPlayers == this.currentPlayerNumber)
-                    this.currentPlayerNumber = 0;
+                currentPlayerNumber++;
+                if (numberOfPlayers == currentPlayerNumber)
+                    currentPlayerNumber = 0;
                 currentPhase = Phase.END;
                 break;
             case END:
@@ -106,11 +104,11 @@ public class TurnManager {
                     currentPhase = Phase.END;
                 break;
             case END:
-                if (this.AthenaPlayer == currentPlayerNumber)
-                    this.Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
+                if (AthenaPlayer == currentPlayerNumber)
+                    Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
                 currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
-                if (numberOfPlayers == currentPlayerNumber)
+                if (numberOfPlayers <= currentPlayerNumber)
                     currentPlayerNumber = 0;
                 break;
         }
@@ -129,14 +127,13 @@ public class TurnManager {
      * @param VamosAllaPlayer i Choose you VAMOSALLAPLAYER!
      */
     public void setCurrentPlayer(Player VamosAllaPlayer) {
-        this.currentPlayer = VamosAllaPlayer;
-        if (null == currentPlayer.getGod());
-        else if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
-            this.AthenaPlayer = this.currentPlayerNumber;
-            this.Athena_moved_up = false;
+        currentPlayer = VamosAllaPlayer;
+        if (null != VamosAllaPlayer.getGod()) {
+            if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
+                AthenaPlayer = currentPlayerNumber;
+                Athena_moved_up = false;
+            }
         }
-        else if ("Hera".equals(VamosAllaPlayer.getGod().getName()))
-            this.HeraPlayer = this.currentPlayerNumber;
     }
 
     /**
@@ -164,21 +161,5 @@ public class TurnManager {
     public void goBanana(){
         currentPhase=Phase.CHOOSE_WORKER;
     }
-
-    //SOLO DI DEBUG! TODO remove
-    public void vaiAllaFineDelTurno(){
-        currentPhase=Phase.END;
-    }
-
-    //DO NOT USE, TODO remove
-    public void addPlayer(){
-        numberOfPlayers++;
-    }
-
-    //DO NOT USE, TODO remove
-    public void subsPlayer(){
-        numberOfPlayers--;
-    }
-
 
 }

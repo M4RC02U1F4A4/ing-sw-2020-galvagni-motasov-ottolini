@@ -30,12 +30,8 @@ public class TurnManagerTest {
 
     @Test
     public void getterSetter() {
-        IChooseYou.addPlayer();
-        assertEquals(1, IChooseYou.getNumberOfPlayers());
-        IChooseYou.addPlayer();
-        assertEquals(2, IChooseYou.getNumberOfPlayers());
-        IChooseYou.subsPlayer();
-        assertEquals(1, IChooseYou.getNumberOfPlayers());
+        IChooseYou.setPlayerNumber(3);
+        assertEquals(3, IChooseYou.getNumberOfPlayers());
         Bulbasaur.setPlayerNumber(1);
         Bulbasaur.setGod(new God());
         IChooseYou.setCurrentPlayer(Bulbasaur);
@@ -44,8 +40,7 @@ public class TurnManagerTest {
 
     @Test
     public void setupPhaseTest() {
-        IChooseYou.addPlayer();
-        IChooseYou.addPlayer();
+        IChooseYou.setPlayerNumber(2);
         // god choose
         IChooseYou.setCurrentPlayer(Bulbasaur);
         IChooseYou.nextPhaseSetUp();
@@ -94,7 +89,7 @@ public class TurnManagerTest {
     public void gamePhaseTest() {
         IChooseYou.goBanana();
         Bulbasaur.setGod(new God());
-        IChooseYou.addPlayer();
+        IChooseYou.setPlayerNumber(1);
         Bulbasaur.setPlayerNumber(0);
         IChooseYou.setCurrentPlayer(Bulbasaur);
         assertEquals(Phase.CHOOSE_WORKER, IChooseYou.getCurrentPhase());

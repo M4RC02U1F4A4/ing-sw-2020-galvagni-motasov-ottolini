@@ -11,7 +11,7 @@ public class Game extends Observable<Message> {
     private String[] availableGods;
     private TurnManager turnManager;
     private boolean activeWorker, ChronusIsHere;
-    private int numPlayers, colorVariable=0, completedTowers;
+    private int numPlayers, colorVariable, completedTowers;
 
     public Game(int numPlayer) {
         map=new Map();
@@ -21,6 +21,8 @@ public class Game extends Observable<Message> {
         turnManager = new TurnManager();
         turnManager.setPlayerNumber(numPlayer);
         ChronusIsHere = false;
+        completedTowers = 0;
+        colorVariable = 0;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +43,6 @@ public class Game extends Observable<Message> {
         players[colorVariable].setColor(getColor());
         players[colorVariable].setPlayerNumber(colorVariable);
         colorVariable++;
-        turnManager.addPlayer();
         return 0;
     }
 
@@ -87,15 +88,16 @@ public class Game extends Observable<Message> {
                 break;
             case "Athena":
                 getCurrentPlayer().setGod(new Athena());
-                for (int cont = 0; cont < numPlayers; cont++)
-                    players[cont].getGod().AthenaIsHere();
+                // TODO così può dare null point exception, trovare altro modo per inizializzare athena e hera
+                /*for (int cont = 0; cont < numPlayers; cont++)
+                    players[cont].getGod().AthenaIsHere();*/
                 break;
             case "Atlas":
                 getCurrentPlayer().setGod(new Atlas());
                 break;
             case "Chronus":
                 getCurrentPlayer().setGod(new Chronus());
-                this.ChronusIsHere = true;
+                ChronusIsHere = true;
                 break;
             case "Demeter":
                 getCurrentPlayer().setGod(new Demeter());
@@ -105,8 +107,8 @@ public class Game extends Observable<Message> {
                 break;
             case "Hera":
                 getCurrentPlayer().setGod(new Hera());
-                for (int cont = 0; cont < numPlayers; cont++)
-                    players[cont].getGod().HeraIsHere();
+                /*for (int cont = 0; cont < numPlayers; cont++)
+                    players[cont].getGod().HeraIsHere();*/
                 break;
             case "Hestia":
                 getCurrentPlayer().setGod(new Hestia());
@@ -127,7 +129,7 @@ public class Game extends Observable<Message> {
                 getCurrentPlayer().setGod(new Zeus());
                 break;
         }
-        this.nextGameSetUpPhase();
+        nextGameSetUpPhase();
         return 0;
     }
 
@@ -198,6 +200,27 @@ public class Game extends Observable<Message> {
         }
     }
 
+    // da chiamare solamente quando si è in 3 giocatori ed uno viene eliminato
+    private void removePlayer(int playerNum) {
+        switch(playerNum) {
+            case 0:
+                numPlayers = 2;
+                turnManager.setPlayerNumber(2);
+                players[0] = players[1];
+                players[1] = players[2];
+                break;
+            case 1:
+                numPlayers = 2;
+                turnManager.setPlayerNumber(2);
+                players[1] = players[2];
+                break;
+            case 2:
+                numPlayers = 2;
+                turnManager.setPlayerNumber(2);
+                break;
+        }
+    }
+
     // TODO check end case
     private void nextGamePhase() {
         turnManager.nextPhaseGame();
@@ -209,18 +232,24 @@ public class Game extends Observable<Message> {
             case CHECK_WIN:
             case CHECK_WIN_MOVE:
             case CHECK_WIN_BUILD:
-                if (getCurrentPlayer().getGod().checkWin(this.getActiveWorker(), completedTowers))
+                if (getCurrentPlayer().getGod().checkWin(getActiveWorker(), completedTowers))
                     sendWin(getCurrentPlayer());
                 nextGamePhase();
                 break;
             case CHECK_LOSE_MOVE:
-                if (getCurrentPlayer().getGod().checkLossMove(this.getActiveWorker(), map))
+                if (getCurrentPlayer().getGod().checkLossMove(getActiveWorker(), map)) {
                     sendLoss(getCurrentPlayer());
+                    if (3 == numPlayers)
+                        removePlayer(getCurrentPlayerNum());
+                }
                 nextGamePhase();
                 break;
             case CHECK_LOSE_BUILD:
-                if (getCurrentPlayer().getGod().checkLossBuild(this.getActiveWorker(), map))
+                if (getCurrentPlayer().getGod().checkLossBuild(getActiveWorker(), map)) {
                     sendLoss(getCurrentPlayer());
+                    if (3 == numPlayers)
+                        removePlayer(getCurrentPlayerNum());
+                }
                 nextGamePhase();
                 break;
             case END:
@@ -253,11 +282,11 @@ public class Game extends Observable<Message> {
     }
 
     private Player getCurrentPlayer() {
-        return players[this.getCurrentPlayerNum()];
+        return players[getCurrentPlayerNum()];
     }
 
     private God getCurrentGod() {
-        return players[this.getCurrentPlayerNum()].getGod();
+        return players[getCurrentPlayerNum()].getGod();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
