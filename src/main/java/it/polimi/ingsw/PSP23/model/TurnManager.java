@@ -1,23 +1,21 @@
 package it.polimi.ingsw.PSP23.model;
 
 /**
-*   TurnManager class
-*/
+ *   TurnManager class
+ */
 public class TurnManager {
-    private int numberOfPlayers = 0;
+    private int numberOfPlayers = 0; // turn manager work with number 0, 1 and 2
     private int currentPlayerNumber;
     private Player currentPlayer;
     private Phase currentPhase;
     private int AthenaPlayer;
-    private int HeraPlayer;
     private boolean Athena_moved_up;
 
-    public TurnManager(){
-        this.currentPlayerNumber = 0;
-        this.currentPhase = Phase.GOD_CHOOSE;
-        this.Athena_moved_up = false;
-        this.AthenaPlayer = -1;
-        this.HeraPlayer = -1;
+    public TurnManager() {
+        currentPlayerNumber = 0;
+        currentPhase = Phase.GOD_CHOOSE;
+        Athena_moved_up = false;
+        AthenaPlayer = -1;
     }
 
     /**
@@ -27,31 +25,27 @@ public class TurnManager {
      * Will set the phase to CHOOSE_WORKER when finished.
      * Also initialize athena and hera flag in gods.
      */
-    public void nextPhaseSetUp(){
+    public void nextPhaseSetUp() {
         switch (currentPhase) {
             case GOD_CHOOSE:
-                this.currentPlayerNumber = 1;
+                currentPlayerNumber = 1;
                 currentPhase = Phase.END;
                 break;
             case GOD_PICK:
                 if (0 == currentPlayerNumber)
                     currentPhase = Phase.WORKER_HOUSING;
                 else {
-                    this.currentPlayerNumber++;
-                    if (numberOfPlayers == this.currentPlayerNumber)
-                        this.currentPlayerNumber = 0;
+                    currentPlayerNumber++;
+                    if (numberOfPlayers <= currentPlayerNumber)
+                        currentPlayerNumber = 0;
                     currentPhase = Phase.END;
                 }
                 break;
             case WORKER_HOUSING:
-                this.currentPlayerNumber++;
-                if (numberOfPlayers == this.currentPlayerNumber)
-                    this.currentPlayerNumber = 0;
+                currentPlayerNumber++;
+                if (numberOfPlayers == currentPlayerNumber)
+                    currentPlayerNumber = 0;
                 currentPhase = Phase.END;
-                if (-1 != this.AthenaPlayer)
-                    this.currentPlayer.getGod().AthenaIsHere();
-                if (-1 != this.HeraPlayer)
-                    this.currentPlayer.getGod().HeraIsHere();
                 break;
             case END:
                 if (null == currentPlayer.getGod())
@@ -68,7 +62,7 @@ public class TurnManager {
      * Game phase switcher, also initialize the turn for gods.
      * When END is seen it has to be used one more time.
      */
-    public void nextPhaseGame(){
+    public void nextPhaseGame() {
         switch (currentPhase) {
             case CHOOSE_WORKER:
                 currentPhase = Phase.START_TURN;
@@ -92,7 +86,7 @@ public class TurnManager {
                 currentPhase = Phase.CHECK_WIN_MOVE;
                 break;
             case CHECK_WIN_MOVE:
-                if (1 <= currentPlayer.getGod().remains_moves)
+                if ((1 <= currentPlayer.getGod().remains_moves) && !(currentPlayer.getGod().getSkip()))
                     currentPhase = Phase.CHECK_LOSE_MOVE;
                 else
                     currentPhase = Phase.CHECK_LOSE_BUILD;
@@ -104,34 +98,27 @@ public class TurnManager {
                 currentPhase = Phase.CHECK_WIN_BUILD;
                 break;
             case CHECK_WIN_BUILD:
-                if (2 <= currentPlayer.getGod().remains_builds)
+                if ((2 <= currentPlayer.getGod().remains_builds) && !(currentPlayer.getGod().getSkip()))
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 else
                     currentPhase = Phase.END;
                 break;
             case END:
-                if (this.AthenaPlayer == currentPlayerNumber)
-                    this.Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
+                if (AthenaPlayer == currentPlayerNumber)
+                    Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
                 currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
-                if (numberOfPlayers == currentPlayerNumber)
+                if (numberOfPlayers <= currentPlayerNumber)
                     currentPlayerNumber = 0;
                 break;
         }
     }
 
     /**
-     * Used to add players in the beginning
+     * Used to set number of players
      */
-    public void addPlayer(){
-        numberOfPlayers++;
-    }
-
-    /**
-     * Used to remove player after loss in 3 player mode
-     */
-    public void subsPlayer(){
-        numberOfPlayers--;
+    public void setPlayerNumber(int num){
+        numberOfPlayers = num;
     }
 
     /**
@@ -140,14 +127,13 @@ public class TurnManager {
      * @param VamosAllaPlayer i Choose you VAMOSALLAPLAYER!
      */
     public void setCurrentPlayer(Player VamosAllaPlayer) {
-        this.currentPlayer = VamosAllaPlayer;
-        if (null == currentPlayer.getGod());
-        else if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
-            this.AthenaPlayer = this.currentPlayerNumber;
-            this.Athena_moved_up = false;
+        currentPlayer = VamosAllaPlayer;
+        if (null != VamosAllaPlayer.getGod()) {
+            if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
+                AthenaPlayer = currentPlayerNumber;
+                Athena_moved_up = false;
+            }
         }
-        else if ("Hera".equals(VamosAllaPlayer.getGod().getName()))
-            this.HeraPlayer = this.currentPlayerNumber;
     }
 
     /**
@@ -171,13 +157,9 @@ public class TurnManager {
         return currentPhase;
     }
 
-    //SOLO DI DEBUG!
-    public void vaiAllaFineDelTurno(){
-        currentPhase=Phase.END;
-    }
-
     //TEST ONLY!
     public void goBanana(){
         currentPhase=Phase.CHOOSE_WORKER;
     }
+
 }

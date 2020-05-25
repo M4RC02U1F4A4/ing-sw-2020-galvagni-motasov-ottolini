@@ -24,7 +24,7 @@ public class Hephaestus extends God{
         if (2 == this.remains_builds) {
             int i = 0;
             i = super.build(c, b, w);
-            if (0 == i)
+            if (0 <= i)
                 this.previousBuild = c;
             return i;
         }

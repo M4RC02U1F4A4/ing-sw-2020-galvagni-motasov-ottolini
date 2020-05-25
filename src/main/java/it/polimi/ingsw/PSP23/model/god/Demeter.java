@@ -28,7 +28,7 @@ public class Demeter extends God {
             return -3;
         int i = 0;
         i = super.build(c, b, w);
-        if (0 == i) {
+        if (0 <= i) {
             this.prev_build_x = c.getX();
             this.prev_build_y = c.getY();
         }

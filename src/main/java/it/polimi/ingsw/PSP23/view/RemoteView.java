@@ -22,18 +22,13 @@ public class RemoteView extends View{
             System.out.println("Ricevuto: "+message);
             clientSaid=message;
             try{
-                String[] inputs=message.split(",");
+                String[] inputs=message.split(":");
+                if(inputs[0].equals("SELECT_GODS")||inputs[0].equals("CHOOSE_GOD")||inputs[0].equals("PLACE_WORKER")||inputs[0].equals("CHOOSE_WORKER")||inputs[0].equals("MOVE")||inputs[0].equals("BUILD"))
+                    handleChoice(inputs[0],inputs[1]);
 
-                if(inputs[0].equals("MOVE")){
-                    showMessage("MI MUOVO");
-                    handleMove(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]));
-                    showMessage("E NON CRASHO");
+                //showMessage("I'm about to "+inputs[0]);
 
-                }
-                else if(inputs[0].equals("BUILD")){
-                    clientConnection.asyncSend("COSTRUISCO");
-                    handleBuild(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]), Integer.parseInt(inputs[3]));
-                }
+
             }catch(IllegalArgumentException e){
                 e.printStackTrace();
             }
@@ -43,7 +38,7 @@ public class RemoteView extends View{
 
     @Override
     public void showMessage(Object message) {
-        clientConnection.asyncSend(message);
+        clientConnection.send(message);
     }
 
 

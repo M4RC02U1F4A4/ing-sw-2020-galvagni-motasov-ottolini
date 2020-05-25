@@ -5,10 +5,8 @@ import it.polimi.ingsw.PSP23.view.View;
 public class PlayerMove {
     private final Player player;
     private final View view;
-    private final int x;
-    private final int y;
-    private final Action a;
-    private final int nWorker;
+    private final String command;
+    private final String args;
 
     /**
      * @return player object
@@ -16,33 +14,25 @@ public class PlayerMove {
     public Player getPlayer() {
         return player;
     }
+
     //TODO: Javadoc
     public View getView() {
         return view;
     }
-    //TODO: Javadoc
-    public int getX() {
-        return x;
+
+    public String getCommand() {
+        return command;
     }
-    //TODO: Javadoc
-    public int getY() {
-        return y;
+
+    public String getArgs() {
+        return args;
     }
-    //TODO: Javadoc
-    public Action getA() { return a; }
-    //TODO: Javadoc
-    public int getnWorker(){ return nWorker;}
 
     //TODO: Javadoc
-    public PlayerMove(Player player, View view, int x, int y, Action a, int nWorker) {
+    public PlayerMove(Player player, View view, String command, String args) {
         this.player = player;
         this.view = view;
-        this.x = x;
-        this.y = y;
-        this.a=a;
-        this.nWorker = nWorker;
+        this.command=command;
+        this.args=args;
     }
-
-
-
 }

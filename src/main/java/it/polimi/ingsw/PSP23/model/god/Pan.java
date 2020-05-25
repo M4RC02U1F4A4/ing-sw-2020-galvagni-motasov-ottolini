@@ -11,8 +11,8 @@ public class Pan extends God {
 
     // true if going from>to 2>0, 3>0, 3>1, 2>3
     @Override
-    public boolean checkWin(Worker w) {
-        if (((2 <= this.starting_z) && (0 == w.getPosZ())) || ((3 == this.starting_z) && (1 == w.getPosZ())) || super.checkWin(w)) {
+    public boolean checkWin(Worker w, int completed_tower) {
+        if (((2 <= this.starting_z) && (0 == w.getPosZ())) || ((3 == this.starting_z) && (1 == w.getPosZ())) || super.checkWin(w, completed_tower)) {
             if (this.is_hera_in_game) {
                 return (0 != w.getPosX()) && (0 != w.getPosY()) && (4 != w.getPosX()) && (4 != w.getPosY());
             }

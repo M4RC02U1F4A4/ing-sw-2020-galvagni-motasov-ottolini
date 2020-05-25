@@ -28,20 +28,21 @@ public class ChronusTest {
 
     @Test
     public void checkWin() {
+        int i = 0;
         foglie.setCoord(1,1);
         albero.setCoord(1,2);
         albero.build(Status.BUILT);
         criceto.startTurn(false);
         assertEquals(0, criceto.move(foglie,hamtaro,map));
-        for (int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
             foglie.build(Status.BUILT);
         }
-        assertTrue(criceto.checkWin(hamtaro));
-        for(int i = 0; i < 5; i++) {
-            assertFalse(criceto.checkWin(null));
-            criceto.addCompletedTower();
+        assertTrue(criceto.checkWin(hamtaro, i));
+        while(i < 5) {
+            assertFalse(criceto.checkWin(null, i));
+            i++;
         }
-        assertTrue(criceto.checkWin(null));
+        assertTrue(criceto.checkWin(null, i));
     }
 
 }

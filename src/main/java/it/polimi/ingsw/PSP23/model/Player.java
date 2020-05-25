@@ -11,14 +11,14 @@ public class Player {
     private Color color;
     private int playerNumber;
 
-    public Player(String name, String ipAddress){
+    public Player(String name, String ipAddress) {
         this.name=name;
         this.ipAddress=ipAddress;
-        this.workers=new Worker[2];
-        this.color=Color.RED;
-        this.god = null;
-        this.workers[0] = null;
-        this.workers[1] = null;
+        workers=new Worker[2];
+        color=null;
+        god = null;
+        workers[0] = null;
+        workers[1] = null;
     }
 
     /**
@@ -50,20 +50,6 @@ public class Player {
     }
 
     /**
-    *   @return player worker list
-    */
-    public Worker[] getWorkers() {
-        return workers;
-    }
-
-    /**
-    *   @param workers list of worker to set for that player
-    */
-    public void setWorkers(Worker[] workers) {
-        this.workers = workers;
-    }
-
-    /**
     *   @return god of the player
     */
     public God getGod() {
@@ -78,23 +64,40 @@ public class Player {
     }
 
     /**
+     *   @return player worker list
+     */
+    public Worker[] getWorkers() {
+        return workers;
+    }
+
+    /**
     *   Check if there is some worker available and return it
     *   @param num number of worker that the player owns
     *   @return return worker if available, or return null
     */
-    public Worker getWorkerByNumber(int num){
+    public Worker getWorkerByNumber(int num) {
         if(num==0 || num==1) return workers[num];
         else return null;
     }
 
     /**
-    *   Save the player's worker in the specified spot on the list
-    *   @param w worker
-    *   @param num number where the worker need to be placed
-    */
-    public void setWorkerByNumber(Worker w,int num){
-        if(num==0 || num==1)workers[num]=w;
-        else System.out.println("error");
+     * A function to rule them all, a function to set them all
+     * @param c the cell where the worker will be placed
+     * @return  0 if worker 0 is created,
+     *          1 if worker 1 is created,
+     *         -1 if all worker are already initialized
+     */
+    public int placeWorker(Cell c) {
+        if (null == workers[0]) {
+            workers[0] = new Worker(c, color);
+            return 0;
+        }
+        else if (null == workers[1]) {
+            workers[1] = new Worker(c, color);
+            return 1;
+        }
+        else
+            return -1;
     }
 
     /**
@@ -106,29 +109,39 @@ public class Player {
     }
 
     /**
-     * Set the Color for the player and its workers
+     * Set the Color for the player
      * @param color the color we want to set
      */
     public void setColor(Color color) {
         this.color = color;
-        workers[0].setColor(color);
-        workers[1].setColor(color);
-    }
-
-    public void placeWorker(Cell c, int nWorker){
-        c.setWorker(workers[0]);
+        //workers[0].setColor(color);
+        //workers[1].setColor(color);
     }
 
     /**
      * Gets the playernumber, used for managing the turns
      * @return the player's number
      */
-    public int getPlayerNumber() { return playerNumber; }
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
 
     /**
      * sets the player's number
      * @param playerNumber the player's number
      */
-    public void setPlayerNumber(int playerNumber) { this.playerNumber = playerNumber; }
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
 
+    // DEBUG ONLY! use placeWorker instead TODO remove me
+    public void setWorkers(Worker[] workers) {
+        this.workers = workers;
+    }
+
+    // DEBUG ONLY! use placeWorker instead TODO remove me
+    public void setWorkerByNumber(Worker w,int num){
+        if(num==0 || num==1)workers[num]=w;
+        else System.out.println("error");
+    }
 }
