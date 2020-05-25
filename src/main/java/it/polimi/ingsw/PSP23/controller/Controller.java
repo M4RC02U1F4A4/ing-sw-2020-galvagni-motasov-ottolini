@@ -53,8 +53,6 @@ public class Controller implements Observer<PlayerMove>{
                         sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
                     }
                     break;
-                // come scritto nella documentazine whatToBuild e chosenWorker possono anche essere indefiniti con alcune operazioni.
-                // TODO sostituire il placeholder chosenWorker with something working
                 case "PLACE_WORKER":{
                     game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y);
                     sendUpdatedMap();
@@ -109,7 +107,6 @@ public class Controller implements Observer<PlayerMove>{
 
     }
 
-    // TODO forse questa funzione può decodificare direttamente il playermove e chiamare game.performemove?
     public void setActionFromTheClient(String msg, String args, Player him){
         String[] tmp=args.split(",");
         switch (msg){
@@ -133,7 +130,7 @@ public class Controller implements Observer<PlayerMove>{
             case "PLACE_WORKER":{
                 actionBeingPerformed=Action.PLACE_WORKER;
                 arguments.add(tmp[0]);//Numero worker
-                chosenWorker=Integer.parseInt(arguments.get(0));
+                chosenWorker=Integer.parseInt(arguments.get(0)); // TODO remove me
                 arguments.add(tmp[1]);//Coordinata x
                 this.x=Integer.parseInt(arguments.get(1));
                 arguments.add(tmp[2]);//Coordinata y

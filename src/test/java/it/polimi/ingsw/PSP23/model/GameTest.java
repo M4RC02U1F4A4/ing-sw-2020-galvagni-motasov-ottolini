@@ -28,11 +28,6 @@ public class GameTest {
     }
 
     @Test
-    public void performeMove() {
-        //hunger.performeMove();
-    }
-
-    @Test
     public void setGods() {
         Game quindici, trenta, quarantacinque;
         hunger = new Game(3);
@@ -88,6 +83,7 @@ public class GameTest {
         hunger.performeMove(Action.MOVE, Status.FREE, 3, 3, 4);
         hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 4);
         hunger.performeMove(Action.SKIP, Status.FREE, 4, 2, 0);
+        hunger.performeMove(Action.BUILD, Status.FREE, 3, 1, 1);
         hunger.performeMove(Action.BUILD, Status.FREE, 3, 3, 3);
         assertEquals(1, hunger.getCurrentPlayerNum());
         // Zeus turn (player 1), worker 2 on the border

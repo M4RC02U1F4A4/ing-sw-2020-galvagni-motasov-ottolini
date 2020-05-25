@@ -357,10 +357,7 @@ public class Game extends Observable<Message> {
         return 1;
     }
 
-    /*
-    TODO IVAN tutte queste funzioni sono tue, l'ideale sarebbe lasciare la classe game come istanza del gioco e chiamare
-    le funzioni di comunicazione con i player attraverso un'altra classe.
-     */
+    //TODO IVAN tutte queste funzioni sono tue
 
     //Invia il messaggio di partita persa
     public void sendLoss(Player toPlayer) {
