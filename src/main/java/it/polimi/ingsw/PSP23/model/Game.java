@@ -60,7 +60,7 @@ public class Game extends Observable<Message> {
         nextGameSetUpPhase();
     }
 
-    // TODO così può dare null point exception, trovare altro modo per inizializzare athena e hera
+    // TODO inside
     /**
      * Set the god choosed to 'scelto' then create the god for player
      * @param god is the god choosed by the player
@@ -89,6 +89,7 @@ public class Game extends Observable<Message> {
                 break;
             case "Athena":
                 getCurrentPlayer().setGod(new Athena());
+                // TODO così può dare null point exception, trovare altro modo per inizializzare athena e hera
                 /*for (int cont = 0; cont < numPlayers; cont++)
                     players[cont].getGod().AthenaIsHere();*/
                 break;
@@ -133,7 +134,13 @@ public class Game extends Observable<Message> {
         return 0;
     }
 
-    //TODO aggiungere un controllo alla cella, se è occupata -> errore
+    /**
+     * set the worker up
+     * @param x the cell x
+     * @param y the cell y
+     * @return 0 if ok
+     *        -1 if cell is occupied
+     */
     private int setWorker(int x, int y) {
         if (map.getCell(x, y).isOccupied())
             return -1;
@@ -142,6 +149,9 @@ public class Game extends Observable<Message> {
         return 0;
     }
 
+    /**
+     * to move the turn manager at the start of the game
+     */
     private void nextGameSetUpPhase() {
         turnManager.nextPhaseSetUp();
         if (Phase.END == turnManager.getCurrentPhase()) {
@@ -154,9 +164,18 @@ public class Game extends Observable<Message> {
     // Set functions, game
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void setActiveWorker(int w) {
-        activeWorker = w;
-        nextGamePhase();
+    /**
+     * set the active worker
+     * @param w 0 for the worker 0 and 1 for the worker 1
+     * @return w
+     */
+    private int setActiveWorker(int w) {
+        if (0 == w || 1 == w) {
+            activeWorker = w;
+            nextGamePhase();
+            return w;
+        }
+        return -1;
     }
 
     /**
@@ -164,26 +183,38 @@ public class Game extends Observable<Message> {
      * @param x of the cell target
      * @param y of the cell target
      * @param b type of block build
+     * @return see god.build for an accurate return
      */
-    private void build(int x, int y, Status b) {
+    private int build(int x, int y, Status b) {
         int i = getCurrentGod().build(map.getCell(x, y), b, getActiveWorker());
-        if (ChronusIsHere && 4 == i)
-            completedTowers++;
-        nextGamePhase();
+        if (0 <= i) {
+            if (ChronusIsHere && 4 == i)
+                completedTowers++;
+            nextGamePhase();
+        }
+        return i;
     }
 
     /**
      * do the move
      * @param x of the cell target
      * @param y of the cell target
+     * @return see god.move for an accurate return
      */
-    private void move(int x, int y) {
-        getCurrentGod().move(map.getCell(x, y), getActiveWorker(), map);
-        nextGamePhase();
+    private int move(int x, int y) {
+        int i = getCurrentGod().move(map.getCell(x, y), getActiveWorker(), map);
+        if (0 <= i)
+            nextGamePhase();
+        return i;
     }
 
-    // TODO check if is an avaiable move, then skip it and modify the remainmoves/builds id needed
-    private void skipAction() {
+    // TODO check if it's ok to skip
+    /**
+     * let some god to skip the move
+     * @return 1 if skipped
+     *        -1 if not skipped
+     */
+    private int skipAction() {
         switch (getCurrentGod().getName()) {
             case "Artemis":
             case "Demeter":
@@ -193,11 +224,16 @@ public class Game extends Observable<Message> {
             case "Triton":
                 getCurrentGod().setSkip();
                 nextGamePhase();
-                break;
+                return 1;
         }
+        return -1;
     }
 
-    // da chiamare solamente quando si è in 3 giocatori ed uno viene eliminato
+    // TODO check this
+    /**
+     * to call only when in a 3 player game and 1 is out
+     * @param playerNum the player to remove
+     */
     private void removePlayer(int playerNum) {
         switch(playerNum) {
             case 0:
@@ -218,7 +254,11 @@ public class Game extends Observable<Message> {
         }
     }
 
-    // TODO check end case
+    // TODO inside
+    /**
+     * sometimes i'm afraid of my own genius.
+     * also this move the turn manager only when needed
+     */
     private void nextGamePhase() {
         turnManager.nextPhaseGame();
         switch (turnManager.getCurrentPhase()) {
@@ -260,6 +300,10 @@ public class Game extends Observable<Message> {
     // internal functions
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * getter
+     * @return the next free color
+     */
     private Color getColor() {
         switch (colorVariable) {
             case (0):
@@ -273,6 +317,10 @@ public class Game extends Observable<Message> {
         }
     }
 
+    /**
+     * getter
+     * @return the active worker of the current player
+     */
     private Worker getActiveWorker() {
         if (0 == activeWorker)
             return getCurrentPlayer().getWorkerByNumber(0);
@@ -280,10 +328,18 @@ public class Game extends Observable<Message> {
             return getCurrentPlayer().getWorkerByNumber(1);
     }
 
+    /**
+     * getter
+     * @return the current player
+     */
     private Player getCurrentPlayer() {
         return players[getCurrentPlayerNum()];
     }
 
+    /**
+     * getter
+     * @return the god of the current player
+     */
     private God getCurrentGod() {
         return players[getCurrentPlayerNum()].getGod();
     }
@@ -292,15 +348,27 @@ public class Game extends Observable<Message> {
     // In and Out functions
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * getter
+     * @return the current phase
+     */
     public Phase getPhase() {
         return turnManager.getCurrentPhase();
     }
 
-    //TODO check this function output
+    /**
+     * getter
+     * @return the current player number
+     */
     public int getCurrentPlayerNum() {
         return turnManager.getCurrentPlayerNumber();
     }
 
+    /**
+     * check if is the turn of the player p
+     * @param p the player to check
+     * @return true if it is the turn player, false otherwise
+     */
     public boolean isPlayerTurn(Player p){
         if(p.getPlayerNumber() == getCurrentPlayerNum())
             return true;
@@ -308,7 +376,10 @@ public class Game extends Observable<Message> {
             return false;
     }
 
-    //Please do not use
+    /**
+     * getter
+     * @return the map of the game
+     */
     public Map getMap() {
         return map;
     }
@@ -334,27 +405,23 @@ public class Game extends Observable<Message> {
      * @param block the block build (for BUILD phase only)
      * @param x the x of the cell build/moved
      * @param y the y of the cell build/moved
-     * @return 0 if everything is ok
-     *        -1 if there is some errors
+     * @return  num_pos if everything is ok
+     *          num_neg if there is an error
      */
     public int performeMove(Action action, Status block, int active, int x, int y) {
         switch (action) {
             case PLACE_WORKER:
                 return setWorker(x, y);
             case SELECT_WORKER:
-                setActiveWorker(active);
-                break;
+                 return setActiveWorker(active);
             case MOVE:
-                move(x, y);
-                break;
+                return move(x, y);
             case BUILD:
-                build(x, y, block);
-                break;
+                return build(x, y, block);
             case SKIP:
-                skipAction();
-                break;
+                return skipAction();
         }
-        return 1;
+        return -1;
     }
 
     //TODO IVAN tutte queste funzioni sono tue
