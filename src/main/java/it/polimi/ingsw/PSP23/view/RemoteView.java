@@ -23,10 +23,10 @@ public class RemoteView extends View{
             clientSaid=message;
             try{
                 String[] inputs=message.split(":");
-                if(inputs[0].equals("SELECT_GODS")||inputs[0].equals("CHOOSE_GOD")||inputs[0].equals("PLACE_WORKER")||inputs[0].equals("SELECT_WORKER")||inputs[0].equals("MOVE")||inputs[0].equals("BUILD"))
+                if(inputs[0].equals("SELECT_GODS")||inputs[0].equals("CHOOSE_GOD")||inputs[0].equals("PLACE_WORKER")||inputs[0].equals("CHOOSE_WORKER")||inputs[0].equals("MOVE")||inputs[0].equals("BUILD"))
                     handleChoice(inputs[0],inputs[1]);
 
-                showMessage("I'm about to "+inputs[0]);
+                //showMessage("I'm about to "+inputs[0]);
 
 
             }catch(IllegalArgumentException e){
@@ -38,7 +38,7 @@ public class RemoteView extends View{
 
     @Override
     public void showMessage(Object message) {
-        clientConnection.asyncSend(message);
+        clientConnection.send(message);
     }
 
 
