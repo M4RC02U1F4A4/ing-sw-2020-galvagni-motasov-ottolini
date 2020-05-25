@@ -71,17 +71,20 @@ public class Controller implements Observer<PlayerMove>{
                     move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
                     sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
                     sendToRemainingPlayers("Attendi il tuo turno");
+                    break;
                 }
                 case "BUILD":{
                     move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
                     sendUpdatedMap();
                     sendToRemainingPlayers("Attendi il tuo turno");
+                    break;
                 }
                 case "MOVE":{
                     move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
                     sendToNextPlayer("Scegli dove e cosa costruire:\nSintassi del comando:\nBUILD:<x>,<y><blocco/CUPOLA>");
                     sendUpdatedMap();
                     sendToRemainingPlayers("Attendi il tuo turno");
+                    break;
                 }
                 case "SKIP":
                     move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
