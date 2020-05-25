@@ -23,7 +23,7 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
 
     void handleChoice(String command, String args){
         notify(new PlayerMove(player, this, command, args));
-        showMessage("You just have :"+command);
+        //showMessage("You just have :"+command);
     }
 
 

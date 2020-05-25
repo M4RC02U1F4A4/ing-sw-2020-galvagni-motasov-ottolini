@@ -35,22 +35,58 @@ public class Controller implements Observer<PlayerMove>{
     public synchronized void  performMove(PlayerMove move){
         move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
         if (game.isPlayerTurn(move.getPlayer())) {
-            move.getView().showMessage("lode lode al san crispino");
             switch (move.getCommand()) {
                 case "SELECT_GODS":
                     game.godChoose(arguments.get(0),arguments.get(1),arguments.get(2));
+                    sendToNextPlayer("Scegli un dio tra quelli disponibili:"+game.getGodList());
+                    sendToNextPlayer("Sintassi del comando: \nCHOOSE_GOD:<god>");
+                    sendToRemainingPlayers("Attendi il tuo turno");
                     break;
                 case "CHOOSE_GOD":
                     move.getView().showMessage(game.setGod(arguments.get(0)));
+                    if(game.getPhase()==Phase.GOD_PICK){
+                        sendToNextPlayer("Scegli un dio tra quelli disponibili:"+game.getGodList());
+                        sendToNextPlayer("Sintassi del comando: \nCHOOSE_GOD:<god>");
+                        sendToRemainingPlayers("Attendi il tuo turno");
+                    }
+                    else{
+                        sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
+                    }
                     break;
                 // come scritto nella documentazine whatToBuild e chosenWorker possono anche essere indefiniti con alcune operazioni.
                 // TODO sostituire il placeholder chosenWorker with something working
-                case "PLACE_WORKER":
-                case "SELECT_WORKER":
-                case "BUILD":
-                case "MOVE":
-                case "SKIP":
+                case "PLACE_WORKER":{
                     game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y);
+                    sendUpdatedMap();
+                    if(game.getPhase()==Phase.CHOOSE_WORKER){
+                        sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
+                        sendToRemainingPlayers("Attendi il tuo turno");
+                    }
+                    else{
+                        sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
+                        sendToRemainingPlayers("Attendi il tuo turno");
+                    }
+                    break;
+                }
+                case "CHOOSE_WORKER":{
+                    move.getView().showMessage(chosenWorker);
+                    move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
+                    sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
+                    sendToRemainingPlayers("Attendi il tuo turno");
+                }
+                case "BUILD":{
+                    move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
+                    sendUpdatedMap();
+                    sendToRemainingPlayers("Attendi il tuo turno");
+                }
+                case "MOVE":{
+                    move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
+                    sendToNextPlayer("Scegli dove e cosa costruire:\nSintassi del comando:\nBUILD:<x>,<y><blocco/CUPOLA>");
+                    sendUpdatedMap();
+                    sendToRemainingPlayers("Attendi il tuo turno");
+                }
+                case "SKIP":
+                    move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
                     break;
             }
         }
@@ -68,6 +104,7 @@ public class Controller implements Observer<PlayerMove>{
         arguments.clear();
         x=0;
         y=0;
+        chosenWorker=0;
         whatToBuild=Status.FREE;
 
     }
@@ -96,15 +133,17 @@ public class Controller implements Observer<PlayerMove>{
             case "PLACE_WORKER":{
                 actionBeingPerformed=Action.PLACE_WORKER;
                 arguments.add(tmp[0]);//Numero worker
+                chosenWorker=Integer.parseInt(arguments.get(0));
                 arguments.add(tmp[1]);//Coordinata x
                 this.x=Integer.parseInt(arguments.get(1));
                 arguments.add(tmp[2]);//Coordinata y
                 this.y=Integer.parseInt(arguments.get(2));
                 break;
             }
-            case "SELECT_WORKER":{
+            case "CHOOSE_WORKER":{
                 actionBeingPerformed=Action.SELECT_WORKER;
                 arguments.add(tmp[0]);//n. worker scelto
+                chosenWorker=Integer.parseInt(arguments.get(0));
                 break;
             }
             case "MOVE":{
@@ -129,6 +168,25 @@ public class Controller implements Observer<PlayerMove>{
                 break;
             }
 
+        }
+    }
+    public void sendToNextPlayer(String msg){
+        int nextPlayer=game.getCurrentPlayerNum();
+        /*if (nextPlayer==players.size()){
+            nextPlayer=0;
+        }*/
+        players.get(nextPlayer).showMessage(msg);
+    }
+    public void sendToRemainingPlayers(String msg){
+        for(int i=0;i<players.size();i++){
+            if(i!=game.getCurrentPlayerNum()){
+                players.get(i).showMessage(msg);
+            }
+        }
+    }
+    public void sendUpdatedMap(){
+        for (int i=0;i<players.size();i++){
+            players.get(i).showMessage(game.getMap());
         }
     }
 }

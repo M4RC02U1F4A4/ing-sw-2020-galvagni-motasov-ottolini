@@ -27,7 +27,7 @@ public class SocketClientConnection extends Observable<String> implements Client
         return socket.getRemoteSocketAddress().toString();
     }
 
-    private synchronized void send(Object message){
+    public synchronized void send(Object message){
         try{
             out.reset();
             out.writeObject(message);

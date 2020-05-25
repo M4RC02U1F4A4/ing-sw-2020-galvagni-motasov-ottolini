@@ -97,10 +97,11 @@ public class Server {
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
                     conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
-                    conn.get(1).asyncSend("non e' il tuo turno");
+                    conn.get(0).asyncSend("Sintassi del comando: \nSELECT_GODS:<god1>,<god2>");
+                    conn.get(1).asyncSend("Attendi il tuo turno");
                 }
                 else{
-                    conn.get(0).asyncSend("non e' il tuo turno");
+                    conn.get(0).asyncSend("Attendi il tuo turno");
                     conn.get(1).asyncSend("e' il tuo turno");
                 }
 

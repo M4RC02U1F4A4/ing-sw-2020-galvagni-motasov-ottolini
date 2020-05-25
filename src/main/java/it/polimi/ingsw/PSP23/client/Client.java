@@ -40,6 +40,8 @@ public class Client {
                             System.out.println((String) inputObject);
                         } else if (inputObject instanceof Map) {
                             ((Map) inputObject).drawMap();
+                        }else if(inputObject instanceof Integer){
+                            System.out.println((Integer) inputObject);
                         } else {
                             throw new IllegalArgumentException();
                         }

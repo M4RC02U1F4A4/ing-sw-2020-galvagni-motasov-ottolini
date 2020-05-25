@@ -319,7 +319,12 @@ public class Game extends Observable<Message> {
 
     // TODO return the list of gods avaiable
     public String getGodList() {
-        return "chiapasu";
+        String tmp="|";
+        for(int i=0;i<availableGods.length;i++){
+            if(!availableGods[i].equals("Scelto"))
+                tmp=tmp+availableGods[i]+"|";
+        }
+        return tmp;
     }
 
     /**
