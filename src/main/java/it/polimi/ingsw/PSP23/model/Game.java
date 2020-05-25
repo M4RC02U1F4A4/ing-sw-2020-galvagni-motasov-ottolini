@@ -60,6 +60,7 @@ public class Game extends Observable<Message> {
         nextGameSetUpPhase();
     }
 
+    // TODO così può dare null point exception, trovare altro modo per inizializzare athena e hera
     /**
      * Set the god choosed to 'scelto' then create the god for player
      * @param god is the god choosed by the player
@@ -88,7 +89,6 @@ public class Game extends Observable<Message> {
                 break;
             case "Athena":
                 getCurrentPlayer().setGod(new Athena());
-                // TODO così può dare null point exception, trovare altro modo per inizializzare athena e hera
                 /*for (int cont = 0; cont < numPlayers; cont++)
                     players[cont].getGod().AthenaIsHere();*/
                 break;
@@ -133,9 +133,13 @@ public class Game extends Observable<Message> {
         return 0;
     }
 
-    private void setWorker(int x, int y) {
+    //TODO aggiungere un controllo alla cella, se è occupata -> errore
+    private int setWorker(int x, int y) {
+        if (map.getCell(x, y).isOccupied())
+            return -1;
         getCurrentPlayer().placeWorker(map.getCell(x, y));
         nextGameSetUpPhase();
+        return 0;
     }
 
     private void nextGameSetUpPhase() {
@@ -182,21 +186,12 @@ public class Game extends Observable<Message> {
     private void skipAction() {
         switch (getCurrentGod().getName()) {
             case "Artemis":
-                nextGamePhase();
-                break;
             case "Demeter":
-                nextGamePhase();
-                break;
             case "Hephaestus":
-                nextGamePhase();
-                break;
             case "Hestia":
-                nextGamePhase();
-                break;
             case "Prometheus":
-                nextGamePhase();
-                break;
             case "Triton":
+                getCurrentGod().setSkip();
                 nextGamePhase();
                 break;
         }
@@ -234,20 +229,21 @@ public class Game extends Observable<Message> {
             case CHECK_WIN:
             case CHECK_WIN_MOVE:
             case CHECK_WIN_BUILD:
-                if (getCurrentPlayer().getGod().checkWin(getActiveWorker(), completedTowers))
+                if (getCurrentGod().checkWin(getActiveWorker(), completedTowers))
                     sendWin(getCurrentPlayer());
                 nextGamePhase();
                 break;
             case CHECK_LOSE_MOVE:
-                if (getCurrentPlayer().getGod().checkLossMove(getActiveWorker(), map)) {
+                if (getCurrentGod().checkLossMove(getActiveWorker(), map)) {
                     sendLoss(getCurrentPlayer());
                     if (3 == numPlayers)
                         removePlayer(getCurrentPlayerNum());
+                    // TODO aggiungere messaggio di vittoria per l'altro giocatore
                 }
                 nextGamePhase();
                 break;
             case CHECK_LOSE_BUILD:
-                if (getCurrentPlayer().getGod().checkLossBuild(getActiveWorker(), map)) {
+                if (getCurrentGod().checkLossBuild(getActiveWorker(), map)) {
                     sendLoss(getCurrentPlayer());
                     if (3 == numPlayers)
                         removePlayer(getCurrentPlayerNum());
@@ -255,6 +251,7 @@ public class Game extends Observable<Message> {
                 nextGamePhase();
                 break;
             case END:
+                nextGamePhase(); // TODO check this
                 break;
         }
     }
@@ -301,7 +298,7 @@ public class Game extends Observable<Message> {
 
     //TODO check this function output
     public int getCurrentPlayerNum() {
-        return turnManager.getCurrentPlayerNumber() ;
+        return turnManager.getCurrentPlayerNumber();
     }
 
     public boolean isPlayerTurn(Player p){
@@ -338,8 +335,7 @@ public class Game extends Observable<Message> {
     public int performeMove(Action action, Status block, int active, int x, int y) {
         switch (action) {
             case PLACE_WORKER:
-                setWorker(x, y);
-                break;
+                return setWorker(x, y);
             case SELECT_WORKER:
                 setActiveWorker(active);
                 break;
@@ -353,7 +349,7 @@ public class Game extends Observable<Message> {
                 skipAction();
                 break;
         }
-        return 0;
+        return 1;
     }
 
     /*

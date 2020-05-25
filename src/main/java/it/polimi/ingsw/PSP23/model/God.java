@@ -15,6 +15,7 @@ public class God {
     protected boolean is_hera_in_game;
     private boolean is_athena_in_game;
     private boolean athena_moved_up;
+    private boolean skip_move;
 
     /**
      *  Constructor of god
@@ -57,6 +58,7 @@ public class God {
         remains_builds = build;
         starting_z = -1;
         athena_moved_up = moved_up;
+        skip_move = false;
     }
 
     /**
@@ -113,6 +115,21 @@ public class God {
             level = c.build(Status.BUILT);
         remains_builds--;
         return level;
+    }
+
+    /**
+     * set the skip flag to true, needed for Artemis, Demeter, Hephaestus, Hestia, Prometheus and Triton
+     */
+    public void setSkip() {
+        skip_move = true;
+    }
+
+    /**
+     * needed for Artemis, Demeter, Hephaestus, Hestia, Prometheus and Triton to not use their power
+     * @return the skip flag
+     */
+    public boolean getSkip() {
+        return skip_move;
     }
 
     /**

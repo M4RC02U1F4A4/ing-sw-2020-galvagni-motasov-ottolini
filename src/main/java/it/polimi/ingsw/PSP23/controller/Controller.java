@@ -7,8 +7,6 @@ import it.polimi.ingsw.PSP23.view.View;
 import java.util.ArrayList;
 
 public class Controller implements Observer<PlayerMove>{
-
-    // potrebbero esserci dei problemi nell'avere 2 array di player?
     private final Game game;
     private ArrayList<View> players = new ArrayList<>();
     private Action actionBeingPerformed;

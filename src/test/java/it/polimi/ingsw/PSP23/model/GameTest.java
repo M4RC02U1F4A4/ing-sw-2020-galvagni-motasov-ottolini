@@ -49,18 +49,18 @@ public class GameTest {
         trenta.godChoose("Atlas", "Chronus", "Demeter");
         quarantacinque.godChoose("Hephaestus", "Hera", "Hestia");
         hunger.godChoose("Minotaur", "Pan", "Prometheus");
-        quindici.setGod("Apollo");
-        quindici.setGod("Artemis");
-        quindici.setGod("Athena");
-        trenta.setGod("Atlas");
-        trenta.setGod("Chronus");
-        trenta.setGod("Demeter");
-        quarantacinque.setGod("Hephaestus");
-        quarantacinque.setGod("Hera");
-        quarantacinque.setGod("Hestia");
-        hunger.setGod("Minotaur");
-        hunger.setGod("Pan");
-        hunger.setGod("Prometheus");
+        assertEquals(0, quindici.setGod("Apollo"));
+        assertEquals(0, quindici.setGod("Artemis"));
+        assertEquals(0, quindici.setGod("Athena"));
+        assertEquals(0, trenta.setGod("Atlas"));
+        assertEquals(0, trenta.setGod("Chronus"));
+        assertEquals(0, trenta.setGod("Demeter"));
+        assertEquals(0, quarantacinque.setGod("Hephaestus"));
+        assertEquals(0, quarantacinque.setGod("Hera"));
+        assertEquals(0, quarantacinque.setGod("Hestia"));
+        assertEquals(0, hunger.setGod("Minotaur"));
+        assertEquals(0, hunger.setGod("Pan"));
+        assertEquals(0, hunger.setGod("Prometheus"));
     }
 
     @Test
@@ -70,5 +70,30 @@ public class GameTest {
         assertEquals(-1, hunger.addPlayer("Dimitri", "111.111.111.111"));
         hunger.godChoose("Triton", "Zeus", "Hera");
         assertEquals(-1, hunger.setGod("Hera"));
+        assertEquals(0, hunger.setGod("Zeus"));
+        assertEquals(0, hunger.setGod("Triton"));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 1, 1));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 2, 2));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 3, 3));
+        assertEquals(-1, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 2, 2));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 4, 4));
+    }
+
+    @Test
+    public void gameOn() {
+        this.gamePrep();
+        // Triton turn (player 0)
+        assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
+        hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 1, 0, 0);
+        hunger.performeMove(Action.MOVE, Status.FREE, 3, 3, 4);
+        hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 4);
+        hunger.performeMove(Action.SKIP, Status.FREE, 4, 2, 0);
+        hunger.performeMove(Action.BUILD, Status.FREE, 3, 3, 3);
+        assertEquals(1, hunger.getCurrentPlayerNum());
+        // Zeus turn (player 1), worker 2 on the border
+        hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 1, 0, 0);
+        hunger.performeMove(Action.MOVE, Status.FREE, 3, 4, 3);
+        hunger.performeMove(Action.BUILD, Status.FREE, 3, 3, 3);
+        hunger.getPhase();
     }
 }

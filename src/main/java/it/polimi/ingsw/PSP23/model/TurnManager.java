@@ -86,7 +86,7 @@ public class TurnManager {
                 currentPhase = Phase.CHECK_WIN_MOVE;
                 break;
             case CHECK_WIN_MOVE:
-                if (1 <= currentPlayer.getGod().remains_moves)
+                if ((1 <= currentPlayer.getGod().remains_moves) && !(currentPlayer.getGod().getSkip()))
                     currentPhase = Phase.CHECK_LOSE_MOVE;
                 else
                     currentPhase = Phase.CHECK_LOSE_BUILD;
@@ -98,7 +98,7 @@ public class TurnManager {
                 currentPhase = Phase.CHECK_WIN_BUILD;
                 break;
             case CHECK_WIN_BUILD:
-                if (2 <= currentPlayer.getGod().remains_builds)
+                if ((2 <= currentPlayer.getGod().remains_builds) && !(currentPlayer.getGod().getSkip()))
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 else
                     currentPhase = Phase.END;
