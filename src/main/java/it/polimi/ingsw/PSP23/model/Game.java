@@ -292,6 +292,7 @@ public class Game extends Observable<Message> {
                 break;
             case END:
                 nextGamePhase(); // TODO check this
+                turnManager.setCurrentPlayer(getCurrentPlayer());
                 break;
         }
     }
