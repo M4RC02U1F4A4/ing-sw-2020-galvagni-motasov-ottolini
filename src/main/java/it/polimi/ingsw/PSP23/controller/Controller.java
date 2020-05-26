@@ -53,41 +53,28 @@ public class Controller implements Observer<PlayerMove>{
                         sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
                     }
                     break;
-                case "PLACE_WORKER":{
-                    game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y);
-                    sendUpdatedMap();
-                    if(game.getPhase()==Phase.CHOOSE_WORKER){
-                        sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
-                        sendToRemainingPlayers("Attendi il tuo turno");
-                    }
-                    else{
-                        sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
-                        sendToRemainingPlayers("Attendi il tuo turno");
-                    }
-                    break;
-                }
-                case "CHOOSE_WORKER":{
-                    move.getView().showMessage(chosenWorker);
-                    move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
-                    sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
-                    sendToRemainingPlayers("Attendi il tuo turno");
-                    break;
-                }
-                case "BUILD":{
-                    move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
-                    sendUpdatedMap();
-                    sendToRemainingPlayers("Attendi il tuo turno");
-                    break;
-                }
-                case "MOVE":{
-                    move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
-                    sendToNextPlayer("Scegli dove e cosa costruire:\nSintassi del comando:\nBUILD:<x>,<y><blocco/CUPOLA>");
-                    sendUpdatedMap();
-                    sendToRemainingPlayers("Attendi il tuo turno");
-                    break;
-                }
+                case "PLACE_WORKER":
+                case "CHOOSE_WORKER":
+                case "BUILD":
+                case "MOVE":
                 case "SKIP":
                     move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
+                    sendUpdatedMap();
+                    switch(game.getPhase()) {
+                        case WORKER_HOUSING:
+                            sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
+                            break;
+                        case CHOOSE_WORKER:
+                            sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
+                            break;
+                        case MOVE:
+                            sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
+                            break;
+                        case BUILD:
+                            sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,");
+                            break;
+                    }
+                    sendToRemainingPlayers("Attendi il tuo turno");
                     break;
             }
         }

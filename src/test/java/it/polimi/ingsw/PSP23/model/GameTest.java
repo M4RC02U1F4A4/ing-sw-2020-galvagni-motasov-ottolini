@@ -88,8 +88,9 @@ public class GameTest {
         assertEquals(1, hunger.getCurrentPlayerNum());
         // Zeus turn (player 1), worker 2 on the border
         hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 0, 0, 0);
-        assertEquals(-1, hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 3));
+        assertEquals(0, hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 3));
         hunger.performeMove(Action.BUILD, Status.FREE, 3, 3, 3);
+        assertEquals(0, hunger.getCurrentPlayerNum());
         hunger.getPhase();
     }
 }
