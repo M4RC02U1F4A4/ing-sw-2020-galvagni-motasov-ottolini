@@ -216,15 +216,18 @@ public class Game extends Observable<Message> {
      */
     private int skipAction() {
         switch (getCurrentGod().getName()) {
-            case "Artemis":
-            case "Demeter":
-            case "Hephaestus":
-            case "Hestia":
-            case "Prometheus":
-            case "Triton":
-                getCurrentGod().setSkip();
-                nextGamePhase();
-                return 1;
+            case "Artemis":         //move
+            case "Demeter":         //build
+            case "Hephaestus":      //build
+            case "Hestia":          //build
+            case "Prometheus":      //build
+            case "Triton":          //move
+                if (turnManager.getSkip()) {
+                    getCurrentGod().setSkip();
+                    nextGamePhase();
+                    return 1;
+                }
+                break;
         }
         return -1;
     }
@@ -291,7 +294,7 @@ public class Game extends Observable<Message> {
                 nextGamePhase();
                 break;
             case END:
-                nextGamePhase(); // TODO check this
+                nextGamePhase();
                 turnManager.setCurrentPlayer(getCurrentPlayer());
                 break;
         }
@@ -389,12 +392,15 @@ public class Game extends Observable<Message> {
         return God.getAllGods();
     }
 
-    // TODO return the list of gods avaiable
+    /**
+     * getter
+     * @return string of avaiable gods
+     */
     public String getGodList() {
-        String tmp="|";
-        for(int i=0;i<availableGods.length;i++){
+        String tmp = "|";
+        for(int i=0; i < numPlayers; i++) {
             if(!availableGods[i].equals("Scelto"))
-                tmp=tmp+availableGods[i]+"|";
+                tmp = tmp + availableGods[i] + "|";
         }
         return tmp;
     }

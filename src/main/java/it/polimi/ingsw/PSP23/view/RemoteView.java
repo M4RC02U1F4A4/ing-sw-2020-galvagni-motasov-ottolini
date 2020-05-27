@@ -23,12 +23,10 @@ public class RemoteView extends View{
             clientSaid=message;
             try{
                 String[] inputs=message.split(":");
-                if(inputs[0].equals("SELECT_GODS")||inputs[0].equals("CHOOSE_GOD")||inputs[0].equals("PLACE_WORKER")||inputs[0].equals("CHOOSE_WORKER")||inputs[0].equals("MOVE")||inputs[0].equals("BUILD"))
+                if(inputs[0].equals("SELECT_GODS")||inputs[0].equals("CHOOSE_GOD")||inputs[0].equals("PLACE_WORKER")||inputs[0].equals("CHOOSE_WORKER")||inputs[0].equals("MOVE")||inputs[0].equals("BUILD")||inputs[0].equals("SKIP"))
                     handleChoice(inputs[0],inputs[1]);
-
-                //showMessage("I'm about to "+inputs[0]);
-
-
+                else
+                    showMessage("Il comando inserito non è valido, riprova");
             }catch(IllegalArgumentException e){
                 e.printStackTrace();
             }

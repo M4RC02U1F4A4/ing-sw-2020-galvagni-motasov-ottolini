@@ -12,8 +12,8 @@ public class Controller implements Observer<PlayerMove>{
     private Action actionBeingPerformed;
     private Status whatToBuild = Status.FREE;
     private ArrayList<String> arguments = new ArrayList<>();
-    private int x = 0, y = 0;
-    private int chosenWorker = 0;
+    private int x = -1, y = -1;
+    private int chosenWorker = -1;
 
 
     public void addPlayer(Player p){
@@ -79,7 +79,7 @@ public class Controller implements Observer<PlayerMove>{
             }
         }
         else {
-            move.getView().showMessage("NON E' IL TUO TURNO!");
+            move.getView().showMessage("NON È IL TUO TURNO!");
         }
     }
 
@@ -87,13 +87,12 @@ public class Controller implements Observer<PlayerMove>{
     public void update(PlayerMove message) {
         setActionFromTheClient(message.getCommand(), message.getArgs(),message.getPlayer());
         performMove(message);
-
         //inizializzazione a fine turno
         arguments.clear();
-        x=0;
-        y=0;
-        chosenWorker=0;
-        whatToBuild=Status.FREE;
+        x = -1;
+        y = -1;
+        chosenWorker = -1;
+        whatToBuild = Status.FREE;
 
     }
 
@@ -154,9 +153,13 @@ public class Controller implements Observer<PlayerMove>{
                     whatToBuild=Status.BUILT;
                 break;
             }
-
+            case "SKIP": {
+                actionBeingPerformed = Action.SKIP;
+                break;
+            }
         }
     }
+
     public void sendToNextPlayer(String msg){
         int nextPlayer=game.getCurrentPlayerNum();
         /*if (nextPlayer==players.size()){
@@ -164,6 +167,7 @@ public class Controller implements Observer<PlayerMove>{
         }*/
         players.get(nextPlayer).showMessage(msg);
     }
+
     public void sendToRemainingPlayers(String msg){
         for(int i=0;i<players.size();i++){
             if(i!=game.getCurrentPlayerNum()){
@@ -171,6 +175,7 @@ public class Controller implements Observer<PlayerMove>{
             }
         }
     }
+
     public void sendUpdatedMap(){
         for (int i=0;i<players.size();i++){
             players.get(i).showMessage(game.getMap());

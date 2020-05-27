@@ -9,12 +9,13 @@ public class TurnManager {
     private Player currentPlayer;
     private Phase currentPhase;
     private int AthenaPlayer;
-    private boolean Athena_moved_up;
+    private boolean AthenaMovedUp;
+    private boolean skipEnabled;
 
     public TurnManager() {
         currentPlayerNumber = 0;
         currentPhase = Phase.GOD_CHOOSE;
-        Athena_moved_up = false;
+        AthenaMovedUp = false;
         AthenaPlayer = -1;
     }
 
@@ -66,12 +67,13 @@ public class TurnManager {
         switch (currentPhase) {
             case CHOOSE_WORKER:
                 currentPhase = Phase.START_TURN;
-                currentPlayer.getGod().startTurn(Athena_moved_up);
+                currentPlayer.getGod().startTurn(AthenaMovedUp);
                 break;
             case START_TURN:
-                if ("Prometheus".equals(currentPlayer.getGod().getName()) && 2 == currentPlayer.getGod().remains_builds)
+                skipEnabled = false;
+                if ("Prometheus".equals(getCurrentGod().getName()) && 2 == getCurrentGod().remains_builds)
                     currentPhase = Phase.CHECK_LOSE_BUILD;
-                else if ("Chronus".equals(currentPlayer.getGod().getName()))
+                else if ("Chronus".equals(getCurrentGod().getName()))
                     currentPhase = Phase.CHECK_WIN;
                 else
                     currentPhase = Phase.CHECK_LOSE_MOVE;
@@ -86,8 +88,11 @@ public class TurnManager {
                 currentPhase = Phase.CHECK_WIN_MOVE;
                 break;
             case CHECK_WIN_MOVE:
-                if ((1 <= currentPlayer.getGod().remains_moves) && !(currentPlayer.getGod().getSkip()))
+                if ((1 <= getCurrentGod().remains_moves) && !(getCurrentGod().getSkip())) {
+                    if ("Triton".equals(getCurrentGod().getName()) || "Artemis".equals(getCurrentGod().getName()))
+                        skipEnabled = true;
                     currentPhase = Phase.CHECK_LOSE_MOVE;
+                }
                 else
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 break;
@@ -98,20 +103,28 @@ public class TurnManager {
                 currentPhase = Phase.CHECK_WIN_BUILD;
                 break;
             case CHECK_WIN_BUILD:
-                if ((2 <= currentPlayer.getGod().remains_builds) && !(currentPlayer.getGod().getSkip()))
+                if ((2 <= getCurrentGod().remains_builds) && !(getCurrentGod().getSkip())) {
+                    if ("Demeter".equals(getCurrentGod().getName()) || "Hephaestus".equals(getCurrentGod().getName()) ||
+                    "Hestia".equals(getCurrentGod().getName()) || "Prometheus".equals(getCurrentGod().getName()))
+                        skipEnabled = true;
                     currentPhase = Phase.CHECK_LOSE_BUILD;
+                }
                 else
                     currentPhase = Phase.END;
                 break;
             case END:
                 if (AthenaPlayer == currentPlayerNumber)
-                    Athena_moved_up = currentPlayer.getGod().AthenaMovedUp();
+                    AthenaMovedUp = getCurrentGod().AthenaMovedUp();
                 currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
                 if (numberOfPlayers <= currentPlayerNumber)
                     currentPlayerNumber = 0;
                 break;
         }
+    }
+
+    private God getCurrentGod() {
+        return currentPlayer.getGod();
     }
 
     /**
@@ -131,7 +144,7 @@ public class TurnManager {
         if (null != VamosAllaPlayer.getGod()) {
             if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
                 AthenaPlayer = currentPlayerNumber;
-                Athena_moved_up = false;
+                AthenaMovedUp = false;
             }
         }
     }
@@ -155,6 +168,14 @@ public class TurnManager {
      */
     public Phase getCurrentPhase() {
         return currentPhase;
+    }
+
+    /**
+     * getter
+     * @return skip enable, the flag to see if the skip move is possible
+     */
+    public boolean getSkip() {
+        return skipEnabled;
     }
 
     //TEST ONLY!

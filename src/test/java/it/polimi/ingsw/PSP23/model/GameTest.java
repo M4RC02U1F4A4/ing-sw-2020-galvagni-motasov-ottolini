@@ -18,13 +18,14 @@ public class GameTest {
     }
 
     @Test
-    public void inOut() {
+    public void getterSetter() {
         hunger.getMap();
         hunger.getCurrentPlayerNum();
-        hunger.getGodList();
         hunger.getAllGodList();
         hunger.getPhase();
         hunger.getPhase();
+        hunger.sendWin(null);
+        hunger.sendLoss(null);
     }
 
     @Test
@@ -64,6 +65,7 @@ public class GameTest {
         hunger.addPlayer("Vladimir", "11.11.11.11");
         assertEquals(-1, hunger.addPlayer("Dimitri", "111.111.111.111"));
         hunger.godChoose("Triton", "Zeus", "Hera");
+        hunger.getGodList();
         assertEquals(-1, hunger.setGod("Hera"));
         assertEquals(0, hunger.setGod("Zeus"));
         assertEquals(0, hunger.setGod("Triton"));
@@ -79,6 +81,7 @@ public class GameTest {
         this.gamePrep();
         // Triton turn (player 0)
         assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
+        assertEquals(-1, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 5, 0, 0));
         hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 1, 0, 0);
         hunger.performeMove(Action.MOVE, Status.FREE, 3, 3, 4);
         hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 4);
@@ -87,7 +90,8 @@ public class GameTest {
         hunger.performeMove(Action.BUILD, Status.FREE, 3, 3, 3);
         assertEquals(1, hunger.getCurrentPlayerNum());
         // Zeus turn (player 1), worker 2 on the border
-        hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 0, 0, 0);
+        assertEquals(0, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 0, 0, 0));
+        hunger.performeMove(Action.SKIP, Status.FREE, 4, 2, 0);
         assertEquals(0, hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 3));
         hunger.performeMove(Action.BUILD, Status.FREE, 3, 3, 3);
         assertEquals(0, hunger.getCurrentPlayerNum());
