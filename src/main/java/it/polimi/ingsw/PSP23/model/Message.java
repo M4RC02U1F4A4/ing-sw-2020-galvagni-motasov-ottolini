@@ -10,27 +10,51 @@ public class Message implements Serializable {
     private final int y;
     private final int nWorker;
 
-
+    /**
+     * @return player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * @return map
+     */
     public Map getMap() {
         return map;
     }
 
+    /**
+     * @return action
+     */
     public Action getAction() {
         return action;
     }
 
+    /**
+     * @return X
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * @return Y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Used for send messages from controller to model
+     * Constructor
+     * @param player
+     * @param map
+     * @param action
+     * @param x
+     * @param y
+     * @param nWorker
+     */
     public Message(Player player, Map map, Action action, int x, int y, int nWorker) {
         this.player = player;
         this.map = map;

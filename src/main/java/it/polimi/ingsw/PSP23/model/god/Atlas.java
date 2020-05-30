@@ -6,7 +6,9 @@ import it.polimi.ingsw.PSP23.model.Status;
 import it.polimi.ingsw.PSP23.model.Worker;
 
 public class Atlas extends God {
-
+    /**
+     * Constructor
+     */
     public Atlas() {
         super.setUpGod("Atlas");
     }

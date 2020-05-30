@@ -11,6 +11,11 @@ public class Player {
     private Color color;
     private int playerNumber;
 
+    /**
+     * Constructor for the player
+     * @param name name of the player
+     * @param ipAddress ip of the server
+     */
     public Player(String name, String ipAddress) {
         this.name=name;
         this.ipAddress=ipAddress;

@@ -7,10 +7,26 @@ import it.polimi.ingsw.PSP23.model.Worker;
 
 public class Apollo extends God {
 
+    /**
+     * Constructor
+     */
     public Apollo() {
         super.setUpGod("Apollo");
     }
 
+    /**
+     * Your worker move into an opponent worker's space by forcing their worker
+     * to the space yours just vacated
+     * @param c cell in which the player want to move the worker
+     * @param w worker that the player want to move
+     * @param map used only for minotaur power
+     * @return 0 if the operation is successful,
+     *        -1 if not near or occupied,
+     *        -2 if already moved this turn,
+     *        -3 athena block moved up moves,
+     *        -4 (Artemis) not back to origin,
+     *        -6 (Apollo) tried to move in friendly occupied cell.
+     */
     @Override
     public int move(Cell c, Worker w, Map map) {
         if (!c.isOccupied())

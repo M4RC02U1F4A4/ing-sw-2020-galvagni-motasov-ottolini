@@ -123,6 +123,10 @@ public class TurnManager {
         }
     }
 
+    /**
+     * TODO: javadoc
+     * @return
+     */
     private God getCurrentGod() {
         return currentPlayer.getGod();
     }

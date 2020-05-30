@@ -15,20 +15,34 @@ public class PlayerMove {
         return player;
     }
 
-    //TODO: Javadoc
+    /**
+     * @return view
+     */
     public View getView() {
         return view;
     }
 
+    /**
+     * @return command
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     * @return args
+     */
     public String getArgs() {
         return args;
     }
 
-    //TODO: Javadoc
+    /**
+     * Constructor
+     * @param player
+     * @param view
+     * @param command
+     * @param args
+     */
     public PlayerMove(Player player, View view, String command, String args) {
         this.player = player;
         this.view = view;

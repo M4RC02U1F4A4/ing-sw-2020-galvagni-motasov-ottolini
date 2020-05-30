@@ -133,9 +133,11 @@ public class God {
     }
 
     /**
-    *   Check if the player has won the game
-    *   @param w the worker moved is needed
-    */
+     * Check if the player has won the game
+     * @param w the worker moved is needed
+     * @param completed_tower number of completed tower on the board
+     * @return bool
+     */
     public boolean checkWin(Worker w, int completed_tower) {
         if ((0 < starting_z) && (3 > starting_z) && (3 == w.getPosZ())) {
             if ((is_hera_in_game) && !("Hera".matches(name))){

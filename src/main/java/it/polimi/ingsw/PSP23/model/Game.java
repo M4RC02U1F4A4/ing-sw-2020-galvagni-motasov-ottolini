@@ -13,6 +13,10 @@ public class Game extends Observable<Message> {
     private boolean ChronusIsHere;
     private int numPlayers, colorVariable, completedTowers, activeWorker;
 
+    /**
+     * Initialize game
+     * @param numPlayer number of players (2 or 3)
+     */
     public Game(int numPlayer) {
         map=new Map();
         numPlayers = numPlayer;

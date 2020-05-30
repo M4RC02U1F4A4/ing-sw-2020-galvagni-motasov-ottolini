@@ -1,7 +1,7 @@
 package it.polimi.ingsw.PSP23.model;
 
 /**
- *
+ * enum for game phase
  */
 public enum Phase {
     GOD_CHOOSE, GOD_PICK, WORKER_HOUSING,
