@@ -34,21 +34,11 @@ public class Server {
     public synchronized void lobby(ClientConnection c, String name, int numberOfPlayers){
         waitingConnection2vs2.put(name, c);
 
-        /*
-        Set<Map.Entry<String, ClientConnection>> xd= waitingConnection2vs2.entrySet();
-        for(Map.Entry<String, ClientConnection>me:xd) {
-            String nome = me.getKey();
-            String ip = me.getValue().getIpAddress();
-            System.out.println("nome: "+nome+" - ip: +"+ip);
-        }*/
-
-
-
         if(numberOfPlayers==2){
             c.asyncSend("Benvenuto nella lobby a 2 giocatori");
             System.out.println("Si e' connesso "+name);
             if(waitingConnection2vs2.size()==2){
-                System.out.println("istanzio il controller");
+                System.out.println("istanzio il controller per una partita a 2 giocatori");
                 Game game=new Game(2);
                 Controller controller=new Controller(game);
                 Set<Map.Entry<String, ClientConnection>> st= waitingConnection2vs2.entrySet();
@@ -61,18 +51,8 @@ public class Server {
                     Player p=new Player(nome, ip);
                     players.add(p);
                 }
-                /*Worker[] workers = new Worker[2];
-                workers[0]=null;
-                workers[1]=null;
-                players.get(0).setWorkers(workers);
-                players.get(0).setGod(null);*/
                 players.get(0).setColor(Color.BLUE);
                 players.get(0).setPlayerNumber(0);
-                /*Worker[] workers2 = new Worker[2];
-                workers2[0]=null;
-                workers2[1]=null;
-                players.get(1).setWorkers(workers2);
-                players.get(1).setGod(null);*/
                 players.get(1).setColor(Color.RED);
                 players.get(1).setPlayerNumber(1);
                 controller.addPlayer(players.get(0));
@@ -113,16 +93,67 @@ public class Server {
             c.asyncSend("Benvenuto nella lobby a 3 giocatori");
             System.out.println("Si e' connesso " + name);
             if (waitingConnection3vs3.size() == 3) {
-                System.out.println("istanzio il controller");
-                Controller controller = new Controller(new Game(2));
-                Set<Map.Entry<String, ClientConnection>> st = waitingConnection3vs3.entrySet();
-                for (Map.Entry<String, ClientConnection> me : st) {
-                    String nome = me.getKey();
-                    String ip = me.getValue().getIpAddress();
-                    System.out.println("Creo il giocatore " + nome + " con ip " + ip);
-                    //controller.addPlayer(new Player(nome, ip));
+                System.out.println("istanzio il controller per una partita a 3 giocatori");
+                Game game=new Game(3);
+                Controller controller=new Controller(game);
+                Set<Map.Entry<String, ClientConnection>> st= waitingConnection3vs3.entrySet();
+
+                for(Map.Entry<String, ClientConnection>me:st){
+                    String nome=me.getKey();
+                    String ip=me.getValue().getIpAddress();
+                    conn.add(me.getValue());
+                    System.out.println("Creo il giocatore "+nome+" con ip "+ip);
+                    Player p=new Player(nome, ip);
+                    players.add(p);
                 }
-                System.out.println("HO AGGIUNTO TUTTI E TRE I GIOCATORI AAAAAAAAAAAAAAAAAAAA");
+                players.get(0).setColor(Color.BLUE);
+                players.get(0).setPlayerNumber(0);
+                players.get(1).setColor(Color.RED);
+                players.get(1).setPlayerNumber(1);
+                players.get(2).setColor(Color.WHITE);
+                players.get(2).setPlayerNumber(2);
+                controller.addPlayer(players.get(0));
+                controller.addPlayer(players.get(1));
+                controller.addPlayer(players.get(2));
+
+
+                View player1view=new RemoteView(players.get(0),conn.get(0));
+                View player2view=new RemoteView(players.get(1),conn.get(1));
+                View player3view=new RemoteView(players.get(2),conn.get(2));
+                game.addObserver(player1view);
+                game.addObserver(player2view);
+                game.addObserver(player3view);
+                controller.addPlayerView(player1view);
+                controller.addPlayerView(player2view);
+                controller.addPlayerView(player3view);
+                player1view.addObserver(controller);
+                player2view.addObserver(controller);
+                player3view.addObserver(controller);
+
+                System.out.println("fino a qua funziona");
+
+
+                System.out.println(players.get(0).getPlayerNumber());
+                System.out.println(players.get(1).getPlayerNumber());
+                System.out.println(players.get(2).getPlayerNumber());
+                if(game.isPlayerTurn(players.get(0))){
+                    conn.get(0).asyncSend("e' il tuo turno");
+                    conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
+                    conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
+                    conn.get(0).asyncSend("Sintassi del comando: \nSELECT_GODS:<god1>,<god2>");
+                    conn.get(1).asyncSend("Attendi il tuo turno");
+                    conn.get(2).asyncSend("Attendi il tuo turno");
+                }
+                else if(game.isPlayerTurn(players.get(1))){
+                    conn.get(1).asyncSend("Attendi il tuo turno");
+                    conn.get(0).asyncSend("e' il tuo turno");
+                    conn.get(2).asyncSend("e' il tuo turno");
+                }
+                else {
+                    conn.get(2).asyncSend("Attendi il tuo turno");
+                    conn.get(0).asyncSend("e' il tuo turno");
+                    conn.get(1).asyncSend("e' il tuo turno");
+                }
             }
 
             System.out.println("Giocatori in attesa di una partita per 2");
