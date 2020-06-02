@@ -19,7 +19,9 @@ public class Artemis extends God {
     }
 
     /**
-     * TODO
+     * call the function <code>setUpTurn</code> with the parameters that indicate
+     * the number of moves and builds that the player can do and
+     * set other variables that are useful for check god's move
      * @param moved_up indicate if athena moved up this turn
      */
     @Override
