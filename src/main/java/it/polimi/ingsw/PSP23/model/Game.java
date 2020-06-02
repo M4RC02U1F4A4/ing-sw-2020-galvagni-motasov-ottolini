@@ -22,6 +22,9 @@ public class Game extends Observable<Message> {
         numPlayers = numPlayer;
         players = new Player[numPlayer];
         availableGods = new String[numPlayer];
+        availableGods[0]="";
+        availableGods[1]="";
+        if(numPlayer==3){availableGods[2]="";}
         turnManager = new TurnManager();
         turnManager.setPlayerNumber(numPlayer);
         ChronusIsHere = false;

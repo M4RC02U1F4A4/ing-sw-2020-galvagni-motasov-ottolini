@@ -32,10 +32,15 @@ public class Server {
     }
 
     public synchronized void lobby(ClientConnection c, String name, int numberOfPlayers){
-        waitingConnection2vs2.put(name, c);
-
+        if(numberOfPlayers==2){
+            waitingConnection2vs2.put(name, c);
+        }
+        else if(numberOfPlayers==3){
+            waitingConnection3vs3.put(name, c);
+        }
         if(numberOfPlayers==2){
             c.asyncSend("Benvenuto nella lobby a 2 giocatori");
+
             System.out.println("Si e' connesso "+name);
             if(waitingConnection2vs2.size()==2){
                 System.out.println("istanzio il controller per una partita a 2 giocatori");
@@ -89,7 +94,7 @@ public class Server {
             }
         }
         else if(numberOfPlayers==3) {
-            waitingConnection3vs3.put(name, c);
+
             c.asyncSend("Benvenuto nella lobby a 3 giocatori");
             System.out.println("Si e' connesso " + name);
             if (waitingConnection3vs3.size() == 3) {
@@ -140,19 +145,19 @@ public class Server {
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
                     conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
-                    conn.get(0).asyncSend("Sintassi del comando: \nSELECT_GODS:<god1>,<god2>");
+                    conn.get(0).asyncSend("Sintassi del comando: \nSELECT_GODS:<god1>,<god2>,<god3>");
                     conn.get(1).asyncSend("Attendi il tuo turno");
                     conn.get(2).asyncSend("Attendi il tuo turno");
                 }
                 else if(game.isPlayerTurn(players.get(1))){
-                    conn.get(1).asyncSend("Attendi il tuo turno");
-                    conn.get(0).asyncSend("e' il tuo turno");
-                    conn.get(2).asyncSend("e' il tuo turno");
+                    conn.get(1).asyncSend("e' il tuo turno");
+                    conn.get(0).asyncSend("Attendi il tuo turno");
+                    conn.get(2).asyncSend("Attendi il tuo turno");
                 }
                 else {
-                    conn.get(2).asyncSend("Attendi il tuo turno");
-                    conn.get(0).asyncSend("e' il tuo turno");
-                    conn.get(1).asyncSend("e' il tuo turno");
+                    conn.get(2).asyncSend("e' il tuo turno");
+                    conn.get(0).asyncSend("Attendi il tuo turno");
+                    conn.get(1).asyncSend("Attendi il tuo turno");
                 }
             }
         }
