@@ -94,11 +94,11 @@ public class Player {
      */
     public int placeWorker(Cell c) {
         if (null == workers[0]) {
-            workers[0] = new Worker(c, color);
+            workers[0] = new Worker(c, color, 0);
             return 0;
         }
         else if (null == workers[1]) {
-            workers[1] = new Worker(c, color);
+            workers[1] = new Worker(c, color, 1);
             return 1;
         }
         else

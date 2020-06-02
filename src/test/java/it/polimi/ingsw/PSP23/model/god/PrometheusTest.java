@@ -16,7 +16,7 @@ public class PrometheusTest {
         uno = new Cell();
         due = new Cell();
         tre = new Cell();
-        fuoco = new Worker(uno, Color.WHITE);
+        fuoco = new Worker(uno, Color.WHITE, 0);
     }
 
     @After

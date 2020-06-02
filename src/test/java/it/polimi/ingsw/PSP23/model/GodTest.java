@@ -27,8 +27,8 @@ public class GodTest {
         apelle = new Apollo();
         toro = new Minotaur();
         map = new Map();
-        murathor = new Worker(ulare, Color.RED);
-        opelatole_ecologico = new Worker(banana, Color.BLUE);
+        murathor = new Worker(ulare, Color.RED, 0);
+        opelatole_ecologico = new Worker(banana, Color.BLUE, 1);
         uno = map.getCell(0,0);
         due = map.getCell(0,1);
         tre = map.getCell(0,2);
@@ -243,9 +243,9 @@ public class GodTest {
         toro.AthenaIsHere();
         //test 1
         rjdio.startTurn(false);
-        pedone1 = new Worker(cin, Color.BLUE);
-        pedone2 = new Worker(due, Color.WHITE);
-        pedone3 = new Worker(ott, Color.WHITE);
+        pedone1 = new Worker(cin, Color.BLUE, 0);
+        pedone2 = new Worker(due, Color.WHITE, 0);
+        pedone3 = new Worker(ott, Color.WHITE, 1);
         assertFalse(rjdio.checkLossMove(pedone1, map));
         rjdio.startTurn(true);
         assertTrue(rjdio.checkLossMove(pedone1, map));
@@ -266,7 +266,7 @@ public class GodTest {
         assertTrue(toro.checkLossMove(pedone1, map));
         //test 5
         banana = map.getCell(3,1);
-        opelatole_ecologico = new Worker(banana, Color.WHITE);
+        opelatole_ecologico = new Worker(banana, Color.WHITE, 2);
         assertTrue(toro.checkLossMove(pedone1, map));
         //test 6
         assertFalse(rjdio.checkLossBuild(pedone1, map));

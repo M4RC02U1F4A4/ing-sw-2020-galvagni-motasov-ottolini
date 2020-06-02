@@ -15,7 +15,7 @@ public class ChronusTest {
         criceto = new Chronus();
         albero = new Cell();
         foglie = new Cell();
-        hamtaro = new Worker(albero,Color.WHITE);
+        hamtaro = new Worker(albero,Color.WHITE, 0);
     }
 
     @After

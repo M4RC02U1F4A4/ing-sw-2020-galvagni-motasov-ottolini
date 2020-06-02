@@ -15,7 +15,7 @@ public class HeraTest {
         ero = new Hera();
         base = new Cell();
         top = new Cell();
-        gianni = new Worker(base, Color.BLUE);
+        gianni = new Worker(base, Color.BLUE, 0);
     }
 
     @After

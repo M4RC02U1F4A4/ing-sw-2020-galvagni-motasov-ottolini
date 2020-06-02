@@ -17,7 +17,7 @@ public class AtlasTest {
         mappamondo = new Atlas();
         polo = new Cell();
         nord = new Cell();
-        gianni = new Worker(polo, Color.WHITE);
+        gianni = new Worker(polo, Color.WHITE, 0);
     }
 
     @After

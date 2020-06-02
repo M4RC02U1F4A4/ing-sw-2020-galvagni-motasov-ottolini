@@ -39,13 +39,13 @@ public class PlayerTest {
 
     @Test
     public void playerWorker(){
-        workerlist[0] = new Worker(map.getCell(1, 1), Color.BLUE);
-        workerlist[1] = new Worker(map.getCell(4, 4), Color.BLUE);
+        workerlist[0] = new Worker(map.getCell(1, 1), Color.BLUE, 0);
+        workerlist[1] = new Worker(map.getCell(4, 4), Color.BLUE, 0);
         player.setWorkers(workerlist);
         assertEquals(player.getWorkerByNumber(0), workerlist[0]);
         assertEquals(player.getWorkerByNumber(1), workerlist[1]);
         assertNull(player.getWorkerByNumber(2));
-        Worker workertemp = new Worker(map.getCell(3, 3), Color.RED);
+        Worker workertemp = new Worker(map.getCell(3, 3), Color.RED, 0);
         player.setWorkerByNumber(workertemp, 0);
         assertEquals(player.getWorkerByNumber(0), workertemp);
         Worker[] workerlistTemp = new Worker[2];
@@ -54,7 +54,7 @@ public class PlayerTest {
         assertEquals(workerlistTemp[1], workerlist[1]);
         player.setColor(Color.WHITE);
         assertEquals(Color.WHITE,player.getColor());
-        Worker Lurido = new Worker(map.getCell(3,3), Color.WHITE);
+        Worker Lurido = new Worker(map.getCell(3,3), Color.WHITE, 0);
         assertNull(player.getWorkerByNumber(2));
         player.setWorkerByNumber(Lurido, 2);
     }

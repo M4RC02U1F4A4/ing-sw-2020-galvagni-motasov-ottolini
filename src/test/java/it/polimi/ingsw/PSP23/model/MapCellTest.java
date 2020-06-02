@@ -82,7 +82,7 @@ public class MapCellTest {
 
     @Test
     public void cellWithWorker(){
-        Worker worker = new Worker(map.getCell(1, 1), Color.BLUE);
+        Worker worker = new Worker(map.getCell(1, 1), Color.BLUE, 0);
         assertTrue(map.getCell(1, 1).isOccupied());
         assertFalse(map.getCell(2, 2).isOccupied());
         assertTrue(map.getCell(2, 2).isNear(worker, true));

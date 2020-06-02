@@ -18,7 +18,7 @@ public class DemeterTest {
         abra = new Cell();
         kadabra = new Cell();
         alakazam = new Cell();
-        melograno = new Worker(abra, Color.RED);
+        melograno = new Worker(abra, Color.RED, 0);
     }
 
     @After

@@ -18,7 +18,7 @@ public class TritonTest {
         tre = new Cell();
         quattro = new Cell();
         cinque = new Cell();
-        pesciolino = new Worker(uno, Color.WHITE);
+        pesciolino = new Worker(uno, Color.WHITE, 0);
     }
 
     @After

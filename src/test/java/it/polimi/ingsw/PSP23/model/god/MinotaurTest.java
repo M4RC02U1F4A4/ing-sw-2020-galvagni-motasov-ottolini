@@ -21,9 +21,9 @@ public class MinotaurTest {
         due = map.getCell(2,2);
         tre = map.getCell(3,3);
         qua = map.getCell(0,0);
-        w = new Worker(qua, Color.BLUE);
-        k = new Worker(due, Color.RED);
-        y = new Worker(tre, Color.WHITE);
+        w = new Worker(qua, Color.BLUE, 0);
+        k = new Worker(due, Color.RED, 0);
+        y = new Worker(tre, Color.WHITE, 0);
     }
 
     @After

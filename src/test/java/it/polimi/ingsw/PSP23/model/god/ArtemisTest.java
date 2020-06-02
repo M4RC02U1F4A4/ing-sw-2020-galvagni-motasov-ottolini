@@ -19,7 +19,7 @@ public class ArtemisTest {
         uno = new Cell();
         dos = new Cell();
         tre = new Cell();
-        september = new Worker(uno, Color.WHITE);
+        september = new Worker(uno, Color.WHITE, 0);
     }
 
     @After

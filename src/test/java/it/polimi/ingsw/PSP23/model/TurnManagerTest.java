@@ -58,25 +58,25 @@ public class TurnManagerTest {
         assertEquals(Phase.GOD_PICK, IChooseYou.getCurrentPhase());
         Bulbasaur.setGod(new Athena());
         IChooseYou.nextPhaseSetUp();
-        Bulbasaur.setWorkerByNumber(new Worker(new Cell(), Color.WHITE), 0);
+        Bulbasaur.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 0);
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 2 worker 0 set
         IChooseYou.setCurrentPlayer(Squirtle);
         IChooseYou.nextPhaseSetUp();
-        Squirtle.setWorkerByNumber(new Worker(new Cell(), Color.WHITE), 0);
+        Squirtle.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 0);
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 1 worker 1 set
         IChooseYou.setCurrentPlayer(Bulbasaur);
         IChooseYou.nextPhaseSetUp();
-        Bulbasaur.setWorkerByNumber(new Worker(new Cell(), Color.WHITE), 1);
+        Bulbasaur.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 1);
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 2 worker 1 set
         IChooseYou.setCurrentPlayer(Squirtle);
         IChooseYou.nextPhaseSetUp();
-        Squirtle.setWorkerByNumber(new Worker(new Cell(), Color.WHITE), 1);
+        Squirtle.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 1);
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 1 end

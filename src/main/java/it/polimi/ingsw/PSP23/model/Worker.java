@@ -15,9 +15,11 @@ public class Worker implements Serializable {
     *   The color of the worker defines who it belogs to
     *   @param c the cell in which the worker must be positioned
     *   @param color the worker color
+    *   @param number the worker number (0 or 1)
     */
-    public Worker(Cell c, Color color) {
+    public Worker(Cell c, Color color, int number) {
         this.cell = c;
+        this.workerNumber = number;
         c.setWorker(this);
         this.color = color;
     }

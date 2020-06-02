@@ -18,7 +18,7 @@ public class HephaestusTest {
         falce = new Cell();
         martello = new Cell();
         segaanastro = new Cell();
-        capobastone = new Worker(falce, Color.BLUE);
+        capobastone = new Worker(falce, Color.BLUE, 0);
     }
 
     @After

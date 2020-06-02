@@ -15,7 +15,7 @@ public class AthenaTest {
         nike = new Athena();
         little = new Cell();
         big = new Cell();
-        gianni = new Worker(big, Color.WHITE);
+        gianni = new Worker(big, Color.WHITE, 0);
     }
 
     @After

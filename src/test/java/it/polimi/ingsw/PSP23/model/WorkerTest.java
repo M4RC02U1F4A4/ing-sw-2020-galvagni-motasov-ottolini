@@ -20,7 +20,7 @@ public class WorkerTest {
 
     @Test
     public void inizializationSetteregetter(){
-        worker = new Worker(map.getCell(1, 1), Color.BLUE);
+        worker = new Worker(map.getCell(1, 1), Color.BLUE, 0);
         assertEquals(worker.getCell(), map.getCell(1, 1));
         assertEquals(Color.BLUE, worker.getColor());
         worker.setColor(Color.WHITE);
@@ -38,7 +38,7 @@ public class WorkerTest {
     public void moveTest() {
         Cell uno = map.getCell(1,1);
         Cell due = map.getCell(2,2);
-        worker = new Worker(uno,Color.WHITE);
+        worker = new Worker(uno,Color.WHITE, 0);
         assertEquals(uno, worker.getCell());
         assertEquals(worker, uno.getWorker());
         worker.moveWorker(due);

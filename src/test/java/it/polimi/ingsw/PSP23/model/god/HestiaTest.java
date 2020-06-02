@@ -18,7 +18,7 @@ public class HestiaTest {
         base = new Cell();
         border = new Cell();
         notborder = new Cell();
-        gianni = new Worker(base, Color.BLUE);
+        gianni = new Worker(base, Color.BLUE, 0);
     }
 
     @After

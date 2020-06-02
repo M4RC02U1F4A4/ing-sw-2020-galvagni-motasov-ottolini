@@ -16,7 +16,7 @@ public class ZeusTest {
     public void setUp() {
         god = new Zeus();
         base = new Cell();
-        gianni = new Worker(base, Color.BLUE);
+        gianni = new Worker(base, Color.BLUE, 0);
     }
 
     @After

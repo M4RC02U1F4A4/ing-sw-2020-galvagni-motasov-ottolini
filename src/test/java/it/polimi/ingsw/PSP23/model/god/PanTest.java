@@ -19,7 +19,7 @@ public class PanTest {
         base = new Cell();
         zero = new Cell();
         one = new Cell();
-        gianni = new Worker(base, Color.BLUE);
+        gianni = new Worker(base, Color.BLUE, 0);
     }
 
     @After

@@ -21,9 +21,9 @@ public class ApolloTest {
         e = new Cell();
         f = new Cell();
         g = new Cell();
-        w = new Worker(d, Color.RED);
-        k = new Worker(e, Color.BLUE);
-        y = new Worker(f, Color.RED);
+        w = new Worker(d, Color.RED, 0);
+        k = new Worker(e, Color.BLUE, 0);
+        y = new Worker(f, Color.RED, 1);
     }
 
     @After
