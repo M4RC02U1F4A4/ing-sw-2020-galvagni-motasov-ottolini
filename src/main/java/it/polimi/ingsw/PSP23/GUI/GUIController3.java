@@ -1,40 +1,40 @@
-package it.polimi.ingsw.PSP23.test;
+package it.polimi.ingsw.PSP23.GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
-public class GUIController2 {
+public class GUIController3 {
 
     @FXML
     private Label player1Username;
     @FXML
     private Label player2Username;
     @FXML
+    private Label player3Username;
+    @FXML
     private Label player1Power;
     @FXML
     private Label player2Power;
+    @FXML
+    private Label player3Power;
     @FXML
     private Label playerCurrentPlay;
     @FXML
     private ImageView player1God;
     @FXML
     private ImageView player2God;
+    @FXML
+    private ImageView player3God;
+    @FXML
+    private ImageView player3;
     @FXML
     private Button errorButton;
     @FXML
@@ -50,10 +50,13 @@ public class GUIController2 {
     public void initialize(){
         player1Username.setText("Player1");
         player2Username.setText("Player2");
+        player3Username.setText("Player3");
         player1God.setImage(new Image ("/img/gods/Artemis.png"));
         player2God.setImage(new Image ("/img/gods/Prometheus.png"));
+        player3God.setImage(new Image ("/img/gods/Minotaur.png"));
         player1Power.setText("Your Worker may move one additional time, but not back to its initial space.");
         player2Power.setText("If your Worker does not move up, it may build both before and after moving.");
+        player3Power.setText("Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.");
         playerCurrentPlay.setText("Marco");
         errorButton.setVisible(false);
     }

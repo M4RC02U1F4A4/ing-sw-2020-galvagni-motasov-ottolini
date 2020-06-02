@@ -73,7 +73,7 @@ public class Controller implements Observer<PlayerMove>{
                             sendUpdatedMap();
                             switch (game.getPhase()) {
                                 case WORKER_HOUSING:
-                                    sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
+                                    sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<x>,<y>");
                                     break;
                                 case CHOOSE_WORKER:
                                     sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
@@ -82,7 +82,7 @@ public class Controller implements Observer<PlayerMove>{
                                     sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
                                     break;
                                 case BUILD:
-                                    sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,blocco o cupola");
+                                    sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,<blocco o cupola>");
                                     break;
                             }
                             sendToRemainingPlayers("Attendi il tuo turno");
@@ -134,12 +134,12 @@ public class Controller implements Observer<PlayerMove>{
             }
             case "PLACE_WORKER":{
                 actionBeingPerformed=Action.PLACE_WORKER;
-                arguments.add(tmp[0]);//Numero worker
-                chosenWorker=Integer.parseInt(arguments.get(0)); // TODO remove me
-                arguments.add(tmp[1]);//Coordinata x
-                this.x=Integer.parseInt(arguments.get(1));
-                arguments.add(tmp[2]);//Coordinata y
-                this.y=Integer.parseInt(arguments.get(2));
+                //arguments.add(tmp[0]);//Numero worker
+                //chosenWorker=Integer.parseInt(arguments.get(0)); // TODO remove me
+                arguments.add(tmp[0]);//Coordinata x
+                this.x=Integer.parseInt(arguments.get(0));
+                arguments.add(tmp[1]);//Coordinata y
+                this.y=Integer.parseInt(arguments.get(1));
                 break;
             }
             case "CHOOSE_WORKER":{

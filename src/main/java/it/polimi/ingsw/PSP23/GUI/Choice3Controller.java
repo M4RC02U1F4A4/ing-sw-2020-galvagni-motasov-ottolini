@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP23.test;
+package it.polimi.ingsw.PSP23.GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

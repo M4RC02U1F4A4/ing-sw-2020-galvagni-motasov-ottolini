@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP23.test;
+package it.polimi.ingsw.PSP23.GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class MainTestChoice extends Application {
+public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -15,7 +15,7 @@ public class MainTestChoice extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/choice.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
         primaryStage.setTitle("Santorini");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);

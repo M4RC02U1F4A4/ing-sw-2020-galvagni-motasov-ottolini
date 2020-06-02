@@ -1,5 +1,8 @@
-package it.polimi.ingsw.PSP23.test;
+package it.polimi.ingsw.PSP23;
 
+import it.polimi.ingsw.PSP23.client.Client;
+import it.polimi.ingsw.PSP23.GUI.Main;
+import it.polimi.ingsw.PSP23.GUI.Vars;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,10 +10,24 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class Board extends Application {
+import java.io.IOException;
 
-    public static void run() {
-        launch();
+/**
+ * Hello world!
+ *
+ */
+public class ClientGuiApp extends Application {
+
+    public static void main(String[] args) {
+        Vars vars = new Vars();
+        launch(args);
+        Client c=new Client(vars.ipServer,13245);
+        System.out.println(vars.username);
+        try {
+            c.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -22,5 +39,4 @@ public class Board extends Application {
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
         primaryStage.show();
     }
-
 }

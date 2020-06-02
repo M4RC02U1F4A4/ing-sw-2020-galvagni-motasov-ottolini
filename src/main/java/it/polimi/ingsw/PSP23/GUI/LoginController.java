@@ -1,19 +1,12 @@
-package it.polimi.ingsw.PSP23.test;
+package it.polimi.ingsw.PSP23.GUI;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class LoginController {
+    Vars vars = new Vars();
 
     @FXML
     private javafx.scene.control.Button closeButton;
@@ -39,12 +32,17 @@ public class LoginController {
         Stage stage = (Stage) playButton.getScene().getWindow();
         stage.close();
         //player data
-        System.out.println(username.getText());
+        //System.out.println(username.getText());
         //default ip is localhost
-        System.out.println(ip.getText());
-        if (playersNumber2.isSelected()) {
+        //System.out.println(ip.getText());
+        vars.ipServer = ip.getText();
+        vars.username = username.getText();
+        if (playersNumber2.isSelected())
+            vars.numPlayer = 2;
+        else
+            vars.numPlayer = 3;
+        /*if (playersNumber2.isSelected()) {
             System.out.println("2");
-            // TODO mandare comando connessione server
             try {
                 Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
                 Stage gameBoard = new Stage();
@@ -71,6 +69,6 @@ public class LoginController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 }
