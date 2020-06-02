@@ -36,7 +36,7 @@ public class Controller implements Observer<PlayerMove>{
         move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
         if (game.isPlayerTurn(move.getPlayer())) {
             switch (move.getCommand()) {
-                case "SELECT_GODS":
+                case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
                         game.godChoose(arguments.get(0), arguments.get(1), arguments.get(2));
                         sendToNextPlayer("Scegli un dio tra quelli disponibili:" + game.getGodList());
@@ -46,14 +46,13 @@ public class Controller implements Observer<PlayerMove>{
                     }else {
                         move.getView().showMessage("Comando non valido! Riprova");
                         break;
+                    }
                 }
-
-                case "CHOOSE_GOD":{
+                case "CHOOSE_GOD": {
                     if(game.setGod(arguments.get(0))==-1){
                         move.getView().showMessage("Parametro divinita' non valido: riprova");
                         break;
                     }
-                    //move.getView().showMessage("lmiao"+game.setGod(arguments.get(0)));
                     if(game.getPhase()==Phase.GOD_PICK){
                         sendToNextPlayer("Scegli un dio tra quelli disponibili:"+game.getGodList());
                         sendToNextPlayer("Sintassi del comando: \nCHOOSE_GOD:<god>");
@@ -64,36 +63,36 @@ public class Controller implements Observer<PlayerMove>{
                     }
                     break;
                 }
-
                 case "PLACE_WORKER":
                 case "CHOOSE_WORKER":
                 case "BUILD":
                 case "MOVE":
-                case "SKIP":
-                    if ((chosenWorker==0 || chosenWorker==1 || chosenWorker==-1) && (x>=-1 && x<5) &&(y>=-1 && y<5) && game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y)!=-1){
-                        //move.getView().showMessage(game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y));
-                        sendUpdatedMap();
-                        switch(game.getPhase()) {
-                            case WORKER_HOUSING:
-                                sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
-                                break;
-                            case CHOOSE_WORKER:
-                                sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
-                                break;
-                            case MOVE:
-                                sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
-                                break;
-                            case BUILD:
-                                sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,");
-                                break;
+                case "SKIP": {
+                    if ((chosenWorker == 0 || chosenWorker == 1 || chosenWorker == -1) && (x >= -1 && x < 5) && (y >= -1 && y < 5)) {
+                        if (0 <= game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y)) {
+                            sendUpdatedMap();
+                            switch (game.getPhase()) {
+                                case WORKER_HOUSING:
+                                    sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
+                                    break;
+                                case CHOOSE_WORKER:
+                                    sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
+                                    break;
+                                case MOVE:
+                                    sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
+                                    break;
+                                case BUILD:
+                                    sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,blocco o cupola");
+                                    break;
+                            }
+                            sendToRemainingPlayers("Attendi il tuo turno");
+                        } else {
+                            move.getView().showMessage("Comando non valido: riprova");
                         }
-                        sendToRemainingPlayers("Attendi il tuo turno");
-                        break;
-                    }
-                    else {
-                        move.getView().showMessage("Comeando non valido: riprova");
-                    }
-
+                    } else
+                        move.getView().showMessage("Comando non valido: riprova");
+                    break;
+                }
             }
         }
         else {
@@ -111,7 +110,6 @@ public class Controller implements Observer<PlayerMove>{
         y = -1;
         chosenWorker = -1;
         whatToBuild = Status.FREE;
-
     }
 
     public void setActionFromTheClient(String msg, String args, Player him){

@@ -44,6 +44,7 @@ public class LoginController {
         System.out.println(ip.getText());
         if (playersNumber2.isSelected()) {
             System.out.println("2");
+            // TODO mandare comando connessione server
             try {
                 Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
                 Stage gameBoard = new Stage();

@@ -12,10 +12,10 @@ public class RemoteView extends View{
     public RemoteView(Player player, ClientConnection c) {
         super(player);
         this.clientConnection=c;
-        c.addObserver(new MessageReciever());
+        c.addObserver(new MessageReceiver());
     }
 
-    private class MessageReciever implements Observer<String>{
+    private class MessageReceiver implements Observer<String>{
 
         @Override
         public void update(String message) {
@@ -34,9 +34,11 @@ public class RemoteView extends View{
                     case "CHOOSE_WORKER":
                     case "MOVE":
                     case "BUILD":
+                        handleChoice(inputs[0],inputs[1]);
+                        break;
                     case "SKIP":
-                    handleChoice(inputs[0],inputs[1]);
-                    break;
+                        handleChoice(inputs[0],"CIAONEBELO");
+                        break;
                     default:{
                         showMessage("Il comando inserito non è valido, riprova");
                     }

@@ -83,9 +83,9 @@ public class GameTest {
         assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
         assertEquals(-1, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 5, 0, 0));
         hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 1, 0, 0);
-        hunger.performeMove(Action.MOVE, Status.FREE, 3, 3, 4);
-        hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 4);
-        hunger.performeMove(Action.SKIP, Status.FREE, 4, 2, 0);
+        assertEquals(0, hunger.performeMove(Action.MOVE, Status.FREE, 3, 3, 4));
+        assertEquals(0, hunger.performeMove(Action.MOVE, Status.FREE, 3, 2, 4));
+        assertEquals(1, hunger.performeMove(Action.SKIP, Status.FREE, 4, 2, 0));
         hunger.performeMove(Action.BUILD, Status.FREE, 3, 1, 1);
         hunger.performeMove(Action.BUILD, Status.FREE, 3, 3, 3);
         assertEquals(1, hunger.getCurrentPlayerNum());

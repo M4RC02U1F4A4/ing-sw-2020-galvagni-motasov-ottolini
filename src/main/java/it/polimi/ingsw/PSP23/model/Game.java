@@ -214,7 +214,7 @@ public class Game extends Observable<Message> {
      */
     private int move(int x, int y) {
         int i = getCurrentGod().move(map.getCell(x, y), getActiveWorker(), map);
-        if (0 <= i)
+        if (0 == i)
             nextGamePhase();
         return i;
     }
@@ -277,7 +277,6 @@ public class Game extends Observable<Message> {
         }
     }
 
-    // TODO inside
     /**
      * sometimes i'm afraid of my own genius.
      * also this move the turn manager only when needed

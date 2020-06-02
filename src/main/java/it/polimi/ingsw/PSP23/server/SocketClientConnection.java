@@ -76,7 +76,7 @@ public class SocketClientConnection extends Observable<String> implements Client
             send("Inserisci il numero di giocatori");
             int nPlayers=in.nextInt();
             //int n=Integer.parseInt(nPlayers);
-            server.lobby(this, name,nPlayers);
+            server.lobby(this, name, nPlayers);
             while (isActive()){
                 read=in.next();
                 notify(read);
