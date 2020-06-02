@@ -85,4 +85,10 @@ public class Worker implements Serializable {
         workerNumber=n;
     }
 
+    /**
+     * Method used to get the Workernumber, in order to indentify a worker when the map is printed
+     * @return workerNumber
+     */
+    public int getWorkerNumber(){return workerNumber;}
+
 }
