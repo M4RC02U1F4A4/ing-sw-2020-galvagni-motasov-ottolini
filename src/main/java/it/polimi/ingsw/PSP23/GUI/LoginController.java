@@ -1,12 +1,17 @@
 package it.polimi.ingsw.PSP23.GUI;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class LoginController {
-    Vars vars = new Vars();
 
     @FXML
     private javafx.scene.control.Button closeButton;
@@ -35,12 +40,12 @@ public class LoginController {
         //System.out.println(username.getText());
         //default ip is localhost
         //System.out.println(ip.getText());
-        vars.ipServer = ip.getText();
-        vars.username = username.getText();
+        Vars.ipServer = ip.getText();
+        Vars.username = username.getText();
         if (playersNumber2.isSelected())
-            vars.numPlayer = 2;
+            Vars.numPlayer = 2;
         else
-            vars.numPlayer = 3;
+            Vars.numPlayer = 3;
         /*if (playersNumber2.isSelected()) {
             System.out.println("2");
             try {

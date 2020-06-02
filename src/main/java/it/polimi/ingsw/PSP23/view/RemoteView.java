@@ -37,7 +37,7 @@ public class RemoteView extends View{
                         handleChoice(inputs[0],inputs[1]);
                         break;
                     case "SKIP":
-                        handleChoice(inputs[0],"CIAONEBELO");
+                        handleChoice(inputs[0],"NULL");
                         break;
                     default:{
                         showMessage("Il comando inserito non è valido, riprova");

@@ -28,7 +28,6 @@ public class Choice3Controller {
     private Button choiceButton3;
     @FXML
     public void initialize(){
-
         choiceImage1desc.setImage(new Image("/img/gods/" + vars.god1 +"_desc.png"));
         choiceImage2desc.setImage(new Image("/img/gods/" + vars.god2 +"_desc.png"));
         choiceImage3desc.setImage(new Image("/img/gods/" + vars.god3 +"_desc.png"));
