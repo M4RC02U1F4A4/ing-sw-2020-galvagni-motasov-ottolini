@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP23;
 
 import it.polimi.ingsw.PSP23.server.Server;
-
 import java.io.IOException;
 
 public class ServerApp {

@@ -10,7 +10,7 @@ public class Game extends Observable<Message> {
     private Player[] players;
     private String[] availableGods;
     private TurnManager turnManager;
-    private boolean ChronusIsHere;
+    private boolean ChronusIsHere, AthenaIsHere, HeraIsHere;
     private int numPlayers, colorVariable, completedTowers, activeWorker;
 
     /**
@@ -25,6 +25,8 @@ public class Game extends Observable<Message> {
         turnManager = new TurnManager();
         turnManager.setPlayerNumber(numPlayer);
         ChronusIsHere = false;
+        AthenaIsHere = false;
+        HeraIsHere = false;
         completedTowers = 0;
         colorVariable = 0;
     }
@@ -57,6 +59,10 @@ public class Game extends Observable<Message> {
      * @param god3 third god, will skip if numplayer == 2
      */
     public void godChoose(String god1, String god2, String god3) {
+        if ("Athena".equals(god1) || "Athena".equals(god2) || "Athena".equals(god3))
+            AthenaIsHere = true;
+        if ("Hera".equals(god1) || "Hera".equals(god2) || "Hera".equals(god3))
+            HeraIsHere = true;
         availableGods[0] = god1;
         availableGods[1] = god2;
         if (3 == numPlayers)
@@ -64,7 +70,6 @@ public class Game extends Observable<Message> {
         nextGameSetUpPhase();
     }
 
-    // TODO inside
     /**
      * Set the god choosed to 'scelto' then create the god for player
      * @param god is the god choosed by the player
@@ -93,9 +98,6 @@ public class Game extends Observable<Message> {
                 break;
             case "Athena":
                 getCurrentPlayer().setGod(new Athena());
-                // TODO così può dare null point exception, trovare altro modo per inizializzare athena e hera
-                /*for (int cont = 0; cont < numPlayers; cont++)
-                    players[cont].getGod().AthenaIsHere();*/
                 break;
             case "Atlas":
                 getCurrentPlayer().setGod(new Atlas());
@@ -112,8 +114,6 @@ public class Game extends Observable<Message> {
                 break;
             case "Hera":
                 getCurrentPlayer().setGod(new Hera());
-                /*for (int cont = 0; cont < numPlayers; cont++)
-                    players[cont].getGod().HeraIsHere();*/
                 break;
             case "Hestia":
                 getCurrentPlayer().setGod(new Hestia());
@@ -134,6 +134,10 @@ public class Game extends Observable<Message> {
                 getCurrentPlayer().setGod(new Zeus());
                 break;
         }
+        if (AthenaIsHere)
+            getCurrentGod().AthenaIsHere();
+        if (HeraIsHere)
+            getCurrentGod().HeraIsHere();
         nextGameSetUpPhase();
         return 0;
     }
@@ -212,7 +216,6 @@ public class Game extends Observable<Message> {
         return i;
     }
 
-    // TODO check if it's ok to skip
     /**
      * let some god to skip the move
      * @return 1 if skipped
@@ -220,18 +223,28 @@ public class Game extends Observable<Message> {
      */
     private int skipAction() {
         switch (getCurrentGod().getName()) {
-            case "Artemis":         //move
-            case "Demeter":         //build
-            case "Hephaestus":      //build
-            case "Hestia":          //build
-            case "Prometheus":      //build
-            case "Triton":          //move
-                if (turnManager.getSkip()) {
+            //skip move
+            case "Artemis":
+            case "Triton": {
+                if (turnManager.getSkip() && Phase.MOVE == getPhase()) {
                     getCurrentGod().setSkip();
                     nextGamePhase();
                     return 1;
                 }
                 break;
+            }
+            //skip build
+            case "Demeter":
+            case "Hephaestus":
+            case "Hestia":
+            case "Prometheus": {
+                if (turnManager.getSkip() && Phase.BUILD == getPhase()) {
+                    getCurrentGod().setSkip();
+                    nextGamePhase();
+                    return 1;
+                }
+                break;
+            }
         }
         return -1;
     }
@@ -285,7 +298,16 @@ public class Game extends Observable<Message> {
                     sendLoss(getCurrentPlayer());
                     if (3 == numPlayers)
                         removePlayer(getCurrentPlayerNum());
-                    // TODO aggiungere messaggio di vittoria per l'altro giocatore
+                    else {
+                        if (1 == getCurrentPlayerNum()) {
+                            sendWin(players[0]);
+                            sendLoss(players[1]);
+                        }
+                        else {
+                            sendLoss(players[0]);
+                            sendWin(players[1]);
+                        }
+                    }
                 }
                 nextGamePhase();
                 break;

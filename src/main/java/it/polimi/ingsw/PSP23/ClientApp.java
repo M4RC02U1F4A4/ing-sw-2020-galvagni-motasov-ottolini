@@ -2,7 +2,6 @@ package it.polimi.ingsw.PSP23;
 
 import it.polimi.ingsw.PSP23.client.Client;
 import it.polimi.ingsw.PSP23.model.Map;
-
 import java.io.IOException;
 
 /**
