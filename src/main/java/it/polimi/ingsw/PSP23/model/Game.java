@@ -296,7 +296,7 @@ public class Game extends Observable<Message> {
                 nextGamePhase();
                 break;
             case CHECK_LOSE_MOVE:
-                if (getCurrentGod().checkLossMove(getActiveWorker(), map)) {
+                if (getCurrentGod().checkLossMove(getActiveWorker(), map)) { // TODO è qui che si nasconde lo stronzo
                     sendLoss(getCurrentPlayer());
                     if (3 == numPlayers)
                         removePlayer(getCurrentPlayerNum());

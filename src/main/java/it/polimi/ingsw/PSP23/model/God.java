@@ -150,8 +150,9 @@ public class God {
             return false;
     }
 
+    // TODO controllare questa funzione
+    // TODO color check for minotaur and apollo
     /**
-     *  TODO add color check for apollo e minotaur
      *  Used for check if a worker cannot move thus triggering a loss
      *  specific cases: Apollo, Athena, Minotaur
      * @param w the worker checked
@@ -162,21 +163,24 @@ public class God {
         int posX = w.getPosX();
         int posY = w.getPosY();
         for (int cont1 = -1; cont1 < 2; cont1++) {
-            for (int cont2 = -1; cont2 < 2; cont2++) {
-                Cell ILikeToMoveIt = map.getCell(posX + cont1, posY + cont2);
-                if (ILikeToMoveIt.isNear(w,true) && !((posX == ILikeToMoveIt.getX()) && (posY == ILikeToMoveIt.getY()))) {
-                    if (!(ILikeToMoveIt.isOccupied()) || ((("Apollo".equals(name))) || ("Minotaur".equals(name)))) {
-                        if (!(athena_moved_up && w.getPosZ() < ILikeToMoveIt.height())) {
-                            if ("Minotaur".equals(name)) {
-                                int X = (posX + 2 * cont1);
-                                int Y = (posY + 2 * cont2);
-                                if (X>=0 && X<5 && Y>=0 && Y<5) {
-                                    if (!map.getCell(X,Y).isOccupied())
+            if ((0 <= posX + cont1) && (5 > posX + cont1)) {
+                for (int cont2 = -1; cont2 < 2; cont2++) {
+                    if ((0 <= posY + cont2) && (5 > posY + cont2)) {
+                        Cell ILikeToMoveIt = map.getCell(posX + cont1, posY + cont2);
+                        if (ILikeToMoveIt.isNear(w, true) && !((posX == ILikeToMoveIt.getX()) && (posY == ILikeToMoveIt.getY()))) {
+                            if (!(ILikeToMoveIt.isOccupied()) || ((("Apollo".equals(name))) || ("Minotaur".equals(name)))) {
+                                if (!(athena_moved_up && w.getPosZ() < ILikeToMoveIt.height())) {
+                                    if ("Minotaur".equals(name)) {
+                                        int X = (posX + 2 * cont1);
+                                        int Y = (posY + 2 * cont2);
+                                        if (X >= 0 && X < 5 && Y >= 0 && Y < 5) {
+                                            if (!map.getCell(X, Y).isOccupied())
+                                                return false;
+                                        }
+                                    } else
                                         return false;
                                 }
                             }
-                            else
-                                return false;
                         }
                     }
                 }

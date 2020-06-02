@@ -143,7 +143,7 @@ public class Server {
                 System.out.println(players.get(2).getPlayerNumber());
                 if(game.isPlayerTurn(players.get(0))){
                     conn.get(0).asyncSend("e' il tuo turno");
-                    conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
+                    conn.get(0).asyncSend("Scegli 3 dei tra quelli disponibili: ");
                     conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
                     conn.get(0).asyncSend("Sintassi del comando: \nSELECT_GODS:<god1>,<god2>,<god3>");
                     conn.get(1).asyncSend("Attendi il tuo turno");

@@ -59,7 +59,7 @@ public class Controller implements Observer<PlayerMove>{
                         sendToRemainingPlayers("Attendi il tuo turno");
                     }
                     else{
-                        sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<n.worker>,<x>,<y>");
+                        sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<x>,<y>");
                     }
                     break;
                 }
