@@ -155,20 +155,21 @@ public class Server {
                     conn.get(1).asyncSend("e' il tuo turno");
                 }
             }
+        }
 
-            System.out.println("Giocatori in attesa di una partita per 2");
-            Set<Map.Entry<String, ClientConnection>> st = waitingConnection2vs2.entrySet();
-            for (Map.Entry<String, ClientConnection> me : st) {
-                System.out.print(me.getKey() + ":");
-                System.out.println(me.getValue().getIpAddress());
-            }
 
-            System.out.println("Giocatori in attesa di una partita per 3");
-            Set<Map.Entry<String, ClientConnection>> sti = waitingConnection3vs3.entrySet();
-            for (Map.Entry<String, ClientConnection> me : sti) {
-                System.out.print(me.getKey() + ":");
-                System.out.println(me.getValue().getIpAddress());
-            }
+        System.out.println("Giocatori in attesa di una partita per 2");
+        Set<Map.Entry<String, ClientConnection>> st = waitingConnection2vs2.entrySet();
+        for (Map.Entry<String, ClientConnection> me : st) {
+            System.out.print(me.getKey() + ":");
+            System.out.println(me.getValue().getIpAddress());
+        }
+
+        System.out.println("Giocatori in attesa di una partita per 3");
+        Set<Map.Entry<String, ClientConnection>> sti = waitingConnection3vs3.entrySet();
+        for (Map.Entry<String, ClientConnection> me : sti) {
+            System.out.print(me.getKey() + ":");
+            System.out.println(me.getValue().getIpAddress());
         }
 
 

@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Worker implements Serializable {
     private Cell cell;
     Color color;
+    int workerNumber=-1;
 
     /**
     *   Costructor used when the worker are placed on the map
@@ -74,6 +75,14 @@ public class Worker implements Serializable {
         this.cell.fireWorker();
         this.cell = c;
         this.cell.setWorker(this);
+    }
+
+    /**
+     * Method used to set the worker's number, in order to indentify a worker when the map is printed
+     * @param n the number to set
+     */
+    public void setWorkerNumber(int n){
+        workerNumber=n;
     }
 
 }

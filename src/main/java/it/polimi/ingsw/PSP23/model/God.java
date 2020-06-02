@@ -259,4 +259,16 @@ public class God {
         gods.add("Zeus");
         return gods;
     }
+
+    /**
+     * static method used to check if a god is spelled correctly
+     * @param god the God we want to check
+     * @return 1 if it is spelled correctly, -1 otherwise
+     */
+    public static int exists(String god){
+        if(getAllGods().contains(god)){
+            return 1;
+        }
+        else return -1;
+    }
 }
