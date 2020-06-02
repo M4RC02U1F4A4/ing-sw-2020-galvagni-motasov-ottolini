@@ -131,7 +131,21 @@ public class Map implements Serializable {
             tmp="";
             for(int j=0;j<5;j++){
                 if(getCell(i,j).isOccupied()){
-                    tmp=tmp+"|OCCUPATA DA "+getCell(i,j).getWorker().getColor();
+                    switch (getCell(i,j).getWorker().getColor()){
+                        case WHITE:{
+                            tmp=tmp+"| WHITE WORKER  "+getCell(i,j).getWorker().getWorkerNumber();
+                            break;
+                        }
+                        case BLUE:{
+                            tmp=tmp+"| BLUE WORKER   "+getCell(i,j).getWorker().getWorkerNumber();
+                            break;
+                        }
+                        case RED:{
+                            tmp=tmp+"| RED WORKER    "+getCell(i,j).getWorker().getWorkerNumber();
+                            break;
+                        }
+                    }
+                    //tmp=tmp+"|"+getCell(i,j).getWorker().getColor()+" --- n. "+getCell(i,j).getWorker().getWorkerNumber();
                 }
                 else{
                     tmp=tmp+"| LIBERA         ";

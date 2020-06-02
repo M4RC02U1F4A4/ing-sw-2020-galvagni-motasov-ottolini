@@ -53,7 +53,7 @@ public class Controller implements Observer<PlayerMove>{
                         move.getView().showMessage("Parametro divinita' non valido: riprova");
                         break;
                     }
-                    move.getView().showMessage(game.setGod(arguments.get(0)));
+                    //move.getView().showMessage("lmiao"+game.setGod(arguments.get(0)));
                     if(game.getPhase()==Phase.GOD_PICK){
                         sendToNextPlayer("Scegli un dio tra quelli disponibili:"+game.getGodList());
                         sendToNextPlayer("Sintassi del comando: \nCHOOSE_GOD:<god>");
