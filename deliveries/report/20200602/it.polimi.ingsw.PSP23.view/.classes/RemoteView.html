@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RemoteView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RemoteView (it.polimi.ingsw.PSP23.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RemoteView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RemoteView$MessageReceiver</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.model.Message;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP23.model.Player;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP23.observer.Observer;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP23.server.ClientConnection;
+<i>7</i>&nbsp;
+<b class="nc"><i>8</i>&nbsp;public class RemoteView extends View{</b>
+<i>9</i>&nbsp;    private ClientConnection clientConnection;
+<b class="nc"><i>10</i>&nbsp;    private String clientSaid=&quot;&quot;;</b>
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    public RemoteView(Player player, ClientConnection c) {
+<b class="nc"><i>13</i>&nbsp;        super(player);</b>
+<b class="nc"><i>14</i>&nbsp;        this.clientConnection=c;</b>
+<b class="nc"><i>15</i>&nbsp;        c.addObserver(new MessageReceiver());</b>
+<i>16</i>&nbsp;    }
+<i>17</i>&nbsp;
+<b class="nc"><i>18</i>&nbsp;    private class MessageReceiver implements Observer&lt;String&gt;{</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;        @Override
+<i>21</i>&nbsp;        public void update(String message) {
+<b class="nc"><i>22</i>&nbsp;            System.out.println(&quot;Ricevuto: &quot;+message);</b>
+<b class="nc"><i>23</i>&nbsp;            clientSaid=message;</b>
+<i>24</i>&nbsp;            try{
+<b class="nc"><i>25</i>&nbsp;                String[] inputs=message.split(&quot;:&quot;);</b>
+<i>26</i>&nbsp;                /*if(inputs[0].equals(&quot;SELECT_GODS&quot;)||inputs[0].equals(&quot;CHOOSE_GOD&quot;)||inputs[0].equals(&quot;PLACE_WORKER&quot;)||inputs[0].equals(&quot;CHOOSE_WORKER&quot;)||inputs[0].equals(&quot;MOVE&quot;)||inputs[0].equals(&quot;BUILD&quot;)||inputs[0].equals(&quot;SKIP&quot;))
+<i>27</i>&nbsp;                    handleChoice(inputs[0],inputs[1]);
+<i>28</i>&nbsp;                else
+<i>29</i>&nbsp;                    showMessage(&quot;Il comando inserito non è valido, riprova&quot;);*/
+<b class="nc"><i>30</i>&nbsp;                switch (inputs[0]){</b>
+<i>31</i>&nbsp;                    case &quot;SELECT_GODS&quot;:
+<i>32</i>&nbsp;                    case &quot;CHOOSE_GOD&quot;:
+<i>33</i>&nbsp;                    case &quot;PLACE_WORKER&quot;:
+<i>34</i>&nbsp;                    case &quot;CHOOSE_WORKER&quot;:
+<i>35</i>&nbsp;                    case &quot;MOVE&quot;:
+<i>36</i>&nbsp;                    case &quot;BUILD&quot;:
+<b class="nc"><i>37</i>&nbsp;                        handleChoice(inputs[0],inputs[1]);</b>
+<b class="nc"><i>38</i>&nbsp;                        break;</b>
+<i>39</i>&nbsp;                    case &quot;SKIP&quot;:
+<b class="nc"><i>40</i>&nbsp;                        handleChoice(inputs[0],&quot;NULL&quot;);</b>
+<b class="nc"><i>41</i>&nbsp;                        break;</b>
+<i>42</i>&nbsp;                    default:{
+<b class="nc"><i>43</i>&nbsp;                        showMessage(&quot;Il comando inserito non è valido, riprova&quot;);</b>
+<i>44</i>&nbsp;                    }
+<i>45</i>&nbsp;                }
+<b class="nc"><i>46</i>&nbsp;            }catch(IllegalArgumentException e){</b>
+<b class="nc"><i>47</i>&nbsp;                e.printStackTrace();</b>
+<b class="nc"><i>48</i>&nbsp;            }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;        }
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    @Override
+<i>54</i>&nbsp;    public void showMessage(Object message) {
+<b class="nc"><i>55</i>&nbsp;        clientConnection.send(message);</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    @Override
+<i>60</i>&nbsp;    public void update(Message message) {
+<b class="nc"><i>61</i>&nbsp;        showMessage(message.getMap());</b>
+<b class="nc"><i>62</i>&nbsp;        showMessage(&quot;aiuto&quot;);</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;        //VERIFICARE CHE NON SIA GAMEOVER
+<i>65</i>&nbsp;       /* if(message.getPlayer().getPlayerNumber()==)//non e&#39; il tuo turno
+<i>66</i>&nbsp;            showMessage(&quot;non è il tuo turno&quot;);
+<i>67</i>&nbsp;          else{
+<i>68</i>&nbsp;             showMessage(&quot;è il tuo turno&quot;);
+<i>69</i>&nbsp;          }
+<i>70</i>&nbsp;        */
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    public String getWhatClientSaid(){
+<b class="nc"><i>75</i>&nbsp;        return clientSaid;</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-02 23:47</div>
+</div>
+</body>
+</html>

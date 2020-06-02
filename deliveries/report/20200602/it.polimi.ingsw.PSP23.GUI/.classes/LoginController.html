@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoginController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.GUI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoginController (it.polimi.ingsw.PSP23.GUI)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.GUI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import javafx.fxml.FXML;
+<i>4</i>&nbsp;import javafx.fxml.FXMLLoader;
+<i>5</i>&nbsp;import javafx.scene.Parent;
+<i>6</i>&nbsp;import javafx.scene.Scene;
+<i>7</i>&nbsp;import javafx.scene.control.RadioButton;
+<i>8</i>&nbsp;import javafx.scene.control.TextField;
+<i>9</i>&nbsp;import javafx.scene.image.Image;
+<i>10</i>&nbsp;import javafx.stage.Stage;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.io.IOException;
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;public class LoginController {</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @FXML
+<i>17</i>&nbsp;    private javafx.scene.control.Button closeButton;
+<i>18</i>&nbsp;    @FXML
+<i>19</i>&nbsp;    public void closeButtonAction() {
+<b class="nc"><i>20</i>&nbsp;        Stage stage = (Stage) closeButton.getScene().getWindow();</b>
+<b class="nc"><i>21</i>&nbsp;        stage.close();</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    @FXML
+<i>25</i>&nbsp;    private javafx.scene.control.Button playButton;
+<i>26</i>&nbsp;    @FXML
+<i>27</i>&nbsp;    private TextField username;
+<i>28</i>&nbsp;    @FXML
+<i>29</i>&nbsp;    private TextField ip;
+<i>30</i>&nbsp;    @FXML
+<i>31</i>&nbsp;    private RadioButton playersNumber2;
+<i>32</i>&nbsp;    @FXML
+<i>33</i>&nbsp;    private RadioButton playersNumber3;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    @FXML
+<i>36</i>&nbsp;    public void playButtonAction() {
+<b class="nc"><i>37</i>&nbsp;        Stage stage = (Stage) playButton.getScene().getWindow();</b>
+<b class="nc"><i>38</i>&nbsp;        stage.close();</b>
+<i>39</i>&nbsp;        //player data
+<i>40</i>&nbsp;        //System.out.println(username.getText());
+<i>41</i>&nbsp;        //default ip is localhost
+<i>42</i>&nbsp;        //System.out.println(ip.getText());
+<b class="nc"><i>43</i>&nbsp;        Vars.ipServer = ip.getText();</b>
+<b class="nc"><i>44</i>&nbsp;        Vars.username = username.getText();</b>
+<b class="nc"><i>45</i>&nbsp;        if (playersNumber2.isSelected())</b>
+<b class="nc"><i>46</i>&nbsp;            Vars.numPlayer = 2;</b>
+<i>47</i>&nbsp;        else
+<b class="nc"><i>48</i>&nbsp;            Vars.numPlayer = 3;</b>
+<i>49</i>&nbsp;        /*if (playersNumber2.isSelected()) {
+<i>50</i>&nbsp;            System.out.println(&quot;2&quot;);
+<i>51</i>&nbsp;            try {
+<i>52</i>&nbsp;                Parent rootGameBoard = FXMLLoader.load(getClass().getResource(&quot;/gameBoard2.fxml&quot;));
+<i>53</i>&nbsp;                Stage gameBoard = new Stage();
+<i>54</i>&nbsp;                gameBoard.setTitle(&quot;Santorini&quot;);
+<i>55</i>&nbsp;                gameBoard.setScene(new Scene(rootGameBoard));
+<i>56</i>&nbsp;                gameBoard.setResizable(false);
+<i>57</i>&nbsp;                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream(&quot;/img/246x0w.png&quot;)));
+<i>58</i>&nbsp;                gameBoard.show();
+<i>59</i>&nbsp;            } catch (IOException e) {
+<i>60</i>&nbsp;                e.printStackTrace();
+<i>61</i>&nbsp;            }
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;        if (playersNumber3.isSelected()) {
+<i>64</i>&nbsp;            System.out.println(&quot;3&quot;);
+<i>65</i>&nbsp;            try {
+<i>66</i>&nbsp;                Parent rootGameBoard = FXMLLoader.load(getClass().getResource(&quot;/gameBoard3.fxml&quot;));
+<i>67</i>&nbsp;                Stage gameBoard = new Stage();
+<i>68</i>&nbsp;                gameBoard.setTitle(&quot;Santorini&quot;);
+<i>69</i>&nbsp;                gameBoard.setScene(new Scene(rootGameBoard));
+<i>70</i>&nbsp;                gameBoard.setResizable(false);
+<i>71</i>&nbsp;                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream(&quot;/img/246x0w.png&quot;)));
+<i>72</i>&nbsp;                gameBoard.show();
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;            } catch (IOException e) {
+<i>75</i>&nbsp;                e.printStackTrace();
+<i>76</i>&nbsp;            }
+<i>77</i>&nbsp;        }*/
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-02 23:47</div>
+</div>
+</body>
+</html>
