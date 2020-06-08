@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP23.GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,47 +34,14 @@ public class LoginController {
     private RadioButton playersNumber3;
 
     @FXML
-    public void playButtonAction() {
+    public void playButtonAction() throws InterruptedException {
         Stage stage = (Stage) playButton.getScene().getWindow();
         stage.close();
-        //player data
-        //System.out.println(username.getText());
-        //default ip is localhost
-        //System.out.println(ip.getText());
         Vars.ipServer = ip.getText();
         Vars.username = username.getText();
         if (playersNumber2.isSelected())
             Vars.numPlayer = 2;
         else
             Vars.numPlayer = 3;
-        /*if (playersNumber2.isSelected()) {
-            System.out.println("2");
-            try {
-                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
-                Stage gameBoard = new Stage();
-                gameBoard.setTitle("Santorini");
-                gameBoard.setScene(new Scene(rootGameBoard));
-                gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
-                gameBoard.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if (playersNumber3.isSelected()) {
-            System.out.println("3");
-            try {
-                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard3.fxml"));
-                Stage gameBoard = new Stage();
-                gameBoard.setTitle("Santorini");
-                gameBoard.setScene(new Scene(rootGameBoard));
-                gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
-                gameBoard.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
     }
 }
