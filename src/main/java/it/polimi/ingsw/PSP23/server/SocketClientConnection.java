@@ -85,9 +85,9 @@ public class SocketClientConnection extends Observable<String> implements Client
 
         }catch (IOException| NoSuchElementException e){
             System.err.println("Errore "+e.getMessage());
-        }/*finally {
+        }finally {
             close();
-        }*/
+        }
 
     }
 }
