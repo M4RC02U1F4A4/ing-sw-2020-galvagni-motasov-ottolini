@@ -34,8 +34,7 @@ public class Client {
             public void run() {
                 try {
                     while (isActive()) {
-                        Object inputObject = socketIn.
-                                readObject();
+                        Object inputObject = socketIn.readObject();
                         if (inputObject instanceof String) {
                             System.out.println((String) inputObject);
                         } else if (inputObject instanceof Map) {
@@ -47,7 +46,8 @@ public class Client {
                         }
                     }
                 }catch (Exception e){
-                    e.printStackTrace();
+                    setActive(false);
+                    System.exit(1);
                 }
             }
         });
@@ -68,6 +68,7 @@ public class Client {
 
                 }catch (Exception e ){
                     setActive(false);
+
                 }
             }
         });
