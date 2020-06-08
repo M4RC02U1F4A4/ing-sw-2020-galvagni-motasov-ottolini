@@ -15,7 +15,6 @@ public class God {
     protected boolean is_hera_in_game;
     private boolean is_athena_in_game;
     private boolean athena_moved_up;
-    private boolean skip_move;
 
     /**
      *  Constructor of god
@@ -58,11 +57,9 @@ public class God {
         remains_builds = build;
         starting_z = -1;
         athena_moved_up = moved_up;
-        skip_move = false;
     }
 
     /**
-     *  TODO check worker color for Apollo and Minotaur
     *   Move the worker in the desired cell
     *   If it is possible to move the worker the <code>moveWorker</code> function is called,
     *   otherwise the action is not successful
@@ -74,14 +71,15 @@ public class God {
     *           -2 if already moved this turn,
     *           -3 athena block moved up moves,
     *           -4 (Artemis) not back to origin,
-    *           -6 (Apollo) tried to move in friendly occupied cell.
+     *          -5 (Minotaur) move out of map,
+    *           -6 (Apollo/Minotaur) tried to move in friendly occupied cell.
     */
     public int move(Cell c, Worker w, Map map){
-        if(is_athena_in_game && athena_moved_up && (w.getPosZ() < c.height()))
+        if(is_athena_in_game && athena_moved_up && (w.getPosZ() < c.height()) && !("Athena".equals(name)))
             return -3;
         if (0 == remains_moves)
             return -2;
-        if (!(c.isNear(w, true)) || (c.isOccupied() && !("Apollo".matches(name))))
+        if (!(c.isNear(w, true)) || (c.isOccupied() && (!("Apollo".matches(name))) && !("Minotaur".matches(name))))
             return -1;
         if (-1 == starting_z)
             starting_z = w.getPosZ();
@@ -96,7 +94,7 @@ public class God {
      * @param b status of the cell
      * @param w worker that the player want to use to build
      * @return  0, 1, 2, 3: the level built if there is no error
-     *         -1 if cell is not near or is under the worker,
+     *         -1 if cell is not near, is under the worker or is occupied,
      *         -2 if the player already build in this turn,
      *         -3 (Demeter) if already build in this cell this turn,
      *         -4 (Hephaestus) if is a different building slot,
@@ -107,7 +105,7 @@ public class God {
         remains_moves = 0;
         if (0 == remains_builds)
             return -2;
-        if (!(c.isNear(w, false)) || ((c == w.getCell()) && !("Zeus".equals(name))))
+        if (!(c.isNear(w, false)) || ((c == w.getCell()) && !("Zeus".equals(name))) || (c.isOccupied()))
             return -1;
         if ("Atlas".equals(name))
             level = c.build(b);
@@ -115,21 +113,6 @@ public class God {
             level = c.build(Status.BUILT);
         remains_builds--;
         return level;
-    }
-
-    /**
-     * set the skip flag to true, needed for Artemis, Demeter, Hephaestus, Hestia, Prometheus and Triton
-     */
-    public void setSkip() {
-        skip_move = true;
-    }
-
-    /**
-     * needed for Artemis, Demeter, Hephaestus, Hestia, Prometheus and Triton to not use their power
-     * @return the skip flag
-     */
-    public boolean getSkip() {
-        return skip_move;
     }
 
     /**
@@ -150,8 +133,6 @@ public class God {
             return false;
     }
 
-    // TODO controllare questa funzione
-    // TODO color check for minotaur and apollo
     /**
      *  Used for check if a worker cannot move thus triggering a loss
      *  specific cases: Apollo, Athena, Minotaur
@@ -163,23 +144,23 @@ public class God {
         int posX = w.getPosX();
         int posY = w.getPosY();
         for (int cont1 = -1; cont1 < 2; cont1++) {
-            if ((0 <= posX + cont1) && (5 > posX + cont1)) {
-                for (int cont2 = -1; cont2 < 2; cont2++) {
-                    if ((0 <= posY + cont2) && (5 > posY + cont2)) {
-                        Cell ILikeToMoveIt = map.getCell(posX + cont1, posY + cont2);
-                        if (ILikeToMoveIt.isNear(w, true) && !((posX == ILikeToMoveIt.getX()) && (posY == ILikeToMoveIt.getY()))) {
-                            if (!(ILikeToMoveIt.isOccupied()) || ((("Apollo".equals(name))) || ("Minotaur".equals(name)))) {
-                                if (!(athena_moved_up && w.getPosZ() < ILikeToMoveIt.height())) {
-                                    if ("Minotaur".equals(name)) {
-                                        int X = (posX + 2 * cont1);
-                                        int Y = (posY + 2 * cont2);
-                                        if (X >= 0 && X < 5 && Y >= 0 && Y < 5) {
-                                            if (!map.getCell(X, Y).isOccupied())
-                                                return false;
-                                        }
-                                    } else
-                                        return false;
-                                }
+            for (int cont2 = -1; cont2 < 2; cont2++) {
+                Cell ILikeToMoveIt = map.getCell(posX + cont1, posY + cont2);
+                if (null != ILikeToMoveIt) {
+                    if (ILikeToMoveIt.isNear(w, true) && !((posX == ILikeToMoveIt.getX()) && (posY == ILikeToMoveIt.getY()))) {
+                        if (!(athena_moved_up && w.getPosZ() < ILikeToMoveIt.height())) {
+                            if (!ILikeToMoveIt.isOccupied()) {
+                                return false;
+                            } else if ("Apollo".equals(name)) {
+                                if (!ILikeToMoveIt.getWorker().getColor().equals(w.getColor()))
+                                    return false;
+                            } else if ("Minotaur".equals(name)) {
+                                int X = (posX + 2 * cont1);
+                                int Y = (posY + 2 * cont2);
+                                if (!ILikeToMoveIt.getWorker().getColor().equals(w.getColor()))
+                                    if (X >= 0 && X < 5 && Y >= 0 && Y < 5)
+                                        if (!map.getCell(X, Y).isOccupied())
+                                            return false;
                             }
                         }
                     }
@@ -202,10 +183,12 @@ public class God {
         for (int cont1 = -1; cont1 < 2; cont1++) {
             for (int cont2 = -1; cont2 < 2; cont2++) {
                 Cell JustChecking = map.getCell(posX + cont1, posY + cont2);
-                if (JustChecking.isNear(w,false) && !JustChecking.isOccupied() && JustChecking.height() < 4)
-                    return false;
-                else if ("Zeus".equals(name) && 0 == cont1 && 0 == cont2 && JustChecking.height() < 3)
-                    return false;
+                if (null != JustChecking) {
+                    if (JustChecking.isNear(w, false) && !JustChecking.isOccupied() && JustChecking.height() < 4)
+                        return false;
+                    else if ("Zeus".equals(name) && 0 == cont1 && 0 == cont2 && JustChecking.height() < 3)
+                        return false;
+                }
             }
         }
         return true;

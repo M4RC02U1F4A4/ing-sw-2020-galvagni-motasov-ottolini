@@ -29,7 +29,7 @@ public class Triton extends God {
     @Override
     public int move(Cell c, Worker w, Map map) {
         int i = super.move(c,w, map);
-        if (0 == c.getX() || 0 == c.getY() || 4 == c.getX() || 4 == c.getY()) {
+        if ((0 == c.getX() || 0 == c.getY() || 4 == c.getX() || 4 == c.getY()) && 0 == i) {
             this.remains_moves++;
         }
         return i;

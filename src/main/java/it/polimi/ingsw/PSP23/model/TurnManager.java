@@ -10,7 +10,8 @@ public class TurnManager {
     private Phase currentPhase;
     private int AthenaPlayer;
     private boolean AthenaMovedUp;
-    private boolean skipEnabled;
+    private boolean skipBuild;
+    private boolean skipMove;
 
     public TurnManager() {
         currentPlayerNumber = 0;
@@ -65,19 +66,22 @@ public class TurnManager {
      */
     public void nextPhaseGame() {
         switch (currentPhase) {
-            case CHOOSE_WORKER:
+            case CHOOSE_WORKER: {
                 currentPhase = Phase.START_TURN;
                 currentPlayer.getGod().startTurn(AthenaMovedUp);
                 break;
-            case START_TURN:
-                skipEnabled = false;
-                if ("Prometheus".equals(getCurrentGod().getName()) && 2 == getCurrentGod().remains_builds)
+            }
+            case START_TURN: {
+                skipBuild = false;
+                skipMove = false;
+                if ("Prometheus".equals(getCurrentGod().getName()))
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 else if ("Chronus".equals(getCurrentGod().getName()))
                     currentPhase = Phase.CHECK_WIN;
                 else
                     currentPhase = Phase.CHECK_LOSE_MOVE;
                 break;
+            }
             case CHECK_WIN:
                 currentPhase = Phase.CHECK_LOSE_MOVE;
                 break;
@@ -87,32 +91,31 @@ public class TurnManager {
             case MOVE:
                 currentPhase = Phase.CHECK_WIN_MOVE;
                 break;
-            case CHECK_WIN_MOVE:
-                if ((1 <= getCurrentGod().remains_moves) && !(getCurrentGod().getSkip())) {
-                    if ("Triton".equals(getCurrentGod().getName()) || "Artemis".equals(getCurrentGod().getName()))
-                        skipEnabled = true;
+            case CHECK_WIN_MOVE: {
+                if ((2 == getCurrentGod().remains_moves))
                     currentPhase = Phase.CHECK_LOSE_MOVE;
-                }
+                else if ((1 == getCurrentGod().remains_moves) && !(skipMove))
+                    currentPhase = Phase.CHECK_LOSE_MOVE;
                 else
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 break;
+            }
             case CHECK_LOSE_BUILD:
                 currentPhase = Phase.BUILD;
                 break;
             case BUILD:
                 currentPhase = Phase.CHECK_WIN_BUILD;
                 break;
-            case CHECK_WIN_BUILD:
-                if ((2 <= getCurrentGod().remains_builds) && !(getCurrentGod().getSkip())) {
-                    if ("Demeter".equals(getCurrentGod().getName()) || "Hephaestus".equals(getCurrentGod().getName()) ||
-                    "Hestia".equals(getCurrentGod().getName()) || "Prometheus".equals(getCurrentGod().getName()))
-                        skipEnabled = true;
+            case CHECK_WIN_BUILD: {
+                if ((2 == getCurrentGod().remains_builds))
                     currentPhase = Phase.CHECK_LOSE_BUILD;
-                }
+                else if ((1 == getCurrentGod().remains_builds) && !(skipBuild))
+                    currentPhase = Phase.CHECK_LOSE_BUILD;
                 else
                     currentPhase = Phase.END;
                 break;
-            case END:
+            }
+            case END: {
                 if (AthenaPlayer == currentPlayerNumber)
                     AthenaMovedUp = getCurrentGod().AthenaMovedUp();
                 currentPhase = Phase.CHOOSE_WORKER;
@@ -120,6 +123,7 @@ public class TurnManager {
                 if (numberOfPlayers <= currentPlayerNumber)
                     currentPlayerNumber = 0;
                 break;
+            }
         }
     }
 
@@ -175,11 +179,17 @@ public class TurnManager {
     }
 
     /**
-     * getter
-     * @return skip enable, the flag to see if the skip move is possible
+     * setter
      */
-    public boolean getSkip() {
-        return skipEnabled;
+    public void setSkipMove() {
+        skipMove = true;
+    }
+
+    /**
+     * setter
+     */
+    public void setSkipBuild() {
+        skipBuild = true;
     }
 
     //TEST ONLY!
