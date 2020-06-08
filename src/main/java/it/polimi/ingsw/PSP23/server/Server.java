@@ -82,7 +82,7 @@ public class Server {
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
                     conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
-                    conn.get(0).asyncSend("Sintassi del comando: \nSELECT_GODS:<god1>,<god2>");
+                    conn.get(0).asyncSend("Sintassi del comando: SELECT_GODS:<god1>,<god2>");
                     conn.get(1).asyncSend("Attendi il tuo turno");
                 }
                 else{
@@ -145,7 +145,7 @@ public class Server {
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 3 dei tra quelli disponibili: ");
                     conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
-                    conn.get(0).asyncSend("Sintassi del comando: \nSELECT_GODS:<god1>,<god2>,<god3>");
+                    conn.get(0).asyncSend("Sintassi del comando: SELECT_GODS:<god1>,<god2>,<god3>");
                     conn.get(1).asyncSend("Attendi il tuo turno");
                     conn.get(2).asyncSend("Attendi il tuo turno");
                 }

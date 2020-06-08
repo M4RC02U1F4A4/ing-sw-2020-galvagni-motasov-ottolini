@@ -22,12 +22,12 @@ public class ClientGuiApp extends Application {
         Vars vars = new Vars();
         launch(args);
         Client c=new Client(vars.ipServer,13245);
-        System.out.println(vars.username);
         try {
             c.run();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

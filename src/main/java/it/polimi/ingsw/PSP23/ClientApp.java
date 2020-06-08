@@ -26,9 +26,9 @@ public class ClientApp extends Application{
         System.out.println("2 - CLI");
         Scanner stdin=new Scanner(System.in);
         String inputLine = stdin.nextLine();
+        //GUI
         if(inputLine.equals("1")){
             launch(args);
-            System.out.println(Vars.username);
             ClientGUI c=new ClientGUI(Vars.ipServer,13245);
             try {
                 c.run();
@@ -36,6 +36,7 @@ public class ClientApp extends Application{
                 e.printStackTrace();
             }
         }
+        //CLI
         else if(inputLine.equals("2")){
             //TODO: Add input for ip
             Client c=new Client("127.0.0.1",13245);
@@ -45,8 +46,9 @@ public class ClientApp extends Application{
                 e.printStackTrace();
             }
         }
+        //ERROR
         else {
-            System.out.println("Non sai scrivere");
+            System.out.println("ERROR!!");
         }
 
     }
