@@ -143,10 +143,6 @@ public class GodTest {
         rjdio.remains_builds = 1;
         assertEquals(3, rjdio.build(ulare, Status.BUILT, murathor));
         assertEquals(Status.CUPOLA, ulare.levelStatus(3));
-        // building cupola via attribute
-        rjdio.remains_builds = 1;
-        assertEquals(0, rjdio.build(banana, Status.CUPOLA, murathor));
-        assertEquals(Status.CUPOLA, ulare.levelStatus(3));
     }
 
     @Test
