@@ -74,9 +74,9 @@ public class Worker implements Serializable {
     *   @param c the cell in which the worker need to be placed
     */
     public void moveWorker(Cell c){
-        this.cell.fireWorker();
-        this.cell = c;
-        this.cell.setWorker(this);
+        cell.fireWorker(this);
+        cell = c;
+        c.setWorker(this);
     }
 
     /**

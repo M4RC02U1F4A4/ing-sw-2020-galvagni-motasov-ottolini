@@ -45,19 +45,20 @@ public class Artemis extends God {
      */
     @Override
     public int move(Cell c, Worker w, Map map) {
-        if ((-1 == this.starting_y)&&(-1 == this.starting_x)) {
-            this.starting_x = w.getPosX();
-            this.starting_y = w.getPosY();
+        if ((-1 == starting_y) && (-1 == starting_x)) {
+            starting_x = w.getPosX();
+            starting_y = w.getPosY();
+            int ris = super.move(c, w, map);
+            if (0 != ris) {
+                starting_x = -1;
+                starting_y = -1;
+            }
+            return ris;
+        }
+        else if ((c.getY() == starting_y) && (c.getX() == starting_x))
+            return -4;
+        else
             return super.move(c, w, map);
-        }
-        else {
-            if ((c.getY() == this.starting_y)&&(c.getX() == this.starting_x)) {
-                return -4;
-            }
-            else {
-                return super.move(c, w, map);
-            }
-        }
     }
 
 }

@@ -73,8 +73,6 @@ public class GodTest {
         assertEquals(rjdio.remains_moves,1);
         assertEquals(rjdio.remains_builds, 1);
         assertEquals(rjdio.starting_z, -1);
-        rjdio.getSkip();
-        rjdio.setSkip();
     }
 
     @Test

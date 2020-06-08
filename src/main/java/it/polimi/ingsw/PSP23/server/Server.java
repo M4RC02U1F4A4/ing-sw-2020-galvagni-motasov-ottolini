@@ -27,7 +27,26 @@ public class Server {
     private Map<String, ClientConnection> waitingConnection3vs3=new LinkedHashMap<>();
     private ArrayList<Player> players=new ArrayList<>();
     private ArrayList<ClientConnection>conn=new ArrayList<>();
+
     public synchronized void deregisterConnection(ClientConnection c){
+        /*List<String> threes = new ArrayList<>(waitingConnection3vs3.keySet());
+        List<String> twos = new ArrayList<>(waitingConnection2vs2.keySet());*/
+        if(waitingConnection3vs3.containsValue(c)){
+            System.out.println("Disconnetto dalla partita 3v3 il giocatore "+c.getIpAddress());
+            Iterator<String> iterator = waitingConnection3vs3.keySet().iterator();
+            while(iterator.hasNext()){
+                waitingConnection3vs3.get(iterator.next()).closeConnection();
+            }
+        }
+
+        if(waitingConnection2vs2.containsValue(c)){
+            System.out.println("Disconnetto dalla partita 2vs2 il giocatore "+c.getIpAddress());
+
+            Iterator<String> iterator = waitingConnection2vs2.keySet().iterator();
+            while(iterator.hasNext()){
+                waitingConnection2vs2.get(iterator.next()).closeConnection();
+            }
+        }
         System.out.println("XD");
     }
 

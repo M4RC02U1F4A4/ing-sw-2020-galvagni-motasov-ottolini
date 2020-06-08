@@ -219,6 +219,7 @@ public class Game extends Observable<Message> {
         return i;
     }
 
+    //TODO inside
     /**
      * let some god to skip the move
      * @return 1 if skipped
@@ -229,8 +230,8 @@ public class Game extends Observable<Message> {
             //skip move
             case "Artemis":
             case "Triton": {
-                if (turnManager.getSkip() && Phase.MOVE == getPhase()) {
-                    getCurrentGod().setSkip();
+                if (Phase.MOVE == getPhase() && 1 == getCurrentGod().remains_moves) {
+                    turnManager.setSkipMove();
                     nextGamePhase();
                     return 1;
                 }
@@ -239,10 +240,18 @@ public class Game extends Observable<Message> {
             //skip build
             case "Demeter":
             case "Hephaestus":
-            case "Hestia":
+            case "Hestia": {
+                if (Phase.BUILD == getPhase() && 1 == getCurrentGod().remains_builds) {
+                    turnManager.setSkipBuild();
+                    nextGamePhase();
+                    return 1;
+                }
+                break;
+            }
+            //TODO maybe it's time to remove this, is not really needed
             case "Prometheus": {
-                if (turnManager.getSkip() && Phase.BUILD == getPhase()) {
-                    getCurrentGod().setSkip();
+                if (Phase.BUILD == getPhase() && 2 == getCurrentGod().remains_builds) {
+                    turnManager.setSkipBuild();
                     nextGamePhase();
                     return 1;
                 }
@@ -296,7 +305,7 @@ public class Game extends Observable<Message> {
                 nextGamePhase();
                 break;
             case CHECK_LOSE_MOVE:
-                if (getCurrentGod().checkLossMove(getActiveWorker(), map)) { // TODO è qui che si nasconde lo stronzo
+                if (getCurrentGod().checkLossMove(getActiveWorker(), map)) {
                     sendLoss(getCurrentPlayer());
                     if (3 == numPlayers)
                         removePlayer(getCurrentPlayerNum());

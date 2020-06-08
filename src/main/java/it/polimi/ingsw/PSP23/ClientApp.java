@@ -12,7 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -39,8 +41,13 @@ public class ClientApp extends Application{
         //CLI
         else if(inputLine.equals("2")){
             //TODO: Add input for ip
-            Client c=new Client("127.0.0.1",13245);
             try {
+                String ip="127.0.0.1";
+                System.out.println("Inserisci l'ip del server: ");
+                //BufferedReader keyboard=new BufferedReader(new InputStreamReader(System.in));
+                ip=stdin.nextLine();
+
+                Client c=new Client(ip,13245);
                 c.run();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -63,3 +70,23 @@ public class ClientApp extends Application{
         primaryStage.show();
     }
 }
+/*
+*
+public class ClientApp
+{
+    public static void main(String[] args){
+        System.out.println("Inserisci l'ip del server: ");
+        BufferedReader keyboard=new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String ip=keyboard.readLine();
+            keyboard.close();
+            Client client = new Client(ip, 12345);
+
+            client.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+*/

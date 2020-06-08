@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP23.model.god;
 
-import it.polimi.ingsw.PSP23.model.Cell;
-import it.polimi.ingsw.PSP23.model.God;
-import it.polimi.ingsw.PSP23.model.Map;
-import it.polimi.ingsw.PSP23.model.Worker;
+import it.polimi.ingsw.PSP23.model.*;
 
 public class Prometheus extends God {
 
@@ -30,7 +27,7 @@ public class Prometheus extends God {
      * @param c cell in which the player want to move the worker
      * @param w worker that the player want to move
      * @param map used only for minotaur power
-     *   @return 0 if the operation is successful,
+     * @return 0 if the operation is successful,
      *           -1 if not near or occupied,
      *           -2 if already moved this turn,
      *           -3 athena block moved up moves,
@@ -39,10 +36,24 @@ public class Prometheus extends God {
      */
     @Override
     public int move(Cell c, Worker w, Map map) {
-        if ((w.getPosZ() < c.height()) || (2 == this.remains_builds)){
-            this.remains_builds--;
+        int pos = w.getPosZ();
+        int cont = super.move(c, w, map);
+        if (0 == cont)
+            if ((pos < c.height()) || (2 == this.remains_builds))
+                remains_builds--;
+        return cont;
+    }
+
+    @Override
+    public int build(Cell c, Status b, Worker w) {
+        if (2 == this.remains_builds) {
+            int cont = super.build(c, b, w);
+            if (0 <= cont) {
+                remains_moves = 1;
+            }
+            return cont;
         }
-        this.remains_moves = 1;
-        return super.move(c, w, map);
+        else
+            return super.build(c, b, w);
     }
 }

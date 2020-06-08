@@ -65,14 +65,15 @@ public class Cell implements Serializable {
     *   @param w worker that the player want to place
     */
     public void setWorker(Worker w){
-        worker=w;
+        worker = w;
     }
 
     /**
     *   Free the cell from the worker
     */
-    public void fireWorker() {
-        worker = null;
+    public void fireWorker(Worker caller) {
+        if (caller == worker)
+            worker = null;
     }
 
     /**
