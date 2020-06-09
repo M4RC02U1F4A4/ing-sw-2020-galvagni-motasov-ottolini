@@ -31,13 +31,7 @@ public class ClientApp extends Application{
         //GUI
         if(inputLine.equals("1")){
             launch(args);
-            ClientGUI c=new ClientGUI(Vars.ipServer,13245);
-            try {
-                c.run();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
         //CLI
         else if(inputLine.equals("2")){
             //TODO: Add input for ip
@@ -46,7 +40,6 @@ public class ClientApp extends Application{
                 System.out.println("Inserisci l'ip del server: ");
                 //BufferedReader keyboard=new BufferedReader(new InputStreamReader(System.in));
                 ip=stdin.nextLine();
-
                 Client c=new Client(ip,13245);
                 c.run();
             } catch (IOException e) {

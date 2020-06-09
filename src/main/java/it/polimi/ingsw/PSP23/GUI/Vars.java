@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PSP23.GUI;
 
+import javafx.stage.Stage;
+
 import java.io.PrintWriter;
 
 public class Vars {

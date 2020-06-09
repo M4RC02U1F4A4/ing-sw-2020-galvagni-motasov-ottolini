@@ -28,24 +28,37 @@ public class Choice3Controller {
     private Button choiceButton3;
     @FXML
     public void initialize(){
-        choiceImage1desc.setImage(new Image("/img/gods/" + vars.god1 +"_desc.png"));
-        choiceImage2desc.setImage(new Image("/img/gods/" + vars.god2 +"_desc.png"));
-        choiceImage3desc.setImage(new Image("/img/gods/" + vars.god3 +"_desc.png"));
-        choiceImage1.setImage(new Image ("/img/gods/" + vars.god1 +".png"));
-        choiceImage2.setImage(new Image ("/img/gods/" + vars.god2 +".png"));
-        choiceImage3.setImage(new Image ("/img/gods/" + vars.god3 +".png"));
+        //TODO: mostrare le divinità tra cui scegliere
+        if(Vars.numPlayer == 2){
+            choiceImage1desc.setImage(new Image("/img/gods/" + Vars.god1 +"_desc.png"));
+            choiceImage3desc.setImage(new Image("/img/gods/" + Vars.god2 +"_desc.png"));
+            choiceImage1.setImage(new Image ("/img/gods/" + Vars.god1 +".png"));
+            choiceImage3.setImage(new Image ("/img/gods/" + Vars.god2 +".png"));
+            choiceButton2.setVisible(false);
+        }
+        if(Vars.numPlayer == 3){
+            choiceImage1desc.setImage(new Image("/img/gods/" + Vars.god1 +"_desc.png"));
+            choiceImage2desc.setImage(new Image("/img/gods/" + Vars.god3 +"_desc.png"));
+            choiceImage3desc.setImage(new Image("/img/gods/" + Vars.god2 +"_desc.png"));
+            choiceImage1.setImage(new Image ("/img/gods/" + Vars.god1 +".png"));
+            choiceImage2.setImage(new Image ("/img/gods/" + Vars.god3 +".png"));
+            choiceImage3.setImage(new Image ("/img/gods/" + Vars.god2 +".png"));
+        }
     }
 
     @FXML
     public void choiceButton1Action(){
-        System.out.println(vars.god1);
+        Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god1);
+        Vars.magicWrite.flush();
     }
     @FXML
     public void choiceButton2Action(){
-        System.out.println(vars.god2);
+        Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god3);
+        Vars.magicWrite.flush();
     }
     @FXML
     public void choiceButton3Action(){
-        System.out.println(vars.god3);
+        Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god2);
+        Vars.magicWrite.flush();
     }
 }

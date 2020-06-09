@@ -94,19 +94,41 @@ public class ChoiceController {
         if(checkHestia.isSelected()){ check += 1; gods += "Hestia-";}
         if(checkHephaestus.isSelected()){ check += 1; gods += "Hephaestus-";}
         if(checkAtlas.isSelected()){ check += 1; gods += "Atlas-";}
-        if(check != 3) choiceError.setVisible(true);
-        else {
+        if(Vars.numPlayer != check)choiceError.setVisible(true);
+        else if(check == 2){
             gods = gods.substring(0, gods.length() - 1);
             String[] parts = gods.split("-");
-            vars.god1 = parts[0];
-            vars.god2 = parts[1];
-            vars.god3 = parts[2];
+            Vars.god1 = parts[0];
+            Vars.god2 = parts[1];
+            String godsToSend = "SELECT_GODS:" + Vars.god1 + "," + Vars.god2;
+            Vars.magicWrite.println(godsToSend);
+            Vars.magicWrite.flush();
             Stage stage = (Stage) choiceError.getScene().getWindow();
             stage.close();
+            while( !(Vars.serverMsg.contains("CHOOSE_GOD"))) {try{Thread.sleep(1000);} catch (InterruptedException e){}}
             try {
                 Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
                 Stage choice3 = new Stage();
                 choice3.setTitle("Santorini");
+                choice3.setScene(new Scene(rootChoice3));
+                choice3.setResizable(false);
+                choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                choice3.show();
+            } catch (IOException e) { e.printStackTrace(); }
+        }
+        else {
+            gods = gods.substring(0, gods.length() - 1);
+            String[] parts = gods.split("-");
+            Vars.god1 = parts[0];
+            Vars.god2 = parts[1];
+            Vars.god3 = parts[2];
+            Stage stage = (Stage) choiceError.getScene().getWindow();
+            stage.close();
+            while( !(Vars.serverMsg.contains("CHOOSE_GOD"))) {try{Thread.sleep(1000);} catch (InterruptedException e){}}
+            try {
+                Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
+                Stage choice3 = new Stage();
+                choice3.setTitle("Santorini - " + Vars.username);
                 choice3.setScene(new Scene(rootChoice3));
                 choice3.setResizable(false);
                 choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
