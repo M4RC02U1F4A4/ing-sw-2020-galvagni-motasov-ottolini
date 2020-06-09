@@ -80,24 +80,13 @@ public class LoginController {
                                     Vars.serverMsg = (String) inputObject;
                                     System.out.println("SALVATA");
                                 }
-                                if(((String) inputObject).contains("Scegli un dio tra quelli disponibili:")){
-                                    String[] parts = ((String) inputObject).split("\\|");
+                                if(((String) inputObject).contains("GODSC")){
+                                    String[] parts = ((String) inputObject).split("-");
                                     int k=0;
                                     //TODO: estrarre le divinità tra cui scegliere
-                                    for(String part : parts){
-                                        if(k == 0){
-                                            Vars.god1 = parts[k];
-                                            k += 1;
-                                        }
-                                        if(k == 1){
-                                            Vars.god2 = parts[k];
-                                            k += 1;
-                                        }
-                                        if(k == 2){
-                                            Vars.god3 = parts[k];
-                                            k += 1;
-                                        }
-                                    }
+
+
+
                                 }
                             }
                             else if (inputObject instanceof Map) {
