@@ -443,6 +443,26 @@ public class Game extends Observable<Message> {
     }
 
     /**
+     * getter, used for javafx purposes
+     * @return string of avaiable gods
+     */
+    public String godsc() {
+        String tmp = "";
+        for(int i=0; i < numPlayers; i++) {
+            if(i==0){
+                if(!availableGods[i].equals("Scelto"))
+                    tmp = tmp + availableGods[i];
+            }
+            else{
+                if(!availableGods[i].equals("Scelto"))
+                    tmp = tmp +"-"+ availableGods[i];
+            }
+
+        }
+        return tmp;
+    }
+
+    /**
      * I MAKE THE GAME DO BLIP BLOP
      * @param action the move requested
      * @param active the active worker (for SELECT_WORKER phase only) 0 for the first, 1 for the second.

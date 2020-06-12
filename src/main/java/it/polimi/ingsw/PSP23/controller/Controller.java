@@ -39,6 +39,11 @@ public class Controller implements Observer<PlayerMove>{
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
                         game.godChoose(arguments.get(0), arguments.get(1), arguments.get(2));
+                        sendToEverybody("GODSC:" +
+                                "" +
+                                ""+game.godsc());
+                        //sendToNextPlayer("GODSC:"+game.godsc());
+                        //sendToRemainingPlayers("GODSC:"+game.godsc());
                         sendToNextPlayer("Scegli un dio tra quelli disponibili:" + game.getGodList());
                         sendToNextPlayer("Sintassi del comando: \nCHOOSE_GOD:<god>");
                         sendToRemainingPlayers("Attendi il tuo turno");
@@ -191,6 +196,13 @@ public class Controller implements Observer<PlayerMove>{
             }
         }
     }
+
+    public void sendToEverybody(String msg){
+        for(int i=0;i<players.size();i++){
+            players.get(i).showMessage(msg);
+        }
+    }
+
 
     public void sendUpdatedMap(){
         for (int i=0;i<players.size();i++){
