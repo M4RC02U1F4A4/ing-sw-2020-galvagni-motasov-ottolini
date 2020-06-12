@@ -8,7 +8,7 @@ import java.util.ArrayList;
 *   God class
 */
 public class God {
-    private String name;
+    private String name="";
     protected int remains_moves;
     protected int remains_builds;
     protected int starting_z;

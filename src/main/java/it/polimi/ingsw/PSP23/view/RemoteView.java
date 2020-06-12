@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP23.view;
 
+import it.polimi.ingsw.PSP23.model.God;
 import it.polimi.ingsw.PSP23.model.Message;
 import it.polimi.ingsw.PSP23.model.Player;
 import it.polimi.ingsw.PSP23.observer.Observer;
@@ -29,7 +30,14 @@ public class RemoteView extends View{
                     showMessage("Il comando inserito non è valido, riprova");*/
                 switch (inputs[0]){
                     case "SELECT_GODS":
-                    case "CHOOSE_GOD":
+                    case "CHOOSE_GOD":{
+                        String[] divinita=inputs[1].split(",");
+                        if(!God.getAllGods().contains(divinita[0])){
+                            showMessage("Divinita' non valida, riprova");
+                            return;
+                        }
+
+                    }
                     case "PLACE_WORKER":
                     case "CHOOSE_WORKER":
                     case "MOVE":

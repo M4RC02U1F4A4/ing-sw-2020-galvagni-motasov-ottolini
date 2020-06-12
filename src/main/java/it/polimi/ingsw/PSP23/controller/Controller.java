@@ -12,6 +12,8 @@ public class Controller implements Observer<PlayerMove>{
     private Action actionBeingPerformed;
     private Status whatToBuild = Status.FREE;
     private ArrayList<String> arguments = new ArrayList<>();
+    private ArrayList<String> godsForFX=new ArrayList<>();
+    private ArrayList<String> deiInOrdine=new ArrayList<>();
     private int x = -1, y = -1;
     private int chosenWorker = -1;
 
@@ -39,9 +41,10 @@ public class Controller implements Observer<PlayerMove>{
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
                         game.godChoose(arguments.get(0), arguments.get(1), arguments.get(2));
-                        sendToEverybody("GODSC:" +
-                                "" +
-                                ""+game.godsc());
+                        godsForFX.add(arguments.get(0));
+                        godsForFX.add(arguments.get(1));
+                        godsForFX.add(arguments.get(2));
+                        sendToEverybody("GODSC:" +game.godsc());
                         //sendToNextPlayer("GODSC:"+game.godsc());
                         //sendToRemainingPlayers("GODSC:"+game.godsc());
                         sendToNextPlayer("Scegli un dio tra quelli disponibili:" + game.getGodList());
@@ -64,6 +67,7 @@ public class Controller implements Observer<PlayerMove>{
                         sendToRemainingPlayers("Attendi il tuo turno");
                     }
                     else{
+                        sendToEverybody(playersList());
                         sendToEverybody("STARTING THE GAME");
                         sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<x>,<y>");
                     }
@@ -136,6 +140,9 @@ public class Controller implements Observer<PlayerMove>{
             case "CHOOSE_GOD":{
                 actionBeingPerformed=Action.CHOOSE_GOD;
                 arguments.add(tmp[0]);  //dio scelto per il giocatore
+                if(godsForFX.contains(arguments.get(0))){
+                    deiInOrdine.add(arguments.get(0));
+                }
                 break;
             }
             case "PLACE_WORKER":{
@@ -209,5 +216,14 @@ public class Controller implements Observer<PlayerMove>{
         for (int i=0;i<players.size();i++){
             players.get(i).showMessage(game.getMap());
         }
+    }
+
+
+    public String playersList(){
+        String msg="";
+        for(int i=0;i<players.size();i++){
+            msg=msg+"PLAYER"+(i+1)+":"+players.get(i).getPlayer().getName()+"-"+players.get(i).getPlayer().getColor()+"-"+deiInOrdine.get(i)+"\n";
+        }
+        return msg;
     }
 }

@@ -442,6 +442,8 @@ public class Game extends Observable<Message> {
         return tmp;
     }
 
+
+
     /**
      * getter, used for javafx purposes
      * @return string of avaiable gods

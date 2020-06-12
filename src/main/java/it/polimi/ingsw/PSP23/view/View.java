@@ -14,7 +14,7 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
         this.player=player;
     }
 
-    protected Player getPlayer(){
+    public Player getPlayer(){
         return player;
     }
 
