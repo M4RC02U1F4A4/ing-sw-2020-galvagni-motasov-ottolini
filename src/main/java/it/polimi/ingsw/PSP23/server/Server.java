@@ -97,6 +97,10 @@ public class Server {
 
                 System.out.println(players.get(0).getPlayerNumber());
                 System.out.println(players.get(1).getPlayerNumber());
+
+                conn.get(0).asyncSend(playersList());
+                conn.get(1).asyncSend(playersList());
+
                 if(game.isPlayerTurn(players.get(0))){
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
@@ -160,6 +164,12 @@ public class Server {
                 System.out.println(players.get(0).getPlayerNumber());
                 System.out.println(players.get(1).getPlayerNumber());
                 System.out.println(players.get(2).getPlayerNumber());
+
+                conn.get(0).asyncSend(playersList());
+                conn.get(1).asyncSend(playersList());
+                conn.get(2).asyncSend(playersList());
+
+
                 if(game.isPlayerTurn(players.get(0))){
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 3 dei tra quelli disponibili: ");
@@ -214,4 +224,13 @@ public class Server {
             }
         }
     }
+
+    public String playersList(){
+        String msg="";
+        for(int i=0;i<players.size();i++){
+            msg=msg+"PLAYER"+(i+1)+":"+players.get(i).getName()+"-"+players.get(i).getColor()+"\n";
+        }
+        return msg;
+    }
+
 }
