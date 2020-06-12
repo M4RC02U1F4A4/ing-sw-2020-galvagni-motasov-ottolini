@@ -81,12 +81,23 @@ public class LoginController {
                                     System.out.println("SALVATA");
                                 }
                                 if(((String) inputObject).contains("GODSC")){
-                                    String[] parts = ((String) inputObject).split("-");
-                                    int k=0;
-                                    //TODO: estrarre le divinità tra cui scegliere
-
-
-
+                                    String tempString = ((String) inputObject).replace("GODSC:", "");
+                                    String[] parts = tempString.split("-");
+                                    if(Vars.numPlayer == 2){
+                                        Vars.god1 = parts[0];
+                                        Vars.god2 = parts[1];
+                                    }
+                                    else if(Vars.numPlayer == 3){
+                                        Vars.god1 = parts[0];
+                                        Vars.god2 = parts[1];
+                                        Vars.god3 = parts[2];
+                                    }
+                                }
+                                if(((String) inputObject).contains("Scegli un dio tra quelli disponibili:")){
+                                    String tempString = ((String) inputObject).replace("Scegli un dio tra quelli disponibili:", "");
+                                    if(!tempString.contains(Vars.god1)){Vars.god1Used = true;}
+                                    if(!tempString.contains(Vars.god2)){Vars.god2Used = true;}
+                                    if(!tempString.contains(Vars.god3)){Vars.god3Used = true;}
                                 }
                             }
                             else if (inputObject instanceof Map) {

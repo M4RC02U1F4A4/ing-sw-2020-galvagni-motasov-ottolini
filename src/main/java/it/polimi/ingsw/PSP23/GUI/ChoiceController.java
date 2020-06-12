@@ -109,14 +109,14 @@ public class ChoiceController {
             try {
                 Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
                 Stage choice3 = new Stage();
-                choice3.setTitle("Santorini");
+                choice3.setTitle("Santorini - " + Vars.username);
                 choice3.setScene(new Scene(rootChoice3));
                 choice3.setResizable(false);
                 choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
                 choice3.show();
             } catch (IOException e) { e.printStackTrace(); }
         }
-        else {
+        else if(check == 3){
             gods = gods.substring(0, gods.length() - 1);
             String[] parts = gods.split("-");
             Vars.god1 = parts[0];
