@@ -34,7 +34,6 @@ public class ClientApp extends Application{
             }
         //CLI
         else if(inputLine.equals("2")){
-            //TODO: Add input for ip
             try {
                 String ip="127.0.0.1";
                 System.out.println("Inserisci l'ip del server: ");

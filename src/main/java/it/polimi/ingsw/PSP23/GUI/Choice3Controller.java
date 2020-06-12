@@ -1,10 +1,15 @@
 package it.polimi.ingsw.PSP23.GUI;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class Choice3Controller {
@@ -79,6 +84,33 @@ public class Choice3Controller {
         Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god1);
         Vars.magicWrite.flush();
         Vars.god1Used = true;
+        while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
+        if(Vars.numPlayer == 2){
+            try {
+                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
+                Stage gameBoard = new Stage();
+                gameBoard.setTitle("Santorini - " + Vars.username);
+                gameBoard.setScene(new Scene(rootGameBoard));
+                gameBoard.setResizable(false);
+                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(Vars.numPlayer == 3){
+            try {
+                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard3.fxml"));
+                Stage gameBoard = new Stage();
+                gameBoard.setTitle("Santorini - " + Vars.username);
+                gameBoard.setScene(new Scene(rootGameBoard));
+                gameBoard.setResizable(false);
+                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     @FXML
     public void choiceButton2Action(){
@@ -87,6 +119,34 @@ public class Choice3Controller {
         Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god2);
         Vars.magicWrite.flush();
         Vars.god2Used = true;
+        while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
+        if(Vars.numPlayer == 2){
+            try {
+                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
+                Stage gameBoard = new Stage();
+                gameBoard.setTitle("Santorini - " + Vars.username);
+                gameBoard.setScene(new Scene(rootGameBoard));
+                gameBoard.setResizable(false);
+                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(Vars.numPlayer == 3){
+            try {
+                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard3.fxml"));
+                Stage gameBoard = new Stage();
+                gameBoard.setTitle("Santorini - " + Vars.username);
+                gameBoard.setScene(new Scene(rootGameBoard));
+                gameBoard.setResizable(false);
+                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     @FXML
     public void choiceButton3Action(){
@@ -95,5 +155,33 @@ public class Choice3Controller {
         Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god3);
         Vars.magicWrite.flush();
         Vars.god3Used = true;
+        while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
+        if(Vars.numPlayer == 2){
+            try {
+                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
+                Stage gameBoard = new Stage();
+                gameBoard.setTitle("Santorini - " + Vars.username);
+                gameBoard.setScene(new Scene(rootGameBoard));
+                gameBoard.setResizable(false);
+                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(Vars.numPlayer == 3){
+            try {
+                Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard3.fxml"));
+                Stage gameBoard = new Stage();
+                gameBoard.setTitle("Santorini - " + Vars.username);
+                gameBoard.setScene(new Scene(rootGameBoard));
+                gameBoard.setResizable(false);
+                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

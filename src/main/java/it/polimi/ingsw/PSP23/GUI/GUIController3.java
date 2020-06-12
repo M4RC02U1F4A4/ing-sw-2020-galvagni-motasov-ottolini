@@ -12,6 +12,23 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GUIController3 {
+    //PLAYER 1 RED
+    //PLAYER 2 BLUE
+    //PLAYER 3 WHITE
+    private String hera = "HERA\n\nAn opponent cannot win by moving into a perimeter space.";
+    private String prometheus = "PROMETHEUS\n\nIf your Worker does not move up, it may build both before and after moving.";
+    private String artemis = "ARTEMIS\n\nYour Worker may move one additional time, but not back to its initial space.";
+    private String triton = "TRITON\n\nEach time your Worker moves into a perimeter space, it may immediately move again.";
+    private String zeus = "ZEUS\n\nYour Worker may build a block under itself.";
+    private String minotaur = "MINOTAUR\n\nYour Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.";
+    private String demeter = "DEMETER\n\nYour Worker may build one additional time, but not on the same space.";
+    private String athena = "ATHENA\n\nIf one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.";
+    private String pan = "PAN\n\nYou also win if your Worker moves down two or more levels.";
+    private String chronus = "CHRONUS\n\nYou also win when there are at least five Complete Towers on the board.";
+    private String hestia = "HESTIA\n\nYour Worker may build one additional time, but this cannot be on a perimeter space.";
+    private String hephaestus = "HEPHAESTUS\n\nYour Worker may build one additional block (not dome) on top of your first block.";
+    private String apollo = "APOLLO\n\nYour Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated.";
+    private String atlas = "ATLAS\n\nYour Worker may build a dome at any level.";
 
     @FXML
     private Label player1Username;
@@ -48,16 +65,64 @@ public class GUIController3 {
 
     @FXML
     public void initialize(){
-        player1Username.setText("Player1");
-        player2Username.setText("Player2");
-        player3Username.setText("Player3");
-        player1God.setImage(new Image ("/img/gods/Artemis.png"));
-        player2God.setImage(new Image ("/img/gods/Prometheus.png"));
-        player3God.setImage(new Image ("/img/gods/Minotaur.png"));
-        player1Power.setText("Your Worker may move one additional time, but not back to its initial space.");
-        player2Power.setText("If your Worker does not move up, it may build both before and after moving.");
-        player3Power.setText("Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.");
-        playerCurrentPlay.setText("Marco");
+        player1Username.setText(Vars.player1Name);
+        player2Username.setText(Vars.player2Name);
+        player3Username.setText(Vars.player3Name);
+        player1God.setImage(new Image ("/img/gods/" + Vars.player1God +".png"));
+        player2God.setImage(new Image ("/img/gods/" + Vars.player2God +".png"));
+        player3God.setImage(new Image ("/img/gods/" + Vars.player3God +".png"));
+        //TODO: migliorare questa parte
+        //Player 1
+        if(Vars.player1God.equals("Hera")) player1Power.setText(hera);
+        if(Vars.player1God.equals("Prometheus")) player1Power.setText(prometheus);
+        if(Vars.player1God.equals("Artemis")) player1Power.setText(artemis);
+        if(Vars.player1God.equals("Triton")) player1Power.setText(triton);
+        if(Vars.player1God.equals("Zeus")) player1Power.setText(zeus);
+        if(Vars.player1God.equals("Minotaur")) player1Power.setText(minotaur);
+        if(Vars.player1God.equals("Demeter")) player1Power.setText(demeter);
+        if(Vars.player1God.equals("Athena")) player1Power.setText(athena);
+        if(Vars.player1God.equals("Pan")) player1Power.setText(pan);
+        if(Vars.player1God.equals("Chronus")) player1Power.setText(chronus);
+        if(Vars.player1God.equals("Hestia")) player1Power.setText(hestia);
+        if(Vars.player1God.equals("Hephaestus")) player1Power.setText(hephaestus);
+        if(Vars.player1God.equals("Apollo")) player1Power.setText(apollo);
+        if(Vars.player1God.equals("Atlas")) player1Power.setText(atlas);
+        //Player 2
+        if(Vars.player2God.equals("Hera")) player2Power.setText(hera);
+        if(Vars.player2God.equals("Prometheus")) player2Power.setText(prometheus);
+        if(Vars.player2God.equals("Artemis")) player2Power.setText(artemis);
+        if(Vars.player2God.equals("Triton")) player2Power.setText(triton);
+        if(Vars.player2God.equals("Zeus")) player2Power.setText(zeus);
+        if(Vars.player2God.equals("Minotaur")) player2Power.setText(minotaur);
+        if(Vars.player2God.equals("Demeter")) player2Power.setText(demeter);
+        if(Vars.player2God.equals("Athena")) player2Power.setText(athena);
+        if(Vars.player2God.equals("Pan")) player2Power.setText(pan);
+        if(Vars.player2God.equals("Chronus")) player2Power.setText(chronus);
+        if(Vars.player2God.equals("Hestia")) player2Power.setText(hestia);
+        if(Vars.player2God.equals("Hephaestus")) player2Power.setText(hephaestus);
+        if(Vars.player2God.equals("Apollo")) player2Power.setText(apollo);
+        if(Vars.player2God.equals("Atlas")) player2Power.setText(atlas);
+        //Player 3
+        if(Vars.player3God.equals("Hera")) player3Power.setText(hera);
+        if(Vars.player3God.equals("Prometheus")) player3Power.setText(prometheus);
+        if(Vars.player3God.equals("Artemis")) player3Power.setText(artemis);
+        if(Vars.player3God.equals("Triton")) player3Power.setText(triton);
+        if(Vars.player3God.equals("Zeus")) player3Power.setText(zeus);
+        if(Vars.player3God.equals("Minotaur")) player3Power.setText(minotaur);
+        if(Vars.player3God.equals("Demeter")) player3Power.setText(demeter);
+        if(Vars.player3God.equals("Athena")) player3Power.setText(athena);
+        if(Vars.player3God.equals("Pan")) player3Power.setText(pan);
+        if(Vars.player3God.equals("Chronus")) player3Power.setText(chronus);
+        if(Vars.player3God.equals("Hestia")) player3Power.setText(hestia);
+        if(Vars.player3God.equals("Hephaestus")) player3Power.setText(hephaestus);
+        if(Vars.player3God.equals("Apollo")) player3Power.setText(apollo);
+        if(Vars.player3God.equals("Atlas")) player3Power.setText(atlas);
+
+        if(Vars.player1Name.equals(Vars.username)) System.out.println("SEI IL GIOCATORE 1");
+        if(Vars.player2Name.equals(Vars.username)) System.out.println("SEI IL GIOCATORE 2");
+        if(Vars.player3Name.equals(Vars.username)) System.out.println("SEI IL GIOCATORE 3");
+
+        playerCurrentPlay.setText(Vars.username);
         errorButton.setVisible(false);
     }
 

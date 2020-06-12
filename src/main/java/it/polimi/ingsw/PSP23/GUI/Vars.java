@@ -7,6 +7,12 @@ import java.io.PrintWriter;
 public class Vars {
     public static String username;
     public static String ipServer = "localhost";
+    public static String player1Name = "";
+    public static String player2Name = "";
+    public static String player3Name = "";
+    public static String player1God = "";
+    public static String player2God = "";
+    public static String player3God = "";
     public static int numPlayer;
     public static String god1 = "";
     public static String god2 = "";

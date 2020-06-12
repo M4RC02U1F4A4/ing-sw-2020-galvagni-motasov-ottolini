@@ -122,6 +122,10 @@ public class ChoiceController {
             Vars.god1 = parts[0];
             Vars.god2 = parts[1];
             Vars.god3 = parts[2];
+            String godsToSend = "SELECT_GODS:" + Vars.god1 + "," + Vars.god2 + "," + Vars.god3;
+            Vars.magicWrite.println(godsToSend);
+            Vars.magicWrite.println(godsToSend);
+            Vars.magicWrite.flush();
             Stage stage = (Stage) choiceError.getScene().getWindow();
             stage.close();
             while( !(Vars.serverMsg.contains("CHOOSE_GOD"))) {try{Thread.sleep(1000);} catch (InterruptedException e){}}

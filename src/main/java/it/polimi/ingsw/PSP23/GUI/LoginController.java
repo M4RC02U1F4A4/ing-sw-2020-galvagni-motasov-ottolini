@@ -76,9 +76,9 @@ public class LoginController {
                                     readObject();
                             if (inputObject instanceof String) {
                                 System.out.println((String) inputObject);
-                                if(((String) inputObject).contains("SELECT_GODS") || ((String) inputObject).contains("CHOOSE_GOD")){
+                                System.out.println("**************************");
+                                if(((String) inputObject).contains("SELECT_GODS") || ((String) inputObject).contains("CHOOSE_GOD") || ((String) inputObject).contains("STARTING THE GAME")){
                                     Vars.serverMsg = (String) inputObject;
-                                    System.out.println("SALVATA");
                                 }
                                 if(((String) inputObject).contains("GODSC")){
                                     String tempString = ((String) inputObject).replace("GODSC:", "");
@@ -98,6 +98,28 @@ public class LoginController {
                                     if(!tempString.contains(Vars.god1)){Vars.god1Used = true;}
                                     if(!tempString.contains(Vars.god2)){Vars.god2Used = true;}
                                     if(!tempString.contains(Vars.god3)){Vars.god3Used = true;}
+                                }
+                                if(((String) inputObject).contains("PLAYER1:")){
+                                    String tempString = (String) inputObject;
+                                    tempString = tempString.replace("\n", "");
+                                    tempString = tempString.replace("PLAYER1:", "");
+                                    tempString = tempString.replace("PLAYER2:", "-");
+                                    tempString = tempString.replace("PLAYER3:", "-");
+                                    String[] parts = tempString.split("-");
+                                    if(Vars.numPlayer == 2){
+                                        Vars.player1Name = parts[0];
+                                        Vars.player1God = parts[2];
+                                        Vars.player2Name = parts[3];
+                                        Vars.player2God = parts[5];
+                                    }
+                                    else if(Vars.numPlayer == 3){
+                                        Vars.player1Name = parts[0];
+                                        Vars.player1God = parts[2];
+                                        Vars.player2Name = parts[3];
+                                        Vars.player2God = parts[5];
+                                        Vars.player3Name = parts[6];
+                                        Vars.player3God = parts[8];
+                                    }
                                 }
                             }
                             else if (inputObject instanceof Map) {
@@ -128,7 +150,7 @@ public class LoginController {
         Vars.magicWrite.flush();
         Vars.magicWrite.println(String.valueOf(Vars.numPlayer));
         Vars.magicWrite.flush();
-        while( !(Vars.serverMsg.contains("SELECT_GODS")) && !(Vars.serverMsg.contains("CHOOSE_GOD")) ) {try{Thread.sleep(1000);} catch (InterruptedException e){}}
+        while( !(Vars.serverMsg.contains("SELECT_GODS")) && !(Vars.serverMsg.contains("CHOOSE_GOD")) ) {try{Thread.sleep(1000);} catch (InterruptedException e){e.printStackTrace();}}
         if(Vars.serverMsg.contains("SELECT_GODS")) {
             try{
                 Parent rootChoice = FXMLLoader.load(getClass().getResource("/choice.fxml"));
@@ -151,6 +173,7 @@ public class LoginController {
                 choice3.show();
             } catch (IOException e) { e.printStackTrace();}
         }
+
 
 
     }
