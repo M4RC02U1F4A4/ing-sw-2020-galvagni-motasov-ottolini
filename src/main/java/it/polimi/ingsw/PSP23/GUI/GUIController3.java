@@ -62,6 +62,14 @@ public class GUIController3 {
             b40, b41, b42, b43, b44;
     @FXML
     private Button utilityButton;
+    @FXML
+    private Button worker1;
+    @FXML
+    private Button worker2;
+    @FXML
+    private RadioButton blocco;
+    @FXML
+    private RadioButton cupola;
 
     @FXML
     public void initialize(){
@@ -133,6 +141,15 @@ public class GUIController3 {
 
     public void errorButtonAction(){
         errorButton.setVisible(false);
+    }
+
+    public void worker1Action(){
+        Vars.magicWrite.println("CHOOSE_WORKER:0");
+        Vars.magicWrite.flush();
+    }
+    public void worker2Action(){
+        Vars.magicWrite.println("CHOOSE_WORKER:1");
+        Vars.magicWrite.flush();
     }
 
     public void press(Button b){
