@@ -77,6 +77,10 @@ public class LoginController {
                             if (inputObject instanceof String) {
                                 System.out.println((String) inputObject);
                                 System.out.println("**************************");
+                                if(((String) inputObject).contains("Attendi il tuo turno")) Vars.turnStatus = 0;
+                                else if(((String) inputObject).contains("PLACE_WORKER")) Vars.turnStatus = 1;
+                                else if(((String) inputObject).contains("MOVE")) Vars.turnStatus = 2;
+                                else if(((String) inputObject).contains("BUILD")) Vars.turnStatus = 3;
                                 if(((String) inputObject).contains("SELECT_GODS") || ((String) inputObject).contains("CHOOSE_GOD") || ((String) inputObject).contains("STARTING THE GAME")){
                                     Vars.serverMsg = (String) inputObject;
                                 }

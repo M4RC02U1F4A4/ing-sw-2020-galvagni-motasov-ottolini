@@ -22,4 +22,9 @@ public class Vars {
     public static boolean god3Used = false;
     public static PrintWriter magicWrite;
     public static String serverMsg = "";
+    //0 Not your turn
+    //1 PLACE_WORKER
+    //2 MOVE
+    //3 BUILD
+    public static int turnStatus = 0;
 }
