@@ -92,9 +92,6 @@ public class GUIController2 {
         if(Vars.player2God.equals("Apollo")) player2Power.setText(apollo);
         if(Vars.player2God.equals("Atlas")) player2Power.setText(atlas);
 
-        if(Vars.player1Name.equals(Vars.username)) System.out.println("SEI IL GIOCATORE 1");
-        if(Vars.player2Name.equals(Vars.username)) System.out.println("SEI IL GIOCATORE 2");
-
         playerCurrentPlay.setText(Vars.username);
         errorButton.setVisible(false);
     }
@@ -108,89 +105,111 @@ public class GUIController2 {
         errorButton.setVisible(false);
     }
 
-    public void press(Button b){
-        b.setStyle("-fx-background-image: url('/img/lvl1.png')");
+    public void press(Button b, int x, int y){
+        if(Vars.turnStatus == 0){
+            errorButton.setVisible(true);
+        }
+        else if(Vars.turnStatus == 1){
+            //place worker
+            Vars.magicWrite.println("PLACE_WORKER:" + x + "," + y);
+            Vars.magicWrite.flush();
+        }
+        else if(Vars.turnStatus == 2){
+            //move
+            Vars.magicWrite.println("MOVE:" + x + "," + y);
+            Vars.magicWrite.flush();
+        }
+        else if(Vars.turnStatus == 3){
+            //build
+            if(/*blocco*/){
+                Vars.magicWrite.println("BUILD:" + x + "," + y + "," + "blocco");
+                Vars.magicWrite.flush();
+            }
+            else if(/*cupola*/)
+                Vars.magicWrite.println("BUILD:" + x + "," + y + "," + "cupola");
+            Vars.magicWrite.flush();
+        }
     }
 
     @FXML
     public void b00Action(){
-        press(b00);
+        press(b00,0,0);
     }
     public void b01Action(){
-        press(b01);
+        press(b01,0,1);
     }
     public void b02Action(){
-        press(b02);
+        press(b02,0,2);
     }
     public void b03Action(){
-        press(b03);
+        press(b03,0,3);
     }
     public void b04Action(){
-        press(b04);
+        press(b04,0,4);
     }
 
     public void b10Action(){
-        press(b10);
+        press(b10,1,0);
     }
     public void b11Action(){
-        press(b11);
+        press(b11,1,1);
     }
     public void b12Action(){
-        press(b12);
+        press(b12,1,2);
     }
     public void b13Action(){
-        press(b13);
+        press(b13,1,3);
     }
     public void b14Action(){
-        press(b14);
+        press(b14,1,4);
     }
 
     public void b20Action(){
-        press(b20);
+        press(b20,2,0);
     }
     public void b21Action(){
-        press(b21);
+        press(b21,2,1);
     }
     public void b22Action(){
-        press(b22);
+        press(b22,2,2);
     }
     public void b23Action(){
-        press(b23);
+        press(b23,2,3);
     }
     public void b24Action(){
-        press(b24);
+        press(b24,2,4);
     }
 
     public void b30Action(){
-        press(b30);
+        press(b30,3,0);
     }
     public void b31Action(){
-        b31.setStyle("-fx-background-image: url('/img/blue.png')");
+        press(b31,3,1);
     }
     public void b32Action(){
-        b32.setStyle("-fx-background-image: url('/img/red.png')");
+        press(b32,3,2);
     }
     public void b33Action(){
-        b33.setStyle("-fx-background-image: url('/img/white.png')");
+        press(b33,3,3);
     }
     public void b34Action(){
-        press(b34);
+        press(b34,3,4);
     }
 
     public void b40Action(){
-        press(b40);
+        press(b40,4,0);
     }
     public void b41Action(){
-        press(b41);
+        press(b41,4,1);
     }
     public void b42Action() {
-        press(b42);
+        press(b42,4,2);
     }
     public void b43Action() {
-        press(b43);
+        press(b43,4,3);
     }
     public void b44Action() {
-        press(b44);
+        press(b44,4,4);
     }
 }
 /*
@@ -222,3 +241,4 @@ Stage stage = (Stage) b43.getScene().getWindow();
         } catch (IOException e) { e.printStackTrace(); }
  */
 
+//b31.setStyle("-fx-background-image: url('/img/blue.png')");
