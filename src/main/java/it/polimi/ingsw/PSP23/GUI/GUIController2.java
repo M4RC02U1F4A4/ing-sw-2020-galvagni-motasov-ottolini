@@ -1,5 +1,10 @@
 package it.polimi.ingsw.PSP23.GUI;
 
+import it.polimi.ingsw.PSP23.model.Cell;
+import it.polimi.ingsw.PSP23.model.Color;
+import it.polimi.ingsw.PSP23.model.Map;
+import it.polimi.ingsw.PSP23.model.Status;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.util.NoSuchElementException;
 
 public class GUIController2 {
     //PLAYER 1 BLUE
@@ -63,7 +71,7 @@ public class GUIController2 {
     private RadioButton cupola;
 
     @FXML
-    public void initialize(){
+    public void initialize() throws IOException{
         player1Username.setText(Vars.player1Name);
         player2Username.setText(Vars.player2Name);
         player1God.setImage(new Image ("/img/gods/" + Vars.player1God +".png"));
@@ -100,8 +108,24 @@ public class GUIController2 {
         if(Vars.player2God.equals("Apollo")) player2Power.setText(apollo);
         if(Vars.player2God.equals("Atlas")) player2Power.setText(atlas);
 
-        playerCurrentPlay.setText(Vars.username);
+        //check Vars.myGod for set utiliry button visibility
+
+        playerCurrentPlay.setText(Vars.player1Name);
         errorButton.setVisible(false);
+
+        Thread thread = new Thread(() -> {
+            while(true) {
+                try{Thread.sleep(250);}catch (InterruptedException e){e.printStackTrace();}
+                if(Vars.mapEdit) {
+                    Platform.runLater(() -> updateGUIMap(Vars.map));
+                    Vars.mapEdit = false;
+                }
+
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
+
     }
 
     @FXML
@@ -114,16 +138,23 @@ public class GUIController2 {
     }
 
     public void worker1Action(){
-        Vars.magicWrite.println("CHOOSE_WORKER:0");
-        Vars.magicWrite.flush();
+        if(Vars.turnStatus == 4){
+            Vars.magicWrite.println("CHOOSE_WORKER:0");
+            Vars.magicWrite.flush();
+        }
+        else errorButton.setVisible(true);
     }
     public void worker2Action(){
-        Vars.magicWrite.println("CHOOSE_WORKER:1");
-        Vars.magicWrite.flush();
+        if(Vars.turnStatus == 4){
+            Vars.magicWrite.println("CHOOSE_WORKER:1");
+            Vars.magicWrite.flush();
+        }
+        else errorButton.setVisible(true);
     }
 
     public void press(Button b, int x, int y){
         if(Vars.turnStatus == 0){
+            //not your turn
             errorButton.setVisible(true);
         }
         else if(Vars.turnStatus == 1){
@@ -136,16 +167,665 @@ public class GUIController2 {
             Vars.magicWrite.println("MOVE:" + x + "," + y);
             Vars.magicWrite.flush();
         }
-//        else if(Vars.turnStatus == 3){
-//            //build
-//            if(/*blocco*/){
-//                Vars.magicWrite.println("BUILD:" + x + "," + y + "," + "blocco");
-//                Vars.magicWrite.flush();
-//            }
-//            else if(/*cupola*/)
-//                Vars.magicWrite.println("BUILD:" + x + "," + y + "," + "cupola");
-//            Vars.magicWrite.flush();
-//        }
+        else if(Vars.turnStatus == 3){
+            //build
+            if(blocco.isSelected()){
+                Vars.magicWrite.println("BUILD:" + x + "," + y + "," + "blocco");
+                Vars.magicWrite.flush();
+            }
+            else if(cupola.isSelected())
+                Vars.magicWrite.println("BUILD:" + x + "," + y + "," + "CUPOLA");
+            Vars.magicWrite.flush();
+        }
+    }
+
+    public void updateGUIMap(Map map){
+        playerCurrentPlay.setText(Vars.currentPlayer);
+        for(int x=0;x<5;x++){
+            for(int y=0;y<5;y++){
+                if(map.getCell(x, y).height() == 0){
+                    if(map.getCell(x, y).isOccupied()){
+                        if(map.getCell(x, y).getWorker().getColor().equals(Color.RED)){
+                            updateCell("red", x, y);
+                        }
+                        else if(map.getCell(x, y).getWorker().getColor().equals(Color.BLUE)){
+                            updateCell("blue", x, y);
+                        }
+                        else if(map.getCell(x, y).getWorker().getColor().equals(Color.WHITE)){
+                            updateCell("white", x, y);
+                        }
+                    }
+                    else updateCell("NULL", x, y);
+
+                }
+                else {
+                    if(map.getCell(x, y).levelStatus(3).equals(Status.CUPOLA)){
+                        //lvl2+c
+                        updateCell("lvl2+c", x, y);
+                    }
+                    else if(map.getCell(x, y).levelStatus(2).equals(Status.BUILT)){
+                        //lvl2
+                        if(map.getCell(x, y).isOccupied()){
+                            if(map.getCell(x, y).getWorker().getColor().equals(Color.RED)){
+                                updateCell("lvl2+red", x, y);
+                            }
+                            else if(map.getCell(x, y).getWorker().getColor().equals(Color.BLUE)){
+                                updateCell("lvl2+blue", x, y);
+                            }
+                            else if(map.getCell(x, y).getWorker().getColor().equals(Color.WHITE)){
+                                updateCell("lvl2+white", x, y);
+                            }
+                        }
+                        else updateCell("lvl2", x, y);
+                    }
+                    else if(map.getCell(x, y).levelStatus(2).equals(Status.CUPOLA)){
+                        //lvl1+c
+                        updateCell("lvl1+c", x, y);
+                    }
+                    else if(map.getCell(x, y).levelStatus(1).equals(Status.BUILT)){
+                        //lvl1
+                        if(map.getCell(x, y).isOccupied()){
+                            if(map.getCell(x, y).getWorker().getColor().equals(Color.RED)){
+                                updateCell("lvl1+red", x, y);
+                            }
+                            else if(map.getCell(x, y).getWorker().getColor().equals(Color.BLUE)){
+                                updateCell("lvl1+blue", x, y);
+                            }
+                            else if(map.getCell(x, y).getWorker().getColor().equals(Color.WHITE)){
+                                updateCell("lvl1+white", x, y);
+                            }
+                        }
+                        else updateCell("lvl1", x, y);
+                    }
+                    else if(map.getCell(x, y).levelStatus(1).equals(Status.CUPOLA)){
+                        //lvl0+c
+                        updateCell("lvl0+c", x, y);
+                    }
+                    else if(map.getCell(x, y).levelStatus(0).equals(Status.BUILT)){
+                        //lvl0
+                        if(map.getCell(x, y).isOccupied()){
+                            if(map.getCell(x, y).getWorker().getColor().equals(Color.RED)){
+                                updateCell("lvl0+red", x, y);
+                            }
+                            else if(map.getCell(x, y).getWorker().getColor().equals(Color.BLUE)){
+                                updateCell("lvl0+blue", x, y);
+                            }
+                            else if(map.getCell(x, y).getWorker().getColor().equals(Color.WHITE)){
+                                updateCell("lvl0+white", x, y);
+                            }
+                        }
+                        else updateCell("lvl0", x, y);
+                    }
+                    else if(map.getCell(x, y).levelStatus(0).equals(Status.CUPOLA)){
+                        //c
+                        updateCell("c", x, y);
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateCell(String imgName, int x, int y){
+        if(x == 0){
+            if(y == 0){
+                if(imgName.equals("c")) b00.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b00.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b00.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b00.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b00.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b00.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b00.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b00.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b00.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b00.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b00.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b00.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b00.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b00.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b00.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b00.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b00.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b00.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b00.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b00.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 1){
+                if(imgName.equals("c")) b01.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b01.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b01.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b01.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b01.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b01.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b01.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b01.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b01.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b01.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b01.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b01.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b01.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b01.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b01.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b01.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b01.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b01.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b01.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b01.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 2){
+                if(imgName.equals("c")) b02.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b02.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b02.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b02.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b02.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b02.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b02.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b02.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b02.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b02.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b02.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b02.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b02.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b02.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b02.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b02.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b02.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b02.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b02.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b02.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 3){
+                if(imgName.equals("c")) b03.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b03.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b03.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b03.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b03.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b03.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b03.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b03.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b03.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b03.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b03.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b03.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b03.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b03.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b03.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b03.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b03.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b03.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b03.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b03.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 4){
+                if(imgName.equals("c")) b04.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b04.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b04.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b04.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b04.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b04.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b04.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b04.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b04.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b04.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b04.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b04.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b04.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b04.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b04.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b04.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b04.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b04.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b04.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b04.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+        }
+        else if(x == 1){
+            if(y == 0){
+                if(imgName.equals("c")) b10.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b10.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b10.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b10.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b10.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b10.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b10.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b10.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b10.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b10.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b10.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b10.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b10.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b10.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b10.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b10.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b10.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b10.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b10.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b10.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 1){
+                if(imgName.equals("c")) b11.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b11.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b11.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b11.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b11.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b11.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b11.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b11.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b11.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b11.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b11.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b11.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b11.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b11.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b11.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b11.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b11.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b11.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b11.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b11.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 2){
+                if(imgName.equals("c")) b12.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b12.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b12.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b12.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b12.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b12.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b12.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b12.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b12.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b12.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b12.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b12.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b12.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b12.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b12.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b12.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b12.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b12.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b12.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b12.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 3){
+                if(imgName.equals("c")) b13.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b13.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b13.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b13.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b13.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b13.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b13.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b13.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b13.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b13.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b13.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b13.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b13.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b13.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b13.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b13.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b13.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b13.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b13.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b13.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 4){
+                if(imgName.equals("c")) b14.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b14.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b14.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b14.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b14.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b14.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b14.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b14.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b14.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b14.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b14.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b14.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b14.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b14.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b14.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b14.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b14.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b14.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b14.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b14.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+        }
+        else if(x == 2){
+            if(y == 0){
+                if(imgName.equals("c")) b20.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b20.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b20.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b20.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b20.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b20.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b20.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b20.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b20.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b20.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b20.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b20.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b20.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b20.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b20.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b20.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b20.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b20.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b20.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b20.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 1){
+                if(imgName.equals("c")) b21.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b21.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b21.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b21.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b21.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b21.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b21.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b21.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b21.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b21.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b21.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b21.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b21.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b21.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b21.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b21.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b21.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b21.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b21.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b21.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 2){
+                if(imgName.equals("c")) b22.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b22.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b22.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b22.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b22.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b22.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b22.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b22.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b22.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b22.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b22.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b22.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b22.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b22.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b22.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b22.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b22.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b22.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b22.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b22.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 3){
+                if(imgName.equals("c")) b23.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b23.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b23.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b23.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b23.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b23.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b23.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b23.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b23.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b23.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b23.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b23.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b23.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b23.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b23.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b23.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b23.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b23.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b23.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b23.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 4){
+                if(imgName.equals("c")) b24.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b24.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b24.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b24.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b24.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b24.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b24.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b24.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b24.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b24.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b24.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b24.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b24.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b24.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b24.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b24.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b24.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b24.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b24.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b24.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+        }
+        else if(x == 3){
+            if(y == 0){
+                if(imgName.equals("c")) b30.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b30.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b30.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b30.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b30.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b30.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b30.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b30.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b30.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b30.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b30.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b30.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b30.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b30.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b30.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b30.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b30.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b30.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b30.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b30.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 1){
+                if(imgName.equals("c")) b31.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b31.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b31.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b31.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b31.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b31.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b31.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b31.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b31.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b31.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b31.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b31.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b31.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b31.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b31.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b31.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b31.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b31.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b31.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b31.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 2){
+                if(imgName.equals("c")) b32.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b32.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b32.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b32.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b32.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b32.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b32.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b32.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b32.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b32.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b32.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b32.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b32.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b32.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b32.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b32.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b32.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b32.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b32.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b32.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 3){
+                if(imgName.equals("c")) b33.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b33.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b33.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b33.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b33.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b33.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b33.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b33.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b33.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b33.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b33.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b33.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b33.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b33.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b33.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b33.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b33.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b33.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b33.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b33.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 4){
+                if(imgName.equals("c")) b34.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b34.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b34.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b34.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b34.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b34.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b34.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b34.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b34.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b34.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b34.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b34.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b34.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b34.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b34.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b34.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b34.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b34.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b34.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b34.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+        }
+        else if(x == 4){
+            if(y == 0){
+                if(imgName.equals("c")) b40.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b40.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b40.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b40.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b40.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b40.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b40.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b40.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b40.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b40.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b40.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b40.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b40.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b40.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b40.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b40.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b40.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b40.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b40.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b40.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 1){
+                if(imgName.equals("c")) b41.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b41.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b41.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b41.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b41.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b41.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b41.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b41.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b41.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b41.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b41.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b41.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b41.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b41.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b41.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b41.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b41.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b41.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b41.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b41.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 2){
+                if(imgName.equals("c")) b42.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b42.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b42.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b42.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b42.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b42.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b42.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b42.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b42.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b42.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b42.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b42.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b42.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b42.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b42.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b42.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b42.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b42.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b42.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b42.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 3){
+                if(imgName.equals("c")) b43.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b43.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b43.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b43.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b43.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b43.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b43.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b43.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b43.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b43.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b43.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b43.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b43.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b43.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b43.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b43.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b43.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b43.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b43.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b43.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+            else if(y == 4){
+                if(imgName.equals("c")) b44.setStyle("-fx-background-image: url('/img/c.png')");
+                else if(imgName.equals("lvl0")) b44.setStyle("-fx-background-image: url('/img/lvl0.png')");
+                else if(imgName.equals("lvl0+c")) b44.setStyle("-fx-background-image: url('/img/lvl0+c.png')");
+                else if(imgName.equals("lvl1")) b44.setStyle("-fx-background-image: url('/img/lvl1.png')");
+                else if(imgName.equals("lvl1+c")) b44.setStyle("-fx-background-image: url('/img/lvl1+c.png')");
+                else if(imgName.equals("lvl2")) b44.setStyle("-fx-background-image: url('/img/lvl2.png')");
+                else if(imgName.equals("lvl2+c")) b44.setStyle("-fx-background-image: url('/img/lvl2+c.png')");
+                else if(imgName.equals("lvl0+red")) b44.setStyle("-fx-background-image: url('/img/lvl0+red.png')");
+                else if(imgName.equals("lvl0+blue")) b44.setStyle("-fx-background-image: url('/img/lvl0+blue.png')");
+                else if(imgName.equals("lvl0+white")) b44.setStyle("-fx-background-image: url('/img/lvl0+white.png')");
+                else if(imgName.equals("lvl1+red")) b44.setStyle("-fx-background-image: url('/img/lvl1+red.png')");
+                else if(imgName.equals("lvl1+blue")) b44.setStyle("-fx-background-image: url('/img/lvl1+blue.png')");
+                else if(imgName.equals("lvl1+white")) b44.setStyle("-fx-background-image: url('/img/lvl1+white.png')");
+                else if(imgName.equals("lvl2+red")) b44.setStyle("-fx-background-image: url('/img/lvl2+red.png')");
+                else if(imgName.equals("lvl2+blue")) b44.setStyle("-fx-background-image: url('/img/lvl2+blue.png')");
+                else if(imgName.equals("lvl2+white")) b44.setStyle("-fx-background-image: url('/img/lvl2+white.png')");
+                else if(imgName.equals("red")) b44.setStyle("-fx-background-image: url('/img/red.png')");
+                else if(imgName.equals("blue")) b44.setStyle("-fx-background-image: url('/img/blue.png')");
+                else if(imgName.equals("white")) b44.setStyle("-fx-background-image: url('/img/white.png')");
+                else if(imgName.equals("NULL")) b44.setStyle("-fx-background-image: url('/img/NULL.png')");
+            }
+        }
     }
 
     @FXML

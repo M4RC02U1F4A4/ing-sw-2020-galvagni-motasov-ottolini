@@ -81,8 +81,12 @@ public class LoginController {
                                 else if(((String) inputObject).contains("PLACE_WORKER")) Vars.turnStatus = 1;
                                 else if(((String) inputObject).contains("MOVE")) Vars.turnStatus = 2;
                                 else if(((String) inputObject).contains("BUILD")) Vars.turnStatus = 3;
+                                else if(((String) inputObject).contains("CHOOSE_WORKER:")) Vars.turnStatus = 4;
                                 if(((String) inputObject).contains("SELECT_GODS") || ((String) inputObject).contains("CHOOSE_GOD") || ((String) inputObject).contains("STARTING THE GAME")){
                                     Vars.serverMsg = (String) inputObject;
+                                }
+                                if(((String) inputObject).contains("TURN:")){
+                                    Vars.currentPlayer = ((String) inputObject).replace("TURN:", "");
                                 }
                                 if(((String) inputObject).contains("GODSC")){
                                     String tempString = ((String) inputObject).replace("GODSC:", "");
@@ -127,7 +131,9 @@ public class LoginController {
                                 }
                             }
                             else if (inputObject instanceof Map) {
-                                ((Map) inputObject).drawMap();
+                                //((Map) inputObject).drawMap();
+                                Vars.map = (Map) inputObject;
+                                Vars.mapEdit = true;
                             }
                             else if(inputObject instanceof Integer){
                                 System.out.println((Integer) inputObject);

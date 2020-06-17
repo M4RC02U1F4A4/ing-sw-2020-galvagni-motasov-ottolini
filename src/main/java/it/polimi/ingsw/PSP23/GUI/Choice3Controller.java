@@ -84,6 +84,7 @@ public class Choice3Controller {
         Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god1);
         Vars.magicWrite.flush();
         Vars.god1Used = true;
+        Vars.myGod = Vars.god1;
         while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
         if(Vars.numPlayer == 2){
             try {
@@ -119,6 +120,7 @@ public class Choice3Controller {
         Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god2);
         Vars.magicWrite.flush();
         Vars.god2Used = true;
+        Vars.myGod = Vars.god2;
         while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
         if(Vars.numPlayer == 2){
             try {
@@ -155,6 +157,7 @@ public class Choice3Controller {
         Vars.magicWrite.println("CHOOSE_GOD:" + Vars.god3);
         Vars.magicWrite.flush();
         Vars.god3Used = true;
+        Vars.myGod = Vars.god3;
         while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
         if(Vars.numPlayer == 2){
             try {
