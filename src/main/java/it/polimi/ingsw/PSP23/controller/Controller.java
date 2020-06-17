@@ -5,9 +5,13 @@ import it.polimi.ingsw.PSP23.observer.Observer;
 import it.polimi.ingsw.PSP23.view.View;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller implements Observer<PlayerMove>{
     private final Game game;
+    private final static int TIME_LIMIT=30;
+
     private ArrayList<View> players = new ArrayList<>();
     private Action actionBeingPerformed;
     private Status whatToBuild = Status.FREE;
@@ -16,6 +20,9 @@ public class Controller implements Observer<PlayerMove>{
     private ArrayList<String> deiInOrdine=new ArrayList<>();
     private int x = -1, y = -1;
     private int chosenWorker = -1;
+
+    private final Timer timer = new Timer();
+    private int timeRunningOut=TIME_LIMIT;
 
 
     public void addPlayer(Player p){
@@ -29,6 +36,19 @@ public class Controller implements Observer<PlayerMove>{
     public Controller(Game game) {
         super();
         this.game = game;
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                timeRunningOut--;
+                System.out.println(timeRunningOut);
+                if(timeRunningOut<=0){
+                    System.out.println("TEMPO SCADUTO!");
+                    timer.cancel();
+                    sendToEverybody("Partita terminata: timeout");
+                    players.get(game.getCurrentPlayerNum()).showMessage("closeMatch");
+                }
+            }
+        },0,1000);
 
     }
 
@@ -123,6 +143,7 @@ public class Controller implements Observer<PlayerMove>{
     }
 
     public void setActionFromTheClient(String msg, String args, Player him){
+        resetTimer();
         String[] tmp=args.split(",");
         switch (msg){
             case "SELECT_GODS":{
@@ -225,5 +246,9 @@ public class Controller implements Observer<PlayerMove>{
             msg=msg+"PLAYER"+(i+1)+":"+players.get(i).getPlayer().getName()+"-"+players.get(i).getPlayer().getColor()+"-"+deiInOrdine.get(i)+"\n";
         }
         return msg;
+    }
+
+    public void resetTimer(){
+        timeRunningOut=TIME_LIMIT;
     }
 }

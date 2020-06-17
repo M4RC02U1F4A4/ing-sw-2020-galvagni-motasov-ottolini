@@ -36,6 +36,9 @@ public class Client {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
                         if (inputObject instanceof String) {
+                            if(inputObject.equals("closeMatch")){
+                                System.exit(1);
+                            }
                             System.out.println((String) inputObject);
                         } else if (inputObject instanceof Map) {
                             ((Map) inputObject).drawMap();
