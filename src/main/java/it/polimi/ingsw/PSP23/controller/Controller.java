@@ -57,6 +57,7 @@ public class Controller implements Observer<PlayerMove>{
     public synchronized void  performMove(PlayerMove move){
         move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
         if (game.isPlayerTurn(move.getPlayer())) {
+            sendToEverybody("TURN:"+move.getPlayer().getName());
             switch (move.getCommand()) {
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
