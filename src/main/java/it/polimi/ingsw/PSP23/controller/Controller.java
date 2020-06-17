@@ -102,7 +102,7 @@ public class Controller implements Observer<PlayerMove>{
                     if ((chosenWorker == 0 || chosenWorker == 1 || chosenWorker == -1) && (x >= -1 && x < 5) && (y >= -1 && y < 5)) {
                         if (0 <= game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y)) {
                             sendUpdatedMap();
-                            sendToEverybody("TURN:"+move.getPlayer().getName());
+                            sendToEverybody("TURN:"+players.get(game.getCurrentPlayerNum()).getPlayer().getName());
                             switch (game.getPhase()) {
                                 case WORKER_HOUSING:
                                     sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<x>,<y>");
