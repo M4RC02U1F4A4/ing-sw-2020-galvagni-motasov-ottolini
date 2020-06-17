@@ -57,7 +57,7 @@ public class Controller implements Observer<PlayerMove>{
     public synchronized void  performMove(PlayerMove move){
         move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
         if (game.isPlayerTurn(move.getPlayer())) {
-            sendToEverybody("TURN:"+move.getPlayer().getName());
+            //sendToEverybody("TURN:"+move.getPlayer().getName());
             switch (move.getCommand()) {
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
@@ -102,6 +102,7 @@ public class Controller implements Observer<PlayerMove>{
                     if ((chosenWorker == 0 || chosenWorker == 1 || chosenWorker == -1) && (x >= -1 && x < 5) && (y >= -1 && y < 5)) {
                         if (0 <= game.performeMove(actionBeingPerformed, whatToBuild, chosenWorker, x, y)) {
                             sendUpdatedMap();
+                            sendToEverybody("TURN:"+move.getPlayer().getName());
                             switch (game.getPhase()) {
                                 case WORKER_HOUSING:
                                     sendToNextPlayer("Piazza un worker sulla mappa \nSintassi del comando:\nPLACE_WORKER:<x>,<y>");
