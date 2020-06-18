@@ -108,8 +108,6 @@ public class GUIController2 {
         if(Vars.player2God.equals("Apollo")) player2Power.setText(apollo);
         if(Vars.player2God.equals("Atlas")) player2Power.setText(atlas);
 
-        //check Vars.myGod for set utiliry button visibility
-
         playerCurrentPlay.setText(Vars.player1Name);
         errorButton.setVisible(false);
         if(Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton") || Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia")) utilityButton.setVisible(true);
