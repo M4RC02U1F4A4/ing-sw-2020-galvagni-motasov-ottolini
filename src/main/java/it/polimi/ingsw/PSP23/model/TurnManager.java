@@ -79,10 +79,13 @@ public class TurnManager {
                 switch (getCurrentGod().getName()) {
                     case "Prometheus":
                         currentPhase = Phase.CHECK_LOSE_BUILD;
+                        break;
                     case "Chronus":
                         currentPhase = Phase.CHECK_WIN;
+                        break;
                     default:
                         currentPhase = Phase.CHECK_LOSE_MOVE;
+                        break;
                 }
                 break;
             }
