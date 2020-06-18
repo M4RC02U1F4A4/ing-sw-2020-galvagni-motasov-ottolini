@@ -35,4 +35,5 @@ public class Vars {
     public static boolean mapEdit = false;
     public static String currentPlayer = "---";
     public static int gameStatus = 1;
+    public static int statusWinLose = -1;
 }

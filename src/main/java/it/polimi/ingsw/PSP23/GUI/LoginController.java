@@ -83,6 +83,8 @@ public class LoginController {
                                 else if(((String) inputObject).contains("BUILD")) Vars.turnStatus = 3;
                                 else if(((String) inputObject).contains("CHOOSE_WORKER:")) Vars.turnStatus = 4;
                                 if(((String) inputObject).contains("timeout")) Vars.gameStatus = 0;
+                                if(((String) inputObject).contains("WIN")) Vars.statusWinLose = 1;
+                                else if(((String) inputObject).contains("LOOSE")) Vars.statusWinLose = 0;
                                 if(((String) inputObject).contains("SELECT_GODS") || ((String) inputObject).contains("CHOOSE_GOD") || ((String) inputObject).contains("STARTING THE GAME")){
                                     Vars.serverMsg = (String) inputObject;
                                 }

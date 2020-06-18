@@ -130,7 +130,34 @@ public class GUIController2 {
                         Vars.gameStatus = -1;
                     });
                 }
-
+                if(Vars.statusWinLose == 0){
+                    Stage stage = (Stage) playerCurrentPlay.getScene().getWindow();
+                    stage.close();
+                    try {
+                        Parent rootWin = FXMLLoader.load(getClass().getResource("/lose.fxml"));
+                        Stage lose = new Stage();
+                        lose.setTitle("Santorini");
+                        lose.setScene(new Scene(rootWin));
+                        lose.setResizable(false);
+                        lose.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                        lose.show();
+                    } catch (IOException e) { e.printStackTrace(); }
+                    Vars.statusWinLose = -1;
+                }
+                else if(Vars.statusWinLose == 1){
+                    Stage stage = (Stage) playerCurrentPlay.getScene().getWindow();
+                    stage.close();
+                    try {
+                        Parent rootWin = FXMLLoader.load(getClass().getResource("/win.fxml"));
+                        Stage win = new Stage();
+                        win.setTitle("Santorini");
+                        win.setScene(new Scene(rootWin));
+                        win.setResizable(false);
+                        win.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                        win.show();
+                    } catch (IOException e) { e.printStackTrace(); }
+                    Vars.statusWinLose = -1;
+                }
             }
         });
         thread.setDaemon(true);
