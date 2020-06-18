@@ -11,6 +11,7 @@ public class Cell implements Serializable {
     Worker worker;
     private int X;
     private int Y;
+    private boolean cupola;
 
     /**
     *   Costructor that set Cell with 4 high levels,
@@ -23,7 +24,8 @@ public class Cell implements Serializable {
         for (int i=0; i<levels.length; i++) {
             levels[i] = FREE;
         }
-        worker=null;
+        cupola = false;
+        worker = null;
         X = x;
         Y = y;
     }
@@ -36,6 +38,7 @@ public class Cell implements Serializable {
         for (int i=0;i<levels.length;i++) {
             levels[i] = FREE;
         }
+        cupola = false;
         worker=null;
     }
 
@@ -99,7 +102,7 @@ public class Cell implements Serializable {
     public boolean isNear (Worker w, boolean height) {
         if ((X >= w.getPosX() - 1) && (X <= w.getPosX() + 1) && (Y >= w.getPosY() - 1) && (Y <= w.getPosY() + 1)) {
             if (height) {
-                if ((height() <= w.getPosZ() + 1) && !(levels[(height() - 1)].equals(CUPOLA)))
+                if ((height() <= w.getPosZ() + 1) && !(cupola))
                     return true;
             }
             else return true;
@@ -170,6 +173,7 @@ public class Cell implements Serializable {
         };
         if (CUPOLA == b || 3 == i) {
             levels[i] = CUPOLA;
+            cupola = true;
         }
         else {
             levels [i] = BUILT;

@@ -116,7 +116,7 @@ public class Controller implements Observer<PlayerMove>{
                                 case BUILD:
                                     sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,<blocco o cupola>");
                                     break;
-                                case GOOD_NEWS:
+                                /*case GOOD_NEWS:
                                     sendToNextPlayer("You won lucky");
                                     sendToRemainingPlayers("Player x won");
                                     break;
@@ -126,7 +126,7 @@ public class Controller implements Observer<PlayerMove>{
                                     sendToRemainingPlayers("One player is KO, 2 to go");
                                     //else
                                     //sendToRemainingPlayers("You won");
-                                    break;
+                                    break;*/
                             }
                             sendToRemainingPlayers("Attendi il tuo turno");
                         } else {

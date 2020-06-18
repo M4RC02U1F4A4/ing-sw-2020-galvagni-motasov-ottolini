@@ -248,15 +248,14 @@ public class Game extends Observable<Message> {
                 }
                 break;
             }
-            //TODO maybe it's time to remove this, is not really needed
-            /*case "Prometheus": {
+            case "Prometheus": {
                 if (Phase.BUILD == getPhase() && 2 == getCurrentGod().remains_builds) {
                     turnManager.setSkipBuild();
                     nextGamePhase();
                     return 1;
                 }
                 break;
-            }*/
+            }
         }
         return -1;
     }
@@ -290,6 +289,7 @@ public class Game extends Observable<Message> {
         }
     }
 
+    //TODO if lose but is possible to skip then skip
     /**
      * sometimes i'm afraid of my own genius.
      * also this move the turn manager only when needed

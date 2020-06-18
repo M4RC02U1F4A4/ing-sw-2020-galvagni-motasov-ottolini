@@ -76,12 +76,14 @@ public class TurnManager {
             case START_TURN: {
                 skipBuild = false;
                 skipMove = false;
-                if ("Prometheus".equals(getCurrentGod().getName()))
-                    currentPhase = Phase.CHECK_LOSE_BUILD;
-                else if ("Chronus".equals(getCurrentGod().getName()))
-                    currentPhase = Phase.CHECK_WIN;
-                else
-                    currentPhase = Phase.CHECK_LOSE_MOVE;
+                switch (getCurrentGod().getName()) {
+                    case "Prometheus":
+                        currentPhase = Phase.CHECK_LOSE_BUILD;
+                    case "Chronus":
+                        currentPhase = Phase.CHECK_WIN;
+                    default:
+                        currentPhase = Phase.CHECK_LOSE_MOVE;
+                }
                 break;
             }
             case CHECK_WIN: {
@@ -98,18 +100,34 @@ public class TurnManager {
                     currentPhase = Phase.MOVE;
                 break;
             }
-            case MOVE:
+            case MOVE: {
                 currentPhase = Phase.CHECK_WIN_MOVE;
                 break;
+            }
             case CHECK_WIN_MOVE: {
-                if (resultsTime)
-                    currentPhase = Phase.GOOD_NEWS;
-                else if ((2 == getCurrentGod().remains_moves))
-                    currentPhase = Phase.CHECK_LOSE_MOVE;
-                else if ((1 == getCurrentGod().remains_moves) && !(skipMove))
-                    currentPhase = Phase.CHECK_LOSE_MOVE;
+                if (!resultsTime) {
+                    switch (getCurrentGod().remains_moves) {
+                        case 2:
+                            currentPhase = Phase.CHECK_LOSE_MOVE;
+                            break;
+                        case 1: {
+                            if (skipMove)
+                                currentPhase = Phase.CHECK_LOSE_BUILD;
+                            else
+                                currentPhase = Phase.CHECK_LOSE_MOVE;
+                            break;
+                        }
+                        default: {
+                            if (getCurrentGod().remains_builds > 0)
+                                currentPhase = Phase.CHECK_LOSE_BUILD;
+                            else
+                                currentPhase = Phase.END;
+                            break;
+                        }
+                    }
+                }
                 else
-                    currentPhase = Phase.CHECK_LOSE_BUILD;
+                    currentPhase = Phase.GOOD_NEWS;
                 break;
             }
             case CHECK_LOSE_BUILD: {
@@ -119,22 +137,42 @@ public class TurnManager {
                     currentPhase = Phase.BUILD;
                 break;
             }
-            case BUILD:
+            case BUILD: {
                 currentPhase = Phase.CHECK_WIN_BUILD;
                 break;
+            }
             case CHECK_WIN_BUILD: {
-                if (resultsTime)
-                    currentPhase = Phase.GOOD_NEWS;
-                else if ((2 == getCurrentGod().remains_builds))
-                    currentPhase = Phase.CHECK_LOSE_BUILD;
-                else if ((1 == getCurrentGod().remains_builds) && !(skipBuild))
-                    currentPhase = Phase.CHECK_LOSE_BUILD;
+                if (!resultsTime) {
+                    switch (getCurrentGod().remains_builds) {
+                        case 2: {
+                            if (skipBuild) {
+                                currentPhase = Phase.CHECK_LOSE_MOVE;
+                                skipBuild = false;
+                            }
+                            else
+                                currentPhase = Phase.CHECK_LOSE_BUILD;
+                            break;
+                        }
+                        case 1: {
+                            if ((1 == getCurrentGod().remains_moves) && ("Prometheus".equals(getCurrentGod().getName())))
+                                currentPhase = Phase.CHECK_LOSE_MOVE;
+                            else if (skipBuild)
+                                currentPhase = Phase.END;
+                            else
+                                currentPhase = Phase.CHECK_LOSE_BUILD;
+                            break;
+                        }
+                        default:
+                            currentPhase = Phase.END;
+                    }
+                }
                 else
-                    currentPhase = Phase.END;
+                    currentPhase = Phase.GOOD_NEWS;
                 break;
             }
-            case GOOD_NEWS:
+            case GOOD_NEWS: {
                 break;
+            }
             case BAD_NEWS: {
                 currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
