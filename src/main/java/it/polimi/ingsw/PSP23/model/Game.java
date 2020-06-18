@@ -249,37 +249,41 @@ public class Game extends Observable<Message> {
                 break;
             }
             //TODO maybe it's time to remove this, is not really needed
-            case "Prometheus": {
+            /*case "Prometheus": {
                 if (Phase.BUILD == getPhase() && 2 == getCurrentGod().remains_builds) {
                     turnManager.setSkipBuild();
                     nextGamePhase();
                     return 1;
                 }
                 break;
-            }
+            }*/
         }
         return -1;
     }
 
-    // TODO check this
     /**
      * to call only when in a 3 player game and 1 is out
-     * @param playerNum the player to remove
      */
-    private void removePlayer(int playerNum) {
-        switch(playerNum) {
+    private void removePlayer() {
+        switch(getCurrentPlayerNum()) {
             case 0:
+                if ("Athena".equals(getCurrentGod().getName()))
+                    turnManager.removeAthena();
                 numPlayers = 2;
                 turnManager.setPlayerNumber(2);
                 players[0] = players[1];
                 players[1] = players[2];
                 break;
             case 1:
+                if ("Athena".equals(getCurrentGod().getName()))
+                    turnManager.removeAthena();
                 numPlayers = 2;
                 turnManager.setPlayerNumber(2);
                 players[1] = players[2];
                 break;
             case 2:
+                if ("Athena".equals(getCurrentGod().getName()))
+                    turnManager.removeAthena();
                 numPlayers = 2;
                 turnManager.setPlayerNumber(2);
                 break;
@@ -301,35 +305,26 @@ public class Game extends Observable<Message> {
             case CHECK_WIN_MOVE:
             case CHECK_WIN_BUILD:
                 if (getCurrentGod().checkWin(getActiveWorker(), completedTowers))
-                    sendWin(getCurrentPlayer());
+                    turnManager.setResults();
                 nextGamePhase();
                 break;
             case CHECK_LOSE_MOVE:
-                if (getCurrentGod().checkLossMove(getActiveWorker(), map)) {
-                    sendLoss(getCurrentPlayer());
-                    if (3 == numPlayers)
-                        removePlayer(getCurrentPlayerNum());
-                    else {
-                        if (1 == getCurrentPlayerNum()) {
-                            sendWin(players[0]);
-                            sendLoss(players[1]);
-                        }
-                        else {
-                            sendLoss(players[0]);
-                            sendWin(players[1]);
-                        }
-                    }
-                }
+                if (getCurrentGod().checkLossMove(getActiveWorker(), map))
+                    turnManager.setResults();
                 nextGamePhase();
                 break;
             case CHECK_LOSE_BUILD:
-                if (getCurrentGod().checkLossBuild(getActiveWorker(), map)) {
-                    sendLoss(getCurrentPlayer());
-                    if (3 == numPlayers)
-                        removePlayer(getCurrentPlayerNum());
-                }
+                if (getCurrentGod().checkLossBuild(getActiveWorker(), map))
+                    turnManager.setResults();
                 nextGamePhase();
                 break;
+            case BAD_NEWS: {
+                if (3 == numPlayers) {
+                    removePlayer();
+                    nextGamePhase();
+                }
+                break;
+            }
             case END:
                 nextGamePhase();
                 turnManager.setCurrentPlayer(getCurrentPlayer());
@@ -489,8 +484,6 @@ public class Game extends Observable<Message> {
         }
         return -1;
     }
-
-    //TODO IVAN tutte queste funzioni sono tue
 
     //Invia il messaggio di partita persa
     public void sendLoss(Player toPlayer) {

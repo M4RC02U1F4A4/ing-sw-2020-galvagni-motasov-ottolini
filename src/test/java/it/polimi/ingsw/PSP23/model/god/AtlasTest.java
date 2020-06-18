@@ -36,5 +36,7 @@ public class AtlasTest {
         assertEquals(-1, mappamondo.build(polo, Status.CUPOLA, gianni));
         assertEquals(0, mappamondo.build(nord, Status.CUPOLA, gianni));
         assertEquals(Status.CUPOLA, nord.levelStatus(0));
+        mappamondo.startTurn(false);
+        assertEquals(-1, mappamondo.move(nord, gianni, null));
     }
 }

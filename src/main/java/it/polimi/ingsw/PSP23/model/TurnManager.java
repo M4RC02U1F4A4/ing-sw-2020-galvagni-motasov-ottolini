@@ -12,12 +12,14 @@ public class TurnManager {
     private boolean AthenaMovedUp;
     private boolean skipBuild;
     private boolean skipMove;
+    private boolean resultsTime;
 
     public TurnManager() {
         currentPlayerNumber = 0;
         currentPhase = Phase.GOD_CHOOSE;
         AthenaMovedUp = false;
         AthenaPlayer = -1;
+        resultsTime = false;
     }
 
     /**
@@ -82,17 +84,27 @@ public class TurnManager {
                     currentPhase = Phase.CHECK_LOSE_MOVE;
                 break;
             }
-            case CHECK_WIN:
-                currentPhase = Phase.CHECK_LOSE_MOVE;
+            case CHECK_WIN: {
+                if (resultsTime)
+                    currentPhase = Phase.GOOD_NEWS;
+                else
+                    currentPhase = Phase.CHECK_LOSE_MOVE;
                 break;
-            case CHECK_LOSE_MOVE:
-                currentPhase = Phase.MOVE;
+            }
+            case CHECK_LOSE_MOVE: {
+                if (resultsTime)
+                    currentPhase = Phase.BAD_NEWS;
+                else
+                    currentPhase = Phase.MOVE;
                 break;
+            }
             case MOVE:
                 currentPhase = Phase.CHECK_WIN_MOVE;
                 break;
             case CHECK_WIN_MOVE: {
-                if ((2 == getCurrentGod().remains_moves))
+                if (resultsTime)
+                    currentPhase = Phase.GOOD_NEWS;
+                else if ((2 == getCurrentGod().remains_moves))
                     currentPhase = Phase.CHECK_LOSE_MOVE;
                 else if ((1 == getCurrentGod().remains_moves) && !(skipMove))
                     currentPhase = Phase.CHECK_LOSE_MOVE;
@@ -100,19 +112,34 @@ public class TurnManager {
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 break;
             }
-            case CHECK_LOSE_BUILD:
-                currentPhase = Phase.BUILD;
+            case CHECK_LOSE_BUILD: {
+                if (resultsTime)
+                    currentPhase = Phase.BAD_NEWS;
+                else
+                    currentPhase = Phase.BUILD;
                 break;
+            }
             case BUILD:
                 currentPhase = Phase.CHECK_WIN_BUILD;
                 break;
             case CHECK_WIN_BUILD: {
-                if ((2 == getCurrentGod().remains_builds))
+                if (resultsTime)
+                    currentPhase = Phase.GOOD_NEWS;
+                else if ((2 == getCurrentGod().remains_builds))
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 else if ((1 == getCurrentGod().remains_builds) && !(skipBuild))
                     currentPhase = Phase.CHECK_LOSE_BUILD;
                 else
                     currentPhase = Phase.END;
+                break;
+            }
+            case GOOD_NEWS:
+                break;
+            case BAD_NEWS: {
+                currentPhase = Phase.CHOOSE_WORKER;
+                currentPlayerNumber++;
+                if (numberOfPlayers <= currentPlayerNumber)
+                    currentPlayerNumber = 0;
                 break;
             }
             case END: {
@@ -128,8 +155,8 @@ public class TurnManager {
     }
 
     /**
-     * TODO: javadoc
-     * @return
+     * getter
+     * @return the current player god
      */
     private God getCurrentGod() {
         return currentPlayer.getGod();
@@ -176,6 +203,21 @@ public class TurnManager {
      */
     public Phase getCurrentPhase() {
         return currentPhase;
+    }
+
+    /**
+     * remove the athena player
+     */
+    public void removeAthena() {
+        AthenaPlayer = -1;
+        AthenaMovedUp = false;
+    }
+
+    /**
+     * setter
+     */
+    public void setResults() {
+        resultsTime = true;
     }
 
     /**
