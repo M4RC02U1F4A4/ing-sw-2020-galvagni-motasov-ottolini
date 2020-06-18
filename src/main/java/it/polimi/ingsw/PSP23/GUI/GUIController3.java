@@ -192,7 +192,7 @@ public class GUIController3 {
             Vars.magicWrite.println("SKIP:");
             Vars.magicWrite.flush();
         }
-        else if(Vars.turnStatus == 3 && (Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia"))){
+        else if(Vars.turnStatus == 3 && (Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia") || Vars.myGod.equals("Prometheus"))){
             Vars.magicWrite.println("SKIP:");
             Vars.magicWrite.flush();
         }
