@@ -112,6 +112,8 @@ public class GUIController2 {
 
         playerCurrentPlay.setText(Vars.player1Name);
         errorButton.setVisible(false);
+        if(Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton") || Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia")) utilityButton.setVisible(true);
+        else utilityButton.setVisible(false);
 
         Thread thread = new Thread(() -> {
             while(true) {
@@ -167,7 +169,15 @@ public class GUIController2 {
 
     @FXML
     private void utilityButtonAction(){
-        System.out.println("ACTION");
+        if(Vars.turnStatus == 2 && (Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton"))){
+            Vars.magicWrite.println("SKIP:");
+            Vars.magicWrite.flush();
+        }
+        else if(Vars.turnStatus == 3 && (Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia"))){
+            Vars.magicWrite.println("SKIP:");
+            Vars.magicWrite.flush();
+        }
+        else errorButton.setVisible(true);
     }
 
     public void errorButtonAction(){
