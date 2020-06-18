@@ -34,4 +34,5 @@ public class Vars {
     public static Map map;
     public static boolean mapEdit = false;
     public static String currentPlayer = "---";
+    public static int gameStatus = 1;
 }
