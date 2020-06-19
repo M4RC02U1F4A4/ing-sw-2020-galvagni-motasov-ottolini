@@ -69,6 +69,8 @@ public class GUIController2 {
     private RadioButton blocco;
     @FXML
     private RadioButton cupola;
+    @FXML
+    private Label turn;
 
     @FXML
     public void initialize() throws IOException{
@@ -121,8 +123,33 @@ public class GUIController2 {
                     Vars.mapEdit = false;
                 }
                 if(Vars.commandNotValid){
-                    errorButton.setVisible(true);
+                    Platform.runLater(() -> errorButton.setVisible(true));
                     Vars.commandNotValid = false;
+                }
+                if(Vars.turnStatus == 0){
+                    Platform.runLater(() -> turn.setText("NOT YOUR TURN"));
+                }
+                else if(Vars.turnStatus == 1){
+                    Platform.runLater(() -> turn.setText("PLACE WORKER"));
+                }
+                else if(Vars.turnStatus == 2){
+                    if(Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton")){
+                        Platform.runLater(() -> turn.setText("MOVE | SKIP"));
+                    }
+                    else {
+                        Platform.runLater(() -> turn.setText("MOVE"));
+                    }
+                }
+                else if(Vars.turnStatus == 3){
+                    if(Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia") || Vars.myGod.equals("Prometheus")){
+                        Platform.runLater(() -> turn.setText("BUILD | SKIP"));
+                    }
+                    else {
+                        Platform.runLater(() -> turn.setText("BUILD"));
+                    }
+                }
+                else if(Vars.turnStatus == 4){
+                    Platform.runLater(() -> turn.setText("CHOOSE WORKER"));
                 }
                 if(Vars.gameStatus == 0){
                     Platform.runLater(() -> {
