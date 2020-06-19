@@ -132,7 +132,7 @@ public class GUIController3 {
 
         playerCurrentPlay.setText(Vars.player1Name);
         errorButton.setVisible(false);
-        if(Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton") || Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia")) utilityButton.setVisible(true);
+        if(Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton") || Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia") || Vars.myGod.equals("Prometheus")) utilityButton.setVisible(true);
         else utilityButton.setVisible(false);
 
         Thread thread = new Thread(() -> {
