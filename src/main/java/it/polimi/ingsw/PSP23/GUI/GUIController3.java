@@ -142,6 +142,10 @@ public class GUIController3 {
                     Platform.runLater(() -> updateGUIMap(Vars.map));
                     Vars.mapEdit = false;
                 }
+                if(Vars.commandNotValid){
+                    errorButton.setVisible(true);
+                    Vars.commandNotValid = false;
+                }
                 if(Vars.gameStatus == 0){
                     Platform.runLater(() -> {
                         Stage stage = (Stage) playerCurrentPlay.getScene().getWindow();

@@ -29,11 +29,12 @@ public class Vars {
     //1 PLACE_WORKER
     //2 MOVE
     //3 BUILD
-    //4 CHOOSE_WORKER:
+    //4 CHOOSE_WORKER
     public static int turnStatus = 0;
     public static Map map;
     public static boolean mapEdit = false;
     public static String currentPlayer = "---";
     public static int gameStatus = 1;
     public static int statusWinLose = -1;
+    public static boolean commandNotValid = false;
 }
