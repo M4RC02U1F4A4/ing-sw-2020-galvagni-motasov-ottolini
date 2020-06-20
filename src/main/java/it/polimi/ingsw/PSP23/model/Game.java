@@ -219,7 +219,6 @@ public class Game extends Observable<Message> {
         return i;
     }
 
-    //TODO inside
     /**
      * let some god to skip the move
      * @return 1 if skipped
@@ -271,6 +270,7 @@ public class Game extends Observable<Message> {
                         turnManager.removeAthena();
                     numPlayers = 2;
                     turnManager.setPlayerNumber(2);
+                    players[0] = null;
                     players[0] = players[1];
                     players[1] = players[2];
                     break;
@@ -279,6 +279,7 @@ public class Game extends Observable<Message> {
                         turnManager.removeAthena();
                     numPlayers = 2;
                     turnManager.setPlayerNumber(2);
+                    players[1] = null;
                     players[1] = players[2];
                     break;
                 case 2:
@@ -286,6 +287,7 @@ public class Game extends Observable<Message> {
                         turnManager.removeAthena();
                     numPlayers = 2;
                     turnManager.setPlayerNumber(2);
+                    players[2] = null;
                     break;
             }
             nextGamePhase();
@@ -385,6 +387,15 @@ public class Game extends Observable<Message> {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // In and Out functions
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * getter
+     * @param numPlayers number of player 0,1,2
+     * @return the player
+     */
+    public Player getPlayer(int numPlayers) {
+        return players[numPlayers];
+    }
 
     /**
      * getter

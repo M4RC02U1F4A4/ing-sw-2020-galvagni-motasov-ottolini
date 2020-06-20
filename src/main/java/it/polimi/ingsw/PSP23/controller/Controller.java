@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 public class Controller implements Observer<PlayerMove>{
     private final Game game;
-    private final static int TIME_LIMIT=30;
+    private final static int TIME_LIMIT=600;
 
     private ArrayList<View> players = new ArrayList<>();
     private Action actionBeingPerformed;
@@ -61,10 +61,10 @@ public class Controller implements Observer<PlayerMove>{
             switch (move.getCommand()) {
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
-                        game.godChoose(arguments.get(0), arguments.get(1), arguments.get(2));
                         godsForFX.add(arguments.get(0));
                         godsForFX.add(arguments.get(1));
                         godsForFX.add(arguments.get(2));
+                        game.godChoose(arguments.get(0), arguments.get(1), arguments.get(2));
                         sendToEverybody("GODSC:" +game.godsc());
                         //sendToNextPlayer("GODSC:"+game.godsc());
                         //sendToRemainingPlayers("GODSC:"+game.godsc());
@@ -117,11 +117,11 @@ public class Controller implements Observer<PlayerMove>{
                                     sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,<blocco o cupola>");
                                     break;
                                 case GOOD_NEWS:
-                                    sendToNextPlayer("You won lucky");
-                                    sendToRemainingPlayers("Player x won");
+                                    sendToNextPlayer("WIN");
+                                    sendToRemainingPlayers("LOSE");
                                     break;
                                 case BAD_NEWS:
-                                    sendToNextPlayer("Try again");
+                                    sendToNextPlayer("LOSE");
                                     if (3 == players.size()) {
                                         //TODO mandare messaggio di rimozione del player
                                         players.remove(players.get(game.getCurrentPlayerNum()));
@@ -129,7 +129,7 @@ public class Controller implements Observer<PlayerMove>{
                                         sendToRemainingPlayers("One player is KO, 2 to go");
                                     }
                                     else {
-                                        sendToRemainingPlayers("You won");
+                                        sendToRemainingPlayers("WIN");
                                     }
                                     break;
                             }
