@@ -111,6 +111,8 @@ public class God {
             level = c.build(b);
         else
             level = c.build(Status.BUILT);
+        if ("Zeus".equals(name) && c.getX() == w.getPosX() && c.getY() == w.getPosY())
+            starting_z = w.getPosZ();
         remains_builds--;
         return level;
     }
