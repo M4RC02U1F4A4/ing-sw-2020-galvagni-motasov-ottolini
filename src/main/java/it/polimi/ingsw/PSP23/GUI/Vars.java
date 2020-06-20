@@ -5,7 +5,9 @@ import javafx.stage.Stage;
 
 import java.io.PrintWriter;
 
-
+/**
+ * Variables used for the GUI
+ */
 public class Vars {
     public static String username;
     public static String ipServer = "localhost";

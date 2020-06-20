@@ -16,9 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GUIController3 {
-    //PLAYER 1 RED
-    //PLAYER 2 BLUE
-    //PLAYER 3 WHITE
+
     private String hera = "HERA\n\nAn opponent cannot win by moving into a perimeter space.";
     private String prometheus = "PROMETHEUS\n\nIf your Worker does not move up, it may build both before and after moving.";
     private String artemis = "ARTEMIS\n\nYour Worker may move one additional time, but not back to its initial space.";
