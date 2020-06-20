@@ -20,8 +20,7 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 
 public class GUIController2 {
-    //PLAYER 1 BLUE
-    //PLAYER 2 RED
+
     private String hera = "HERA\n\nAn opponent cannot win by moving into a perimeter space.";
     private String prometheus = "PROMETHEUS\n\nIf your Worker does not move up, it may build both before and after moving.";
     private String artemis = "ARTEMIS\n\nYour Worker may move one additional time, but not back to its initial space.";
@@ -162,32 +161,36 @@ public class GUIController2 {
                     });
                 }
                 if(Vars.statusWinLose == 0){
-                    Stage stage = (Stage) playerCurrentPlay.getScene().getWindow();
-                    stage.close();
-                    try {
-                        Parent rootWin = FXMLLoader.load(getClass().getResource("/lose.fxml"));
-                        Stage lose = new Stage();
-                        lose.setTitle("Santorini");
-                        lose.setScene(new Scene(rootWin));
-                        lose.setResizable(false);
-                        lose.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
-                        lose.show();
-                    } catch (IOException e) { e.printStackTrace(); }
-                    Vars.statusWinLose = -1;
+                    Platform.runLater(() -> {
+                        Stage stage = (Stage) playerCurrentPlay.getScene().getWindow();
+                        stage.close();
+                        try {
+                            Parent rootWin = FXMLLoader.load(getClass().getResource("/lose.fxml"));
+                            Stage lose = new Stage();
+                            lose.setTitle("Santorini - " + Vars.username);
+                            lose.setScene(new Scene(rootWin));
+                            lose.setResizable(false);
+                            lose.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                            lose.show();
+                        } catch (IOException e) { e.printStackTrace(); }
+                        Vars.statusWinLose = -1;
+                    });
                 }
                 else if(Vars.statusWinLose == 1){
-                    Stage stage = (Stage) playerCurrentPlay.getScene().getWindow();
-                    stage.close();
-                    try {
-                        Parent rootWin = FXMLLoader.load(getClass().getResource("/win.fxml"));
-                        Stage win = new Stage();
-                        win.setTitle("Santorini");
-                        win.setScene(new Scene(rootWin));
-                        win.setResizable(false);
-                        win.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
-                        win.show();
-                    } catch (IOException e) { e.printStackTrace(); }
-                    Vars.statusWinLose = -1;
+                    Platform.runLater(() -> {
+                        Stage stage = (Stage) playerCurrentPlay.getScene().getWindow();
+                        stage.close();
+                        try {
+                            Parent rootWin = FXMLLoader.load(getClass().getResource("/win.fxml"));
+                            Stage win = new Stage();
+                            win.setTitle("Santorini - " + Vars.username);
+                            win.setScene(new Scene(rootWin));
+                            win.setResizable(false);
+                            win.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                            win.show();
+                        } catch (IOException e) { e.printStackTrace(); }
+                        Vars.statusWinLose = -1;
+                    });
                 }
             }
         });
