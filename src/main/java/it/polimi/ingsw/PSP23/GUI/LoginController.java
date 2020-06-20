@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP23.GUI;
 
-import it.polimi.ingsw.PSP23.client.ClientGUI;
 import it.polimi.ingsw.PSP23.model.Map;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -59,8 +58,7 @@ public class LoginController {
 
         Stage stage = (Stage) playButton.getScene().getWindow();
         stage.close();
-
-        ClientGUI c=new ClientGUI(Vars.ipServer,13245);
+        
         Socket socket=new Socket(Vars.ipServer, 13245);
         System.out.println("connessione stabilita");
         ObjectInputStream socketIn=new ObjectInputStream(socket.getInputStream());
