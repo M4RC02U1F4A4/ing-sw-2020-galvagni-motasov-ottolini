@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP23.GUI;
 
+import it.polimi.ingsw.PSP23.ClientApp;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -114,7 +115,7 @@ public class ChoiceController {
                 choice3.setTitle("Santorini - " + Vars.username);
                 choice3.setScene(new Scene(rootChoice3));
                 choice3.setResizable(false);
-                choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 choice3.show();
             } catch (IOException e) { e.printStackTrace(); }
         }
@@ -137,7 +138,7 @@ public class ChoiceController {
                 choice3.setTitle("Santorini - " + Vars.username);
                 choice3.setScene(new Scene(rootChoice3));
                 choice3.setResizable(false);
-                choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 choice3.show();
             } catch (IOException e) { e.printStackTrace(); }
         }
@@ -177,7 +178,7 @@ public class ChoiceController {
 
     public void description(String god){
         Stage window = new Stage();
-        window.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+        window.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
         //must be closed before reuse the choice window
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(god);
