@@ -263,30 +263,36 @@ public class Game extends Observable<Message> {
     /**
      * to call only when in a 3 player game and 1 is out
      */
-    private void removePlayer() {
-        switch(getCurrentPlayerNum()) {
-            case 0:
-                if ("Athena".equals(getCurrentGod().getName()))
-                    turnManager.removeAthena();
-                numPlayers = 2;
-                turnManager.setPlayerNumber(2);
-                players[0] = players[1];
-                players[1] = players[2];
-                break;
-            case 1:
-                if ("Athena".equals(getCurrentGod().getName()))
-                    turnManager.removeAthena();
-                numPlayers = 2;
-                turnManager.setPlayerNumber(2);
-                players[1] = players[2];
-                break;
-            case 2:
-                if ("Athena".equals(getCurrentGod().getName()))
-                    turnManager.removeAthena();
-                numPlayers = 2;
-                turnManager.setPlayerNumber(2);
-                break;
+    public int removePlayer() {
+        if (Phase.BAD_NEWS == getPhase()) {
+            switch (getCurrentPlayerNum()) {
+                case 0:
+                    if ("Athena".equals(getCurrentGod().getName()))
+                        turnManager.removeAthena();
+                    numPlayers = 2;
+                    turnManager.setPlayerNumber(2);
+                    players[0] = players[1];
+                    players[1] = players[2];
+                    break;
+                case 1:
+                    if ("Athena".equals(getCurrentGod().getName()))
+                        turnManager.removeAthena();
+                    numPlayers = 2;
+                    turnManager.setPlayerNumber(2);
+                    players[1] = players[2];
+                    break;
+                case 2:
+                    if ("Athena".equals(getCurrentGod().getName()))
+                        turnManager.removeAthena();
+                    numPlayers = 2;
+                    turnManager.setPlayerNumber(2);
+                    break;
+            }
+            nextGamePhase();
+            return 0;
         }
+        else
+            return -1;
     }
 
     //TODO if lose but is possible to skip then skip
@@ -298,7 +304,6 @@ public class Game extends Observable<Message> {
         turnManager.nextPhaseGame();
         switch (turnManager.getCurrentPhase()) {
             case START_TURN:
-                sendMapUpdate();
                 nextGamePhase();
                 break;
             case CHECK_WIN:
@@ -319,10 +324,7 @@ public class Game extends Observable<Message> {
                 nextGamePhase();
                 break;
             case BAD_NEWS: {
-                if (3 == numPlayers) {
-                    removePlayer();
-                    nextGamePhase();
-                }
+                nextGamePhase();
                 break;
             }
             case END:
@@ -483,20 +485,5 @@ public class Game extends Observable<Message> {
                 return skipAction();
         }
         return -1;
-    }
-
-    //Invia il messaggio di partita persa
-    public void sendLoss(Player toPlayer) {
-        System.out.println("lmao");
-    }
-
-    //Invia il messaggio di partita vinta
-    public void sendWin(Player toPlayer) {
-        System.out.println("xd");
-    }
-
-    //Invia il messaggio di update map
-    public void sendMapUpdate() {
-        System.out.println("lol");
     }
 }

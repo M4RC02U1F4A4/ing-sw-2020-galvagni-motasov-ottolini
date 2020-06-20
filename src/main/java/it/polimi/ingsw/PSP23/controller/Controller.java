@@ -116,17 +116,22 @@ public class Controller implements Observer<PlayerMove>{
                                 case BUILD:
                                     sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nBUILD:<x>,<y>,<blocco o cupola>");
                                     break;
-                                /*case GOOD_NEWS:
+                                case GOOD_NEWS:
                                     sendToNextPlayer("You won lucky");
                                     sendToRemainingPlayers("Player x won");
                                     break;
                                 case BAD_NEWS:
                                     sendToNextPlayer("Try again");
-                                    //if (player == 3)
-                                    sendToRemainingPlayers("One player is KO, 2 to go");
-                                    //else
-                                    //sendToRemainingPlayers("You won");
-                                    break;*/
+                                    if (3 == players.size()) {
+                                        //TODO mandare messaggio di rimozione del player
+                                        players.remove(players.get(game.getCurrentPlayerNum()));
+                                        game.removePlayer();
+                                        sendToRemainingPlayers("One player is KO, 2 to go");
+                                    }
+                                    else {
+                                        sendToRemainingPlayers("You won");
+                                    }
+                                    break;
                             }
                             sendToRemainingPlayers("Attendi il tuo turno");
                         } else {

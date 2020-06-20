@@ -24,8 +24,6 @@ public class GameTest {
         hunger.getAllGodList();
         hunger.getPhase();
         hunger.getPhase();
-        hunger.sendWin(null);
-        hunger.sendLoss(null);
     }
 
     @Test
