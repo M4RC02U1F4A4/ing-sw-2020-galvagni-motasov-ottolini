@@ -199,7 +199,7 @@ public class Game extends Observable<Message> {
     private int build(int x, int y, Status b) {
         int i = getCurrentGod().build(map.getCell(x, y), b, getActiveWorker());
         if (0 <= i) {
-            if (ChronusIsHere && 4 == i)
+            if (ChronusIsHere && 3 == i)
                 completedTowers++;
             nextGamePhase();
         }
