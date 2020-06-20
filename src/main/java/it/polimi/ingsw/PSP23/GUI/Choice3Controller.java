@@ -34,7 +34,6 @@ public class Choice3Controller {
     private Button choiceButton3;
     @FXML
     public void initialize(){
-        //TODO: mostrare le divinità tra cui scegliere
         if(Vars.numPlayer == 2){
             if(!Vars.god1Used){
                 choiceImage1desc.setImage(new Image("/img/gods/" + Vars.god1 +"_desc.png"));

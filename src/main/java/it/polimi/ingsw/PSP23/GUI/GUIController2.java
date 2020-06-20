@@ -237,6 +237,12 @@ public class GUIController2 {
         else errorButton.setVisible(true);
     }
 
+    /**
+     * Action to do when a cell on the map is been pressed
+     * @param b buton pressed
+     * @param x X position of the cell
+     * @param y Y position of the cell
+     */
     public void press(Button b, int x, int y){
         if(Vars.turnStatus == 0){
             //not your turn
