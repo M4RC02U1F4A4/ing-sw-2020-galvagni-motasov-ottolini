@@ -95,4 +95,8 @@ public class GameTest {
         assertEquals(0, hunger.getCurrentPlayerNum());
         hunger.getPhase();
     }
+
+    @Test
+    public void removePlayer() {
+    }
 }

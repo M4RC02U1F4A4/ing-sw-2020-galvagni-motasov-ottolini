@@ -100,12 +100,13 @@ public class Cell implements Serializable {
     *   @return true if the condition is verified, false other otherwise
     */
     public boolean isNear (Worker w, boolean height) {
+        if (cupola)
+            return false;
         if ((X >= w.getPosX() - 1) && (X <= w.getPosX() + 1) && (Y >= w.getPosY() - 1) && (Y <= w.getPosY() + 1)) {
-            if (height) {
-                if ((height() <= w.getPosZ() + 1) && !(cupola))
-                    return true;
-            }
-            else return true;
+            if (!height)
+                return true;
+            else if (height() <= w.getPosZ() + 1)
+                return true;
         }
         return false;
     }
