@@ -107,7 +107,7 @@ public class God {
             return -2;
         if (!(c.isNear(w, false)) || (c.isOccupied() && !(c == w.getCell())))
             return -1;
-        if (c == w.getCell() && (!"Zeus".equals(name) || (3 > c.height())))
+        if (c == w.getCell() && (!"Zeus".equals(name) || (3 == c.height())))
             return -1;
         if ("Atlas".equals(name))
             level = c.build(b);
