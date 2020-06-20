@@ -16,8 +16,6 @@ public class Controller implements Observer<PlayerMove>{
     private Action actionBeingPerformed;
     private Status whatToBuild = Status.FREE;
     private ArrayList<String> arguments = new ArrayList<>();
-    private ArrayList<String> godsForFX=new ArrayList<>();
-    private ArrayList<String> deiInOrdine=new ArrayList<>();
     private int x = -1, y = -1;
     private int chosenWorker = -1;
 
@@ -29,12 +27,15 @@ public class Controller implements Observer<PlayerMove>{
         game.addPlayer(p.getName(),p.getIpAddress());
     }
 
+
+
     public void addPlayerView(View v){
         players.add(v);
     }
 
     public Controller(Game game) {
         super();
+
         this.game = game;
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -61,9 +62,6 @@ public class Controller implements Observer<PlayerMove>{
             switch (move.getCommand()) {
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
-                        godsForFX.add(arguments.get(0));
-                        godsForFX.add(arguments.get(1));
-                        godsForFX.add(arguments.get(2));
                         game.godChoose(arguments.get(0), arguments.get(1), arguments.get(2));
                         sendToEverybody("GODSC:" +game.godsc());
                         //sendToNextPlayer("GODSC:"+game.godsc());
@@ -179,9 +177,6 @@ public class Controller implements Observer<PlayerMove>{
             case "CHOOSE_GOD":{
                 actionBeingPerformed=Action.CHOOSE_GOD;
                 arguments.add(tmp[0]);  //dio scelto per il giocatore
-                if(godsForFX.contains(arguments.get(0))){
-                    deiInOrdine.add(arguments.get(0));
-                }
                 break;
             }
             case "PLACE_WORKER":{
@@ -261,7 +256,8 @@ public class Controller implements Observer<PlayerMove>{
     public String playersList(){
         String msg="";
         for(int i=0;i<players.size();i++){
-            msg=msg+"PLAYER"+(i+1)+":"+players.get(i).getPlayer().getName()+"-"+players.get(i).getPlayer().getColor()+"-"+deiInOrdine.get(i)+"\n";
+            //msg=msg+"PLAYER"+(i+1)+":"+players.get(i).getPlayer().getName()+"-"+players.get(i).getPlayer().getColor()+"-"+deiInOrdine.get(i)+"\n";
+            msg=msg+"PLAYER"+(i+1)+":"+players.get(i).getPlayer().getName()+"-"+game.getPlayer(i).getColor()+"-"+game.getPlayer(i).getGod().getName()+"\n";
         }
         return msg;
     }
