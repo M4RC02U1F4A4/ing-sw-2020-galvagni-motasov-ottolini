@@ -105,7 +105,7 @@ public class God {
         remains_moves = 0;
         if (0 == remains_builds)
             return -2;
-        if (!(c.isNear(w, false)) || (c.isOccupied() && !(c == w.getCell())) || (c == w.getCell() && !"Zeus".equals(name)))
+        if (!(c.isNear(w, false)) || (c.isOccupied() && !(c == w.getCell())) || (c == w.getCell() && !"Zeus".equals(name) && (3 > c.height())))
             return -1;
         if ("Atlas".equals(name))
             level = c.build(b);
