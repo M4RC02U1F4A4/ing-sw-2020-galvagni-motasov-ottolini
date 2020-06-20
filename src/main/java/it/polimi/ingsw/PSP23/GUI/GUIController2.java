@@ -111,8 +111,14 @@ public class GUIController2 {
 
         playerCurrentPlay.setText(Vars.player1Name);
         errorButton.setVisible(false);
+        blocco.setVisible(false);
+        cupola.setVisible(false);
         if(Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton") || Vars.myGod.equals("Demeter") || Vars.myGod.equals("Hephaestus") || Vars.myGod.equals("Hestia") || Vars.myGod.equals("Prometheus")) utilityButton.setVisible(true);
         else utilityButton.setVisible(false);
+        if(Vars.myGod.equals("Atlas")){
+            blocco.setVisible(true);
+            cupola.setVisible(true);
+        }
 
         Thread thread = new Thread(() -> {
             while(true) {
