@@ -1,10 +1,6 @@
 package it.polimi.ingsw.PSP23;
 
-import it.polimi.ingsw.PSP23.GUI.Main;
-import it.polimi.ingsw.PSP23.GUI.Vars;
 import it.polimi.ingsw.PSP23.client.Client;
-import it.polimi.ingsw.PSP23.client.ClientGUI;
-import it.polimi.ingsw.PSP23.model.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,9 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -58,7 +52,7 @@ public class ClientApp extends Application{
         primaryStage.setTitle("Santorini");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+        primaryStage.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
         primaryStage.show();
     }
 }

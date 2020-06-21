@@ -1,6 +1,6 @@
 package it.polimi.ingsw.PSP23.GUI;
 
-import it.polimi.ingsw.PSP23.client.ClientGUI;
+import it.polimi.ingsw.PSP23.ClientApp;
 import it.polimi.ingsw.PSP23.model.Map;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -60,7 +60,6 @@ public class LoginController {
         Stage stage = (Stage) playButton.getScene().getWindow();
         stage.close();
 
-        ClientGUI c=new ClientGUI(Vars.ipServer,13245);
         Socket socket=new Socket(Vars.ipServer, 13245);
         System.out.println("connessione stabilita");
         ObjectInputStream socketIn=new ObjectInputStream(socket.getInputStream());
@@ -172,7 +171,7 @@ public class LoginController {
                 choice.setTitle("Santorini - " + Vars.username);
                 choice.setScene(new Scene(rootChoice));
                 choice.setResizable(false);
-                choice.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                choice.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 choice.show();
             } catch (IOException e) {e.printStackTrace();}
         }
@@ -183,7 +182,7 @@ public class LoginController {
                 choice3.setTitle("Santorini - " + Vars.username);
                 choice3.setScene(new Scene(rootChoice3));
                 choice3.setResizable(false);
-                choice3.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 choice3.show();
             } catch (IOException e) { e.printStackTrace();}
         }

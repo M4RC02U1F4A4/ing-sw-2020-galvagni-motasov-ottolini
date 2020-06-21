@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP23;
 
 import it.polimi.ingsw.PSP23.client.Client;
-import it.polimi.ingsw.PSP23.GUI.Main;
 import it.polimi.ingsw.PSP23.GUI.Vars;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +35,7 @@ public class ClientGuiApp extends Application {
         primaryStage.setTitle("Santorini");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+        primaryStage.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
         primaryStage.show();
     }
 }

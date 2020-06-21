@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP23.GUI;
 
+import it.polimi.ingsw.PSP23.ClientApp;
 import it.polimi.ingsw.PSP23.model.Color;
 import it.polimi.ingsw.PSP23.model.Map;
 import it.polimi.ingsw.PSP23.model.Status;
@@ -197,7 +198,7 @@ public class GUIController3 {
                             lose.setTitle("Santorini - " + Vars.username);
                             lose.setScene(new Scene(rootWin));
                             lose.setResizable(false);
-                            lose.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                            lose.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                             lose.show();
                         } catch (IOException e) { e.printStackTrace(); }
                         Vars.statusWinLose = -1;
@@ -213,7 +214,7 @@ public class GUIController3 {
                             win.setTitle("Santorini - " + Vars.username);
                             win.setScene(new Scene(rootWin));
                             win.setResizable(false);
-                            win.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                            win.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                             win.show();
                         } catch (IOException e) { e.printStackTrace(); }
                         Vars.statusWinLose = -1;
@@ -257,6 +258,12 @@ public class GUIController3 {
         else errorButton.setVisible(true);
     }
 
+    /**
+     * Action to do when a cell on the map is been pressed
+     * @param b buton pressed
+     * @param x X position of the cell
+     * @param y Y position of the cell
+     */
     public void press(Button b, int x, int y){
         if(Vars.turnStatus == 0){
             //not your turn

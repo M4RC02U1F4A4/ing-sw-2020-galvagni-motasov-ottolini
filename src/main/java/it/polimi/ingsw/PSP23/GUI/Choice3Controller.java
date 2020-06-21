@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP23.GUI;
 
+import it.polimi.ingsw.PSP23.ClientApp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,7 +35,6 @@ public class Choice3Controller {
     private Button choiceButton3;
     @FXML
     public void initialize(){
-        //TODO: mostrare le divinità tra cui scegliere
         if(Vars.numPlayer == 2){
             if(!Vars.god1Used){
                 choiceImage1desc.setImage(new Image("/img/gods/" + Vars.god1 +"_desc.png"));
@@ -93,7 +93,7 @@ public class Choice3Controller {
                 gameBoard.setTitle("Santorini - " + Vars.username);
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -106,7 +106,7 @@ public class Choice3Controller {
                 gameBoard.setTitle("Santorini - " + Vars.username);
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -129,7 +129,7 @@ public class Choice3Controller {
                 gameBoard.setTitle("Santorini - " + Vars.username);
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -142,7 +142,7 @@ public class Choice3Controller {
                 gameBoard.setTitle("Santorini - " + Vars.username);
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 gameBoard.show();
 
             } catch (IOException e) {
@@ -166,7 +166,7 @@ public class Choice3Controller {
                 gameBoard.setTitle("Santorini - " + Vars.username);
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -179,7 +179,7 @@ public class Choice3Controller {
                 gameBoard.setTitle("Santorini - " + Vars.username);
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
-                gameBoard.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
                 gameBoard.show();
 
             } catch (IOException e) {
