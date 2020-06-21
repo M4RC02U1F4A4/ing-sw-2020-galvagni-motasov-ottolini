@@ -64,10 +64,9 @@ public class TurnManager {
      */
     public void nextPhaseGame() {
         switch (currentPhase) {
-            case CHOOSE_WORKER: {
+            case CHOOSE_WORKER:
                 currentPhase = Phase.START_TURN;
                 break;
-            }
             case START_TURN: {
                 skipBuild = false;
                 skipMove = false;
@@ -98,10 +97,9 @@ public class TurnManager {
                     currentPhase = Phase.MOVE;
                 break;
             }
-            case MOVE: {
+            case MOVE:
                 currentPhase = Phase.CHECK_WIN_MOVE;
                 break;
-            }
             case CHECK_WIN_MOVE: {
                 if (!resultsTime) {
                     switch (getCurrentGod().remains_moves) {
@@ -135,10 +133,9 @@ public class TurnManager {
                     currentPhase = Phase.BUILD;
                 break;
             }
-            case BUILD: {
+            case BUILD:
                 currentPhase = Phase.CHECK_WIN_BUILD;
                 break;
-            }
             case CHECK_WIN_BUILD: {
                 if (!resultsTime) {
                     switch (getCurrentGod().remains_builds) {
@@ -168,12 +165,8 @@ public class TurnManager {
                     currentPhase = Phase.GOOD_NEWS;
                 break;
             }
-            case GOOD_NEWS: {
-                break;
-            }
-            case BAD_NEWS: {
+            case BAD_NEWS:{
                 currentPhase = Phase.CHOOSE_WORKER;
-                currentPlayerNumber++;
                 if (numberOfPlayers <= currentPlayerNumber)
                     currentPlayerNumber = 0;
                 break;
@@ -253,10 +246,4 @@ public class TurnManager {
     public void setSkipBuild() {
         skipBuild = true;
     }
-
-    //TEST ONLY!
-    public void goBanana(){
-        currentPhase=Phase.CHOOSE_WORKER;
-    }
-
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Worker implements Serializable {
     private Cell cell;
     Color color;
-    int workerNumber=-1;
+    int workerNumber = -1;
 
     /**
     *   Costructor used when the worker are placed on the map

@@ -138,15 +138,4 @@ public class Player {
     public void setPlayerNumber(int playerNumber) {
         this.playerNumber = playerNumber;
     }
-
-    // DEBUG ONLY! use placeWorker instead TODO remove me
-    public void setWorkers(Worker[] workers) {
-        this.workers = workers;
-    }
-
-    // DEBUG ONLY! use placeWorker instead TODO remove me
-    public void setWorkerByNumber(Worker w,int num){
-        if(num==0 || num==1)workers[num]=w;
-        else System.out.println("error");
-    }
 }

@@ -265,6 +265,8 @@ public class Game extends Observable<Message> {
                 HeraIsHere = false;
             else if (getCurrentGod() instanceof Chronus)
                 ChronusIsHere = false;
+            getCurrentPlayer().getWorkerByNumber(0).getCell().fireWorker(getCurrentPlayer().getWorkerByNumber(0));
+            getCurrentPlayer().getWorkerByNumber(1).getCell().fireWorker(getCurrentPlayer().getWorkerByNumber(1));
             switch (getCurrentPlayerNum()) {
                 case 0:
                     numPlayers = 2;
@@ -321,10 +323,6 @@ public class Game extends Observable<Message> {
                     turnManager.setResults();
                 nextGamePhase();
                 break;
-            case BAD_NEWS: {
-                nextGamePhase();
-                break;
-            }
             case END:
                 nextGamePhase();
                 turnManager.setCurrentPlayer(getCurrentPlayer());

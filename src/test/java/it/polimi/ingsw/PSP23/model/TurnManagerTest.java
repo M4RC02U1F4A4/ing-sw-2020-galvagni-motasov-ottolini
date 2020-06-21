@@ -58,25 +58,25 @@ public class TurnManagerTest {
         assertEquals(Phase.GOD_PICK, IChooseYou.getCurrentPhase());
         Bulbasaur.setGod(new Athena());
         IChooseYou.nextPhaseSetUp();
-        Bulbasaur.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 0);
+        Bulbasaur.placeWorker(new Cell(0,0));
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 2 worker 0 set
         IChooseYou.setCurrentPlayer(Squirtle);
         IChooseYou.nextPhaseSetUp();
-        Squirtle.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 0);
+        Squirtle.placeWorker(new Cell(0,0));
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 1 worker 1 set
         IChooseYou.setCurrentPlayer(Bulbasaur);
         IChooseYou.nextPhaseSetUp();
-        Bulbasaur.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 1);
+        Bulbasaur.placeWorker(new Cell(0,1));
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 2 worker 1 set
         IChooseYou.setCurrentPlayer(Squirtle);
         IChooseYou.nextPhaseSetUp();
-        Squirtle.setWorkerByNumber(new Worker(new Cell(), Color.WHITE, 0), 1);
+        Squirtle.placeWorker(new Cell(0,1));
         IChooseYou.nextPhaseSetUp();
         assertEquals(Phase.END, IChooseYou.getCurrentPhase());
         // player 1 end
@@ -87,7 +87,7 @@ public class TurnManagerTest {
 
     @Test
     public void gamePhaseTest() {
-        IChooseYou.goBanana();
+        this.setupPhaseTest();
         Bulbasaur.setGod(new God());
         IChooseYou.setPlayerNumber(1);
         Bulbasaur.setPlayerNumber(0);

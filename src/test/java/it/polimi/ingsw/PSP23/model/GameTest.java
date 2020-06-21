@@ -69,6 +69,18 @@ public class GameTest {
     }
 
     @Test
+    public void lose() {
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 0, 0));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 1, 1));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 0, 1));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 1, 0));
+        // Triton turn (player 0)
+        assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
+        assertEquals(0, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 0, 0, 0));
+        assertEquals(Phase.BAD_NEWS, hunger.getPhase());
+    }
+
+    @Test
     public void removePlayer() {
         this.setUp3();
         assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 0, 0));
@@ -80,6 +92,9 @@ public class GameTest {
         // Triton turn (player 0)
         assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
         assertEquals(0, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 0, 0, 0));
-        assertEquals(0, hunger.getCurrentPlayerNum());
+        assertEquals(Phase.BAD_NEWS, hunger.getPhase());
+        hunger.removePlayer();
+        assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
+        assertFalse(hunger.getMap().getCell(0,0).isOccupied());
     }
 }

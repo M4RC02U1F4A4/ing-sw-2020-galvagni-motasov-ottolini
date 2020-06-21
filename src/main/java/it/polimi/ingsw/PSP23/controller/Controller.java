@@ -124,7 +124,8 @@ public class Controller implements Observer<PlayerMove>{
                                         //TODO mandare messaggio di rimozione del player
                                         players.remove(players.get(game.getCurrentPlayerNum()));
                                         game.removePlayer();
-                                        sendToRemainingPlayers("One player is KO, 2 to go");
+                                        sendUpdatedMap();
+                                        sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
                                     }
                                     else {
                                         sendToRemainingPlayers("WIN");
