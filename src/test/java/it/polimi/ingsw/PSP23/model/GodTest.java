@@ -55,13 +55,10 @@ public class GodTest {
 
     @Test
     public void inizialization() {
-        assertFalse(rjdio.is_hera_in_game);
         assertEquals(rjdio.remains_builds, 0);
         assertEquals(rjdio.remains_moves, 0);
         assertEquals(rjdio.starting_z, -2);
         assertEquals(rjdio.getName(), "zioDelTuono");
-        rjdio.HeraIsHere();
-        assertTrue(rjdio.is_hera_in_game);
     }
 
     @Test
@@ -91,7 +88,6 @@ public class GodTest {
         perfect.setCoord(2,2);
         assertEquals(-2, rjdio.move(perfect, murathor, map));
         // athena power up, "It's over, Anakin! I have the high ground!"
-        rjdio.AthenaIsHere();
         rjdio.setUpTurn(1,0,true);
         perfect.build(Status.BUILT);
         assertEquals(-3, rjdio.move(perfect, murathor, map));
@@ -151,38 +147,37 @@ public class GodTest {
             rjdio.starting_z = 1;
             ulare.build(Status.BUILT);
             murathor.moveWorker(ulare);
-            assertFalse(rjdio.checkWin(murathor, 0));
+            assertFalse(rjdio.checkWin(murathor, 0, false));
         }
         ulare.build(Status.BUILT);
-        assertTrue(rjdio.checkWin(murathor, 12));
+        assertTrue(rjdio.checkWin(murathor, 12, false));
         //hera power enabled
-        rjdio.HeraIsHere();
         //testing borders
         int i = 0;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(i,j);
-            assertFalse(rjdio.checkWin(murathor, 34));
+            assertFalse(rjdio.checkWin(murathor, 34, true));
         }
         i = 4;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(i,j);
-            assertFalse(rjdio.checkWin(murathor, 5));
+            assertFalse(rjdio.checkWin(murathor, 5, true));
         }
         i = 4;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(j,i);
-            assertFalse(rjdio.checkWin(murathor, 3));
+            assertFalse(rjdio.checkWin(murathor, 3, true));
         }
         i = 4;
         for (int j = 0; j < 5; j++) {
             ulare.setCoord(j,i);
-            assertFalse(rjdio.checkWin(murathor, 0));
+            assertFalse(rjdio.checkWin(murathor, 0, true));
         }
         //testing center
         for (i = 1; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
                 ulare.setCoord(i, j);
-                assertTrue(rjdio.checkWin(murathor, 0));
+                assertTrue(rjdio.checkWin(murathor, 0, true));
             }
         }
     }
@@ -233,8 +228,6 @@ public class GodTest {
             set.build(Status.BUILT);
         }
         nov.build(Status.BUILT);
-        apelle.AthenaIsHere();
-        toro.AthenaIsHere();
         //test 1
         rjdio.startTurn(false);
         pedone1 = new Worker(cin, Color.BLUE, 0);

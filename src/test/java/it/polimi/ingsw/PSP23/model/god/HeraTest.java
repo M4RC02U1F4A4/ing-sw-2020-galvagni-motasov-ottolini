@@ -34,8 +34,8 @@ public class HeraTest {
         }
         top.build(Status.BUILT);
         ero.startTurn(false);
-        assertFalse(ero.checkWin(gianni, 0));
+        assertFalse(ero.checkWin(gianni, 0, true));
         assertEquals(0, ero.move(top, gianni,map));
-        assertTrue(ero.checkWin(gianni, 0));
+        assertTrue(ero.checkWin(gianni, 0, true));
     }
 }

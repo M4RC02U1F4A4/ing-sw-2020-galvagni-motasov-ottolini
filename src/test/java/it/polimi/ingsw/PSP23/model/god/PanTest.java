@@ -42,7 +42,7 @@ public class PanTest {
         one.build(Status.BUILT);
         god.startTurn(false);
         god.move(zero, gianni,map);
-        assertTrue(god.checkWin(gianni, 0));
+        assertTrue(god.checkWin(gianni, 0, false));
         //from 3 to 0
         god.startTurn(false);
         god.move(one,gianni,map);
@@ -51,7 +51,7 @@ public class PanTest {
         base.build(Status.BUILT);
         god.startTurn(false);
         god.move(zero,gianni,map);
-        assertTrue(god.checkWin(gianni, 15));
+        assertTrue(god.checkWin(gianni, 15, false));
         //from 3 to 1
         god.startTurn(false);
         god.move(one,gianni,map);
@@ -63,19 +63,18 @@ public class PanTest {
         god.move(base,gianni,map);
         god.startTurn(false);
         god.move(one,gianni,map);
-        assertTrue(god.checkWin(gianni, 2));
+        assertTrue(god.checkWin(gianni, 2, false));
         //from 1 to 2
         god.startTurn(false);
         god.move(zero,gianni,map);
-        assertFalse(god.checkWin(gianni, -1));
+        assertFalse(god.checkWin(gianni, -1, false));
         //from 2 to 3 border
-        god.HeraIsHere();
         god.startTurn(false);
         god.move(base,gianni,map);
-        assertFalse(god.checkWin(gianni, 9));
+        assertFalse(god.checkWin(gianni, 9, true));
         //from 3 to 1 border
         god.startTurn(false);
         god.move(one,gianni,map);
-        assertFalse(god.checkWin(gianni, 5));
+        assertFalse(god.checkWin(gianni, 5, true));
     }
 }

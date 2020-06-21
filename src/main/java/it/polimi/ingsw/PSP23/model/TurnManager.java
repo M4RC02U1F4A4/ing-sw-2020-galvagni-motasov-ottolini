@@ -8,8 +8,6 @@ public class TurnManager {
     private int currentPlayerNumber;
     private Player currentPlayer;
     private Phase currentPhase;
-    private int AthenaPlayer;
-    private boolean AthenaMovedUp;
     private boolean skipBuild;
     private boolean skipMove;
     private boolean resultsTime;
@@ -17,8 +15,6 @@ public class TurnManager {
     public TurnManager() {
         currentPlayerNumber = 0;
         currentPhase = Phase.GOD_CHOOSE;
-        AthenaMovedUp = false;
-        AthenaPlayer = -1;
         resultsTime = false;
     }
 
@@ -70,7 +66,6 @@ public class TurnManager {
         switch (currentPhase) {
             case CHOOSE_WORKER: {
                 currentPhase = Phase.START_TURN;
-                currentPlayer.getGod().startTurn(AthenaMovedUp);
                 break;
             }
             case START_TURN: {
@@ -184,8 +179,6 @@ public class TurnManager {
                 break;
             }
             case END: {
-                if (AthenaPlayer == currentPlayerNumber)
-                    AthenaMovedUp = getCurrentGod().AthenaMovedUp();
                 currentPhase = Phase.CHOOSE_WORKER;
                 currentPlayerNumber++;
                 if (numberOfPlayers <= currentPlayerNumber)
@@ -217,12 +210,6 @@ public class TurnManager {
      */
     public void setCurrentPlayer(Player VamosAllaPlayer) {
         currentPlayer = VamosAllaPlayer;
-        if (null != VamosAllaPlayer.getGod()) {
-            if ("Athena".equals(VamosAllaPlayer.getGod().getName())) {
-                AthenaPlayer = currentPlayerNumber;
-                AthenaMovedUp = false;
-            }
-        }
     }
 
     /**
@@ -247,15 +234,7 @@ public class TurnManager {
     }
 
     /**
-     * remove the athena player
-     */
-    public void removeAthena() {
-        AthenaPlayer = -1;
-        AthenaMovedUp = false;
-    }
-
-    /**
-     * setter
+     * set the flag to see the results
      */
     public void setResults() {
         resultsTime = true;

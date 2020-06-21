@@ -29,15 +29,15 @@ public class AthenaTest {
     @Test
     public void move() {
         nike.startTurn(true);
-        assertFalse(nike.CheckMovedUp());
+        assertFalse(nike.AthenaMovedUp());
         nike.startTurn(false);
-        assertFalse(nike.CheckMovedUp());
+        assertFalse(nike.AthenaMovedUp());
         assertEquals(0, nike.move(little, gianni,map));
         nike.startTurn(false);
         big.build(Status.BUILT);
         big.setCoord(1,1);
         little.setCoord(2,2);
         assertEquals(0, nike.move(big, gianni,map));
-        assertTrue(nike.CheckMovedUp());
+        assertTrue(nike.AthenaMovedUp());
     }
 }

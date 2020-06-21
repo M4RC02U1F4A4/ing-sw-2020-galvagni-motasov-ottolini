@@ -37,12 +37,12 @@ public class ChronusTest {
         for(int j = 0; j < 3; j++) {
             foglie.build(Status.BUILT);
         }
-        assertTrue(criceto.checkWin(hamtaro, i));
+        assertTrue(criceto.checkWin(hamtaro, i, false));
         while(i < 5) {
-            assertFalse(criceto.checkWin(null, i));
+            assertFalse(criceto.checkWin(null, i, false));
             i++;
         }
-        assertTrue(criceto.checkWin(null, i));
+        assertTrue(criceto.checkWin(null, i, false));
     }
 
 }

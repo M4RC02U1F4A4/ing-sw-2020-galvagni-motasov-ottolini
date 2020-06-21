@@ -21,8 +21,8 @@ public class Chronus extends God {
      * @return bool
      */
     @Override
-    public boolean checkWin(Worker w, int completed_tower) {
-        if ((null != w) && (super.checkWin(w, completed_tower)))
+    public boolean checkWin(Worker w, int completed_tower, boolean is_hera_in_game) {
+        if ((null != w) && (super.checkWin(w, completed_tower, is_hera_in_game)))
             return true;
         else
             return (5 <= completed_tower);

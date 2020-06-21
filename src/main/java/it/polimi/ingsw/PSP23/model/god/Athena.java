@@ -55,7 +55,8 @@ public class Athena extends God {
      * Check if moved up
      * @return bool
      */
-    public boolean CheckMovedUp () {
+    @Override
+    public boolean AthenaMovedUp () {
         return moved_up;
     }
 

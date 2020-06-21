@@ -10,6 +10,11 @@ public class GameTest {
     @Before
     public void setUp() {
         hunger = new Game(2);
+        hunger.addPlayer("Luigi", "1.1.1.1");
+        hunger.addPlayer("Mario", "11.11.11.11");
+        hunger.godChoose("Triton", "Zeus", "gino");
+        hunger.setGod("Zeus");
+        hunger.setGod("Triton");
     }
 
     @After
@@ -18,65 +23,32 @@ public class GameTest {
     }
 
     @Test
+    public void setUp3() {
+        hunger = new Game(3);
+        hunger.addPlayer("Luigi", "1.1.1.1");
+        hunger.addPlayer("Mario", "11.11.11.11");
+        hunger.addPlayer("Toad", "111.111.111.111");
+        hunger.godChoose("Triton", "Zeus", "Chronus");
+        hunger.setGod("Zeus");
+        hunger.setGod("Triton");
+        hunger.setGod("Chronus");
+    }
+
+    @Test
     public void getterSetter() {
         hunger.getMap();
         hunger.getCurrentPlayerNum();
         hunger.getAllGodList();
-        hunger.getPhase();
-        hunger.getPhase();
-    }
-
-    @Test
-    public void setGods() {
-        Game quindici, trenta, quarantacinque;
-        hunger = new Game(3);
-        quindici = new Game(3);
-        trenta = new Game(3);
-        quarantacinque = new Game(3);
-        for (int i = 0; i < 3; i++) {
-            hunger.addPlayer("Tumbleweed", "1.1.1.1");
-            quindici.addPlayer("Tumbleweed", "1.1.1.1");
-            trenta.addPlayer("Tumbleweed", "1.1.1.1");
-            quarantacinque.addPlayer("Tumbleweed", "1.1.1.1");
-        }
-        quindici.godChoose("Apollo", "Artemis", "Athena");
-        trenta.godChoose("Atlas", "Chronus", "Demeter");
-        quarantacinque.godChoose("Hephaestus", "Hera", "Hestia");
-        hunger.godChoose("Minotaur", "Pan", "Prometheus");
-        assertEquals(0, quindici.setGod("Apollo"));
-        assertEquals(0, quindici.setGod("Artemis"));
-        assertEquals(0, quindici.setGod("Athena"));
-        assertEquals(0, trenta.setGod("Atlas"));
-        assertEquals(0, trenta.setGod("Chronus"));
-        assertEquals(0, trenta.setGod("Demeter"));
-        assertEquals(0, quarantacinque.setGod("Hephaestus"));
-        assertEquals(0, quarantacinque.setGod("Hera"));
-        assertEquals(0, quarantacinque.setGod("Hestia"));
-        assertEquals(0, hunger.setGod("Minotaur"));
-        assertEquals(0, hunger.setGod("Pan"));
-        assertEquals(0, hunger.setGod("Prometheus"));
-    }
-
-    @Test
-    public void gamePrep() {
-        hunger.addPlayer("Gianni", "1.1.1.1");
-        hunger.addPlayer("Vladimir", "11.11.11.11");
-        assertEquals(-1, hunger.addPlayer("Dimitri", "111.111.111.111"));
-        hunger.godChoose("Triton", "Zeus", "Hera");
         hunger.getGodList();
-        assertEquals(-1, hunger.setGod("Hera"));
-        assertEquals(0, hunger.setGod("Zeus"));
-        assertEquals(0, hunger.setGod("Triton"));
-        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 1, 1));
-        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 2, 2));
-        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 3, 3));
-        assertEquals(-1, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 2, 2));
-        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 4, 4));
+        hunger.getPhase();
     }
 
     @Test
     public void gameOn() {
-        this.gamePrep();
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 1, 1));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 2, 2));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 3, 3));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 4, 4));
         // Triton turn (player 0)
         assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
         assertEquals(-1, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 5, 0, 0));
@@ -98,5 +70,16 @@ public class GameTest {
 
     @Test
     public void removePlayer() {
+        this.setUp3();
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 0, 0));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 1, 1));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 0, 1));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 1, 0));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 2, 2));
+        assertEquals(0, hunger.performeMove(Action.PLACE_WORKER, Status.FREE, 0, 3, 3));
+        // Triton turn (player 0)
+        assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
+        assertEquals(0, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 0, 0, 0));
+        assertEquals(0, hunger.getCurrentPlayerNum());
     }
 }

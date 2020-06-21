@@ -12,8 +12,6 @@ public class God {
     protected int remains_moves;
     protected int remains_builds;
     protected int starting_z;
-    protected boolean is_hera_in_game;
-    private boolean is_athena_in_game;
     private boolean athena_moved_up;
 
     /**
@@ -32,8 +30,6 @@ public class God {
         remains_builds = 0;
         remains_moves = 0;
         starting_z = -2;
-        is_hera_in_game = false;
-        is_athena_in_game = false;
         athena_moved_up = false;
     }
 
@@ -75,7 +71,7 @@ public class God {
     *           -6 (Apollo/Minotaur) tried to move in friendly occupied cell.
     */
     public int move(Cell c, Worker w, Map map){
-        if(is_athena_in_game && athena_moved_up && (w.getPosZ() < c.height()) && !("Athena".equals(name)))
+        if(athena_moved_up && (w.getPosZ() < c.height()) && !("Athena".equals(name)))
             return -3;
         if (0 == remains_moves)
             return -2;
@@ -125,7 +121,7 @@ public class God {
      * @param completed_tower number of completed tower on the board
      * @return bool
      */
-    public boolean checkWin(Worker w, int completed_tower) {
+    public boolean checkWin(Worker w, int completed_tower, boolean is_hera_in_game) {
         if ((0 < starting_z) && (3 > starting_z) && (3 == w.getPosZ())) {
             if ((is_hera_in_game) && !("Hera".matches(name))){
                 return (0 != w.getPosX()) && (0 != w.getPosY()) && (4 != w.getPosX()) && (4 != w.getPosY());
@@ -199,25 +195,11 @@ public class God {
     }
 
     /**
-    *   Set the flag for Athena's power
-    */
-    public void AthenaIsHere() {
-        is_athena_in_game = true;
-    }
-
-    /**
      *  Used by turn manager
      * @return if athena moved up
      */
     public boolean AthenaMovedUp() {
         return athena_moved_up;
-    }
-
-    /**
-     *  Set the flag for Hera's power
-     */
-    public void HeraIsHere() {
-        is_hera_in_game = true;
     }
 
     /**

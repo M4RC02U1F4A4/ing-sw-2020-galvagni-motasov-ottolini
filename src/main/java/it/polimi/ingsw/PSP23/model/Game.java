@@ -10,7 +10,7 @@ public class Game extends Observable<Message> {
     private Player[] players;
     private String[] availableGods;
     private TurnManager turnManager;
-    private boolean ChronusIsHere, AthenaIsHere, HeraIsHere;
+    private boolean ChronusIsHere, HeraIsHere, AthenaMovedUp;
     private int numPlayers, colorVariable, completedTowers, activeWorker;
 
     /**
@@ -27,8 +27,8 @@ public class Game extends Observable<Message> {
         if(numPlayer==3){availableGods[2]="";}
         turnManager = new TurnManager();
         turnManager.setPlayerNumber(numPlayer);
+        AthenaMovedUp = false;
         ChronusIsHere = false;
-        AthenaIsHere = false;
         HeraIsHere = false;
         completedTowers = 0;
         colorVariable = 0;
@@ -62,10 +62,6 @@ public class Game extends Observable<Message> {
      * @param god3 third god, will skip if numplayer == 2
      */
     public void godChoose(String god1, String god2, String god3) {
-        if ("Athena".equals(god1) || "Athena".equals(god2) || "Athena".equals(god3))
-            AthenaIsHere = true;
-        if ("Hera".equals(god1) || "Hera".equals(god2) || "Hera".equals(god3))
-            HeraIsHere = true;
         availableGods[0] = god1;
         availableGods[1] = god2;
         if (3 == numPlayers)
@@ -117,6 +113,7 @@ public class Game extends Observable<Message> {
                 break;
             case "Hera":
                 getCurrentPlayer().setGod(new Hera());
+                HeraIsHere = true;
                 break;
             case "Hestia":
                 getCurrentPlayer().setGod(new Hestia());
@@ -137,10 +134,6 @@ public class Game extends Observable<Message> {
                 getCurrentPlayer().setGod(new Zeus());
                 break;
         }
-        if (AthenaIsHere)
-            getCurrentGod().AthenaIsHere();
-        if (HeraIsHere)
-            getCurrentGod().HeraIsHere();
         nextGameSetUpPhase();
         return 0;
     }
@@ -214,6 +207,8 @@ public class Game extends Observable<Message> {
      */
     private int move(int x, int y) {
         int i = getCurrentGod().move(map.getCell(x, y), getActiveWorker(), map);
+        if (getCurrentGod() instanceof Athena)
+            AthenaMovedUp = getCurrentGod().AthenaMovedUp();
         if (0 == i)
             nextGamePhase();
         return i;
@@ -264,10 +259,14 @@ public class Game extends Observable<Message> {
      */
     public int removePlayer() {
         if (Phase.BAD_NEWS == getPhase()) {
+            if (getCurrentGod() instanceof Athena)
+                AthenaMovedUp = false;
+            else if (getCurrentGod() instanceof Hera)
+                HeraIsHere = false;
+            else if (getCurrentGod() instanceof Chronus)
+                ChronusIsHere = false;
             switch (getCurrentPlayerNum()) {
                 case 0:
-                    if ("Athena".equals(getCurrentGod().getName()))
-                        turnManager.removeAthena();
                     numPlayers = 2;
                     turnManager.setPlayerNumber(2);
                     players[0] = null;
@@ -275,16 +274,12 @@ public class Game extends Observable<Message> {
                     players[1] = players[2];
                     break;
                 case 1:
-                    if ("Athena".equals(getCurrentGod().getName()))
-                        turnManager.removeAthena();
                     numPlayers = 2;
                     turnManager.setPlayerNumber(2);
                     players[1] = null;
                     players[1] = players[2];
                     break;
                 case 2:
-                    if ("Athena".equals(getCurrentGod().getName()))
-                        turnManager.removeAthena();
                     numPlayers = 2;
                     turnManager.setPlayerNumber(2);
                     players[2] = null;
@@ -306,12 +301,13 @@ public class Game extends Observable<Message> {
         turnManager.nextPhaseGame();
         switch (turnManager.getCurrentPhase()) {
             case START_TURN:
+                getCurrentGod().startTurn(AthenaMovedUp);
                 nextGamePhase();
                 break;
             case CHECK_WIN:
             case CHECK_WIN_MOVE:
             case CHECK_WIN_BUILD:
-                if (getCurrentGod().checkWin(getActiveWorker(), completedTowers))
+                if (getCurrentGod().checkWin(getActiveWorker(), completedTowers, HeraIsHere))
                     turnManager.setResults();
                 nextGamePhase();
                 break;
