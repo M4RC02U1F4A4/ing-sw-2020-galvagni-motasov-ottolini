@@ -22,12 +22,9 @@ public class Controller implements Observer<PlayerMove>{
     private final Timer timer = new Timer();
     private int timeRunningOut=TIME_LIMIT;
 
-
     public void addPlayer(Player p){
         game.addPlayer(p.getName(),p.getIpAddress());
     }
-
-
 
     public void addPlayerView(View v){
         players.add(v);
@@ -52,8 +49,6 @@ public class Controller implements Observer<PlayerMove>{
         },0,1000);
 
     }
-
-    //TODO
 
     public synchronized void  performMove(PlayerMove move){
         move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
@@ -120,16 +115,10 @@ public class Controller implements Observer<PlayerMove>{
                                     break;
                                 case BAD_NEWS:
                                     sendToNextPlayer("LOSE");
-                                    if (3 == players.size()) {
-                                        //TODO mandare messaggio di rimozione del player
-                                        players.remove(players.get(game.getCurrentPlayerNum()));
-                                        game.removePlayer();
-                                        sendUpdatedMap();
-                                        sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
-                                    }
-                                    else {
+                                    if (3 == players.size())
+                                        removePlayer();
+                                    else
                                         sendToRemainingPlayers("WIN");
-                                    }
                                     break;
                             }
                             sendToRemainingPlayers("Attendi il tuo turno");
@@ -145,6 +134,14 @@ public class Controller implements Observer<PlayerMove>{
         else {
             move.getView().showMessage("NON È IL TUO TURNO!");
         }
+    }
+
+    private void removePlayer() {
+        players.remove(players.get(game.getCurrentPlayerNum()));
+        game.removePlayer();
+        sendUpdatedMap();
+        sendToEverybody("TURN:"+players.get(game.getCurrentPlayerNum()).getPlayer().getName());
+        sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
     }
 
     @Override
@@ -246,13 +243,11 @@ public class Controller implements Observer<PlayerMove>{
         }
     }
 
-
     public void sendUpdatedMap(){
         for (int i=0;i<players.size();i++){
             players.get(i).showMessage(game.getMap());
         }
     }
-
 
     public String playersList(){
         String msg="";
