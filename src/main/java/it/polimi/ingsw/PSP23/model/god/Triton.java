@@ -14,6 +14,11 @@ public class Triton extends God {
         setUpGod("Triton");
     }
 
+    @Override
+    public void startTurn(boolean moved_up) {
+        super.setUpTurn(2, 1, moved_up);
+    }
+
     /**
      * Each time your worker moves into a perimeter space, it may immediately move again
      * @param c cell in which the player want to move the worker
@@ -29,9 +34,10 @@ public class Triton extends God {
     @Override
     public int move(Cell c, Worker w, Map map) {
         int i = super.move(c,w, map);
-        if ((0 == c.getX() || 0 == c.getY() || 4 == c.getX() || 4 == c.getY()) && 0 == i) {
-            this.remains_moves++;
-        }
+        if ((0 == c.getX() || 0 == c.getY() || 4 == c.getX() || 4 == c.getY()) && 0 == i)
+            remains_moves = 1;
+        else if (1 == remains_moves)
+            remains_moves = 0;
         return i;
     }
 }
