@@ -37,16 +37,14 @@ public class Minotaur extends God{
         Cell b = w.getCell();
         int moreX = c.getX() - b.getX();
         int moreY = c.getY() - b.getY();
+        Worker teseo = c.getWorker();
         Cell a = map.getCell(c.getX()+moreX, c.getY()+moreY);
         if (null == a)
             return -5;
-        if (null == a.getWorker()) {
-            Worker teseo = c.getWorker();
+        if (null == a.getWorker() && a.isNear(teseo, false)) {
             teseo.moveWorker(a);
             return super.move(c, w, map);
         }
-        else {
-            return -1;
-        }
+        else return -1;
     }
 }
