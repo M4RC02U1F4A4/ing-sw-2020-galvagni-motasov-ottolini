@@ -25,13 +25,16 @@ public class Server {
     private ExecutorService executor= Executors.newFixedThreadPool(5); //probabilmente basta falo con 3 al massimo, da vedere
     private Map<String, ClientConnection> waitingConnection2vs2=new LinkedHashMap<>();
     private Map<String, ClientConnection> waitingConnection3vs3=new LinkedHashMap<>();
-    private ArrayList<Player> players=new ArrayList<>();
+    private ArrayList<Player> playing2s=new ArrayList<>();
+    private ArrayList<Player> playing3s=new ArrayList<>();
     private ArrayList<ClientConnection>conn=new ArrayList<>();
 
     public synchronized void deregisterConnection(ClientConnection c){
         /*List<String> threes = new ArrayList<>(waitingConnection3vs3.keySet());
         List<String> twos = new ArrayList<>(waitingConnection2vs2.keySet());*/
-        if(waitingConnection3vs3.containsValue(c)){
+
+        //TODO: La parte sotto commentata butta via fuori brutalmente
+        /*if(waitingConnection3vs3.containsValue(c)){
             System.out.println("Disconnetto dalla partita 3v3 il giocatore "+c.getIpAddress());
             Iterator<String> iterator = waitingConnection3vs3.keySet().iterator();
             while(iterator.hasNext()){
@@ -46,7 +49,7 @@ public class Server {
             while(iterator.hasNext()){
                 waitingConnection2vs2.get(iterator.next()).closeConnection();
             }
-        }
+        }*/
         System.out.println("XD");
     }
 
@@ -73,18 +76,19 @@ public class Server {
                     conn.add(me.getValue());
                     System.out.println("Creo il giocatore "+nome+" con ip "+ip);
                     Player p=new Player(nome, ip);
-                    players.add(p);
+                    playing2s.add(p);
                 }
-                players.get(0).setColor(Color.BLUE);
-                players.get(0).setPlayerNumber(0);
-                players.get(1).setColor(Color.RED);
-                players.get(1).setPlayerNumber(1);
-                controller.addPlayer(players.get(0));
-                controller.addPlayer(players.get(1));
+                waitingConnection2vs2.clear();
+                playing2s.get(0).setColor(Color.BLUE);
+                playing2s.get(0).setPlayerNumber(0);
+                playing2s.get(1).setColor(Color.RED);
+                playing2s.get(1).setPlayerNumber(1);
+                controller.addPlayer(playing2s.get(0));
+                controller.addPlayer(playing2s.get(1));
 
 
-                View player1view=new RemoteView(players.get(0),conn.get(0));
-                View player2view=new RemoteView(players.get(1),conn.get(1));
+                View player1view=new RemoteView(playing2s.get(0),conn.get(0));
+                View player2view=new RemoteView(playing2s.get(1),conn.get(1));
                 game.addObserver(player1view);
                 game.addObserver(player2view);
                 controller.addPlayerView(player1view);
@@ -95,11 +99,11 @@ public class Server {
                 System.out.println("fino a qua funziona");
 
 
-                System.out.println(players.get(0).getPlayerNumber());
-                System.out.println(players.get(1).getPlayerNumber());
+                System.out.println(playing2s.get(0).getPlayerNumber());
+                System.out.println(playing2s.get(1).getPlayerNumber());
 
 
-                if(game.isPlayerTurn(players.get(0))){
+                if(game.isPlayerTurn(playing2s.get(0))){
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
                     conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
@@ -130,22 +134,23 @@ public class Server {
                     conn.add(me.getValue());
                     System.out.println("Creo il giocatore "+nome+" con ip "+ip);
                     Player p=new Player(nome, ip);
-                    players.add(p);
+                    playing3s.add(p);
                 }
-                players.get(0).setColor(Color.BLUE);
-                players.get(0).setPlayerNumber(0);
-                players.get(1).setColor(Color.RED);
-                players.get(1).setPlayerNumber(1);
-                players.get(2).setColor(Color.WHITE);
-                players.get(2).setPlayerNumber(2);
-                controller.addPlayer(players.get(0));
-                controller.addPlayer(players.get(1));
-                controller.addPlayer(players.get(2));
+                waitingConnection3vs3.clear();
+                playing3s.get(0).setColor(Color.BLUE);
+                playing3s.get(0).setPlayerNumber(0);
+                playing3s.get(1).setColor(Color.RED);
+                playing3s.get(1).setPlayerNumber(1);
+                playing3s.get(2).setColor(Color.WHITE);
+                playing3s.get(2).setPlayerNumber(2);
+                controller.addPlayer(playing3s.get(0));
+                controller.addPlayer(playing3s.get(1));
+                controller.addPlayer(playing3s.get(2));
 
 
-                View player1view=new RemoteView(players.get(0),conn.get(0));
-                View player2view=new RemoteView(players.get(1),conn.get(1));
-                View player3view=new RemoteView(players.get(2),conn.get(2));
+                View player1view=new RemoteView(playing3s.get(0),conn.get(0));
+                View player2view=new RemoteView(playing3s.get(1),conn.get(1));
+                View player3view=new RemoteView(playing3s.get(2),conn.get(2));
                 game.addObserver(player1view);
                 game.addObserver(player2view);
                 game.addObserver(player3view);
@@ -159,13 +164,13 @@ public class Server {
                 System.out.println("fino a qua funziona");
 
 
-                System.out.println(players.get(0).getPlayerNumber());
-                System.out.println(players.get(1).getPlayerNumber());
-                System.out.println(players.get(2).getPlayerNumber());
+                System.out.println(playing3s.get(0).getPlayerNumber());
+                System.out.println(playing3s.get(1).getPlayerNumber());
+                System.out.println(playing3s.get(2).getPlayerNumber());
 
 
 
-                if(game.isPlayerTurn(players.get(0))){
+                if(game.isPlayerTurn(playing3s.get(0))){
                     conn.get(0).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Scegli 3 dei tra quelli disponibili: ");
                     conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
@@ -173,7 +178,7 @@ public class Server {
                     conn.get(1).asyncSend("Attendi il tuo turno");
                     conn.get(2).asyncSend("Attendi il tuo turno");
                 }
-                else if(game.isPlayerTurn(players.get(1))){
+                else if(game.isPlayerTurn(playing3s.get(1))){
                     conn.get(1).asyncSend("e' il tuo turno");
                     conn.get(0).asyncSend("Attendi il tuo turno");
                     conn.get(2).asyncSend("Attendi il tuo turno");

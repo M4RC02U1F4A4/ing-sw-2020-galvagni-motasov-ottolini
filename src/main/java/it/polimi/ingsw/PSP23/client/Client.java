@@ -50,7 +50,8 @@ public class Client {
                     }
                 }catch (Exception e){
                     setActive(false);
-                    System.exit(1);
+                    //TODO togli i commenti lmao
+                    //System.exit(1);
                 }
             }
         });

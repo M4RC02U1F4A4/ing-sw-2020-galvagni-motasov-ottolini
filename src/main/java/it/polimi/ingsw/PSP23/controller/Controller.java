@@ -18,6 +18,7 @@ public class Controller implements Observer<PlayerMove>{
     private ArrayList<String> arguments = new ArrayList<>();
     private int x = -1, y = -1;
     private int chosenWorker = -1;
+    private int removedPlayer=-1,currPl=0;
 
     private final Timer timer = new Timer();
     private int timeRunningOut=TIME_LIMIT;
@@ -51,8 +52,10 @@ public class Controller implements Observer<PlayerMove>{
     }
 
     public synchronized void  performMove(PlayerMove move){
-        move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
-        if (game.isPlayerTurn(move.getPlayer())) {
+        //move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
+        players.get(currPl).showMessage(currPl+"-"+game.getCurrentPlayerNum());
+        //if (game.isPlayerTurn(move.getPlayer())) {
+        if (game.isPlayerTurn(players.get(currPl).getPlayer())) {
             //sendToEverybody("TURN:"+move.getPlayer().getName());
             switch (move.getCommand()) {
                 case "SELECT_GODS": {
@@ -66,13 +69,15 @@ public class Controller implements Observer<PlayerMove>{
                         sendToRemainingPlayers("Attendi il tuo turno");
                         break;
                     }else {
-                        move.getView().showMessage("Comando non valido! Riprova");
+                        //move.getView().showMessage("Comando non valido! Riprova");
+                        players.get(currPl).showMessage("Comando non valido! Riprova");
                         break;
                     }
                 }
                 case "CHOOSE_GOD": {
                     if(game.setGod(arguments.get(0))==-1){
-                        move.getView().showMessage("Parametro divinita' non valido: riprova");
+                        //move.getView().showMessage("Parametro divinita' non valido: riprova");
+                        players.get(currPl).showMessage("Parametro divinita' non valido: riprova");
                         break;
                     }
                     if(game.getPhase()==Phase.GOD_PICK){
@@ -123,10 +128,12 @@ public class Controller implements Observer<PlayerMove>{
                             }
                             sendToRemainingPlayers("Attendi il tuo turno");
                         } else {
-                            move.getView().showMessage("Comando non valido: riprova");
+                            //move.getView().showMessage("Comando non valido: riprova");
+                            players.get(currPl).showMessage("Comando non valido: riprova");
                         }
                     } else
-                        move.getView().showMessage("Comando non valido: riprova");
+                        //move.getView().showMessage("Comando non valido: riprova");
+                        players.get(currPl).showMessage("Comando non valido: riprova");
                     break;
                 }
             }
@@ -137,9 +144,14 @@ public class Controller implements Observer<PlayerMove>{
     }
 
     private void removePlayer() {
+        System.out.println("Il giocatore"+game.getCurrentPlayerNum()+" ha perso, ez noob");
+        removedPlayer=game.getCurrentPlayerNum();
         players.remove(players.get(game.getCurrentPlayerNum()));
         game.removePlayer();
+        players.get(0).getPlayer().setPlayerNumber(0);
+        players.get(1).getPlayer().setPlayerNumber(1);
         sendUpdatedMap();
+        System.out.println(playersList());
         sendToEverybody("TURN:"+players.get(game.getCurrentPlayerNum()).getPlayer().getName());
         sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
     }
@@ -158,6 +170,30 @@ public class Controller implements Observer<PlayerMove>{
 
     public void setActionFromTheClient(String msg, String args, Player him){
         resetTimer();
+        switch (removedPlayer){
+            case 0:{
+                if (him.getPlayerNumber()==1){
+                    currPl=0;
+                }
+                else if(him.getPlayerNumber()==2){
+                    currPl=1;
+                }
+                break;
+            }
+            case 1:{
+                if(him.getPlayerNumber()==0){
+                    currPl=0;
+                }
+                else if(him.getPlayerNumber()==2){
+                    currPl=1;
+                }
+                break;
+            }
+            case 2:
+            case -1:{
+                currPl=him.getPlayerNumber();
+            }
+        }
         String[] tmp=args.split(",");
         switch (msg){
             case "SELECT_GODS":{
