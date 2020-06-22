@@ -167,6 +167,7 @@ public class TurnManager {
             }
             case BAD_NEWS:{
                 currentPhase = Phase.CHOOSE_WORKER;
+                resultsTime = false;
                 if (numberOfPlayers <= currentPlayerNumber)
                     currentPlayerNumber = 0;
                 break;

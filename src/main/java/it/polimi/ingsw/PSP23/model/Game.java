@@ -267,27 +267,24 @@ public class Game extends Observable<Message> {
                 ChronusIsHere = false;
             getCurrentPlayer().getWorkerByNumber(0).getCell().fireWorker(getCurrentPlayer().getWorkerByNumber(0));
             getCurrentPlayer().getWorkerByNumber(1).getCell().fireWorker(getCurrentPlayer().getWorkerByNumber(1));
+            numPlayers = 2;
+            turnManager.setPlayerNumber(2);
             switch (getCurrentPlayerNum()) {
                 case 0:
-                    numPlayers = 2;
-                    turnManager.setPlayerNumber(2);
                     players[0] = null;
                     players[0] = players[1];
                     players[1] = players[2];
                     break;
                 case 1:
-                    numPlayers = 2;
-                    turnManager.setPlayerNumber(2);
                     players[1] = null;
                     players[1] = players[2];
                     break;
                 case 2:
-                    numPlayers = 2;
-                    turnManager.setPlayerNumber(2);
                     players[2] = null;
                     break;
             }
             nextGamePhase();
+            turnManager.setCurrentPlayer(getCurrentPlayer());
             return 0;
         }
         else

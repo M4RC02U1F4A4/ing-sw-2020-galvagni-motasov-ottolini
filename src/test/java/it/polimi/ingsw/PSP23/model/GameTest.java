@@ -94,7 +94,9 @@ public class GameTest {
         assertEquals(0, hunger.performeMove(Action.SELECT_WORKER, Status.FREE, 0, 0, 0));
         assertEquals(Phase.BAD_NEWS, hunger.getPhase());
         hunger.removePlayer();
+        assertEquals(0, hunger.getCurrentPlayerNum());
         assertEquals(Phase.CHOOSE_WORKER, hunger.getPhase());
+        assertEquals("Zeus", hunger.getPlayer(hunger.getCurrentPlayerNum()).getGod().getName());
         assertFalse(hunger.getMap().getCell(0,0).isOccupied());
     }
 }
