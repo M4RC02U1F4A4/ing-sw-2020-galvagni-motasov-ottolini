@@ -32,6 +32,14 @@ public class Server {
     public synchronized void deregisterConnection(ClientConnection c){
         /*List<String> threes = new ArrayList<>(waitingConnection3vs3.keySet());
         List<String> twos = new ArrayList<>(waitingConnection2vs2.keySet());*/
+        if(playing3s.contains(c)){
+            c.closeConnection();
+            playing3s.remove(c);
+        }
+        if(playing2s.contains(c)){
+            c.closeConnection();
+            playing2s.remove(c);
+        }
 
         //TODO: La parte sotto commentata butta via fuori brutalmente
         /*if(waitingConnection3vs3.containsValue(c)){
@@ -79,6 +87,7 @@ public class Server {
                     playing2s.add(p);
                 }
                 waitingConnection2vs2.clear();
+                //conn.clear();
                 playing2s.get(0).setColor(Color.BLUE);
                 playing2s.get(0).setPlayerNumber(0);
                 playing2s.get(1).setColor(Color.RED);
@@ -137,6 +146,7 @@ public class Server {
                     playing3s.add(p);
                 }
                 waitingConnection3vs3.clear();
+                //conn.clear();
                 playing3s.get(0).setColor(Color.BLUE);
                 playing3s.get(0).setPlayerNumber(0);
                 playing3s.get(1).setColor(Color.RED);
