@@ -120,10 +120,12 @@ public class Controller implements Observer<PlayerMove>{
                                     break;
                                 case BAD_NEWS:
                                     sendToNextPlayer("LOSE");
-                                    if (3 == players.size())
+                                    if (3 == players.size()) {
                                         removePlayer();
-                                    else
+                                    }
+                                    else {
                                         sendToRemainingPlayers("WIN");
+                                    }
                                     break;
                             }
                             sendToRemainingPlayers("Attendi il tuo turno");
@@ -147,7 +149,7 @@ public class Controller implements Observer<PlayerMove>{
         System.out.println("Il giocatore"+game.getCurrentPlayerNum()+" ha perso, ez noob");
         removedPlayer=game.getCurrentPlayerNum();
         players.remove(players.get(game.getCurrentPlayerNum()));
-        game.removePlayer();
+        System.out.println("REMOVING PLAYER: "+game.removePlayer());
         players.get(0).getPlayer().setPlayerNumber(0);
         players.get(1).getPlayer().setPlayerNumber(1);
         sendUpdatedMap();
@@ -170,6 +172,7 @@ public class Controller implements Observer<PlayerMove>{
 
     public void setActionFromTheClient(String msg, String args, Player him){
         resetTimer();
+        System.out.println("NUMERO:"+him.getPlayerNumber());
         switch (removedPlayer){
             case 0:{
                 if (him.getPlayerNumber()==1){
@@ -192,8 +195,10 @@ public class Controller implements Observer<PlayerMove>{
             case 2:
             case -1:{
                 currPl=him.getPlayerNumber();
+                break;
             }
         }
+        removedPlayer=-1;
         String[] tmp=args.split(",");
         switch (msg){
             case "SELECT_GODS":{
