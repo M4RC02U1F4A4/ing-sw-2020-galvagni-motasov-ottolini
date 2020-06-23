@@ -193,8 +193,9 @@ public class ChoiceController {
         switch (god){
             case "apollo":
                 //layout.setStyle("-fx-background-image: url('/img/gods/Apollo_desc.png')");
-                BackgroundImage myBG= new BackgroundImage(new Image(getClass().getResource("/img/gods/Apollo_desc.png").toString(), true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-                layout.setBackground(new Background(myBG));
+                //BackgroundImage myBG = new BackgroundImage(new Image(getClass().getResource("/img/gods/Apollo_desc.png").toString(), true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                //layout.setBackground(new Background(myBG));
+                layout.getStyleClass().add("apollo-style");
                 break;
             case "hera":
                 layout.setStyle("-fx-background-image: url('/img/gods/Hera_desc.png')");
@@ -237,6 +238,7 @@ public class ChoiceController {
                 break;
         }
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("apollo.css");
         window.setScene(scene);
         window.showAndWait();
     }
