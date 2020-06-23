@@ -10,7 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -192,7 +192,9 @@ public class ChoiceController {
         Pane layout = new Pane();
         switch (god){
             case "apollo":
-                layout.setStyle("-fx-background-image: url('/img/gods/Apollo_desc.png')");
+                //layout.setStyle("-fx-background-image: url('/img/gods/Apollo_desc.png')");
+                BackgroundImage myBG= new BackgroundImage(new Image("/img/gods/Apollo_desc.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                layout.setBackground(new Background(myBG));
                 break;
             case "hera":
                 layout.setStyle("-fx-background-image: url('/img/gods/Hera_desc.png')");
