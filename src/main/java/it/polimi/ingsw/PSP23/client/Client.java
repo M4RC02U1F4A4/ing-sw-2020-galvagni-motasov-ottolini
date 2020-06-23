@@ -36,7 +36,12 @@ public class Client {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
                         if (inputObject instanceof String) {
-                            if(inputObject.equals("closeMatch")){
+                            if(inputObject.equals("LOSE")){
+                                System.out.println("HAI PERSO");
+                                System.exit(1);
+                            }
+                            else if(inputObject.equals("WIN")){
+                                System.out.println("HAI VINTO");
                                 System.exit(1);
                             }
                             System.out.println((String) inputObject);
