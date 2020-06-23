@@ -193,7 +193,7 @@ public class ChoiceController {
         switch (god){
             case "apollo":
                 //layout.setStyle("-fx-background-image: url('/img/gods/Apollo_desc.png')");
-                BackgroundImage myBG= new BackgroundImage(new Image("/img/gods/Apollo_desc.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                BackgroundImage myBG= new BackgroundImage(new Image(getClass().getResource("/img/gods/Apollo_desc.png").toString(), true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
                 layout.setBackground(new Background(myBG));
                 break;
             case "hera":
