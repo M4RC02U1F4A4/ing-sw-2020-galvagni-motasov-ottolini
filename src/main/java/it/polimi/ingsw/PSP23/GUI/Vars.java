@@ -39,4 +39,5 @@ public class Vars {
     public static int gameStatus = 1;
     public static int statusWinLose = -1;
     public static boolean commandNotValid = false;
+    public static String godChoice = "";
 }
