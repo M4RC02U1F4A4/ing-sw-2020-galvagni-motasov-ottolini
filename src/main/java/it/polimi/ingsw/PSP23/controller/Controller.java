@@ -44,7 +44,7 @@ public class Controller implements Observer<PlayerMove>{
                     System.out.println("TEMPO SCADUTO!");
                     timer.cancel();
                     sendToEverybody("Partita terminata: timeout");
-                    players.get(game.getCurrentPlayerNum()).showMessage("closeMatch");
+                    closeEverybody();
                 }
             }
         },0,1000);
@@ -117,14 +117,17 @@ public class Controller implements Observer<PlayerMove>{
                                 case GOOD_NEWS:
                                     sendToNextPlayer("WIN");
                                     sendToRemainingPlayers("LOSE");
+                                    closeEverybody();
                                     break;
                                 case BAD_NEWS:
                                     sendToNextPlayer("LOSE");
                                     if (3 == players.size()) {
                                         removePlayer();
+                                        closeNextPlayer();
                                     }
                                     else {
                                         sendToRemainingPlayers("WIN");
+                                        closeEverybody();
                                     }
                                     break;
                             }
@@ -301,5 +304,26 @@ public class Controller implements Observer<PlayerMove>{
 
     public void resetTimer(){
         timeRunningOut=TIME_LIMIT;
+    }
+
+    public void closeNextPlayer(){
+        players.get(game.getCurrentPlayerNum()).close();
+        players.get(game.getCurrentPlayerNum()).isOver();
+    }
+
+    public void closeOtherPlayers(){
+        for(int i=0;i<players.size();i++){
+            if(i!=game.getCurrentPlayerNum()){
+                players.get(i).close();
+                players.get(i).isOver();
+            }
+        }
+    }
+
+    public void closeEverybody(){
+        for(int i=0;i<players.size();i++){
+            players.get(i).close();
+            players.get(i).isOver();
+        }
     }
 }

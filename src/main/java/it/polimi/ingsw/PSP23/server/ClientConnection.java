@@ -8,4 +8,6 @@ public interface ClientConnection {
     void asyncSend(Object message);
     void send(Object message);
     String getIpAddress();
+    void close();
+    void isOver();
 }

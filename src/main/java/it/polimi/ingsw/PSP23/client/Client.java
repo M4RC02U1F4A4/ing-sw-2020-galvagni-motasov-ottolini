@@ -43,7 +43,11 @@ public class Client {
                             else if(inputObject.equals("WIN")){
                                 System.out.println("HAI VINTO");
                                 System.exit(1);
+                            }else if(inputObject.equals("Connection closed!")){
+                                System.out.println("Connection closed!");
+                                System.exit(1);
                             }
+
                             System.out.println((String) inputObject);
                         } else if (inputObject instanceof Map) {
                             ((Map) inputObject).drawMap();

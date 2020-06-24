@@ -27,7 +27,8 @@ public class Server {
     private Map<String, ClientConnection> waitingConnection3vs3=new LinkedHashMap<>();
     private ArrayList<Player> playing2s=new ArrayList<>();
     private ArrayList<Player> playing3s=new ArrayList<>();
-    private ArrayList<ClientConnection>conn=new ArrayList<>();
+    private ArrayList<ClientConnection>conn2s=new ArrayList<>();
+    private ArrayList<ClientConnection>conn3s=new ArrayList<>();
 
     public synchronized void deregisterConnection(ClientConnection c){
         /*List<String> threes = new ArrayList<>(waitingConnection3vs3.keySet());
@@ -61,6 +62,14 @@ public class Server {
         System.out.println("XD");
     }
 
+    public ArrayList<ClientConnection> getConn2s() {
+        return conn2s;
+    }
+
+    public ArrayList<ClientConnection> getConn3s() {
+        return conn3s;
+    }
+
     public synchronized void lobby(ClientConnection c, String name, int numberOfPlayers){
         if(numberOfPlayers==2){
             waitingConnection2vs2.put(name, c);
@@ -81,7 +90,7 @@ public class Server {
                 for(Map.Entry<String, ClientConnection>me:st){
                     String nome=me.getKey();
                     String ip=me.getValue().getIpAddress();
-                    conn.add(me.getValue());
+                    conn2s.add(me.getValue());
                     System.out.println("Creo il giocatore "+nome+" con ip "+ip);
                     Player p=new Player(nome, ip);
                     playing2s.add(p);
@@ -96,8 +105,8 @@ public class Server {
                 controller.addPlayer(playing2s.get(1));
 
 
-                View player1view=new RemoteView(playing2s.get(0),conn.get(0));
-                View player2view=new RemoteView(playing2s.get(1),conn.get(1));
+                View player1view=new RemoteView(playing2s.get(0),conn2s.get(0));
+                View player2view=new RemoteView(playing2s.get(1),conn2s.get(1));
                 game.addObserver(player1view);
                 game.addObserver(player2view);
                 controller.addPlayerView(player1view);
@@ -113,15 +122,15 @@ public class Server {
 
 
                 if(game.isPlayerTurn(playing2s.get(0))){
-                    conn.get(0).asyncSend("e' il tuo turno");
-                    conn.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
-                    conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
-                    conn.get(0).asyncSend("Sintassi del comando: SELECT_GODS:<god1>,<god2>");
-                    conn.get(1).asyncSend("Attendi il tuo turno");
+                    conn2s.get(0).asyncSend("e' il tuo turno");
+                    conn2s.get(0).asyncSend("Scegli 2 dei tra quelli disponibili: ");
+                    conn2s.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
+                    conn2s.get(0).asyncSend("Sintassi del comando: SELECT_GODS:<god1>,<god2>");
+                    conn2s.get(1).asyncSend("Attendi il tuo turno");
                 }
                 else{
-                    conn.get(0).asyncSend("Attendi il tuo turno");
-                    conn.get(1).asyncSend("e' il tuo turno");
+                    conn2s.get(0).asyncSend("Attendi il tuo turno");
+                    conn2s.get(1).asyncSend("e' il tuo turno");
                 }
 
 
@@ -140,7 +149,7 @@ public class Server {
                 for(Map.Entry<String, ClientConnection>me:st){
                     String nome=me.getKey();
                     String ip=me.getValue().getIpAddress();
-                    conn.add(me.getValue());
+                    conn3s.add(me.getValue());
                     System.out.println("Creo il giocatore "+nome+" con ip "+ip);
                     Player p=new Player(nome, ip);
                     playing3s.add(p);
@@ -158,9 +167,9 @@ public class Server {
                 controller.addPlayer(playing3s.get(2));
 
 
-                View player1view=new RemoteView(playing3s.get(0),conn.get(0));
-                View player2view=new RemoteView(playing3s.get(1),conn.get(1));
-                View player3view=new RemoteView(playing3s.get(2),conn.get(2));
+                View player1view=new RemoteView(playing3s.get(0),conn3s.get(0));
+                View player2view=new RemoteView(playing3s.get(1),conn3s.get(1));
+                View player3view=new RemoteView(playing3s.get(2),conn3s.get(2));
                 game.addObserver(player1view);
                 game.addObserver(player2view);
                 game.addObserver(player3view);
@@ -181,22 +190,22 @@ public class Server {
 
 
                 if(game.isPlayerTurn(playing3s.get(0))){
-                    conn.get(0).asyncSend("e' il tuo turno");
-                    conn.get(0).asyncSend("Scegli 3 dei tra quelli disponibili: ");
-                    conn.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
-                    conn.get(0).asyncSend("Sintassi del comando: SELECT_GODS:<god1>,<god2>,<god3>");
-                    conn.get(1).asyncSend("Attendi il tuo turno");
-                    conn.get(2).asyncSend("Attendi il tuo turno");
+                    conn3s.get(0).asyncSend("e' il tuo turno");
+                    conn3s.get(0).asyncSend("Scegli 3 dei tra quelli disponibili: ");
+                    conn3s.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));
+                    conn3s.get(0).asyncSend("Sintassi del comando: SELECT_GODS:<god1>,<god2>,<god3>");
+                    conn3s.get(1).asyncSend("Attendi il tuo turno");
+                    conn3s.get(2).asyncSend("Attendi il tuo turno");
                 }
                 else if(game.isPlayerTurn(playing3s.get(1))){
-                    conn.get(1).asyncSend("e' il tuo turno");
-                    conn.get(0).asyncSend("Attendi il tuo turno");
-                    conn.get(2).asyncSend("Attendi il tuo turno");
+                    conn3s.get(1).asyncSend("e' il tuo turno");
+                    conn3s.get(0).asyncSend("Attendi il tuo turno");
+                    conn3s.get(2).asyncSend("Attendi il tuo turno");
                 }
                 else {
-                    conn.get(2).asyncSend("e' il tuo turno");
-                    conn.get(0).asyncSend("Attendi il tuo turno");
-                    conn.get(1).asyncSend("Attendi il tuo turno");
+                    conn3s.get(2).asyncSend("e' il tuo turno");
+                    conn3s.get(0).asyncSend("Attendi il tuo turno");
+                    conn3s.get(1).asyncSend("Attendi il tuo turno");
                 }
             }
         }

@@ -82,4 +82,11 @@ public class RemoteView extends View{
     public String getWhatClientSaid(){
         return clientSaid;
     }
+
+    public void close(){
+        clientConnection.close();
+    }
+    public void isOver(){
+        clientConnection.isOver();
+    }
 }

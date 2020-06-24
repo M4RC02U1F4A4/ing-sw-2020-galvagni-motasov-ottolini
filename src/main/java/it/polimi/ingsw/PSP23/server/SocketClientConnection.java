@@ -13,6 +13,11 @@ public class SocketClientConnection extends Observable<String> implements Client
     private ObjectOutputStream out;
     private Server server;
     public boolean active = true;
+    private boolean isOver=false;
+
+    public void isOver() {
+        isOver=true;
+    }
 
     public SocketClientConnection(Socket socket, Server server){
         this.server=server;
@@ -47,7 +52,7 @@ public class SocketClientConnection extends Observable<String> implements Client
         active=false;
     }
 
-    private void close(){
+    public void close(){
         closeConnection();
         System.out.println("Deregistering client...");
         server.deregisterConnection(this);
@@ -83,9 +88,23 @@ public class SocketClientConnection extends Observable<String> implements Client
             }
 
 
-        }catch (IOException| NoSuchElementException e){
-            System.err.println("Errore "+e.getMessage());
-        }finally {
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (NoSuchElementException e){
+            if(!isOver){
+                if(server.getConn2s().contains(this)){
+                    for (int i=0;i<server.getConn2s().size();i++){
+                        server.getConn2s().get(i).close();
+                    }
+                }
+                else if(server.getConn3s().contains(this)){
+                    for (int i=0;i<server.getConn3s().size();i++){
+                        server.getConn3s().get(i).close();
+                    }
+                }
+            }
+        }
+        finally {
             close();
         }
 

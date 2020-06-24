@@ -26,6 +26,9 @@ public abstract class View extends Observable<PlayerMove>  implements Observer<M
         //showMessage("You just have :"+command);
     }
 
+    public abstract void close();
+    public abstract void isOver();
+
 
 
 }
