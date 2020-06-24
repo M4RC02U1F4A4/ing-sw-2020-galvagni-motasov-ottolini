@@ -178,6 +178,10 @@ public class GUIController2 {
                             lose.setScene(new Scene(rootWin));
                             lose.setResizable(false);
                             lose.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                            lose.setOnCloseRequest(e -> {
+                                Platform.exit();
+                                System.exit(0);
+                            });
                             lose.show();
                         } catch (IOException e) { e.printStackTrace(); }
                         Vars.statusWinLose = -1;
@@ -194,6 +198,10 @@ public class GUIController2 {
                             win.setScene(new Scene(rootWin));
                             win.setResizable(false);
                             win.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                            win.setOnCloseRequest(e -> {
+                                Platform.exit();
+                                System.exit(0);
+                            });
                             win.show();
                         } catch (IOException e) { e.printStackTrace(); }
                         Vars.statusWinLose = -1;
