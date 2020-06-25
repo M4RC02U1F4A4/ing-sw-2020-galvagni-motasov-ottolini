@@ -7,11 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -66,13 +68,12 @@ public class LoginController {
         Vars.magicWrite=new PrintWriter(socket.getOutputStream());
 
         try{
-            new Thread((new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         while (isActive()) {
-                            Object inputObject = socketIn.
-                                    readObject();
+                            Object inputObject = socketIn.readObject();
                             if (inputObject instanceof String) {
                                 System.out.println((String) inputObject);
                                 System.out.println("**************************");
@@ -82,6 +83,7 @@ public class LoginController {
                                 else if(((String) inputObject).contains("BUILD")) Vars.turnStatus = 3;
                                 else if(((String) inputObject).contains("CHOOSE_WORKER:")) Vars.turnStatus = 4;
                                 if(((String) inputObject).contains("timeout")) Vars.gameStatus = 0;
+                                if(((String) inputObject).contains("Connection closed!")) Vars.gameStatus = 0;
                                 if(((String) inputObject).contains("Comando non valido: riprova")) Vars.commandNotValid = true;
                                 if(((String) inputObject).contains("WIN")) Vars.statusWinLose = 1;
                                 else if(((String) inputObject).contains("LOSE")) Vars.statusWinLose = 0;
@@ -145,11 +147,11 @@ public class LoginController {
                                 throw new IllegalArgumentException();
                             }
                         }
-                    }catch (Exception e){
+                    } catch (Exception e){
                         e.printStackTrace();
                     }
                 }
-            })).start();
+            }).start();
         }catch (NoSuchElementException e){
             System.out.println("connection closed from client side");
         }finally {
@@ -163,7 +165,7 @@ public class LoginController {
         Vars.magicWrite.flush();
         Vars.magicWrite.println(String.valueOf(Vars.numPlayer));
         Vars.magicWrite.flush();
-        while( !(Vars.serverMsg.contains("SELECT_GODS")) && !(Vars.serverMsg.contains("CHOOSE_GOD")) ) {try{Thread.sleep(1000);} catch (InterruptedException e){e.printStackTrace();}}
+        while( !(Vars.serverMsg.contains("SELECT_GODS")) && !(Vars.serverMsg.contains("CHOOSE_GOD")) && Vars.gameStatus == 1 ) {try{Thread.sleep(1000);} catch (InterruptedException e){e.printStackTrace();}}
         if(Vars.serverMsg.contains("SELECT_GODS")) {
             try{
                 Parent rootChoice = FXMLLoader.load(getClass().getResource("/choice.fxml"));
@@ -172,6 +174,10 @@ public class LoginController {
                 choice.setScene(new Scene(rootChoice));
                 choice.setResizable(false);
                 choice.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                choice.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 choice.show();
             } catch (IOException e) {e.printStackTrace();}
         }
@@ -183,10 +189,22 @@ public class LoginController {
                 choice3.setScene(new Scene(rootChoice3));
                 choice3.setResizable(false);
                 choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                choice3.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 choice3.show();
             } catch (IOException e) { e.printStackTrace();}
         }
-
+        else if(Vars.gameStatus == 0){
+            Alert timeout = new Alert(Alert.AlertType.ERROR);
+            timeout.setHeaderText("Network error");
+            timeout.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            timeout.show();
+        }
 
 
     }

@@ -108,16 +108,31 @@ public class ChoiceController {
             Vars.magicWrite.flush();
             Stage stage = (Stage) choiceError.getScene().getWindow();
             stage.close();
-            while( !(Vars.serverMsg.contains("CHOOSE_GOD"))) {try{Thread.sleep(1000);} catch (InterruptedException e){}}
-            try {
-                Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
-                Stage choice3 = new Stage();
-                choice3.setTitle("Santorini - " + Vars.username);
-                choice3.setScene(new Scene(rootChoice3));
-                choice3.setResizable(false);
-                choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
-                choice3.show();
-            } catch (IOException e) { e.printStackTrace(); }
+            while( !(Vars.serverMsg.contains("CHOOSE_GOD")) && Vars.gameStatus == 1) {try{Thread.sleep(1000);} catch (InterruptedException e){}}
+            if(Vars.gameStatus == 0){
+                Alert timeout = new Alert(Alert.AlertType.ERROR);
+                timeout.setHeaderText("Network error");
+                timeout.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
+                timeout.show();
+            }
+            else if(Vars.serverMsg.contains("CHOOSE_GOD")){
+                try {
+                    Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
+                    Stage choice3 = new Stage();
+                    choice3.setTitle("Santorini - " + Vars.username);
+                    choice3.setScene(new Scene(rootChoice3));
+                    choice3.setResizable(false);
+                    choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                    choice3.setOnCloseRequest(e -> {
+                        Platform.exit();
+                        System.exit(0);
+                    });
+                    choice3.show();
+                } catch (IOException e) { e.printStackTrace(); }
+            }
         }
         else if(check == 3){
             gods = gods.substring(0, gods.length() - 1);
@@ -127,20 +142,36 @@ public class ChoiceController {
             Vars.god3 = parts[2];
             String godsToSend = "SELECT_GODS:" + Vars.god1 + "," + Vars.god2 + "," + Vars.god3;
             Vars.magicWrite.println(godsToSend);
-            Vars.magicWrite.println(godsToSend);
             Vars.magicWrite.flush();
             Stage stage = (Stage) choiceError.getScene().getWindow();
             stage.close();
-            while( !(Vars.serverMsg.contains("CHOOSE_GOD"))) {try{Thread.sleep(1000);} catch (InterruptedException e){}}
-            try {
-                Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
-                Stage choice3 = new Stage();
-                choice3.setTitle("Santorini - " + Vars.username);
-                choice3.setScene(new Scene(rootChoice3));
-                choice3.setResizable(false);
-                choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
-                choice3.show();
-            } catch (IOException e) { e.printStackTrace(); }
+            while( !(Vars.serverMsg.contains("CHOOSE_GOD")) && Vars.gameStatus == 1) {try{Thread.sleep(1000);} catch (InterruptedException e){}}
+             if(Vars.gameStatus == 0){
+                Alert timeout = new Alert(Alert.AlertType.ERROR);
+                timeout.setHeaderText("Network error");
+                timeout.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
+                timeout.show();
+            }
+            else if(Vars.serverMsg.contains("CHOOSE_GOD")) {
+                try {
+                    Parent rootChoice3 = FXMLLoader.load(getClass().getResource("/choice3.fxml"));
+                    Stage choice3 = new Stage();
+                    choice3.setTitle("Santorini - " + Vars.username);
+                    choice3.setScene(new Scene(rootChoice3));
+                    choice3.setResizable(false);
+                    choice3.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                    choice3.setOnCloseRequest(e -> {
+                        Platform.exit();
+                        System.exit(0);
+                    });
+                    choice3.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

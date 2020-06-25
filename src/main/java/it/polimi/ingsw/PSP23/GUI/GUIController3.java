@@ -184,6 +184,10 @@ public class GUIController3 {
                         stage.close();
                         Alert timeout = new Alert(Alert.AlertType.ERROR);
                         timeout.setHeaderText("Network error");
+                        timeout.setOnCloseRequest(e -> {
+                            Platform.exit();
+                            System.exit(0);
+                        });
                         timeout.show();
                         Vars.gameStatus = -1;
                     });

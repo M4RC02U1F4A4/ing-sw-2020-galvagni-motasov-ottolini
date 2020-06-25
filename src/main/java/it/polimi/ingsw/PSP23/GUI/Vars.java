@@ -36,8 +36,13 @@ public class Vars {
     public static Map map;
     public static boolean mapEdit = false;
     public static String currentPlayer = "---";
+    //1 when ok
+    //0 network error
     public static int gameStatus = 1;
+    //0 lose
+    //1 win
     public static int statusWinLose = -1;
     public static boolean commandNotValid = false;
+    //used for choice3
     public static String godChoice = "";
 }

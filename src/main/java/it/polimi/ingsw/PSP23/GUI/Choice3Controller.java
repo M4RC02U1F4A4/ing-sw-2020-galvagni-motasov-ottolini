@@ -1,10 +1,12 @@
 package it.polimi.ingsw.PSP23.GUI;
 
 import it.polimi.ingsw.PSP23.ClientApp;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -85,8 +87,17 @@ public class Choice3Controller {
         Vars.magicWrite.flush();
         Vars.god1Used = true;
         Vars.myGod = Vars.god1;
-        while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
-        if(Vars.numPlayer == 2){
+        while( !(Vars.serverMsg.contains("STARTING THE GAME")) && Vars.gameStatus == 1 ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
+        if(Vars.gameStatus == 0){
+            Alert timeout = new Alert(Alert.AlertType.ERROR);
+            timeout.setHeaderText("Network error");
+            timeout.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            timeout.show();
+        }
+        else if(Vars.numPlayer == 2){
             try {
                 Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
                 Stage gameBoard = new Stage();
@@ -94,6 +105,10 @@ public class Choice3Controller {
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
                 gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -107,6 +122,10 @@ public class Choice3Controller {
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
                 gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -121,8 +140,17 @@ public class Choice3Controller {
         Vars.magicWrite.flush();
         Vars.god2Used = true;
         Vars.myGod = Vars.god2;
-        while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
-        if(Vars.numPlayer == 2){
+        while( !(Vars.serverMsg.contains("STARTING THE GAME")) && Vars.gameStatus == 1 ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
+        if(Vars.gameStatus == 0){
+            Alert timeout = new Alert(Alert.AlertType.ERROR);
+            timeout.setHeaderText("Network error");
+            timeout.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            timeout.show();
+        }
+        else if(Vars.numPlayer == 2){
             try {
                 Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
                 Stage gameBoard = new Stage();
@@ -130,6 +158,10 @@ public class Choice3Controller {
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
                 gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -143,6 +175,10 @@ public class Choice3Controller {
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
                 gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 gameBoard.show();
 
             } catch (IOException e) {
@@ -158,8 +194,17 @@ public class Choice3Controller {
         Vars.magicWrite.flush();
         Vars.god3Used = true;
         Vars.myGod = Vars.god3;
-        while( !(Vars.serverMsg.contains("STARTING THE GAME")) ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
-        if(Vars.numPlayer == 2){
+        while( !(Vars.serverMsg.contains("STARTING THE GAME")) && Vars.gameStatus == 1 ){try{Thread.sleep(1000);}catch (InterruptedException e){e.printStackTrace();}}
+        if(Vars.gameStatus == 0){
+            Alert timeout = new Alert(Alert.AlertType.ERROR);
+            timeout.setHeaderText("Network error");
+            timeout.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            timeout.show();
+        }
+        else if(Vars.numPlayer == 2){
             try {
                 Parent rootGameBoard = FXMLLoader.load(getClass().getResource("/gameBoard2.fxml"));
                 Stage gameBoard = new Stage();
@@ -167,6 +212,10 @@ public class Choice3Controller {
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
                 gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 gameBoard.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -180,6 +229,10 @@ public class Choice3Controller {
                 gameBoard.setScene(new Scene(rootGameBoard));
                 gameBoard.setResizable(false);
                 gameBoard.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
+                gameBoard.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
+                });
                 gameBoard.show();
 
             } catch (IOException e) {
