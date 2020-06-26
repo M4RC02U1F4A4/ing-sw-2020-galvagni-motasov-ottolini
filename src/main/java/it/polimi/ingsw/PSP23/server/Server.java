@@ -210,7 +210,7 @@ public class Server {
             }
         }
 
-
+        /*
         System.out.println("Giocatori in attesa di una partita per 2");
         Set<Map.Entry<String, ClientConnection>> st = waitingConnection2vs2.entrySet();
         for (Map.Entry<String, ClientConnection> me : st) {
@@ -224,6 +224,8 @@ public class Server {
             System.out.print(me.getKey() + ":");
             System.out.println(me.getValue().getIpAddress());
         }
+
+         */
 
 
     }

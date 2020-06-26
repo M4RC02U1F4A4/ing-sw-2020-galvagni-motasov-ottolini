@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 public class Controller implements Observer<PlayerMove>{
     private final Game game;
-    private final static int TIME_LIMIT=600;
+    private final static int TIME_LIMIT=30;
 
     private ArrayList<View> players = new ArrayList<>();
     private Action actionBeingPerformed;
@@ -21,7 +21,7 @@ public class Controller implements Observer<PlayerMove>{
     private int removedPlayer=-1,currPl=0;
 
     private final Timer timer = new Timer();
-    private int timeRunningOut=TIME_LIMIT;
+    private int timeRunningOut=TIME_LIMIT*5;
 
     public void addPlayer(Player p){
         game.addPlayer(p.getName(),p.getIpAddress());
