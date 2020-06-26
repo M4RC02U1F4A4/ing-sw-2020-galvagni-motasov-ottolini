@@ -20,14 +20,9 @@ public class RemoteView extends View{
 
         @Override
         public void update(String message) {
-            System.out.println("Ricevuto: "+message);
             clientSaid=message;
             try{
                 String[] inputs=message.split(":");
-                /*if(inputs[0].equals("SELECT_GODS")||inputs[0].equals("CHOOSE_GOD")||inputs[0].equals("PLACE_WORKER")||inputs[0].equals("CHOOSE_WORKER")||inputs[0].equals("MOVE")||inputs[0].equals("BUILD")||inputs[0].equals("SKIP"))
-                    handleChoice(inputs[0],inputs[1]);
-                else
-                    showMessage("Il comando inserito non è valido, riprova");*/
                 switch (inputs[0]){
                     case "SELECT_GODS":
                     case "CHOOSE_GOD":{
@@ -67,16 +62,6 @@ public class RemoteView extends View{
     @Override
     public void update(Message message) {
         showMessage(message.getMap());
-        showMessage("aiuto");
-
-        //VERIFICARE CHE NON SIA GAMEOVER
-       /* if(message.getPlayer().getPlayerNumber()==)//non e' il tuo turno
-            showMessage("non è il tuo turno");
-          else{
-             showMessage("è il tuo turno");
-          }
-        */
-
     }
 
     public String getWhatClientSaid(){
