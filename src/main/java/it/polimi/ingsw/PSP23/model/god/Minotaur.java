@@ -43,7 +43,10 @@ public class Minotaur extends God{
             return -5;
         if (null == a.getWorker() && a.isNear(teseo, false)) {
             teseo.moveWorker(a);
-            return super.move(c, w, map);
+            int i = super.move(c, w, map);
+            if (i < 0)
+                teseo.moveWorker(c);
+            return i;
         }
         else return -1;
     }
