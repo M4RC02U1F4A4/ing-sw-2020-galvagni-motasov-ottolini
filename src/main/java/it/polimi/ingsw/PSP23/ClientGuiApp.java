@@ -10,23 +10,15 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Hello world!
  *
  */
-public class ClientGuiApp extends Application {
-
-    public static void main(String[] args) {
-        Vars vars = new Vars();
-        launch(args);
-        Client c=new Client(vars.ipServer,13245);
-        try {
-            c.run();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+public class ClientGuiApp extends Application{
+    public static void main( String[] args ) {
+            launch(args);
     }
 
     @Override
