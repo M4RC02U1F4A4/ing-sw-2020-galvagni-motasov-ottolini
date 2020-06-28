@@ -52,11 +52,8 @@ public class Controller implements Observer<PlayerMove>{
     }
 
     public synchronized void  performMove(PlayerMove move){
-        //move.getView().showMessage(move.getPlayer().getPlayerNumber()+"-"+(game.getCurrentPlayerNum()));
         players.get(currPl).showMessage(currPl+"-"+game.getCurrentPlayerNum());
-        //if (game.isPlayerTurn(move.getPlayer())) {
         if (game.isPlayerTurn(players.get(currPl).getPlayer())) {
-            //sendToEverybody("TURN:"+move.getPlayer().getName());
             switch (move.getCommand()) {
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
@@ -133,11 +130,9 @@ public class Controller implements Observer<PlayerMove>{
                             }
                             sendToRemainingPlayers("Attendi il tuo turno");
                         } else {
-                            //move.getView().showMessage("Comando non valido: riprova");
                             players.get(currPl).showMessage("Comando non valido: riprova");
                         }
                     } else
-                        //move.getView().showMessage("Comando non valido: riprova");
                         players.get(currPl).showMessage("Comando non valido: riprova");
                     break;
                 }
