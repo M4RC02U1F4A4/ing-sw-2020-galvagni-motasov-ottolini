@@ -15,7 +15,7 @@ import java.util.Scanner;
  * Hello world!
  *
  */
-public class ClientApp extends Application{
+public class ClientApp{
 
     public static void main( String[] args ) {
         System.out.println("1 - GUI");
@@ -24,7 +24,9 @@ public class ClientApp extends Application{
         String inputLine = stdin.nextLine();
         //GUI
         if(inputLine.equals("1")){
-            launch(args);
+            new Thread(() -> {
+                javafx.application.Application.launch(ClientGuiApp.class);
+            }).start();
             }
         //CLI
         else if(inputLine.equals("2")){
@@ -44,16 +46,6 @@ public class ClientApp extends Application{
             System.out.println("ERROR!!");
         }
 
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
-        primaryStage.setTitle("Santorini");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
-        primaryStage.show();
     }
 }
 /*
