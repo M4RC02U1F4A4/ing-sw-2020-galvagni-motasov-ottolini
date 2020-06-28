@@ -15,23 +15,44 @@ public class SocketClientConnection extends Observable<String> implements Client
     public boolean active = true;
     private boolean isOver=false;
 
+    /**
+     * Sets isOver to true.
+     * If true, it means that the client was disconnected from the server, otherwise we were disconnected due to a TimeOut
+     */
     public void isOver() {
         isOver=true;
     }
 
+    /**
+     * Constructor
+     * @param socket
+     * @param server
+     */
     public SocketClientConnection(Socket socket, Server server){
         this.server=server;
         this.socket=socket;
     }
 
+    /**
+     * getter for active
+     * @return true if active, false otherwise
+     */
     public synchronized boolean isActive(){
         return active;
     }
 
+    /**
+     * Getter for the ipAddress
+     * @return the ipAddress
+     */
     public String getIpAddress(){
         return socket.getRemoteSocketAddress().toString();
     }
 
+    /**
+     * Method used to send a message from the server to the client
+     * @param message the message we want to send
+     */
     public synchronized void send(Object message){
         try{
             out.reset();
@@ -42,6 +63,9 @@ public class SocketClientConnection extends Observable<String> implements Client
         }
     }
 
+    /**
+     * Closes the socket
+     */
     public synchronized void closeConnection(){
         send("Connection closed!");
         try {
@@ -52,6 +76,9 @@ public class SocketClientConnection extends Observable<String> implements Client
         active=false;
     }
 
+    /**
+     * Closes a connection and deregisters it from the server
+     */
     public void close(){
         closeConnection();
         System.out.println("Deregistering client...");
@@ -59,6 +86,10 @@ public class SocketClientConnection extends Observable<String> implements Client
         System.out.println("Done!");
     }
 
+    /**
+     * Asynchronously send a message to the client
+     * @param message
+     */
     public void asyncSend(final Object message){
         new Thread((new Runnable() {
             @Override
@@ -68,6 +99,10 @@ public class SocketClientConnection extends Observable<String> implements Client
         })).start();
     }
 
+    /**
+     * Method that runs whenever the connection between the client and the server is estabilished.
+     * It reads from the client its name and the number of players, and then adds the player to the lobby
+     */
     public void run(){
         Scanner in;
         String name;

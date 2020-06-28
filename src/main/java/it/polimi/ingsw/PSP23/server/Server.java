@@ -30,9 +30,11 @@ public class Server {
     private ArrayList<ClientConnection>conn2s=new ArrayList<>();
     private ArrayList<ClientConnection>conn3s=new ArrayList<>();
 
+    /**
+     * This method deregisters a connection
+     * @param c the connection we want to remove
+     */
     public synchronized void deregisterConnection(ClientConnection c){
-        /*List<String> threes = new ArrayList<>(waitingConnection3vs3.keySet());
-        List<String> twos = new ArrayList<>(waitingConnection2vs2.keySet());*/
         if(playing3s.contains(c)){
             c.closeConnection();
             playing3s.remove(c);
@@ -41,35 +43,31 @@ public class Server {
             c.closeConnection();
             playing2s.remove(c);
         }
-
-        //TODO: La parte sotto commentata butta via fuori brutalmente
-        /*if(waitingConnection3vs3.containsValue(c)){
-            System.out.println("Disconnetto dalla partita 3v3 il giocatore "+c.getIpAddress());
-            Iterator<String> iterator = waitingConnection3vs3.keySet().iterator();
-            while(iterator.hasNext()){
-                waitingConnection3vs3.get(iterator.next()).closeConnection();
-            }
-        }
-
-        if(waitingConnection2vs2.containsValue(c)){
-            System.out.println("Disconnetto dalla partita 2vs2 il giocatore "+c.getIpAddress());
-
-            Iterator<String> iterator = waitingConnection2vs2.keySet().iterator();
-            while(iterator.hasNext()){
-                waitingConnection2vs2.get(iterator.next()).closeConnection();
-            }
-        }*/
-        System.out.println("XD");
     }
 
+    /**
+     * Getter for getConn2s
+     * @return getConn2s()
+     */
     public ArrayList<ClientConnection> getConn2s() {
         return conn2s;
     }
 
+    /**
+     * Getter for getConn3s
+     * @return getConn3s
+     */
     public ArrayList<ClientConnection> getConn3s() {
         return conn3s;
     }
 
+    /**
+     * This method adds a player to a waitingList, based on the numberOfPlayers paramether
+     * After the waiting list is full, the method starts a new march
+     * @param c the client connection we want to add to the list
+     * @param name the name of the player who joins the lobby
+     * @param numberOfPlayers the size of the match, it can be 2 or 3
+     */
     public synchronized void lobby(ClientConnection c, String name, int numberOfPlayers){
         if(numberOfPlayers==2){
             waitingConnection2vs2.put(name, c);
@@ -209,31 +207,19 @@ public class Server {
                 }
             }
         }
-
-        /*
-        System.out.println("Giocatori in attesa di una partita per 2");
-        Set<Map.Entry<String, ClientConnection>> st = waitingConnection2vs2.entrySet();
-        for (Map.Entry<String, ClientConnection> me : st) {
-            System.out.print(me.getKey() + ":");
-            System.out.println(me.getValue().getIpAddress());
-        }
-
-        System.out.println("Giocatori in attesa di una partita per 3");
-        Set<Map.Entry<String, ClientConnection>> sti = waitingConnection3vs3.entrySet();
-        for (Map.Entry<String, ClientConnection> me : sti) {
-            System.out.print(me.getKey() + ":");
-            System.out.println(me.getValue().getIpAddress());
-        }
-
-         */
-
-
     }
 
+    /**
+     * Constructor
+     * @throws IOException
+     */
     public Server() throws IOException {
         this.serverSocket=new ServerSocket(PORT);
     }
 
+    /**
+     * Stats the server and waits for new connections
+     */
     public void run(){
         while(true){
             try{

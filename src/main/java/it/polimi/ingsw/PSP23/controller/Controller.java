@@ -23,14 +23,26 @@ public class Controller implements Observer<PlayerMove>{
     private final Timer timer = new Timer();
     private int timeRunningOut=TIME_LIMIT*5;
 
+    /**
+     * Adds a player to the match
+     * @param p the player to add
+     */
     public void addPlayer(Player p){
         game.addPlayer(p.getName(),p.getIpAddress());
     }
 
+    /**
+     * Adds a View to the View list
+     * @param v the view to add
+     */
     public void addPlayerView(View v){
         players.add(v);
     }
 
+    /**
+     * Constructor
+     * @param game the game we are playing on
+     */
     public Controller(Game game) {
         super();
 
@@ -51,29 +63,32 @@ public class Controller implements Observer<PlayerMove>{
 
     }
 
+    /**
+     *This method actually makes the move: it uses the local variables and the set of messages contained in the PlayerMove move in order to make any choice in the game
+     * It checks if the player can send a message or it's not his turn.
+     * After that check, depending on the gamePhase, the method performes the move and notifies the next player on what he needs to do
+     * This method also checks if the current player wins or loses and eventually he notifies them about it
+     * @param move the player move
+     */
     public synchronized void  performMove(PlayerMove move){
-        players.get(currPl).showMessage(currPl+"-"+game.getCurrentPlayerNum());
+        //players.get(currPl).showMessage(currPl+"-"+game.getCurrentPlayerNum());
         if (game.isPlayerTurn(players.get(currPl).getPlayer())) {
             switch (move.getCommand()) {
                 case "SELECT_GODS": {
                     if((players.size()==2 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1) ||(players.size()==3 && God.exists(arguments.get(0))==1&&God.exists(arguments.get(0))==1 && God.exists(arguments.get(2))==1)){
                         game.godChoose(arguments.get(0), arguments.get(1), arguments.get(2));
                         sendToEverybody("GODSC:" +game.godsc());
-                        //sendToNextPlayer("GODSC:"+game.godsc());
-                        //sendToRemainingPlayers("GODSC:"+game.godsc());
                         sendToNextPlayer("Scegli un dio tra quelli disponibili:" + game.getGodList());
                         sendToNextPlayer("Sintassi del comando: \nCHOOSE_GOD:<god>");
                         sendToRemainingPlayers("Attendi il tuo turno");
                         break;
                     }else {
-                        //move.getView().showMessage("Comando non valido! Riprova");
                         players.get(currPl).showMessage("Comando non valido! Riprova");
                         break;
                     }
                 }
                 case "CHOOSE_GOD": {
                     if(game.setGod(arguments.get(0))==-1){
-                        //move.getView().showMessage("Parametro divinita' non valido: riprova");
                         players.get(currPl).showMessage("Parametro divinita' non valido: riprova");
                         break;
                     }
@@ -143,8 +158,13 @@ public class Controller implements Observer<PlayerMove>{
         }
     }
 
+    /**
+     * Method used to disconnect a player whenever he loses.
+     * When we disconnect a player, we need to adjust the number of remaining players, in order to match it with the TurnManager
+     * After adjusting, we send everybody the updated map and we wait for the next player to performe his moves
+     */
     private void removePlayer() {
-        System.out.println("Il giocatore"+game.getCurrentPlayerNum()+" ha perso, ez noob");
+        System.out.println("Il giocatore"+game.getCurrentPlayerNum()+" ha perso");
         removedPlayer=game.getCurrentPlayerNum();
         players.remove(players.get(game.getCurrentPlayerNum()));
         System.out.println("REMOVING PLAYER: "+game.removePlayer());
@@ -156,6 +176,10 @@ public class Controller implements Observer<PlayerMove>{
         sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
     }
 
+    /**
+     * Method that calls setActionFromClient(), in order to set local variables for each move, and performes the move
+     * @param message the whole comand recieved from the client
+     */
     @Override
     public void update(PlayerMove message) {
         setActionFromTheClient(message.getCommand(), message.getArgs(),message.getPlayer());
@@ -168,6 +192,12 @@ public class Controller implements Observer<PlayerMove>{
         whatToBuild = Status.FREE;
     }
 
+    /**
+     * Method used everytime a player makes any move. Used to set local variables in order to perform the moves
+     * @param msg the comand sent from the player
+     * @param args the parameters that are required to perform the move
+     * @param him the player, used in order to adjust the number of players whenever a player loses the match
+     */
     public void setActionFromTheClient(String msg, String args, Player him){
         resetTimer();
         System.out.println("NUMERO:"+him.getPlayerNumber());
@@ -260,6 +290,10 @@ public class Controller implements Observer<PlayerMove>{
         }
     }
 
+    /**
+     * Method used to send a message to the next playing player
+     * @param msg the message we want to send
+     */
     public void sendToNextPlayer(String msg){
         int nextPlayer=game.getCurrentPlayerNum();
         /*if (nextPlayer==players.size()){
@@ -268,6 +302,10 @@ public class Controller implements Observer<PlayerMove>{
         players.get(nextPlayer).showMessage(msg);
     }
 
+    /**
+     * Method used to send a message to all players except the next playing player
+     * @param msg the message we want to send
+     */
     public void sendToRemainingPlayers(String msg){
         for(int i=0;i<players.size();i++){
             if(i!=game.getCurrentPlayerNum()){
@@ -276,18 +314,30 @@ public class Controller implements Observer<PlayerMove>{
         }
     }
 
+    /**
+     * Method used to send everybody a certain message
+     * @param msg the message we want to send
+     */
     public void sendToEverybody(String msg){
         for(int i=0;i<players.size();i++){
             players.get(i).showMessage(msg);
         }
     }
 
+    /**
+     * Method used to send the map to each player
+     */
     public void sendUpdatedMap(){
         for (int i=0;i<players.size();i++){
             players.get(i).showMessage(game.getMap());
         }
     }
 
+    /**
+     * Method used to send a list of the players.
+     * for each player the method returns its name, its color and its god
+     * @return the players list
+     */
     public String playersList(){
         String msg="";
         for(int i=0;i<players.size();i++){
@@ -297,15 +347,22 @@ public class Controller implements Observer<PlayerMove>{
         return msg;
     }
 
+    /**
+     * Method used to reset the timer whenever we recieve a message
+     */
     public void resetTimer(){
         timeRunningOut=TIME_LIMIT;
     }
 
+    /**
+     * Method used to disconnect the next player whenever he loses a match
+     */
     public void closeNextPlayer(){
         players.get(game.getCurrentPlayerNum()).close();
         players.get(game.getCurrentPlayerNum()).isOver();
     }
 
+    /*
     public void closeOtherPlayers(){
         for(int i=0;i<players.size();i++){
             if(i!=game.getCurrentPlayerNum()){
@@ -313,8 +370,11 @@ public class Controller implements Observer<PlayerMove>{
                 players.get(i).isOver();
             }
         }
-    }
+    }*/
 
+    /**
+     * Method used to disconnect every player whenever the timer reaches 0
+     */
     public void closeEverybody(){
         for(int i=0;i<players.size();i++){
             players.get(i).close();

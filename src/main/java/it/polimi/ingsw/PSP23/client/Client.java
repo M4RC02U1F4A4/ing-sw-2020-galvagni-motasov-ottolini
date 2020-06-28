@@ -15,19 +15,39 @@ public class Client {
     private int port;
     private boolean active = true;
 
+    /**Constructor
+     * @param ip server's IP address
+     * @param port server's listening port
+     */
     public Client(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
 
+    /**
+     * getter for active
+     * @return true if active, false otherwise
+     */
     public synchronized boolean isActive(){
         return active;
     }
 
+    /**
+     * Setter for active
+     * @param active
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     * Method thar recieves messages from the server.
+     * If it recieves a normal text message, it writes it on screen
+     * If it recieves a map, it draws it
+     * If it recives "win"/"lose", it prints it and then it disconnects from the server
+     * @param socketIn the stream that contains our messages
+     * @return
+     */
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
         Thread t=new Thread(new Runnable() {
             @Override
@@ -59,7 +79,6 @@ public class Client {
                     }
                 }catch (Exception e){
                     setActive(false);
-                    //TODO togli i commenti lmao
                     //System.exit(1);
                 }
             }
@@ -68,6 +87,12 @@ public class Client {
         return t;
     }
 
+    /**
+     * Method that reads a line fron an input buffer and writes is on the socket's output buffed
+     * @param stdin the keyboard buffer
+     * @param socketOut the buffer where we write the message
+     * @return
+     */
     public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
         Thread t= new Thread(new Runnable() {
             @Override
@@ -89,6 +114,10 @@ public class Client {
         return t;
     }
 
+    /**
+     * Method that runs when a client is launched
+     * @throws IOException
+     */
     public void run() throws IOException{
         Socket socket=new Socket(ip, port);
         System.out.println("connessione stabilita");
