@@ -20,8 +20,8 @@ public class ControllerTest {
         Torre = null;
     }
 
-    @Test
-    public void ChooseWorker() {
-        Torre.setActionFromTheClient("CHOOSE_WORKER", "0", null);
-    }
+//    @Test
+//    public void ChooseWorker() {
+//        Torre.setActionFromTheClient("CHOOSE_WORKER", "0", null);
+//    }
 }
