@@ -14,7 +14,14 @@ java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\out\artifacts\Server_j
 ### Client
 ```
 java -jar <path-to-client-jar>
+```
 
+Example:
+```
+java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\out\artifacts\Client_jar\Santorini2k20.jar
+```
+
+```
 GUI
 Type 1 in the console and then hit enter
 
@@ -22,10 +29,7 @@ CLI
 Type 2 in the console and then hit enter
 ```
 
-Example:
-```
-java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\out\artifacts\Client_jar\Santorini2k20.jar
-```
+
 
 ## Features
 * Complete rules
