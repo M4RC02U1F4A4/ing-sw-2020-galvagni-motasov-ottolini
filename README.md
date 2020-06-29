@@ -27,10 +27,6 @@ Example:
 java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\out\artifacts\Client_jar\Santorini2k20.jar
 ```
 
-Example:
-```
-java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\out\artifacts\Client_jar\Santorini2k20.jar
-```
 ## Features
 * Complete rules
 * CLI
