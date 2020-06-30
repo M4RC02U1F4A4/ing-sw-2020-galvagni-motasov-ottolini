@@ -100,7 +100,7 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.view;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.model.Message;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.model.MessageTest;
 <i>4</i>&nbsp;import it.polimi.ingsw.PSP23.model.Player;
 <i>5</i>&nbsp;import it.polimi.ingsw.PSP23.observer.Observer;
 <i>6</i>&nbsp;import it.polimi.ingsw.PSP23.server.ClientConnection;
@@ -126,7 +126,7 @@
 <i>26</i>&nbsp;                /*if(inputs[0].equals(&quot;SELECT_GODS&quot;)||inputs[0].equals(&quot;CHOOSE_GOD&quot;)||inputs[0].equals(&quot;PLACE_WORKER&quot;)||inputs[0].equals(&quot;CHOOSE_WORKER&quot;)||inputs[0].equals(&quot;MOVE&quot;)||inputs[0].equals(&quot;BUILD&quot;)||inputs[0].equals(&quot;SKIP&quot;))
 <i>27</i>&nbsp;                    handleChoice(inputs[0],inputs[1]);
 <i>28</i>&nbsp;                else
-<i>29</i>&nbsp;                    showMessage(&quot;Il comando inserito non è valido, riprova&quot;);*/
+<i>29</i>&nbsp;                    showMessage(&quot;Il comando inserito non ï¿½ valido, riprova&quot;);*/
 <b class="nc"><i>30</i>&nbsp;                switch (inputs[0]){</b>
 <i>31</i>&nbsp;                    case &quot;SELECT_GODS&quot;:
 <i>32</i>&nbsp;                    case &quot;CHOOSE_GOD&quot;:
@@ -140,7 +140,7 @@
 <b class="nc"><i>40</i>&nbsp;                        handleChoice(inputs[0],&quot;NULL&quot;);</b>
 <b class="nc"><i>41</i>&nbsp;                        break;</b>
 <i>42</i>&nbsp;                    default:{
-<b class="nc"><i>43</i>&nbsp;                        showMessage(&quot;Il comando inserito non è valido, riprova&quot;);</b>
+<b class="nc"><i>43</i>&nbsp;                        showMessage(&quot;Il comando inserito non ï¿½ valido, riprova&quot;);</b>
 <i>44</i>&nbsp;                    }
 <i>45</i>&nbsp;                }
 <b class="nc"><i>46</i>&nbsp;            }catch(IllegalArgumentException e){</b>
@@ -163,9 +163,9 @@
 <i>63</i>&nbsp;
 <i>64</i>&nbsp;        //VERIFICARE CHE NON SIA GAMEOVER
 <i>65</i>&nbsp;       /* if(message.getPlayer().getPlayerNumber()==)//non e&#39; il tuo turno
-<i>66</i>&nbsp;            showMessage(&quot;non è il tuo turno&quot;);
+<i>66</i>&nbsp;            showMessage(&quot;non ï¿½ il tuo turno&quot;);
 <i>67</i>&nbsp;          else{
-<i>68</i>&nbsp;             showMessage(&quot;è il tuo turno&quot;);
+<i>68</i>&nbsp;             showMessage(&quot;ï¿½ il tuo turno&quot;);
 <i>69</i>&nbsp;          }
 <i>70</i>&nbsp;        */
 <i>71</i>&nbsp;
