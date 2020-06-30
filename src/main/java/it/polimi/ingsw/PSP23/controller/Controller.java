@@ -379,6 +379,7 @@ public class Controller implements Observer<PlayerMove>{
         for(int i=0;i<players.size();i++){
             players.get(i).close();
             players.get(i).isOver();
+            timeRunningOut=0;
         }
     }
 }

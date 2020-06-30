@@ -37,9 +37,22 @@ public class Server {
     public synchronized void deregisterConnection(ClientConnection c){
         if(playing3s.contains(c)){
             c.closeConnection();
+            for(int i=0;i<conn3s.size();i++){
+                if(conn3s.get(i).equals(c)){
+                    System.out.println("Ho trovato chi cancellare xd");
+                    playing3s.remove(playing3s.get(i));
+                }
+            }
             playing3s.remove(c);
+            conn3s.remove(c);
         }
         if(playing2s.contains(c)){
+            for(int i=0;i<conn2s.size();i++){
+                if(conn2s.get(i).equals(c)){
+                    System.out.println("Ho trovato chi cancellare xd");
+                    playing2s.remove(playing2s.get(i));
+                }
+            }
             c.closeConnection();
             playing2s.remove(c);
         }
