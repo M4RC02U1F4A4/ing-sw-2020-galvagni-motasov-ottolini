@@ -82,6 +82,9 @@ public class SocketClientConnection extends Observable<String> implements Client
     public void close(){
         closeConnection();
         System.out.println("Deregistering client...");
+        /*
+        }*/
+
         server.deregisterConnection(this);
         System.out.println("Done!");
     }
@@ -122,18 +125,16 @@ public class SocketClientConnection extends Observable<String> implements Client
                 notify(read);
             }
 
-
         }catch (IOException e){
             e.printStackTrace();
-        }catch (NoSuchElementException e){
-            if(!isOver){
-                if(server.getConn2s().contains(this)){
-                    for (int i=0;i<server.getConn2s().size();i++){
+        }catch (NoSuchElementException e) {
+            if (!isOver) {
+                if (server.getConn2s().contains(this)) {
+                    for (int i = 0; i < server.getConn2s().size(); i++) {
                         server.getConn2s().get(i).close();
                     }
-                }
-                else if(server.getConn3s().contains(this)){
-                    for (int i=0;i<server.getConn3s().size();i++){
+                } else if (server.getConn3s().contains(this)) {
+                    for (int i = 0; i < server.getConn3s().size(); i++) {
                         server.getConn3s().get(i).close();
                     }
                 }

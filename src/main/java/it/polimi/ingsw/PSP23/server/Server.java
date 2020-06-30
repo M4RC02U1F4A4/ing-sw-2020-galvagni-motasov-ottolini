@@ -35,27 +35,35 @@ public class Server {
      * @param c the connection we want to remove
      */
     public synchronized void deregisterConnection(ClientConnection c){
-        if(playing3s.contains(c)){
-            c.closeConnection();
-            for(int i=0;i<conn3s.size();i++){
-                if(conn3s.get(i).equals(c)){
-                    System.out.println("Ho trovato chi cancellare xd");
-                    playing3s.remove(playing3s.get(i));
-                }
+        for(int i=0;i<playing2s.size();i++){
+            if(playing2s.get(i).getIpAddress().equals(c.getIpAddress())){
+                playing2s.remove(playing2s.get(0));
+                playing2s.remove(playing2s.get(1));
+                conn2s.remove(conn2s.get(0));
+                conn2s.remove(conn2s.get(1));
+                c.closeConnection();
+                c.closeConnection();
             }
-            playing3s.remove(c);
-            conn3s.remove(c);
         }
-        if(playing2s.contains(c)){
-            for(int i=0;i<conn2s.size();i++){
-                if(conn2s.get(i).equals(c)){
-                    System.out.println("Ho trovato chi cancellare xd");
-                    playing2s.remove(playing2s.get(i));
-                }
+        for(int i=0;i<playing3s.size();i++){
+            if(playing3s.get(i).getIpAddress().equals(c.getIpAddress())){
+                playing3s.remove(playing3s.get(i));
+                conn3s.remove(conn3s.get(i));
+                c.closeConnection();
             }
-            c.closeConnection();
-            playing2s.remove(c);
         }
+        if(conn2s.size()==0 && conn3s.size()==0){
+            try {
+                serverSocket.close();
+                executor.shutdownNow();
+
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     /**
@@ -234,14 +242,16 @@ public class Server {
      * Stats the server and waits for new connections
      */
     public void run(){
+        try{
         while(true){
-            try{
+
                 Socket s=serverSocket.accept();
                 SocketClientConnection socketConnection= new SocketClientConnection(s, this);
                 executor.submit(socketConnection);
-            }catch(IOException e){
-                System.out.println("Connection error");
-            }
+
+        }
+        }catch(IOException e){
+            System.out.println("Connection error");
         }
     }
 

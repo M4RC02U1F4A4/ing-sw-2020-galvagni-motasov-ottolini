@@ -57,6 +57,7 @@ public class Controller implements Observer<PlayerMove>{
                     timer.cancel();
                     sendToEverybody("Partita terminata: timeout");
                     closeEverybody();
+
                 }
             }
         },0,1000);
