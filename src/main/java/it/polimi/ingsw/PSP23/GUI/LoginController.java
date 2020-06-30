@@ -49,6 +49,12 @@ public class LoginController {
         this.active = active;
     }
 
+    /**
+     * Takes login data
+     * Connect to the server
+     * Handles incoming messages from the server
+     * @throws IOException
+     */
     @FXML
     public void playButtonAction() throws IOException {
 

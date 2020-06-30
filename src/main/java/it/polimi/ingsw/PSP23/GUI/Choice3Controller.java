@@ -14,7 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+/**
+ * Controller of the divinity selection window that the player will use during the game
+ */
 public class Choice3Controller {
     Vars vars = new Vars();
     @FXML
@@ -79,6 +81,10 @@ public class Choice3Controller {
         }
     }
 
+    /**
+     * When the user press che first button
+     * Mark the divinity taken for the player and wait to start the game
+     */
     @FXML
     public void choiceButton1Action(){
         Stage stage = (Stage) choiceButton1.getScene().getWindow();
@@ -132,6 +138,10 @@ public class Choice3Controller {
             }
         }
     }
+    /**
+     * When the user press che second button
+     * Mark the divinity taken for the player and wait to start the game
+     */
     @FXML
     public void choiceButton2Action(){
         Stage stage = (Stage) choiceButton2.getScene().getWindow();
@@ -186,6 +196,10 @@ public class Choice3Controller {
             }
         }
     }
+    /**
+     * When the user press che third button
+     * Mark the divinity taken for the player and wait to start the game
+     */
     @FXML
     public void choiceButton3Action(){
         Stage stage = (Stage) choiceButton3.getScene().getWindow();

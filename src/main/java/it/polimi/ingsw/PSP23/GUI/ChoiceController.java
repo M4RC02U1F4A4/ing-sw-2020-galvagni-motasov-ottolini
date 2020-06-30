@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller of the game selection window
+ */
 public class ChoiceController {
     @FXML
     private Button apollo;
@@ -78,6 +81,11 @@ public class ChoiceController {
     @FXML
     private CheckBox checkAtlas;
 
+    /**
+     * Choice confirmation button
+     * Check the choice and send the 2/3 gods chosen to the server
+     * Wait for my turn to choose my divinity
+     */
     @FXML
     public void choiceNextAction(){
         Vars vars = new Vars();
@@ -175,35 +183,80 @@ public class ChoiceController {
         }
     }
 
+    /**
+     * Button for disable the error
+     */
     @FXML
     public void choiceErrorAction(){choiceError.setVisible(false);}
 
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void apolloAction(){description("apollo");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void heraAction(){description("hera");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void prometheusAction(){description("prometheus");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void artemisAction(){description("artemis");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void tritonAction(){description("triton");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void zeusAction(){description("zeus");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void minotaurAction(){description("minotaur");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void demeterAction(){description("demeter");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void athenaAction(){description("athena");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void panAction(){description("pan");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void chronusAction(){description("chronus");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void hestiaAction(){description("hestia");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void hephaestusAction(){description("hephaestus");}
+    /**
+     * Open the description of the god
+     */
     @FXML
     public void atlasAction(){description("atlas");}
 
@@ -219,67 +272,6 @@ public class ChoiceController {
             godDescchoice.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
             godDescchoice.show();
         } catch (IOException e) {e.printStackTrace();}
-
-//        Stage window = new Stage();
-//        window.getIcons().add(new Image(ClientApp.class.getResourceAsStream("/img/246x0w.png")));
-//        //must be closed before reuse the choice window
-//        window.initModality(Modality.APPLICATION_MODAL);
-//        window.setTitle(god);
-//        window.setMinWidth(640);
-//        window.setWidth(640);
-//        window.setMaxWidth(640);
-//        window.setMinHeight(520);
-//        window.setHeight(520);
-//        window.setMaxHeight(520);
-//        window.setResizable(false);
-//        Pane layout = new Pane();
-//        switch (god){
-//            case "apollo":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Apollo_desc.png')");
-//                break;
-//            case "hera":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Hera_desc.png')");
-//                break;
-//            case "prometheus":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Prometheus_desc.png')");
-//                break;
-//            case "artemis":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Artemis_desc.png')");
-//                break;
-//            case "triton":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Triton_desc.png')");
-//                break;
-//            case "zeus":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Zeus_desc.png')");
-//                break;
-//            case "minotaur":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Minotaur_desc.png')");
-//                break;
-//            case "demeter":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Demeter_desc.png')");
-//                break;
-//            case "athena":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Athena_desc.png')");
-//                break;
-//            case "pan":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Pan_desc.png')");
-//                break;
-//            case "chronus":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Chronus_desc.png')");
-//                break;
-//            case "hestia":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Hestia_desc.png')");
-//                break;
-//            case "hephaestus":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Hephaestus_desc.png')");
-//                break;
-//            case "atlas":
-//                layout.setStyle("-fx-background-image: url('/img/gods/Atlas_desc.png')");
-//                break;
-//        }
-//        Scene scene = new Scene(layout);
-//        window.setScene(scene);
-//        window.showAndWait();
     }
 
 }
