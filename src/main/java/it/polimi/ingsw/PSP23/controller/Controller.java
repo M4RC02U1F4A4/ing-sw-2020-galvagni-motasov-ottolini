@@ -383,4 +383,15 @@ public class Controller implements Observer<PlayerMove>{
             timeRunningOut=0;
         }
     }
+
+    /**
+     * Method used to set the timer to zero. Used when all clients need to be disconnected due to a connection error.
+     * Setting the time to zero allows the server to host a new game
+     */
+    public void setTimeToZero(){
+        timeRunningOut=0;
+    }
+
+
+
 }

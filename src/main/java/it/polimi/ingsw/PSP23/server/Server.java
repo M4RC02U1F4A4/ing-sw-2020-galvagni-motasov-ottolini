@@ -30,6 +30,8 @@ public class Server {
     private ArrayList<ClientConnection>conn2s=new ArrayList<>();
     private ArrayList<ClientConnection>conn3s=new ArrayList<>();
 
+    Controller controller;
+
     /**
      * This method deregisters a connection
      * @param c the connection we want to remove
@@ -37,11 +39,8 @@ public class Server {
     public synchronized void deregisterConnection(ClientConnection c){
         for(int i=0;i<playing2s.size();i++){
             if(playing2s.get(i).getIpAddress().equals(c.getIpAddress())){
-                playing2s.remove(playing2s.get(0));
-                playing2s.remove(playing2s.get(1));
-                conn2s.remove(conn2s.get(0));
-                conn2s.remove(conn2s.get(1));
-                c.closeConnection();
+                playing2s.remove(playing2s.get(i));
+                conn2s.remove(conn2s.get(i));
                 c.closeConnection();
             }
         }
@@ -103,7 +102,7 @@ public class Server {
             if(waitingConnection2vs2.size()==2){
                 System.out.println("istanzio il controller per una partita a 2 giocatori");
                 Game game=new Game(2);
-                Controller controller=new Controller(game);
+                controller=new Controller(game);
                 Set<Map.Entry<String, ClientConnection>> st= waitingConnection2vs2.entrySet();
 
                 for(Map.Entry<String, ClientConnection>me:st){
@@ -162,7 +161,7 @@ public class Server {
             if (waitingConnection3vs3.size() == 3) {
                 System.out.println("istanzio il controller per una partita a 3 giocatori");
                 Game game=new Game(3);
-                Controller controller=new Controller(game);
+                controller=new Controller(game);
                 Set<Map.Entry<String, ClientConnection>> st= waitingConnection3vs3.entrySet();
 
                 for(Map.Entry<String, ClientConnection>me:st){
@@ -253,6 +252,13 @@ public class Server {
         }catch(IOException e){
             System.out.println("Connection error");
         }
+    }
+
+    /**
+     * Method used to terminate the game's timer, in order to allow the server to host a new match
+     */
+    public void setTimerToZero(){
+        controller.setTimeToZero();
     }
 
 
