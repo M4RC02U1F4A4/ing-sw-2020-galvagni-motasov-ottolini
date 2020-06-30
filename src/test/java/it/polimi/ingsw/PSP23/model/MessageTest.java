@@ -9,7 +9,6 @@ public class MessageTest {
     PlayerMove move;
     Player player = new Player("Vamos", "1.1.1.1");
     Map map = new Map();
-    TextMessage text = new TextMessage();
 
 
     @Before
