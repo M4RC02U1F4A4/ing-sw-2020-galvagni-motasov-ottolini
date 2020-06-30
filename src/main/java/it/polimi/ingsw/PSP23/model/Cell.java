@@ -73,6 +73,7 @@ public class Cell implements Serializable {
 
     /**
     *   Free the cell from the worker
+     * @param caller caller
     */
     public void fireWorker(Worker caller) {
         if (caller == worker)
@@ -95,8 +96,9 @@ public class Cell implements Serializable {
 
     /**
     *   Check if the worker is adjacent the cell
-    *   and if the difference between worker height and cell height is <= 1
+    *   and if the difference between worker height and cell height is &lt;= 1
     *   @param w worker
+    *   @param height TODO:
     *   @return true if the condition is verified, false other otherwise
     */
     public boolean isNear (Worker w, boolean height) {
@@ -166,6 +168,7 @@ public class Cell implements Serializable {
     *   Search for a FREE level, when it is found build a new BUILD level,
     *   if the level already contains a CUPOLA or is the last one (level 4), build a CUPOLA
     *   @param b level status
+     * @return level heigh
     */
     public int build (Status b) {
         int i = 0;
@@ -184,8 +187,8 @@ public class Cell implements Serializable {
 
     /**
     *   Return a string made in this way
-    *   livello <height> <STATUS>
-    *   @return string livello <height> <STATUS>
+    *   livello height STATUS
+    *   @return string livello height STATUS
     */
     public String toString(){
         String ret="";

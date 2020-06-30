@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for 3 players board
+ */
 public class GUIController3 {
 
     private String hera = "HERA\n\nAn opponent cannot win by moving into a perimeter space.";

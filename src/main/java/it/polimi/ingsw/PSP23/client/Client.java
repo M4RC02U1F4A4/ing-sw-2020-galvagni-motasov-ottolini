@@ -34,7 +34,7 @@ public class Client {
 
     /**
      * Setter for active
-     * @param active
+     * @param active NA
      */
     public void setActive(boolean active) {
         this.active = active;
@@ -46,7 +46,6 @@ public class Client {
      * If it recieves a map, it draws it
      * If it recives "win"/"lose", it prints it and then it disconnects from the server
      * @param socketIn the stream that contains our messages
-     * @return
      */
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
         Thread t=new Thread(new Runnable() {
@@ -91,7 +90,6 @@ public class Client {
      * Method that reads a line fron an input buffer and writes is on the socket's output buffed
      * @param stdin the keyboard buffer
      * @param socketOut the buffer where we write the message
-     * @return
      */
     public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
         Thread t= new Thread(new Runnable() {
@@ -116,7 +114,7 @@ public class Client {
 
     /**
      * Method that runs when a client is launched
-     * @throws IOException
+     * @throws IOException NA
      */
     public void run() throws IOException{
         Socket socket=new Socket(ip, port);

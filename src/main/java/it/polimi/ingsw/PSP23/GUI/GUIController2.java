@@ -20,6 +20,9 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 
+/**
+ * Controller for 2 players board
+ */
 public class GUIController2 {
 
     private String hera = "HERA\n\nAn opponent cannot win by moving into a perimeter space.";

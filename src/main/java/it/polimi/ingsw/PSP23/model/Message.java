@@ -48,12 +48,12 @@ public class Message implements Serializable {
     /**
      * Used for send messages from controller to model
      * Constructor
-     * @param player
-     * @param map
-     * @param action
-     * @param x
-     * @param y
-     * @param nWorker
+     * @param player player
+     * @param map map
+     * @param action actin
+     * @param x x position
+     * @param y y position
+     * @param nWorker   worker number
      */
     public Message(Player player, Map map, Action action, int x, int y, int nWorker) {
         this.player = player;

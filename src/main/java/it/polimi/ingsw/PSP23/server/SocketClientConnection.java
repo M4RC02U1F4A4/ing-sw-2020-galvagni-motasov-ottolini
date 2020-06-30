@@ -25,8 +25,8 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     /**
      * Constructor
-     * @param socket
-     * @param server
+     * @param socket socker
+     * @param server server
      */
     public SocketClientConnection(Socket socket, Server server){
         this.server=server;
@@ -88,7 +88,7 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     /**
      * Asynchronously send a message to the client
-     * @param message
+     * @param message message
      */
     public void asyncSend(final Object message){
         new Thread((new Runnable() {

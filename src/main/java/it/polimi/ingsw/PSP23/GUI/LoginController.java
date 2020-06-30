@@ -20,6 +20,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 
+
+/**
+ * Controller for login window
+ */
 public class LoginController {
 
     @FXML
@@ -53,7 +57,7 @@ public class LoginController {
      * Takes login data
      * Connect to the server
      * Handles incoming messages from the server
-     * @throws IOException
+     * @throws IOException NA
      */
     @FXML
     public void playButtonAction() throws IOException {

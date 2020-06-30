@@ -256,6 +256,7 @@ public class Game extends Observable<Message> {
 
     /**
      * to call only when in a 3 player game and 1 is out
+     * @return status code
      */
     public int removePlayer() {
         if (Phase.BAD_NEWS == getPhase()) {

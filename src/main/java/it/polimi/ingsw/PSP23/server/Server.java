@@ -224,7 +224,7 @@ public class Server {
 
     /**
      * Constructor
-     * @throws IOException
+     * @throws IOException NA
      */
     public Server() throws IOException {
         this.serverSocket=new ServerSocket(PORT);
