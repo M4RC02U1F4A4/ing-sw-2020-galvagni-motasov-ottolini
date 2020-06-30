@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Hello world!
- *
+ * Cliet GUI
  */
 public class ClientGuiApp extends Application{
     public static void main( String[] args ) {

@@ -20,6 +20,9 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 
+/**
+ * Controller for 2 players board
+ */
 public class GUIController2 {
 
     private String hera = "HERA\n\nAn opponent cannot win by moving into a perimeter space.";
@@ -72,13 +75,16 @@ public class GUIController2 {
     @FXML
     private Label turn;
 
+    /**
+     * Prepare the board with player information
+     * Start a thread to manage server messages
+     */
     @FXML
-    public void initialize() throws IOException{
+    public void initialize(){
         player1Username.setText(Vars.player1Name);
         player2Username.setText(Vars.player2Name);
         player1God.setImage(new Image ("/img/gods/" + Vars.player1God +".png"));
         player2God.setImage(new Image ("/img/gods/" + Vars.player2God +".png"));
-        //TODO: migliorare questa parte
         //Player 1
         if(Vars.player1God.equals("Hera")) player1Power.setText(hera);
         if(Vars.player1God.equals("Prometheus")) player1Power.setText(prometheus);
@@ -218,6 +224,9 @@ public class GUIController2 {
 
     }
 
+    /**
+     * used in the case of certain gods to skip the move or build
+     */
     @FXML
     private void utilityButtonAction(){
         if(Vars.turnStatus == 2 && (Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton"))){
@@ -1373,33 +1382,3 @@ public class GUIController2 {
         press(b44,4,4);
     }
 }
-/*
-VITTORIA
-Stage stage = (Stage) b44.getScene().getWindow();
-        stage.close();
-        try {
-            Parent rootWin = FXMLLoader.load(getClass().getResource("/win.fxml"));
-            Stage win = new Stage();
-            win.setTitle("Santorini");
-            win.setScene(new Scene(rootWin));
-            win.setResizable(false);
-            win.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
-            win.show();
-        } catch (IOException e) { e.printStackTrace(); }
- */
-/*
-SCONFITTA
-Stage stage = (Stage) b43.getScene().getWindow();
-        stage.close();
-        try {
-            Parent rootWin = FXMLLoader.load(getClass().getResource("/lose.fxml"));
-            Stage lose = new Stage();
-            lose.setTitle("Santorini");
-            lose.setScene(new Scene(rootWin));
-            lose.setResizable(false);
-            lose.getIcons().add(new Image(Main.class.getResourceAsStream("/img/246x0w.png")));
-            lose.show();
-        } catch (IOException e) { e.printStackTrace(); }
- */
-
-//b31.setStyle("-fx-background-image: url('/img/blue.png')");
