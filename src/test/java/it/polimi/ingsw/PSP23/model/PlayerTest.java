@@ -33,6 +33,7 @@ public class PlayerTest {
         Apollo cedra = new Apollo();
         player.setGod(cedra);
         assertEquals(cedra,player.getGod());
+        player.getColor();
     }
 
     @Test

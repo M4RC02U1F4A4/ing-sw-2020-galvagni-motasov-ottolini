@@ -104,6 +104,15 @@ public class MapCellTest {
         map.getCell(1, 1).build(Status.BUILT);
         map.getCell(1, 1).build(Status.BUILT);
         map.getCell(1, 1).build(Status.BUILT);
+        map.getCell(2,1).build(Status.BUILT);
+        map.getCell(2,1).build(Status.BUILT);
+        map.getCell(2,1).build(Status.CUPOLA);
+        map.getCell(3,1).build(Status.BUILT);
+        map.getCell(3,1).build(Status.CUPOLA);
+        map.getCell(4,1).build(Status.CUPOLA);
+        map.getCell(2,2).setWorker(new Worker(map.getCell(2,2), Color.WHITE, 0));
+        map.getCell(3,3).setWorker(new Worker(map.getCell(2,2), Color.RED, 0));
+        map.getCell(4,4).setWorker(new Worker(map.getCell(2,2), Color.BLUE, 0));
         System.out.println(map.getCell(1, 1).toString());
         map.printStatus();
         map.drawMap();

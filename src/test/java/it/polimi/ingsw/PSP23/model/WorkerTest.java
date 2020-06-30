@@ -32,6 +32,7 @@ public class WorkerTest {
         assertEquals(2, worker.getPosX());
         assertEquals(2, worker.getPosY());
         assertEquals(0, worker.getPosZ());
+        worker.setWorkerNumber(0);
     }
 
     @Test
