@@ -29,6 +29,7 @@ public class Server {
     private ArrayList<Player> playing3s=new ArrayList<>();
     private ArrayList<ClientConnection>conn2s=new ArrayList<>();
     private ArrayList<ClientConnection>conn3s=new ArrayList<>();
+    private ArrayList<String>takenNames=new ArrayList<>();
 
     Controller controller;
 
@@ -55,6 +56,7 @@ public class Server {
             try {
                 serverSocket.close();
                 executor.shutdownNow();
+                takenNames.clear();
 
                 return;
             } catch (IOException e) {
@@ -259,6 +261,20 @@ public class Server {
      */
     public void setTimerToZero(){
         controller.setTimeToZero();
+    }
+
+    /**
+     * returns the list of taken names
+     * @return takenNames;
+     */
+    public ArrayList<String> getTakenNames(){return takenNames;}
+
+    /**
+     * add an unique player name
+     * @param uniqueNameToAdd the name to add
+     */
+    public void addName(String uniqueNameToAdd){
+        takenNames.add(uniqueNameToAdd);
     }
 
 

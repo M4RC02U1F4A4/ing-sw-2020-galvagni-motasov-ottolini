@@ -133,10 +133,13 @@ public class Controller implements Observer<PlayerMove>{
                                     closeEverybody();
                                     break;
                                 case BAD_NEWS:
-                                    sendToNextPlayer("LOSE");
+                                    move.getView().showMessage("LOSE");
                                     if (3 == players.size()) {
+                                        players.get(move.getPlayer().getPlayerNumber()).isOver();
                                         removePlayer();
-                                        closeNextPlayer();
+                                        //players.get(move.getPlayer().getPlayerNumber()).close();
+                                        //closeNextPlayer();
+
                                     }
                                     else {
                                         sendToRemainingPlayers("WIN");
@@ -359,8 +362,9 @@ public class Controller implements Observer<PlayerMove>{
      * Method used to disconnect the next player whenever he loses a match
      */
     public void closeNextPlayer(){
-        players.get(game.getCurrentPlayerNum()).close();
+
         players.get(game.getCurrentPlayerNum()).isOver();
+        players.get(game.getCurrentPlayerNum()).close();
     }
 
     /*

@@ -115,6 +115,11 @@ public class SocketClientConnection extends Observable<String> implements Client
             send("Inserisci il tuo nome");
             String read=in.nextLine();
             name=read;
+            if(server.getTakenNames().contains(name)){
+                int n=(int)(Math.random()*1000)%1000;
+                name=name+String.valueOf(n);
+            }
+            server.addName(name);
             in.reset();
             send("Inserisci il numero di giocatori");
             int nPlayers=in.nextInt();
