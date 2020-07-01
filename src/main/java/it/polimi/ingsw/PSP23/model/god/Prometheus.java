@@ -44,6 +44,13 @@ public class Prometheus extends God {
         return cont;
     }
 
+    /**
+     * If your worker does not move up, it may build both before and after moving
+     * @param c cell
+     * @param b status of the cell
+     * @param w worker that the player want to use to build
+     * @return the level of the building
+     */
     @Override
     public int build(Cell c, Status b, Worker w) {
         if (2 == this.remains_builds) {
