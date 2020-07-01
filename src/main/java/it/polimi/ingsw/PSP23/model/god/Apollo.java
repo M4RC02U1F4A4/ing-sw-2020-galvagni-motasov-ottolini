@@ -14,7 +14,6 @@ public class Apollo extends God {
         super.setUpGod("Apollo");
     }
 
-    //TODO rework this
     /**
      * Your worker move into an opponent worker's space by forcing their worker
      * to the space yours just vacated

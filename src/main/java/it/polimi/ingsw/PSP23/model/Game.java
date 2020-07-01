@@ -312,14 +312,35 @@ public class Game extends Observable<Message> {
                 break;
             case CHECK_LOSE_MOVE:
                 if (getCurrentGod().checkLossMove(getActiveWorker(), map))
-                    if (-1 == performeMove(Action.SKIP, Status.FREE, 0, 0, 0))
-                        turnManager.setResults();
+                    switch(getCurrentGod().getName()) {
+                        case "Artemis":
+                        case "Triton":
+                            if (2 == getCurrentGod().remains_moves)
+                                turnManager.setResults();
+                            break;
+                        default:
+                            turnManager.setResults();
+                            break;
+                    }
                 nextGamePhase();
                 break;
             case CHECK_LOSE_BUILD:
                 if (getCurrentGod().checkLossBuild(getActiveWorker(), map))
-                    if (-1 == performeMove(Action.SKIP, Status.FREE, 0, 0, 0))
-                        turnManager.setResults();
+                    switch(getCurrentGod().getName()) {
+                        case "Prometheus":
+                            if (1 == getCurrentGod().remains_builds)
+                                turnManager.setResults();
+                            break;
+                        case "Demeter":
+                        case "Hephaestus":
+                        case "Hestia":
+                            if (2 == getCurrentGod().remains_builds)
+                                turnManager.setResults();
+                            break;
+                        default:
+                            turnManager.setResults();
+                            break;
+                    }
                 nextGamePhase();
                 break;
             case END:
