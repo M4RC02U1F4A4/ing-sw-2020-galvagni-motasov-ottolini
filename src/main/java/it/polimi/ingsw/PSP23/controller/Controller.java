@@ -120,6 +120,7 @@ public class Controller implements Observer<PlayerMove>{
                                     break;
                                 case CHOOSE_WORKER:
                                     sendToNextPlayer("Scegli il worker per questo turno:\nSintassi del comando:\nCHOOSE_WORKER:<nWorker>");
+                                    sendToNextPlayer("Ricorda: i tuoi worker sono quelli di colore "+move.getPlayer().getColor());
                                     break;
                                 case MOVE:
                                     sendToNextPlayer("Scegli dove muoverti:\nSintassi del comando:\nMOVE:<x>,<y>");
