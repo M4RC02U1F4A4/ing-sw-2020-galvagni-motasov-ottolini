@@ -9,7 +9,7 @@ java -jar <path-to-server-jar>
 ```
 Example:
 ```
-java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\deliveries\final\JAR\client.jar
+java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\deliveries\final\JAR\server.jar
 ```
 ### Client
 ```
@@ -18,7 +18,7 @@ java -jar <path-to-client-jar>
 
 Example:
 ```
-java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\deliveries\final\JAR\server.jar
+java -jar V:\GitHub\ing-sw-2020-galvagni-motasov-ottolini\deliveries\final\JAR\client.jar
 ```
 
 ```
