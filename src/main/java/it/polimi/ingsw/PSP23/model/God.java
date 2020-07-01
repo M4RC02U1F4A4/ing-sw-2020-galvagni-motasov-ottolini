@@ -212,7 +212,7 @@ public class God {
     }
 
     /**
-     * TODO update documentation
+     * return the name of all the gods
      * @return name of the god
      */
     public static ArrayList<String> getAllGods(){

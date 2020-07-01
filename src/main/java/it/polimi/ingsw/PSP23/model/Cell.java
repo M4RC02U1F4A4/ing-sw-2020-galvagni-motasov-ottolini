@@ -98,7 +98,7 @@ public class Cell implements Serializable {
     *   Check if the worker is adjacent the cell
     *   and if the difference between worker height and cell height is &lt;= 1
     *   @param w worker
-    *   @param height TODO:
+    *   @param height check if the worker is at most 1 block below this cell
     *   @return true if the condition is verified, false other otherwise
     */
     public boolean isNear (Worker w, boolean height) {

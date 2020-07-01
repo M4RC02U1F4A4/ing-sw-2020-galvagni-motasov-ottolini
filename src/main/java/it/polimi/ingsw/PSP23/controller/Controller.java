@@ -252,8 +252,6 @@ public class Controller implements Observer<PlayerMove>{
             }
             case "PLACE_WORKER":{
                 actionBeingPerformed=Action.PLACE_WORKER;
-                //arguments.add(tmp[0]);//Numero worker
-                //chosenWorker=Integer.parseInt(arguments.get(0)); // TODO remove me
                 arguments.add(tmp[0]);//Coordinata x
                 this.x=Integer.parseInt(arguments.get(0));
                 arguments.add(tmp[1]);//Coordinata y
