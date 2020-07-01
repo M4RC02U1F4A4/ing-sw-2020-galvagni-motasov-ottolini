@@ -291,7 +291,6 @@ public class Game extends Observable<Message> {
             return -1;
     }
 
-    //TODO if lose but is possible to skip then skip
     /**
      * sometimes i'm afraid of my own genius.
      * also this move the turn manager only when needed
@@ -312,12 +311,14 @@ public class Game extends Observable<Message> {
                 break;
             case CHECK_LOSE_MOVE:
                 if (getCurrentGod().checkLossMove(getActiveWorker(), map))
-                    turnManager.setResults();
+                    if (-1 == performeMove(Action.SKIP, Status.FREE, 0, 0, 0))
+                        turnManager.setResults();
                 nextGamePhase();
                 break;
             case CHECK_LOSE_BUILD:
                 if (getCurrentGod().checkLossBuild(getActiveWorker(), map))
-                    turnManager.setResults();
+                    if (-1 == performeMove(Action.SKIP, Status.FREE, 0, 0, 0))
+                        turnManager.setResults();
                 nextGamePhase();
                 break;
             case END:
