@@ -4,10 +4,16 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Controller of the gods description window
+ */
 public class GodsDesc {
     @FXML
     private ImageView descImg;
 
+    /**
+     * Show the desired image based on the chosen god
+     */
     @FXML
     public void initialize(){
         switch (Vars.godChoice){

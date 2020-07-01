@@ -119,6 +119,7 @@ public class God {
      * Check if the player has won the game
      * @param w the worker moved is needed
      * @param completed_tower number of completed tower on the board
+     * @param is_hera_in_game true of false if here is in the game or not
      * @return bool
      */
     public boolean checkWin(Worker w, int completed_tower, boolean is_hera_in_game) {

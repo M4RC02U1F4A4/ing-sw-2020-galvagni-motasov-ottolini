@@ -25,8 +25,8 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     /**
      * Constructor
-     * @param socket
-     * @param server
+     * @param socket socker
+     * @param server server
      */
     public SocketClientConnection(Socket socket, Server server){
         this.server=server;
@@ -59,8 +59,9 @@ public class SocketClientConnection extends Observable<String> implements Client
             out.writeObject(message);
             out.flush();
         }catch (IOException e){
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
+
     }
 
     /**
@@ -81,14 +82,16 @@ public class SocketClientConnection extends Observable<String> implements Client
      */
     public void close(){
         closeConnection();
-        System.out.println("Deregistering client...");
         server.deregisterConnection(this);
         System.out.println("Done!");
+
+
+
     }
 
     /**
      * Asynchronously send a message to the client
-     * @param message
+     * @param message message
      */
     public void asyncSend(final Object message){
         new Thread((new Runnable() {
@@ -122,21 +125,20 @@ public class SocketClientConnection extends Observable<String> implements Client
                 notify(read);
             }
 
-
         }catch (IOException e){
             e.printStackTrace();
-        }catch (NoSuchElementException e){
-            if(!isOver){
-                if(server.getConn2s().contains(this)){
-                    for (int i=0;i<server.getConn2s().size();i++){
-                        server.getConn2s().get(i).close();
+        }catch (NoSuchElementException e) {
+            if (!isOver) {
+                if (server.getConn2s().contains(this)) {
+                    for (int i = 0; i < server.getConn2s().size(); i++) {
+                        server.getConn2s().get(i).send("Connection closed!");
+                    }
+                } else if (server.getConn3s().contains(this)) {
+                    for (int i = 0; i < server.getConn3s().size(); i++) {
+                        server.getConn3s().get(i).send("Connection closed!");
                     }
                 }
-                else if(server.getConn3s().contains(this)){
-                    for (int i=0;i<server.getConn3s().size();i++){
-                        server.getConn3s().get(i).close();
-                    }
-                }
+                server.setTimerToZero();
             }
         }
         finally {

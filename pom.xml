@@ -9,8 +9,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>Santorini2k20</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/Marco1097/ing-sw-2020-galvagni-motasov-ottolini</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,24 +40,24 @@
       <artifactId>javafx-fxml</artifactId>
       <version>11.0.2</version>
     </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>11.0.2</version>
-      <classifier>win</classifier>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>11.0.2</version>
-      <classifier>linux</classifier>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>11.0.2</version>
-      <classifier>mac</classifier>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.openjfx</groupId>-->
+<!--      <artifactId>javafx-graphics</artifactId>-->
+<!--      <version>11.0.2</version>-->
+<!--      <classifier>win</classifier>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.openjfx</groupId>-->
+<!--      <artifactId>javafx-graphics</artifactId>-->
+<!--      <version>11.0.2</version>-->
+<!--      <classifier>linux</classifier>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.openjfx</groupId>-->
+<!--      <artifactId>javafx-graphics</artifactId>-->
+<!--      <version>11.0.2</version>-->
+<!--      <classifier>mac</classifier>-->
+<!--    </dependency>-->
   </dependencies>
 
 

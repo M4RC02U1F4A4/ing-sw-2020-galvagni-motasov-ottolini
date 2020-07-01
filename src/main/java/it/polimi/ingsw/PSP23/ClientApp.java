@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Hello world!
- *
+ *  Client
  */
 public class ClientApp{
 

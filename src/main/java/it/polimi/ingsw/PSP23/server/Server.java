@@ -30,19 +30,39 @@ public class Server {
     private ArrayList<ClientConnection>conn2s=new ArrayList<>();
     private ArrayList<ClientConnection>conn3s=new ArrayList<>();
 
+    Controller controller;
+
     /**
      * This method deregisters a connection
      * @param c the connection we want to remove
      */
     public synchronized void deregisterConnection(ClientConnection c){
-        if(playing3s.contains(c)){
-            c.closeConnection();
-            playing3s.remove(c);
+        for(int i=0;i<playing2s.size();i++){
+            if(playing2s.get(i).getIpAddress().equals(c.getIpAddress())){
+                playing2s.remove(playing2s.get(i));
+                conn2s.remove(conn2s.get(i));
+                c.closeConnection();
+            }
         }
-        if(playing2s.contains(c)){
-            c.closeConnection();
-            playing2s.remove(c);
+        for(int i=0;i<playing3s.size();i++){
+            if(playing3s.get(i).getIpAddress().equals(c.getIpAddress())){
+                playing3s.remove(playing3s.get(i));
+                conn3s.remove(conn3s.get(i));
+                c.closeConnection();
+            }
         }
+        if(conn2s.size()==0 && conn3s.size()==0){
+            try {
+                serverSocket.close();
+                executor.shutdownNow();
+
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     /**
@@ -82,7 +102,7 @@ public class Server {
             if(waitingConnection2vs2.size()==2){
                 System.out.println("istanzio il controller per una partita a 2 giocatori");
                 Game game=new Game(2);
-                Controller controller=new Controller(game);
+                controller=new Controller(game);
                 Set<Map.Entry<String, ClientConnection>> st= waitingConnection2vs2.entrySet();
 
                 for(Map.Entry<String, ClientConnection>me:st){
@@ -141,7 +161,7 @@ public class Server {
             if (waitingConnection3vs3.size() == 3) {
                 System.out.println("istanzio il controller per una partita a 3 giocatori");
                 Game game=new Game(3);
-                Controller controller=new Controller(game);
+                controller=new Controller(game);
                 Set<Map.Entry<String, ClientConnection>> st= waitingConnection3vs3.entrySet();
 
                 for(Map.Entry<String, ClientConnection>me:st){
@@ -211,7 +231,7 @@ public class Server {
 
     /**
      * Constructor
-     * @throws IOException
+     * @throws IOException NA
      */
     public Server() throws IOException {
         this.serverSocket=new ServerSocket(PORT);
@@ -221,15 +241,24 @@ public class Server {
      * Stats the server and waits for new connections
      */
     public void run(){
+        try{
         while(true){
-            try{
+
                 Socket s=serverSocket.accept();
                 SocketClientConnection socketConnection= new SocketClientConnection(s, this);
                 executor.submit(socketConnection);
-            }catch(IOException e){
-                System.out.println("Connection error");
-            }
+
         }
+        }catch(IOException e){
+            System.out.println("Connection error");
+        }
+    }
+
+    /**
+     * Method used to terminate the game's timer, in order to allow the server to host a new match
+     */
+    public void setTimerToZero(){
+        controller.setTimeToZero();
     }
 
 

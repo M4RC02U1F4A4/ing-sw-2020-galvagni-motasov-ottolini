@@ -16,7 +16,7 @@ public class Pan extends God {
      * You also win if your worker moves down two or more levels
      * @param w the worker moved is needed
      * @param completed_tower number of completed tower on the board
-     * @return bool true if going from>to 2>0, 3>0, 3>1, 2>3
+     * @return bool true if going from&gt;to 2&gt;0, 3&gt;0, 3&gt;1, 2&gt;3
      */
     @Override
     public boolean checkWin(Worker w, int completed_tower, boolean is_hera_in_game) {

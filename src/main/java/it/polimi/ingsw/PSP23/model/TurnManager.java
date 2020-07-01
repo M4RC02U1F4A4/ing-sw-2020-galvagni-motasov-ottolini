@@ -192,6 +192,7 @@ public class TurnManager {
 
     /**
      * Used to set number of players
+     * @param num number of players
      */
     public void setPlayerNumber(int num){
         numberOfPlayers = num;

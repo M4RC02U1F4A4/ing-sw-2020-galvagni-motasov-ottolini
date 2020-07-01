@@ -57,6 +57,7 @@ public class Controller implements Observer<PlayerMove>{
                     timer.cancel();
                     sendToEverybody("Partita terminata: timeout");
                     closeEverybody();
+
                 }
             }
         },0,1000);
@@ -379,6 +380,18 @@ public class Controller implements Observer<PlayerMove>{
         for(int i=0;i<players.size();i++){
             players.get(i).close();
             players.get(i).isOver();
+            timeRunningOut=0;
         }
     }
+
+    /**
+     * Method used to set the timer to zero. Used when all clients need to be disconnected due to a connection error.
+     * Setting the time to zero allows the server to host a new game
+     */
+    public void setTimeToZero(){
+        timeRunningOut=0;
+    }
+
+
+
 }

@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for 3 players board
+ */
 public class GUIController3 {
 
     private String hera = "HERA\n\nAn opponent cannot win by moving into a perimeter space.";
@@ -76,6 +79,10 @@ public class GUIController3 {
     @FXML
     private Label turn;
 
+    /**
+     * Prepare the board with player information
+     * Start a thread to manage server messages
+     */
     @FXML
     public void initialize(){
         player1Username.setText(Vars.player1Name);
@@ -84,7 +91,6 @@ public class GUIController3 {
         player1God.setImage(new Image ("/img/gods/" + Vars.player1God +".png"));
         player2God.setImage(new Image ("/img/gods/" + Vars.player2God +".png"));
         player3God.setImage(new Image ("/img/gods/" + Vars.player3God +".png"));
-        //TODO: migliorare questa parte
         //Player 1
         if(Vars.player1God.equals("Hera")) player1Power.setText(hera);
         if(Vars.player1God.equals("Prometheus")) player1Power.setText(prometheus);
@@ -238,6 +244,9 @@ public class GUIController3 {
         thread.start();
     }
 
+    /**
+     * used in the case of certain gods to skip the move or build
+     */
     @FXML
     private void utilityButtonAction(){
         if(Vars.turnStatus == 2 && (Vars.myGod.equals("Artemis") || Vars.myGod.equals("Triton"))){

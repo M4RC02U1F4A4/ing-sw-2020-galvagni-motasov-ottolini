@@ -38,10 +38,10 @@ public class PlayerMove {
 
     /**
      * Constructor
-     * @param player
-     * @param view
-     * @param command
-     * @param args
+     * @param player player
+     * @param view  view
+     * @param command   command
+     * @param args args
      */
     public PlayerMove(Player player, View view, String command, String args) {
         this.player = player;
