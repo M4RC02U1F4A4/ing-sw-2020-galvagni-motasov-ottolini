@@ -36,7 +36,7 @@ public class Triton extends God {
         int i = super.move(c,w, map);
         if ((0 == c.getX() || 0 == c.getY() || 4 == c.getX() || 4 == c.getY()) && 0 == i)
             remains_moves = 1;
-        else if (1 == remains_moves)
+        else if (1 == remains_moves && 0 == i)
             remains_moves = 0;
         return i;
     }
