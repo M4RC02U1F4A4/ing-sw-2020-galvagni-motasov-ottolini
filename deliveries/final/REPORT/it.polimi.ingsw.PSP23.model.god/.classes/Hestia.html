@@ -1,0 +1,135 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Hestia</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.model.god</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Hestia (it.polimi.ingsw.PSP23.model.god)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Hestia</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.model.god;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.model.Cell;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP23.model.God;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP23.model.Status;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP23.model.Worker;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class Hestia extends God {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /**
+<i>12</i>&nbsp;     * Constructor
+<i>13</i>&nbsp;     */
+<b class="fc"><i>14</i>&nbsp;    public Hestia() {</b>
+<b class="fc"><i>15</i>&nbsp;        setUpGod(&quot;Hestia&quot;);</b>
+<b class="fc"><i>16</i>&nbsp;    }</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * call the function &lt;code&gt;setUpTurn&lt;/code&gt; with the parameters that indicate
+<i>20</i>&nbsp;     * the number of moves and builds that the player can do and
+<i>21</i>&nbsp;     * set other variables that are useful for check god&#39;s move
+<i>22</i>&nbsp;     * @param moved_up indicate if athena moved up this turn
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    @Override
+<i>25</i>&nbsp;    public void startTurn(boolean moved_up) {
+<b class="fc"><i>26</i>&nbsp;        super.setUpTurn(1,2, moved_up);</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Your worker may build one addition time, but this cannot be on a perimeter space
+<i>31</i>&nbsp;     * @param c cell
+<i>32</i>&nbsp;     * @param b status of the cell
+<i>33</i>&nbsp;     * @param w worker that the player want to use to build
+<i>34</i>&nbsp;     * @return  0, 1, 2, 3: the level built if there is no error
+<i>35</i>&nbsp;     *         -1 if cell is not near or is under the worker,
+<i>36</i>&nbsp;     *         -2 if the player already build in this turn,
+<i>37</i>&nbsp;     *         -3 (Demeter) if already build in this cell this turn,
+<i>38</i>&nbsp;     *         -4 (Hephaestus) if is a different building slot,
+<i>39</i>&nbsp;     *         -5 (Hesta) if perimetral slot build
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    @Override
+<i>42</i>&nbsp;    public int build(Cell c, Status b, Worker w) {
+<b class="fc"><i>43</i>&nbsp;        if (2 == this.remains_builds)</b>
+<b class="fc"><i>44</i>&nbsp;            return super.build(c, b, w);</b>
+<i>45</i>&nbsp;        else {
+<b class="fc"><i>46</i>&nbsp;            if (1 == this.remains_builds &amp;&amp; (0 == c.getX() || 0 == c.getY() || 4 == c.getX() || 4 == c.getY()))</b>
+<b class="fc"><i>47</i>&nbsp;                return -5;</b>
+<i>48</i>&nbsp;            else
+<b class="fc"><i>49</i>&nbsp;                return super.build(c, b, w);</b>
+<i>50</i>&nbsp;        }
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-01 21:58</div>
+</div>
+</body>
+</html>

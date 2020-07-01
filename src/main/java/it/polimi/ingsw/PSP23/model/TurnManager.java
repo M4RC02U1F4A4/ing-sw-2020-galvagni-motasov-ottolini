@@ -248,20 +248,4 @@ public class TurnManager {
     public void setSkipBuild() {
         skipBuild = true;
     }
-
-    /**
-     * getter
-     * @return skipmove
-     */
-    public boolean getSkipMove() {
-        return skipMove;
-    }
-
-    /**
-     * getter
-     * @return skipbuild
-     */
-    public boolean getSkipBuild() {
-        return skipBuild;
-    }
 }

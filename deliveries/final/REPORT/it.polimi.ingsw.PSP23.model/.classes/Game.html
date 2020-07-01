@@ -1,0 +1,623 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Game</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Game (it.polimi.ingsw.PSP23.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Game</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (25/ 25)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,1%
+  </span>
+  <span class="absValue">
+    (175/ 201)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Game$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (26/ 26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,2%
+  </span>
+  <span class="absValue">
+    (177/ 203)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.model.god.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP23.observer.Observable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.ArrayList;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public class Game extends Observable&lt;Message&gt; {
+<i>9</i>&nbsp;    private Map map;
+<i>10</i>&nbsp;    private Player[] players;
+<i>11</i>&nbsp;    private String[] availableGods;
+<i>12</i>&nbsp;    private TurnManager turnManager;
+<i>13</i>&nbsp;    private boolean ChronusIsHere, HeraIsHere, AthenaMovedUp;
+<i>14</i>&nbsp;    private int numPlayers, colorVariable, completedTowers, activeWorker;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Initialize game
+<i>18</i>&nbsp;     * @param numPlayer number of players (2 or 3)
+<i>19</i>&nbsp;     */
+<b class="fc"><i>20</i>&nbsp;    public Game(int numPlayer) {</b>
+<b class="fc"><i>21</i>&nbsp;        map=new Map();</b>
+<b class="fc"><i>22</i>&nbsp;        numPlayers = numPlayer;</b>
+<b class="fc"><i>23</i>&nbsp;        players = new Player[numPlayer];</b>
+<b class="fc"><i>24</i>&nbsp;        availableGods = new String[numPlayer];</b>
+<b class="fc"><i>25</i>&nbsp;        availableGods[0]=&quot;&quot;;</b>
+<b class="fc"><i>26</i>&nbsp;        availableGods[1]=&quot;&quot;;</b>
+<b class="fc"><i>27</i>&nbsp;        if(numPlayer==3){availableGods[2]=&quot;&quot;;}</b>
+<b class="fc"><i>28</i>&nbsp;        turnManager = new TurnManager();</b>
+<b class="fc"><i>29</i>&nbsp;        turnManager.setPlayerNumber(numPlayer);</b>
+<b class="fc"><i>30</i>&nbsp;        AthenaMovedUp = false;</b>
+<b class="fc"><i>31</i>&nbsp;        ChronusIsHere = false;</b>
+<b class="fc"><i>32</i>&nbsp;        HeraIsHere = false;</b>
+<b class="fc"><i>33</i>&nbsp;        completedTowers = 0;</b>
+<b class="fc"><i>34</i>&nbsp;        colorVariable = 0;</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>38</i>&nbsp;    // Set functions, game preparation
+<i>39</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    /**
+<i>42</i>&nbsp;     * function to add player to game e to turn manager
+<i>43</i>&nbsp;     * @param name name of the player
+<i>44</i>&nbsp;     * @param ip ip of the player
+<i>45</i>&nbsp;     * @return 0 if all ok
+<i>46</i>&nbsp;     *        -1 if try to make a 4 player game
+<i>47</i>&nbsp;     */
+<i>48</i>&nbsp;    public int addPlayer(String name, String ip) {
+<b class="fc"><i>49</i>&nbsp;        if (colorVariable &gt;= numPlayers)</b>
+<b class="nc"><i>50</i>&nbsp;            return -1;</b>
+<b class="fc"><i>51</i>&nbsp;        players[colorVariable] = new Player(name, ip);</b>
+<b class="fc"><i>52</i>&nbsp;        players[colorVariable].setColor(getColor());</b>
+<b class="fc"><i>53</i>&nbsp;        players[colorVariable].setPlayerNumber(colorVariable);</b>
+<b class="fc"><i>54</i>&nbsp;        colorVariable++;</b>
+<b class="fc"><i>55</i>&nbsp;        return 0;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * the 2 or 3 gods choosed for this game
+<i>60</i>&nbsp;     * @param god1 first god
+<i>61</i>&nbsp;     * @param god2 second god
+<i>62</i>&nbsp;     * @param god3 third god, will skip if numplayer == 2
+<i>63</i>&nbsp;     */
+<i>64</i>&nbsp;    public void godChoose(String god1, String god2, String god3) {
+<b class="fc"><i>65</i>&nbsp;        availableGods[0] = god1;</b>
+<b class="fc"><i>66</i>&nbsp;        availableGods[1] = god2;</b>
+<b class="fc"><i>67</i>&nbsp;        if (3 == numPlayers)</b>
+<b class="fc"><i>68</i>&nbsp;            availableGods[2] = god3;</b>
+<b class="fc"><i>69</i>&nbsp;        nextGameSetUpPhase();</b>
+<b class="fc"><i>70</i>&nbsp;    }</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    /**
+<i>73</i>&nbsp;     * Set the god choosed to &#39;scelto&#39; then create the god for player
+<i>74</i>&nbsp;     * @param god is the god choosed by the player
+<i>75</i>&nbsp;     * @return 0 if everithing is ok
+<i>76</i>&nbsp;     *        -1 if tried to choose a god not avaiable
+<i>77</i>&nbsp;     */
+<i>78</i>&nbsp;    public int setGod(String god) {
+<b class="fc"><i>79</i>&nbsp;        if (god.equals(availableGods[0]))</b>
+<b class="fc"><i>80</i>&nbsp;            availableGods[0] = &quot;Scelto&quot;;</b>
+<b class="fc"><i>81</i>&nbsp;        else if (god.equals(availableGods[1]))</b>
+<b class="fc"><i>82</i>&nbsp;            availableGods[1] = &quot;Scelto&quot;;</b>
+<b class="fc"><i>83</i>&nbsp;        else if (3 == numPlayers) {</b>
+<b class="fc"><i>84</i>&nbsp;            if (god.equals(availableGods[2]))</b>
+<b class="fc"><i>85</i>&nbsp;                availableGods[2] = &quot;Scelto&quot;;</b>
+<i>86</i>&nbsp;            else
+<b class="nc"><i>87</i>&nbsp;                return -1;</b>
+<i>88</i>&nbsp;        }
+<i>89</i>&nbsp;        else
+<b class="nc"><i>90</i>&nbsp;            return -1;</b>
+<b class="fc"><i>91</i>&nbsp;        switch (god) {</b>
+<i>92</i>&nbsp;            case &quot;Apollo&quot;:
+<b class="fc"><i>93</i>&nbsp;                getCurrentPlayer().setGod(new Apollo());</b>
+<b class="fc"><i>94</i>&nbsp;                break;</b>
+<i>95</i>&nbsp;            case &quot;Artemis&quot;:
+<b class="fc"><i>96</i>&nbsp;                getCurrentPlayer().setGod(new Artemis());</b>
+<b class="fc"><i>97</i>&nbsp;                break;</b>
+<i>98</i>&nbsp;            case &quot;Athena&quot;:
+<b class="fc"><i>99</i>&nbsp;                getCurrentPlayer().setGod(new Athena());</b>
+<b class="fc"><i>100</i>&nbsp;                break;</b>
+<i>101</i>&nbsp;            case &quot;Atlas&quot;:
+<b class="fc"><i>102</i>&nbsp;                getCurrentPlayer().setGod(new Atlas());</b>
+<b class="fc"><i>103</i>&nbsp;                break;</b>
+<i>104</i>&nbsp;            case &quot;Chronus&quot;:
+<b class="nc"><i>105</i>&nbsp;                getCurrentPlayer().setGod(new Chronus());</b>
+<b class="nc"><i>106</i>&nbsp;                ChronusIsHere = true;</b>
+<b class="nc"><i>107</i>&nbsp;                break;</b>
+<i>108</i>&nbsp;            case &quot;Demeter&quot;:
+<b class="fc"><i>109</i>&nbsp;                getCurrentPlayer().setGod(new Demeter());</b>
+<b class="fc"><i>110</i>&nbsp;                break;</b>
+<i>111</i>&nbsp;            case &quot;Hephaestus&quot;:
+<b class="fc"><i>112</i>&nbsp;                getCurrentPlayer().setGod(new Hephaestus());</b>
+<b class="fc"><i>113</i>&nbsp;                break;</b>
+<i>114</i>&nbsp;            case &quot;Hera&quot;:
+<b class="fc"><i>115</i>&nbsp;                getCurrentPlayer().setGod(new Hera());</b>
+<b class="fc"><i>116</i>&nbsp;                HeraIsHere = true;</b>
+<b class="fc"><i>117</i>&nbsp;                break;</b>
+<i>118</i>&nbsp;            case &quot;Hestia&quot;:
+<b class="fc"><i>119</i>&nbsp;                getCurrentPlayer().setGod(new Hestia());</b>
+<b class="fc"><i>120</i>&nbsp;                break;</b>
+<i>121</i>&nbsp;            case &quot;Minotaur&quot;:
+<b class="fc"><i>122</i>&nbsp;                getCurrentPlayer().setGod(new Minotaur());</b>
+<b class="fc"><i>123</i>&nbsp;                break;</b>
+<i>124</i>&nbsp;            case &quot;Pan&quot;:
+<b class="fc"><i>125</i>&nbsp;                getCurrentPlayer().setGod(new Pan());</b>
+<b class="fc"><i>126</i>&nbsp;                break;</b>
+<i>127</i>&nbsp;            case &quot;Prometheus&quot;:
+<b class="fc"><i>128</i>&nbsp;                getCurrentPlayer().setGod(new Prometheus());</b>
+<b class="fc"><i>129</i>&nbsp;                break;</b>
+<i>130</i>&nbsp;            case &quot;Triton&quot;:
+<b class="fc"><i>131</i>&nbsp;                getCurrentPlayer().setGod(new Triton());</b>
+<b class="fc"><i>132</i>&nbsp;                break;</b>
+<i>133</i>&nbsp;            case &quot;Zeus&quot;:
+<b class="fc"><i>134</i>&nbsp;                getCurrentPlayer().setGod(new Zeus());</b>
+<i>135</i>&nbsp;                break;
+<i>136</i>&nbsp;        }
+<b class="fc"><i>137</i>&nbsp;        nextGameSetUpPhase();</b>
+<b class="fc"><i>138</i>&nbsp;        return 0;</b>
+<i>139</i>&nbsp;    }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;    /**
+<i>142</i>&nbsp;     * set the worker up
+<i>143</i>&nbsp;     * @param x the cell x
+<i>144</i>&nbsp;     * @param y the cell y
+<i>145</i>&nbsp;     * @return 0 if ok
+<i>146</i>&nbsp;     *        -1 if cell is occupied
+<i>147</i>&nbsp;     */
+<i>148</i>&nbsp;    private int setWorker(int x, int y) {
+<b class="fc"><i>149</i>&nbsp;        if (map.getCell(x, y).isOccupied())</b>
+<b class="nc"><i>150</i>&nbsp;            return -1;</b>
+<b class="fc"><i>151</i>&nbsp;        getCurrentPlayer().placeWorker(map.getCell(x, y));</b>
+<b class="fc"><i>152</i>&nbsp;        nextGameSetUpPhase();</b>
+<b class="fc"><i>153</i>&nbsp;        return 0;</b>
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    /**
+<i>157</i>&nbsp;     * to move the turn manager at the start of the game
+<i>158</i>&nbsp;     */
+<i>159</i>&nbsp;    private void nextGameSetUpPhase() {
+<b class="fc"><i>160</i>&nbsp;        turnManager.nextPhaseSetUp();</b>
+<b class="fc"><i>161</i>&nbsp;        if (Phase.END == turnManager.getCurrentPhase()) {</b>
+<b class="fc"><i>162</i>&nbsp;            turnManager.setCurrentPlayer(getCurrentPlayer());</b>
+<b class="fc"><i>163</i>&nbsp;            turnManager.nextPhaseSetUp();</b>
+<i>164</i>&nbsp;        }
+<b class="fc"><i>165</i>&nbsp;    }</b>
+<i>166</i>&nbsp;
+<i>167</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>168</i>&nbsp;    // Set functions, game
+<i>169</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    /**
+<i>172</i>&nbsp;     * set the active worker
+<i>173</i>&nbsp;     * @param w 0 for the worker 0 and 1 for the worker 1
+<i>174</i>&nbsp;     * @return w
+<i>175</i>&nbsp;     */
+<i>176</i>&nbsp;    private int setActiveWorker(int w) {
+<b class="fc"><i>177</i>&nbsp;        if (0 == w || 1 == w) {</b>
+<b class="fc"><i>178</i>&nbsp;            activeWorker = w;</b>
+<b class="fc"><i>179</i>&nbsp;            nextGamePhase();</b>
+<b class="fc"><i>180</i>&nbsp;            return w;</b>
+<i>181</i>&nbsp;        }
+<b class="fc"><i>182</i>&nbsp;        return -1;</b>
+<i>183</i>&nbsp;    }
+<i>184</i>&nbsp;
+<i>185</i>&nbsp;    /**
+<i>186</i>&nbsp;     * do the build
+<i>187</i>&nbsp;     * @param x of the cell target
+<i>188</i>&nbsp;     * @param y of the cell target
+<i>189</i>&nbsp;     * @param b type of block build
+<i>190</i>&nbsp;     * @return see god.build for an accurate return
+<i>191</i>&nbsp;     */
+<i>192</i>&nbsp;    private int build(int x, int y, Status b) {
+<b class="fc"><i>193</i>&nbsp;        int i = getCurrentGod().build(map.getCell(x, y), b, getActiveWorker());</b>
+<b class="fc"><i>194</i>&nbsp;        if (0 &lt;= i) {</b>
+<b class="fc"><i>195</i>&nbsp;            if (ChronusIsHere &amp;&amp; 3 == i)</b>
+<b class="nc"><i>196</i>&nbsp;                completedTowers++;</b>
+<b class="fc"><i>197</i>&nbsp;            nextGamePhase();</b>
+<i>198</i>&nbsp;        }
+<b class="fc"><i>199</i>&nbsp;        return i;</b>
+<i>200</i>&nbsp;    }
+<i>201</i>&nbsp;
+<i>202</i>&nbsp;    /**
+<i>203</i>&nbsp;     * do the move
+<i>204</i>&nbsp;     * @param x of the cell target
+<i>205</i>&nbsp;     * @param y of the cell target
+<i>206</i>&nbsp;     * @return see god.move for an accurate return
+<i>207</i>&nbsp;     */
+<i>208</i>&nbsp;    private int move(int x, int y) {
+<b class="fc"><i>209</i>&nbsp;        int i = getCurrentGod().move(map.getCell(x, y), getActiveWorker(), map);</b>
+<b class="fc"><i>210</i>&nbsp;        if (getCurrentGod() instanceof Athena)</b>
+<b class="nc"><i>211</i>&nbsp;            AthenaMovedUp = getCurrentGod().AthenaMovedUp();</b>
+<b class="fc"><i>212</i>&nbsp;        if (0 == i)</b>
+<b class="fc"><i>213</i>&nbsp;            nextGamePhase();</b>
+<b class="fc"><i>214</i>&nbsp;        return i;</b>
+<i>215</i>&nbsp;    }
+<i>216</i>&nbsp;
+<i>217</i>&nbsp;    /**
+<i>218</i>&nbsp;     * let some god to skip the move
+<i>219</i>&nbsp;     * @return 1 if skipped
+<i>220</i>&nbsp;     *        -1 if not skipped
+<i>221</i>&nbsp;     */
+<i>222</i>&nbsp;    private int skipAction() {
+<b class="fc"><i>223</i>&nbsp;        switch (getCurrentGod().getName()) {</b>
+<i>224</i>&nbsp;            //skip move
+<i>225</i>&nbsp;            case &quot;Artemis&quot;:
+<i>226</i>&nbsp;            case &quot;Triton&quot;: {
+<b class="fc"><i>227</i>&nbsp;                if (Phase.MOVE == getPhase() &amp;&amp; 1 == getCurrentGod().remains_moves) {</b>
+<b class="fc"><i>228</i>&nbsp;                    turnManager.setSkipMove();</b>
+<b class="fc"><i>229</i>&nbsp;                    nextGamePhase();</b>
+<b class="fc"><i>230</i>&nbsp;                    return 1;</b>
+<i>231</i>&nbsp;                }
+<i>232</i>&nbsp;                break;
+<i>233</i>&nbsp;            }
+<i>234</i>&nbsp;            //skip build
+<i>235</i>&nbsp;            case &quot;Demeter&quot;:
+<i>236</i>&nbsp;            case &quot;Hephaestus&quot;:
+<i>237</i>&nbsp;            case &quot;Hestia&quot;: {
+<b class="fc"><i>238</i>&nbsp;                if (Phase.BUILD == getPhase() &amp;&amp; 1 == getCurrentGod().remains_builds) {</b>
+<b class="fc"><i>239</i>&nbsp;                    turnManager.setSkipBuild();</b>
+<b class="fc"><i>240</i>&nbsp;                    nextGamePhase();</b>
+<b class="fc"><i>241</i>&nbsp;                    return 1;</b>
+<i>242</i>&nbsp;                }
+<i>243</i>&nbsp;                break;
+<i>244</i>&nbsp;            }
+<i>245</i>&nbsp;            case &quot;Prometheus&quot;: {
+<b class="fc"><i>246</i>&nbsp;                if (Phase.BUILD == getPhase() &amp;&amp; 2 == getCurrentGod().remains_builds) {</b>
+<b class="fc"><i>247</i>&nbsp;                    turnManager.setSkipBuild();</b>
+<b class="fc"><i>248</i>&nbsp;                    nextGamePhase();</b>
+<b class="fc"><i>249</i>&nbsp;                    return 1;</b>
+<i>250</i>&nbsp;                }
+<i>251</i>&nbsp;                break;
+<i>252</i>&nbsp;            }
+<i>253</i>&nbsp;        }
+<b class="fc"><i>254</i>&nbsp;        return -1;</b>
+<i>255</i>&nbsp;    }
+<i>256</i>&nbsp;
+<i>257</i>&nbsp;    /**
+<i>258</i>&nbsp;     * to call only when in a 3 player game and 1 is out
+<i>259</i>&nbsp;     * @return status code
+<i>260</i>&nbsp;     */
+<i>261</i>&nbsp;    public int removePlayer() {
+<b class="fc"><i>262</i>&nbsp;        if (Phase.BAD_NEWS == getPhase()) {</b>
+<b class="fc"><i>263</i>&nbsp;            if (getCurrentGod() instanceof Athena)</b>
+<b class="nc"><i>264</i>&nbsp;                AthenaMovedUp = false;</b>
+<b class="fc"><i>265</i>&nbsp;            else if (getCurrentGod() instanceof Hera)</b>
+<b class="nc"><i>266</i>&nbsp;                HeraIsHere = false;</b>
+<b class="fc"><i>267</i>&nbsp;            else if (getCurrentGod() instanceof Chronus)</b>
+<b class="nc"><i>268</i>&nbsp;                ChronusIsHere = false;</b>
+<b class="fc"><i>269</i>&nbsp;            getCurrentPlayer().getWorkerByNumber(0).getCell().fireWorker(getCurrentPlayer().getWorkerByNumber(0));</b>
+<b class="fc"><i>270</i>&nbsp;            getCurrentPlayer().getWorkerByNumber(1).getCell().fireWorker(getCurrentPlayer().getWorkerByNumber(1));</b>
+<b class="fc"><i>271</i>&nbsp;            numPlayers = 2;</b>
+<b class="fc"><i>272</i>&nbsp;            turnManager.setPlayerNumber(2);</b>
+<b class="fc"><i>273</i>&nbsp;            switch (getCurrentPlayerNum()) {</b>
+<i>274</i>&nbsp;                case 0:
+<b class="fc"><i>275</i>&nbsp;                    players[0] = null;</b>
+<b class="fc"><i>276</i>&nbsp;                    players[0] = players[1];</b>
+<b class="fc"><i>277</i>&nbsp;                    players[1] = players[2];</b>
+<b class="fc"><i>278</i>&nbsp;                    break;</b>
+<i>279</i>&nbsp;                case 1:
+<b class="nc"><i>280</i>&nbsp;                    players[1] = null;</b>
+<b class="nc"><i>281</i>&nbsp;                    players[1] = players[2];</b>
+<b class="nc"><i>282</i>&nbsp;                    break;</b>
+<i>283</i>&nbsp;                case 2:
+<b class="nc"><i>284</i>&nbsp;                    players[2] = null;</b>
+<i>285</i>&nbsp;                    break;
+<i>286</i>&nbsp;            }
+<b class="fc"><i>287</i>&nbsp;            nextGamePhase();</b>
+<b class="fc"><i>288</i>&nbsp;            turnManager.setCurrentPlayer(getCurrentPlayer());</b>
+<b class="fc"><i>289</i>&nbsp;            return 0;</b>
+<i>290</i>&nbsp;        }
+<i>291</i>&nbsp;        else
+<b class="nc"><i>292</i>&nbsp;            return -1;</b>
+<i>293</i>&nbsp;    }
+<i>294</i>&nbsp;
+<i>295</i>&nbsp;    /**
+<i>296</i>&nbsp;     * sometimes i&#39;m afraid of my own genius.
+<i>297</i>&nbsp;     * also this move the turn manager only when needed
+<i>298</i>&nbsp;     */
+<i>299</i>&nbsp;    private void nextGamePhase() {
+<b class="fc"><i>300</i>&nbsp;        turnManager.nextPhaseGame();</b>
+<b class="fc"><i>301</i>&nbsp;        switch (turnManager.getCurrentPhase()) {</b>
+<i>302</i>&nbsp;            case START_TURN:
+<b class="fc"><i>303</i>&nbsp;                getCurrentGod().startTurn(AthenaMovedUp);</b>
+<b class="fc"><i>304</i>&nbsp;                nextGamePhase();</b>
+<b class="fc"><i>305</i>&nbsp;                break;</b>
+<i>306</i>&nbsp;            case CHECK_WIN:
+<i>307</i>&nbsp;            case CHECK_WIN_MOVE:
+<i>308</i>&nbsp;            case CHECK_WIN_BUILD:
+<b class="fc"><i>309</i>&nbsp;                if (getCurrentGod().checkWin(getActiveWorker(), completedTowers, HeraIsHere))</b>
+<b class="nc"><i>310</i>&nbsp;                    turnManager.setResults();</b>
+<b class="fc"><i>311</i>&nbsp;                nextGamePhase();</b>
+<b class="fc"><i>312</i>&nbsp;                break;</b>
+<i>313</i>&nbsp;            case CHECK_LOSE_MOVE:
+<b class="fc"><i>314</i>&nbsp;                if (getCurrentGod().checkLossMove(getActiveWorker(), map))</b>
+<b class="fc"><i>315</i>&nbsp;                    switch(getCurrentGod().getName()) {</b>
+<i>316</i>&nbsp;                        case &quot;Artemis&quot;:
+<i>317</i>&nbsp;                        case &quot;Triton&quot;:
+<b class="fc"><i>318</i>&nbsp;                            if (2 == getCurrentGod().remains_moves)</b>
+<b class="fc"><i>319</i>&nbsp;                                turnManager.setResults();</b>
+<i>320</i>&nbsp;                            break;
+<i>321</i>&nbsp;                        default:
+<b class="fc"><i>322</i>&nbsp;                            turnManager.setResults();</b>
+<i>323</i>&nbsp;                            break;
+<i>324</i>&nbsp;                    }
+<b class="fc"><i>325</i>&nbsp;                nextGamePhase();</b>
+<b class="fc"><i>326</i>&nbsp;                break;</b>
+<i>327</i>&nbsp;            case CHECK_LOSE_BUILD:
+<b class="fc"><i>328</i>&nbsp;                if (getCurrentGod().checkLossBuild(getActiveWorker(), map))</b>
+<b class="nc"><i>329</i>&nbsp;                    switch(getCurrentGod().getName()) {</b>
+<i>330</i>&nbsp;                        case &quot;Prometheus&quot;:
+<b class="nc"><i>331</i>&nbsp;                            if (1 == getCurrentGod().remains_builds)</b>
+<b class="nc"><i>332</i>&nbsp;                                turnManager.setResults();</b>
+<i>333</i>&nbsp;                            break;
+<i>334</i>&nbsp;                        case &quot;Demeter&quot;:
+<i>335</i>&nbsp;                        case &quot;Hephaestus&quot;:
+<i>336</i>&nbsp;                        case &quot;Hestia&quot;:
+<b class="nc"><i>337</i>&nbsp;                            if (2 == getCurrentGod().remains_builds)</b>
+<b class="nc"><i>338</i>&nbsp;                                turnManager.setResults();</b>
+<i>339</i>&nbsp;                            break;
+<i>340</i>&nbsp;                        default:
+<b class="nc"><i>341</i>&nbsp;                            turnManager.setResults();</b>
+<i>342</i>&nbsp;                            break;
+<i>343</i>&nbsp;                    }
+<b class="fc"><i>344</i>&nbsp;                nextGamePhase();</b>
+<b class="fc"><i>345</i>&nbsp;                break;</b>
+<i>346</i>&nbsp;            case END:
+<b class="fc"><i>347</i>&nbsp;                nextGamePhase();</b>
+<b class="fc"><i>348</i>&nbsp;                turnManager.setCurrentPlayer(getCurrentPlayer());</b>
+<i>349</i>&nbsp;                break;
+<i>350</i>&nbsp;        }
+<b class="fc"><i>351</i>&nbsp;    }</b>
+<i>352</i>&nbsp;
+<i>353</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>354</i>&nbsp;    // internal functions
+<i>355</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>356</i>&nbsp;
+<i>357</i>&nbsp;    /**
+<i>358</i>&nbsp;     * getter
+<i>359</i>&nbsp;     * @return the next free color
+<i>360</i>&nbsp;     */
+<i>361</i>&nbsp;    private Color getColor() {
+<b class="fc"><i>362</i>&nbsp;        switch (colorVariable) {</b>
+<i>363</i>&nbsp;            case (0):
+<b class="fc"><i>364</i>&nbsp;                return Color.RED;</b>
+<i>365</i>&nbsp;            case (1):
+<b class="fc"><i>366</i>&nbsp;                return Color.BLUE;</b>
+<i>367</i>&nbsp;            case (2):
+<b class="fc"><i>368</i>&nbsp;                return Color.WHITE;</b>
+<i>369</i>&nbsp;            default:
+<b class="nc"><i>370</i>&nbsp;                return null;</b>
+<i>371</i>&nbsp;        }
+<i>372</i>&nbsp;    }
+<i>373</i>&nbsp;
+<i>374</i>&nbsp;    /**
+<i>375</i>&nbsp;     * getter
+<i>376</i>&nbsp;     * @return the active worker of the current player
+<i>377</i>&nbsp;     */
+<i>378</i>&nbsp;    private Worker getActiveWorker() {
+<b class="fc"><i>379</i>&nbsp;        if (0 == activeWorker)</b>
+<b class="fc"><i>380</i>&nbsp;            return getCurrentPlayer().getWorkerByNumber(0);</b>
+<i>381</i>&nbsp;        else
+<b class="fc"><i>382</i>&nbsp;            return getCurrentPlayer().getWorkerByNumber(1);</b>
+<i>383</i>&nbsp;    }
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    /**
+<i>386</i>&nbsp;     * getter
+<i>387</i>&nbsp;     * @return the current player
+<i>388</i>&nbsp;     */
+<i>389</i>&nbsp;    private Player getCurrentPlayer() {
+<b class="fc"><i>390</i>&nbsp;        return players[getCurrentPlayerNum()];</b>
+<i>391</i>&nbsp;    }
+<i>392</i>&nbsp;
+<i>393</i>&nbsp;    /**
+<i>394</i>&nbsp;     * getter
+<i>395</i>&nbsp;     * @return the god of the current player
+<i>396</i>&nbsp;     */
+<i>397</i>&nbsp;    private God getCurrentGod() {
+<b class="fc"><i>398</i>&nbsp;        return players[getCurrentPlayerNum()].getGod();</b>
+<i>399</i>&nbsp;    }
+<i>400</i>&nbsp;
+<i>401</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>402</i>&nbsp;    // In and Out functions
+<i>403</i>&nbsp;    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<i>404</i>&nbsp;
+<i>405</i>&nbsp;    /**
+<i>406</i>&nbsp;     * getter
+<i>407</i>&nbsp;     * @param numPlayers number of player 0,1,2
+<i>408</i>&nbsp;     * @return the player
+<i>409</i>&nbsp;     */
+<i>410</i>&nbsp;    public Player getPlayer(int numPlayers) {
+<b class="fc"><i>411</i>&nbsp;        return players[numPlayers];</b>
+<i>412</i>&nbsp;    }
+<i>413</i>&nbsp;
+<i>414</i>&nbsp;    /**
+<i>415</i>&nbsp;     * getter
+<i>416</i>&nbsp;     * @return the current phase
+<i>417</i>&nbsp;     */
+<i>418</i>&nbsp;    public Phase getPhase() {
+<b class="fc"><i>419</i>&nbsp;        return turnManager.getCurrentPhase();</b>
+<i>420</i>&nbsp;    }
+<i>421</i>&nbsp;
+<i>422</i>&nbsp;    /**
+<i>423</i>&nbsp;     * getter
+<i>424</i>&nbsp;     * @return the current player number
+<i>425</i>&nbsp;     */
+<i>426</i>&nbsp;    public int getCurrentPlayerNum() {
+<b class="fc"><i>427</i>&nbsp;        return turnManager.getCurrentPlayerNumber();</b>
+<i>428</i>&nbsp;    }
+<i>429</i>&nbsp;
+<i>430</i>&nbsp;    /**
+<i>431</i>&nbsp;     * check if is the turn of the player p
+<i>432</i>&nbsp;     * @param p the player to check
+<i>433</i>&nbsp;     * @return true if it is the turn player, false otherwise
+<i>434</i>&nbsp;     */
+<i>435</i>&nbsp;    public boolean isPlayerTurn(Player p){
+<b class="fc"><i>436</i>&nbsp;        if(p.getPlayerNumber() == getCurrentPlayerNum())</b>
+<b class="fc"><i>437</i>&nbsp;            return true;</b>
+<i>438</i>&nbsp;        else
+<b class="fc"><i>439</i>&nbsp;            return false;</b>
+<i>440</i>&nbsp;    }
+<i>441</i>&nbsp;
+<i>442</i>&nbsp;    /**
+<i>443</i>&nbsp;     * getter
+<i>444</i>&nbsp;     * @return the map of the game
+<i>445</i>&nbsp;     */
+<i>446</i>&nbsp;    public Map getMap() {
+<b class="fc"><i>447</i>&nbsp;        return map;</b>
+<i>448</i>&nbsp;    }
+<i>449</i>&nbsp;
+<i>450</i>&nbsp;    public ArrayList&lt;String&gt; getAllGodList() {
+<b class="fc"><i>451</i>&nbsp;        return God.getAllGods();</b>
+<i>452</i>&nbsp;    }
+<i>453</i>&nbsp;
+<i>454</i>&nbsp;    /**
+<i>455</i>&nbsp;     * getter
+<i>456</i>&nbsp;     * @return string of avaiable gods
+<i>457</i>&nbsp;     */
+<i>458</i>&nbsp;    public String getGodList() {
+<b class="fc"><i>459</i>&nbsp;        String tmp = &quot;|&quot;;</b>
+<b class="fc"><i>460</i>&nbsp;        for(int i=0; i &lt; numPlayers; i++) {</b>
+<b class="fc"><i>461</i>&nbsp;            if(!availableGods[i].equals(&quot;Scelto&quot;))</b>
+<b class="nc"><i>462</i>&nbsp;                tmp = tmp + availableGods[i] + &quot;|&quot;;</b>
+<i>463</i>&nbsp;        }
+<b class="fc"><i>464</i>&nbsp;        return tmp;</b>
+<i>465</i>&nbsp;    }
+<i>466</i>&nbsp;
+<i>467</i>&nbsp;
+<i>468</i>&nbsp;
+<i>469</i>&nbsp;    /**
+<i>470</i>&nbsp;     * getter, used for javafx purposes
+<i>471</i>&nbsp;     * @return string of avaiable gods
+<i>472</i>&nbsp;     */
+<i>473</i>&nbsp;    public String godsc() {
+<b class="fc"><i>474</i>&nbsp;        String tmp = &quot;&quot;;</b>
+<b class="fc"><i>475</i>&nbsp;        for(int i=0; i &lt; numPlayers; i++) {</b>
+<b class="fc"><i>476</i>&nbsp;            if(i==0){</b>
+<b class="fc"><i>477</i>&nbsp;                if(!availableGods[i].equals(&quot;Scelto&quot;))</b>
+<b class="fc"><i>478</i>&nbsp;                    tmp = tmp + availableGods[i];</b>
+<i>479</i>&nbsp;            }
+<i>480</i>&nbsp;            else{
+<b class="fc"><i>481</i>&nbsp;                if(!availableGods[i].equals(&quot;Scelto&quot;))</b>
+<b class="fc"><i>482</i>&nbsp;                    tmp = tmp +&quot;-&quot;+ availableGods[i];</b>
+<i>483</i>&nbsp;            }
+<i>484</i>&nbsp;
+<i>485</i>&nbsp;        }
+<b class="fc"><i>486</i>&nbsp;        return tmp;</b>
+<i>487</i>&nbsp;    }
+<i>488</i>&nbsp;
+<i>489</i>&nbsp;    /**
+<i>490</i>&nbsp;     * I MAKE THE GAME DO BLIP BLOP
+<i>491</i>&nbsp;     * @param action the move requested
+<i>492</i>&nbsp;     * @param active the active worker (for SELECT_WORKER phase only) 0 for the first, 1 for the second.
+<i>493</i>&nbsp;     * @param block the block build (for BUILD phase only)
+<i>494</i>&nbsp;     * @param x the x of the cell build/moved
+<i>495</i>&nbsp;     * @param y the y of the cell build/moved
+<i>496</i>&nbsp;     * @return  num_pos if everything is ok
+<i>497</i>&nbsp;     *          num_neg if there is an error
+<i>498</i>&nbsp;     */
+<i>499</i>&nbsp;    public int performeMove(Action action, Status block, int active, int x, int y) {
+<b class="fc"><i>500</i>&nbsp;        switch (action) {</b>
+<i>501</i>&nbsp;            case PLACE_WORKER:
+<b class="fc"><i>502</i>&nbsp;                return setWorker(x, y);</b>
+<i>503</i>&nbsp;            case SELECT_WORKER:
+<b class="fc"><i>504</i>&nbsp;                 return setActiveWorker(active);</b>
+<i>505</i>&nbsp;            case MOVE:
+<b class="fc"><i>506</i>&nbsp;                return move(x, y);</b>
+<i>507</i>&nbsp;            case BUILD:
+<b class="fc"><i>508</i>&nbsp;                return build(x, y, block);</b>
+<i>509</i>&nbsp;            case SKIP:
+<b class="fc"><i>510</i>&nbsp;                return skipAction();</b>
+<i>511</i>&nbsp;        }
+<b class="fc"><i>512</i>&nbsp;        return -1;</b>
+<i>513</i>&nbsp;    }
+<i>514</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-01 21:58</div>
+</div>
+</body>
+</html>

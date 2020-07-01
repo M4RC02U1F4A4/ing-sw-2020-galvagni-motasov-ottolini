@@ -1,0 +1,364 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Server</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP23.server</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Server (it.polimi.ingsw.PSP23.server)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Server</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 140)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP23.server;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP23.client.Client;
+<i>4</i>&nbsp;//import it.polimi.ingsw.PSP23.controller.Controller;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP23.controller.Controller;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP23.model.*;
+<i>7</i>&nbsp;import it.polimi.ingsw.PSP23.model.god.Apollo;
+<i>8</i>&nbsp;import it.polimi.ingsw.PSP23.model.god.Demeter;
+<i>9</i>&nbsp;import it.polimi.ingsw.PSP23.view.RemoteView;
+<i>10</i>&nbsp;import it.polimi.ingsw.PSP23.view.View;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.io.IOException;
+<i>13</i>&nbsp;import java.net.ServerSocket;
+<i>14</i>&nbsp;import java.net.Socket;
+<i>15</i>&nbsp;import java.util.*;
+<i>16</i>&nbsp;import java.util.Map;
+<i>17</i>&nbsp;import java.util.concurrent.Executor;
+<i>18</i>&nbsp;import java.util.concurrent.ExecutorService;
+<i>19</i>&nbsp;import java.util.concurrent.Executors;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;public class Server {
+<i>22</i>&nbsp;    private static final int PORT=13245;
+<i>23</i>&nbsp;    private ServerSocket serverSocket;
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;    private ExecutorService executor= Executors.newFixedThreadPool(5); //probabilmente basta falo con 3 al massimo, da vedere</b>
+<b class="nc"><i>26</i>&nbsp;    private Map&lt;String, ClientConnection&gt; waitingConnection2vs2=new LinkedHashMap&lt;&gt;();</b>
+<b class="nc"><i>27</i>&nbsp;    private Map&lt;String, ClientConnection&gt; waitingConnection3vs3=new LinkedHashMap&lt;&gt;();</b>
+<b class="nc"><i>28</i>&nbsp;    private ArrayList&lt;Player&gt; playing2s=new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>29</i>&nbsp;    private ArrayList&lt;Player&gt; playing3s=new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>30</i>&nbsp;    private ArrayList&lt;ClientConnection&gt;conn2s=new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>31</i>&nbsp;    private ArrayList&lt;ClientConnection&gt;conn3s=new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>32</i>&nbsp;    private ArrayList&lt;String&gt;takenNames=new ArrayList&lt;&gt;();</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    Controller controller;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * This method deregisters a connection
+<i>38</i>&nbsp;     * @param c the connection we want to remove
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    public synchronized void deregisterConnection(ClientConnection c){
+<b class="nc"><i>41</i>&nbsp;        for(int i=0;i&lt;playing2s.size();i++){</b>
+<b class="nc"><i>42</i>&nbsp;            if(playing2s.get(i).getIpAddress().equals(c.getIpAddress())){</b>
+<b class="nc"><i>43</i>&nbsp;                playing2s.remove(playing2s.get(i));</b>
+<b class="nc"><i>44</i>&nbsp;                conn2s.remove(conn2s.get(i));</b>
+<b class="nc"><i>45</i>&nbsp;                c.closeConnection();</b>
+<i>46</i>&nbsp;            }
+<i>47</i>&nbsp;        }
+<b class="nc"><i>48</i>&nbsp;        for(int i=0;i&lt;playing3s.size();i++){</b>
+<b class="nc"><i>49</i>&nbsp;            if(playing3s.get(i).getIpAddress().equals(c.getIpAddress())){</b>
+<b class="nc"><i>50</i>&nbsp;                playing3s.remove(playing3s.get(i));</b>
+<b class="nc"><i>51</i>&nbsp;                conn3s.remove(conn3s.get(i));</b>
+<b class="nc"><i>52</i>&nbsp;                c.closeConnection();</b>
+<i>53</i>&nbsp;            }
+<i>54</i>&nbsp;        }
+<b class="nc"><i>55</i>&nbsp;        if(conn2s.size()==0 &amp;&amp; conn3s.size()==0){</b>
+<i>56</i>&nbsp;            try {
+<b class="nc"><i>57</i>&nbsp;                serverSocket.close();</b>
+<b class="nc"><i>58</i>&nbsp;                executor.shutdownNow();</b>
+<b class="nc"><i>59</i>&nbsp;                takenNames.clear();</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;                return;
+<b class="nc"><i>62</i>&nbsp;            } catch (IOException e) {</b>
+<b class="nc"><i>63</i>&nbsp;                e.printStackTrace();</b>
+<i>64</i>&nbsp;            }
+<i>65</i>&nbsp;        }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    /**
+<i>71</i>&nbsp;     * Getter for getConn2s
+<i>72</i>&nbsp;     * @return getConn2s()
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    public ArrayList&lt;ClientConnection&gt; getConn2s() {
+<b class="nc"><i>75</i>&nbsp;        return conn2s;</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    /**
+<i>79</i>&nbsp;     * Getter for getConn3s
+<i>80</i>&nbsp;     * @return getConn3s
+<i>81</i>&nbsp;     */
+<i>82</i>&nbsp;    public ArrayList&lt;ClientConnection&gt; getConn3s() {
+<b class="nc"><i>83</i>&nbsp;        return conn3s;</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    /**
+<i>87</i>&nbsp;     * This method adds a player to a waitingList, based on the numberOfPlayers paramether
+<i>88</i>&nbsp;     * After the waiting list is full, the method starts a new march
+<i>89</i>&nbsp;     * @param c the client connection we want to add to the list
+<i>90</i>&nbsp;     * @param name the name of the player who joins the lobby
+<i>91</i>&nbsp;     * @param numberOfPlayers the size of the match, it can be 2 or 3
+<i>92</i>&nbsp;     */
+<i>93</i>&nbsp;    public synchronized void lobby(ClientConnection c, String name, int numberOfPlayers){
+<b class="nc"><i>94</i>&nbsp;        if(numberOfPlayers==2){</b>
+<b class="nc"><i>95</i>&nbsp;            waitingConnection2vs2.put(name, c);</b>
+<i>96</i>&nbsp;        }
+<b class="nc"><i>97</i>&nbsp;        else if(numberOfPlayers==3){</b>
+<b class="nc"><i>98</i>&nbsp;            waitingConnection3vs3.put(name, c);</b>
+<i>99</i>&nbsp;        }
+<b class="nc"><i>100</i>&nbsp;        if(numberOfPlayers==2){</b>
+<b class="nc"><i>101</i>&nbsp;            c.asyncSend(&quot;Benvenuto nella lobby a 2 giocatori&quot;);</b>
+<i>102</i>&nbsp;
+<b class="nc"><i>103</i>&nbsp;            System.out.println(&quot;Si e&#39; connesso &quot;+name);</b>
+<b class="nc"><i>104</i>&nbsp;            if(waitingConnection2vs2.size()==2){</b>
+<b class="nc"><i>105</i>&nbsp;                System.out.println(&quot;istanzio il controller per una partita a 2 giocatori&quot;);</b>
+<b class="nc"><i>106</i>&nbsp;                Game game=new Game(2);</b>
+<b class="nc"><i>107</i>&nbsp;                controller=new Controller(game);</b>
+<b class="nc"><i>108</i>&nbsp;                Set&lt;Map.Entry&lt;String, ClientConnection&gt;&gt; st= waitingConnection2vs2.entrySet();</b>
+<i>109</i>&nbsp;
+<b class="nc"><i>110</i>&nbsp;                for(Map.Entry&lt;String, ClientConnection&gt;me:st){</b>
+<b class="nc"><i>111</i>&nbsp;                    String nome=me.getKey();</b>
+<b class="nc"><i>112</i>&nbsp;                    String ip=me.getValue().getIpAddress();</b>
+<b class="nc"><i>113</i>&nbsp;                    conn2s.add(me.getValue());</b>
+<b class="nc"><i>114</i>&nbsp;                    System.out.println(&quot;Creo il giocatore &quot;+nome+&quot; con ip &quot;+ip);</b>
+<b class="nc"><i>115</i>&nbsp;                    Player p=new Player(nome, ip);</b>
+<b class="nc"><i>116</i>&nbsp;                    playing2s.add(p);</b>
+<b class="nc"><i>117</i>&nbsp;                }</b>
+<b class="nc"><i>118</i>&nbsp;                waitingConnection2vs2.clear();</b>
+<i>119</i>&nbsp;                //conn.clear();
+<b class="nc"><i>120</i>&nbsp;                playing2s.get(0).setColor(Color.BLUE);</b>
+<b class="nc"><i>121</i>&nbsp;                playing2s.get(0).setPlayerNumber(0);</b>
+<b class="nc"><i>122</i>&nbsp;                playing2s.get(1).setColor(Color.RED);</b>
+<b class="nc"><i>123</i>&nbsp;                playing2s.get(1).setPlayerNumber(1);</b>
+<b class="nc"><i>124</i>&nbsp;                controller.addPlayer(playing2s.get(0));</b>
+<b class="nc"><i>125</i>&nbsp;                controller.addPlayer(playing2s.get(1));</b>
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;                View player1view=new RemoteView(playing2s.get(0),conn2s.get(0));</b>
+<b class="nc"><i>129</i>&nbsp;                View player2view=new RemoteView(playing2s.get(1),conn2s.get(1));</b>
+<b class="nc"><i>130</i>&nbsp;                game.addObserver(player1view);</b>
+<b class="nc"><i>131</i>&nbsp;                game.addObserver(player2view);</b>
+<b class="nc"><i>132</i>&nbsp;                controller.addPlayerView(player1view);</b>
+<b class="nc"><i>133</i>&nbsp;                controller.addPlayerView(player2view);</b>
+<b class="nc"><i>134</i>&nbsp;                player1view.addObserver(controller);</b>
+<b class="nc"><i>135</i>&nbsp;                player2view.addObserver(controller);</b>
+<i>136</i>&nbsp;
+<b class="nc"><i>137</i>&nbsp;                System.out.println(&quot;fino a qua funziona&quot;);</b>
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;
+<b class="nc"><i>140</i>&nbsp;                System.out.println(playing2s.get(0).getPlayerNumber());</b>
+<b class="nc"><i>141</i>&nbsp;                System.out.println(playing2s.get(1).getPlayerNumber());</b>
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;
+<b class="nc"><i>144</i>&nbsp;                if(game.isPlayerTurn(playing2s.get(0))){</b>
+<b class="nc"><i>145</i>&nbsp;                    conn2s.get(0).asyncSend(&quot;e&#39; il tuo turno&quot;);</b>
+<b class="nc"><i>146</i>&nbsp;                    conn2s.get(0).asyncSend(&quot;Scegli 2 dei tra quelli disponibili: &quot;);</b>
+<b class="nc"><i>147</i>&nbsp;                    conn2s.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));</b>
+<b class="nc"><i>148</i>&nbsp;                    conn2s.get(0).asyncSend(&quot;Sintassi del comando: SELECT_GODS:&lt;god1&gt;,&lt;god2&gt;&quot;);</b>
+<b class="nc"><i>149</i>&nbsp;                    conn2s.get(1).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<i>150</i>&nbsp;                }
+<i>151</i>&nbsp;                else{
+<b class="nc"><i>152</i>&nbsp;                    conn2s.get(0).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<b class="nc"><i>153</i>&nbsp;                    conn2s.get(1).asyncSend(&quot;e&#39; il tuo turno&quot;);</b>
+<i>154</i>&nbsp;                }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;
+<b class="nc"><i>157</i>&nbsp;            }</b>
+<i>158</i>&nbsp;        }
+<b class="nc"><i>159</i>&nbsp;        else if(numberOfPlayers==3) {</b>
+<i>160</i>&nbsp;
+<b class="nc"><i>161</i>&nbsp;            c.asyncSend(&quot;Benvenuto nella lobby a 3 giocatori&quot;);</b>
+<b class="nc"><i>162</i>&nbsp;            System.out.println(&quot;Si e&#39; connesso &quot; + name);</b>
+<b class="nc"><i>163</i>&nbsp;            if (waitingConnection3vs3.size() == 3) {</b>
+<b class="nc"><i>164</i>&nbsp;                System.out.println(&quot;istanzio il controller per una partita a 3 giocatori&quot;);</b>
+<b class="nc"><i>165</i>&nbsp;                Game game=new Game(3);</b>
+<b class="nc"><i>166</i>&nbsp;                controller=new Controller(game);</b>
+<b class="nc"><i>167</i>&nbsp;                Set&lt;Map.Entry&lt;String, ClientConnection&gt;&gt; st= waitingConnection3vs3.entrySet();</b>
+<i>168</i>&nbsp;
+<b class="nc"><i>169</i>&nbsp;                for(Map.Entry&lt;String, ClientConnection&gt;me:st){</b>
+<b class="nc"><i>170</i>&nbsp;                    String nome=me.getKey();</b>
+<b class="nc"><i>171</i>&nbsp;                    String ip=me.getValue().getIpAddress();</b>
+<b class="nc"><i>172</i>&nbsp;                    conn3s.add(me.getValue());</b>
+<b class="nc"><i>173</i>&nbsp;                    System.out.println(&quot;Creo il giocatore &quot;+nome+&quot; con ip &quot;+ip);</b>
+<b class="nc"><i>174</i>&nbsp;                    Player p=new Player(nome, ip);</b>
+<b class="nc"><i>175</i>&nbsp;                    playing3s.add(p);</b>
+<b class="nc"><i>176</i>&nbsp;                }</b>
+<b class="nc"><i>177</i>&nbsp;                waitingConnection3vs3.clear();</b>
+<i>178</i>&nbsp;                //conn.clear();
+<b class="nc"><i>179</i>&nbsp;                playing3s.get(0).setColor(Color.BLUE);</b>
+<b class="nc"><i>180</i>&nbsp;                playing3s.get(0).setPlayerNumber(0);</b>
+<b class="nc"><i>181</i>&nbsp;                playing3s.get(1).setColor(Color.RED);</b>
+<b class="nc"><i>182</i>&nbsp;                playing3s.get(1).setPlayerNumber(1);</b>
+<b class="nc"><i>183</i>&nbsp;                playing3s.get(2).setColor(Color.WHITE);</b>
+<b class="nc"><i>184</i>&nbsp;                playing3s.get(2).setPlayerNumber(2);</b>
+<b class="nc"><i>185</i>&nbsp;                controller.addPlayer(playing3s.get(0));</b>
+<b class="nc"><i>186</i>&nbsp;                controller.addPlayer(playing3s.get(1));</b>
+<b class="nc"><i>187</i>&nbsp;                controller.addPlayer(playing3s.get(2));</b>
+<i>188</i>&nbsp;
+<i>189</i>&nbsp;
+<b class="nc"><i>190</i>&nbsp;                View player1view=new RemoteView(playing3s.get(0),conn3s.get(0));</b>
+<b class="nc"><i>191</i>&nbsp;                View player2view=new RemoteView(playing3s.get(1),conn3s.get(1));</b>
+<b class="nc"><i>192</i>&nbsp;                View player3view=new RemoteView(playing3s.get(2),conn3s.get(2));</b>
+<b class="nc"><i>193</i>&nbsp;                game.addObserver(player1view);</b>
+<b class="nc"><i>194</i>&nbsp;                game.addObserver(player2view);</b>
+<b class="nc"><i>195</i>&nbsp;                game.addObserver(player3view);</b>
+<b class="nc"><i>196</i>&nbsp;                controller.addPlayerView(player1view);</b>
+<b class="nc"><i>197</i>&nbsp;                controller.addPlayerView(player2view);</b>
+<b class="nc"><i>198</i>&nbsp;                controller.addPlayerView(player3view);</b>
+<b class="nc"><i>199</i>&nbsp;                player1view.addObserver(controller);</b>
+<b class="nc"><i>200</i>&nbsp;                player2view.addObserver(controller);</b>
+<b class="nc"><i>201</i>&nbsp;                player3view.addObserver(controller);</b>
+<i>202</i>&nbsp;
+<b class="nc"><i>203</i>&nbsp;                System.out.println(&quot;fino a qua funziona&quot;);</b>
+<i>204</i>&nbsp;
+<i>205</i>&nbsp;
+<b class="nc"><i>206</i>&nbsp;                System.out.println(playing3s.get(0).getPlayerNumber());</b>
+<b class="nc"><i>207</i>&nbsp;                System.out.println(playing3s.get(1).getPlayerNumber());</b>
+<b class="nc"><i>208</i>&nbsp;                System.out.println(playing3s.get(2).getPlayerNumber());</b>
+<i>209</i>&nbsp;
+<i>210</i>&nbsp;
+<i>211</i>&nbsp;
+<b class="nc"><i>212</i>&nbsp;                if(game.isPlayerTurn(playing3s.get(0))){</b>
+<b class="nc"><i>213</i>&nbsp;                    conn3s.get(0).asyncSend(&quot;e&#39; il tuo turno&quot;);</b>
+<b class="nc"><i>214</i>&nbsp;                    conn3s.get(0).asyncSend(&quot;Scegli 3 dei tra quelli disponibili: &quot;);</b>
+<b class="nc"><i>215</i>&nbsp;                    conn3s.get(0).asyncSend(Arrays.toString(God.getAllGods().toArray()));</b>
+<b class="nc"><i>216</i>&nbsp;                    conn3s.get(0).asyncSend(&quot;Sintassi del comando: SELECT_GODS:&lt;god1&gt;,&lt;god2&gt;,&lt;god3&gt;&quot;);</b>
+<b class="nc"><i>217</i>&nbsp;                    conn3s.get(1).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<b class="nc"><i>218</i>&nbsp;                    conn3s.get(2).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<i>219</i>&nbsp;                }
+<b class="nc"><i>220</i>&nbsp;                else if(game.isPlayerTurn(playing3s.get(1))){</b>
+<b class="nc"><i>221</i>&nbsp;                    conn3s.get(1).asyncSend(&quot;e&#39; il tuo turno&quot;);</b>
+<b class="nc"><i>222</i>&nbsp;                    conn3s.get(0).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<b class="nc"><i>223</i>&nbsp;                    conn3s.get(2).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<i>224</i>&nbsp;                }
+<i>225</i>&nbsp;                else {
+<b class="nc"><i>226</i>&nbsp;                    conn3s.get(2).asyncSend(&quot;e&#39; il tuo turno&quot;);</b>
+<b class="nc"><i>227</i>&nbsp;                    conn3s.get(0).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<b class="nc"><i>228</i>&nbsp;                    conn3s.get(1).asyncSend(&quot;Attendi il tuo turno&quot;);</b>
+<i>229</i>&nbsp;                }
+<i>230</i>&nbsp;            }
+<i>231</i>&nbsp;        }
+<i>232</i>&nbsp;    }
+<i>233</i>&nbsp;
+<i>234</i>&nbsp;    /**
+<i>235</i>&nbsp;     * Constructor
+<i>236</i>&nbsp;     * @throws IOException NA
+<i>237</i>&nbsp;     */
+<b class="nc"><i>238</i>&nbsp;    public Server() throws IOException {</b>
+<b class="nc"><i>239</i>&nbsp;        this.serverSocket=new ServerSocket(PORT);</b>
+<i>240</i>&nbsp;    }
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    /**
+<i>243</i>&nbsp;     * Stats the server and waits for new connections
+<i>244</i>&nbsp;     */
+<i>245</i>&nbsp;    public void run(){
+<i>246</i>&nbsp;        try{
+<i>247</i>&nbsp;        while(true){
+<i>248</i>&nbsp;
+<b class="nc"><i>249</i>&nbsp;                Socket s=serverSocket.accept();</b>
+<b class="nc"><i>250</i>&nbsp;                SocketClientConnection socketConnection= new SocketClientConnection(s, this);</b>
+<b class="nc"><i>251</i>&nbsp;                executor.submit(socketConnection);</b>
+<i>252</i>&nbsp;
+<b class="nc"><i>253</i>&nbsp;        }</b>
+<b class="nc"><i>254</i>&nbsp;        }catch(IOException e){</b>
+<b class="nc"><i>255</i>&nbsp;            System.out.println(&quot;Connection error&quot;);</b>
+<i>256</i>&nbsp;        }
+<i>257</i>&nbsp;    }
+<i>258</i>&nbsp;
+<i>259</i>&nbsp;    /**
+<i>260</i>&nbsp;     * Method used to terminate the game&#39;s timer, in order to allow the server to host a new match
+<i>261</i>&nbsp;     */
+<i>262</i>&nbsp;    public void setTimerToZero(){
+<b class="nc"><i>263</i>&nbsp;        controller.setTimeToZero();</b>
+<i>264</i>&nbsp;    }
+<i>265</i>&nbsp;
+<i>266</i>&nbsp;    /**
+<i>267</i>&nbsp;     * returns the list of taken names
+<i>268</i>&nbsp;     * @return takenNames;
+<i>269</i>&nbsp;     */
+<b class="nc"><i>270</i>&nbsp;    public ArrayList&lt;String&gt; getTakenNames(){return takenNames;}</b>
+<i>271</i>&nbsp;
+<i>272</i>&nbsp;    /**
+<i>273</i>&nbsp;     * add an unique player name
+<i>274</i>&nbsp;     * @param uniqueNameToAdd the name to add
+<i>275</i>&nbsp;     */
+<i>276</i>&nbsp;    public void addName(String uniqueNameToAdd){
+<b class="nc"><i>277</i>&nbsp;        takenNames.add(uniqueNameToAdd);</b>
+<i>278</i>&nbsp;    }
+<i>279</i>&nbsp;
+<i>280</i>&nbsp;
+<i>281</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-01 21:58</div>
+</div>
+</body>
+</html>
