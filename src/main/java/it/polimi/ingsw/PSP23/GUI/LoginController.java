@@ -158,7 +158,7 @@ public class LoginController {
                             }
                         }
                     } catch (Exception e){
-                        e.printStackTrace();
+                        System.out.println("Connessione terminata!");
                     }
                 }
             }).start();
