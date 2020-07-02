@@ -34,7 +34,12 @@ Type 2 in the console and then hit enter
 ## Features
 * Complete rules
 * CLI
-* GUI
+* GUI 2D
 * Socket
 * 1 advanced functionality (Advanced Gods)
+  * Hera
+  * Hestia
+  * Chronus
+  * Triton
+  * Zeus
 ###### Created by Marco Galvagni - Ivan Motasov - Carlo Ottolini
